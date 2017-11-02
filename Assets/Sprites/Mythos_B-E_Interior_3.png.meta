@@ -1,0 +1,1447 @@
+fileFormatVersion: 2
+guid: a61deb1bd17ff2240bf6541daad9fffc
+timeCreated: 1509293727
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Mythos_B-E_Interior_3_0
+    21300002: Mythos_B-E_Interior_3_1
+    21300004: Mythos_B-E_Interior_3_2
+    21300006: Mythos_B-E_Interior_3_3
+    21300008: Mythos_B-E_Interior_3_4
+    21300010: Mythos_B-E_Interior_3_5
+    21300012: Mythos_B-E_Interior_3_6
+    21300014: Mythos_B-E_Interior_3_7
+    21300016: Mythos_B-E_Interior_3_8
+    21300018: Mythos_B-E_Interior_3_9
+    21300020: Mythos_B-E_Interior_3_10
+    21300022: Mythos_B-E_Interior_3_11
+    21300024: Mythos_B-E_Interior_3_12
+    21300026: Mythos_B-E_Interior_3_13
+    21300028: Mythos_B-E_Interior_3_14
+    21300030: Mythos_B-E_Interior_3_15
+    21300032: Mythos_B-E_Interior_3_16
+    21300034: Mythos_B-E_Interior_3_17
+    21300036: Mythos_B-E_Interior_3_18
+    21300038: Mythos_B-E_Interior_3_19
+    21300040: Mythos_B-E_Interior_3_20
+    21300042: Mythos_B-E_Interior_3_21
+    21300044: Mythos_B-E_Interior_3_22
+    21300046: Mythos_B-E_Interior_3_23
+    21300048: Mythos_B-E_Interior_3_24
+    21300050: Mythos_B-E_Interior_3_25
+    21300052: Mythos_B-E_Interior_3_26
+    21300054: Mythos_B-E_Interior_3_27
+    21300056: Mythos_B-E_Interior_3_28
+    21300058: Mythos_B-E_Interior_3_29
+    21300060: Mythos_B-E_Interior_3_30
+    21300062: Mythos_B-E_Interior_3_31
+    21300064: Mythos_B-E_Interior_3_32
+    21300066: Mythos_B-E_Interior_3_33
+    21300068: Mythos_B-E_Interior_3_34
+    21300070: Mythos_B-E_Interior_3_35
+    21300072: Mythos_B-E_Interior_3_36
+    21300074: Mythos_B-E_Interior_3_37
+    21300076: Mythos_B-E_Interior_3_38
+    21300078: Mythos_B-E_Interior_3_39
+    21300080: Mythos_B-E_Interior_3_40
+    21300082: Mythos_B-E_Interior_3_41
+    21300084: Mythos_B-E_Interior_3_42
+    21300086: Mythos_B-E_Interior_3_43
+    21300088: Mythos_B-E_Interior_3_44
+    21300090: Mythos_B-E_Interior_3_45
+    21300092: Mythos_B-E_Interior_3_46
+    21300094: Mythos_B-E_Interior_3_47
+    21300096: Mythos_B-E_Interior_3_48
+    21300098: Mythos_B-E_Interior_3_49
+    21300100: Mythos_B-E_Interior_3_50
+    21300102: Mythos_B-E_Interior_3_51
+    21300104: Mythos_B-E_Interior_3_52
+    21300106: Mythos_B-E_Interior_3_53
+    21300108: Mythos_B-E_Interior_3_54
+    21300110: Mythos_B-E_Interior_3_55
+    21300112: Mythos_B-E_Interior_3_56
+    21300114: Mythos_B-E_Interior_3_57
+    21300116: Mythos_B-E_Interior_3_58
+    21300118: Mythos_B-E_Interior_3_59
+    21300120: Mythos_B-E_Interior_3_60
+    21300122: Mythos_B-E_Interior_3_61
+    21300124: Mythos_B-E_Interior_3_62
+    21300126: Mythos_B-E_Interior_3_63
+    21300128: Mythos_B-E_Interior_3_64
+    21300130: Mythos_B-E_Interior_3_65
+    21300132: Mythos_B-E_Interior_3_66
+    21300134: Mythos_B-E_Interior_3_67
+    21300136: Mythos_B-E_Interior_3_68
+    21300138: Mythos_B-E_Interior_3_69
+    21300140: Mythos_B-E_Interior_3_70
+    21300142: Mythos_B-E_Interior_3_71
+    21300144: Mythos_B-E_Interior_3_72
+    21300146: Mythos_B-E_Interior_3_73
+    21300148: Mythos_B-E_Interior_3_74
+    21300150: Mythos_B-E_Interior_3_75
+    21300152: Mythos_B-E_Interior_3_76
+    21300154: Mythos_B-E_Interior_3_77
+    21300156: Mythos_B-E_Interior_3_78
+    21300158: Mythos_B-E_Interior_3_79
+    21300160: Mythos_B-E_Interior_3_80
+    21300162: Mythos_B-E_Interior_3_81
+    21300164: Mythos_B-E_Interior_3_82
+    21300166: Mythos_B-E_Interior_3_83
+    21300168: Mythos_B-E_Interior_3_84
+    21300170: Mythos_B-E_Interior_3_85
+    21300172: Mythos_B-E_Interior_3_86
+    21300174: Mythos_B-E_Interior_3_87
+    21300176: Mythos_B-E_Interior_3_88
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 480
+        width: 61
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 480
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 480
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_3
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 480
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 480
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_5
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 480
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_6
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 414
+        width: 93
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_7
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 428
+        width: 92
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_8
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 32
+        width: 146
+        height: 480
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_9
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 416
+        width: 61
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_10
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 416
+        width: 87
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_11
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 416
+        width: 54
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_12
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 416
+        width: 29
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_13
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 352
+        width: 84
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_14
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 412
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_15
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 384
+        width: 59
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_16
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 352
+        width: 54
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_17
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 351
+        width: 30
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_18
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 288
+        width: 83
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_19
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 352
+        width: 58
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_20
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 319
+        width: 58
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_21
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 320
+        width: 58
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_22
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 320
+        width: 59
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_23
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 223
+        width: 90
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_24
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 222
+        width: 90
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_25
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 288
+        width: 60
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 60, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_26
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 256
+        width: 58
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_27
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 264
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_28
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 263
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_29
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 264
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_30
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 261
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_31
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 192
+        width: 59
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_32
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 225
+        width: 6
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_33
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 225
+        width: 6
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_34
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 230
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_35
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 229
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_36
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 96
+        width: 90
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_37
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 128
+        width: 90
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_38
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 195
+        width: 9
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_39
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 192
+        width: 6
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_40
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 196
+        width: 5
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_41
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 159
+        width: 58
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_42
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 172
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_43
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 173
+        width: 29
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_44
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 173
+        width: 29
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_45
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 172
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_46
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 140
+        width: 32
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_47
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 141
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_48
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 141
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_49
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 140
+        width: 32
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_50
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 101
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_51
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 96
+        width: 63
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_52
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_53
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 103
+        width: 28
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_54
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 110
+        width: 23
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_55
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 110
+        width: 23
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_56
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 66
+        width: 10
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_57
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 64
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_58
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 65
+        width: 15
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_59
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 63
+        width: 30
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_60
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 59
+        width: 25
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_61
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 71
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_62
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 64
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_63
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 69
+        width: 30
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_64
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 67
+        width: 5
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_65
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 63
+        width: 6
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_66
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 65
+        width: 9
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_67
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 34
+        width: 9
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_68
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 17
+        width: 42
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_69
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 43
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_70
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 51
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_71
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 51
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_72
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 32
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_73
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 35
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_74
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 0
+        width: 26
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_75
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 32
+        width: 22
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_76
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_77
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 38
+        width: 6
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_78
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 33
+        width: 6
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_79
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 39
+        width: 4
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_80
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 39
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_81
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 38
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_82
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 2
+        width: 11
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_83
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 7
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_84
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 2
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_85
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 5
+        width: 29
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_86
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 1
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_87
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 4
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mythos_B-E_Interior_3_88
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
