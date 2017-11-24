@@ -7,45 +7,62 @@ public class PlayerController : MonoBehaviour {
 	public int playerSpeed = 5;
 	public int xThrowStrength = 500;
 	public int yThrowStrength = 100;
-	public float heldItemOffset = 0.4f;
-	public GameObject floorItem;
+	public int health = 5;
+
+	public List<GameObject> nearItems = new List<GameObject>();
 	public GameObject heldItem;
 	private float moveX;
 	private Animator anim;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer playerSprite;
+	private bool isAttacking;
 
 	void Start() {
 		anim = gameObject.GetComponent<Animator> ();
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
+		isAttacking = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		playerMove ();
-		checkPlayerInput ();
+		if (heldItem) {
+			isAttacking = heldItem.GetComponent<Item> ().isAttacking;
+		} else {
+			isAttacking = false;
+		}
+
+		if (!isAttacking) {
+			playerMove ();
+			checkPlayerInput ();
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.tag == "Item") {
-			floorItem = other.gameObject;
+			nearItems.Add (other.gameObject);
+		} else if (other.gameObject.tag == "Enemy") {
+			Debug.Log ("Hit by enemy!");
+			takeDamage (1);
 		}
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
 		if (other.gameObject.tag == "Item") {
-			floorItem = null;
+			nearItems.Remove(other.gameObject);
 		}
 	}
 
 	void checkPlayerInput() {
-		if (floorItem) {
+		if (nearItems.Count != 0) {
 			checkPickup ();
 		}
 		if (heldItem) {
+			//Since we are sharing a key for both, only check for item use if not throwing item
+			if (!checkThrow ()) {
+				checkUse ();
+			}
 			checkDrop ();
-			checkThrow ();
 		}
 	}
 
@@ -74,24 +91,43 @@ public class PlayerController : MonoBehaviour {
 		else if (moveX == 0.0f) {
 			anim.SetInteger("State", 0);
 		}
-
-		moveHeldItem ();
 	}
 
 	void flipPlayer() {
 		playerSprite.flipX = !playerSprite.flipX;
 
 		if (heldItem) {
-			heldItem.GetComponent<ItemController> ().flipItem ();
+			heldItem.GetComponent<Item> ().flipItem ();
+			positionHeldItem ();
 		}
 	}
 
-	void checkThrow() {
-		if (Input.GetButton("up") && Input.GetButtonDown("use")) {
-			Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
-			heldItem.AddComponent (typeof(BoxCollider2D));
+	void takeDamage(int damage) {
+		health -= damage;
+		Debug.Log (health);
+		if (health <= 0) {
+			gameOver ();
+		}
+	}
 
-			//Set throw direction
+	void gameOver() {
+		Destroy (gameObject);
+	}
+
+	void checkUse() {
+		if (Input.GetButtonDown ("use")) {
+			rigidBody.velocity = new Vector2 (0, 0);
+			anim.SetInteger("State", 0);
+			heldItem.GetComponent<Item>().use ();
+		}
+	}
+
+	bool checkThrow() {
+		if (Input.GetButton("up") && Input.GetButtonDown("use")) {
+			heldItem.transform.parent = null;
+			Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
+
+			//Set throw direction	
 			int tempThrowStrength;
 			if (playerSprite.flipX) {
 				tempThrowStrength = xThrowStrength * -1;
@@ -99,41 +135,64 @@ public class PlayerController : MonoBehaviour {
 				tempThrowStrength = xThrowStrength;
 			}
 
+			Item item = heldItem.GetComponent<Item> ();
+			item.isThrown = true;
+
 			body.bodyType = RigidbodyType2D.Dynamic;
 			body.AddForce (new Vector2 (tempThrowStrength, yThrowStrength));
 
-			heldItem.GetComponent<ItemController> ().isThrown = true;
 			heldItem = null;
+			return true;
 		}
+		return false;
 	}
 
 	void checkPickup() {
-		if (Input.GetButtonDown ("use")) {
-			heldItem = floorItem;
+		if (Input.GetButtonDown ("pickup")) {
+			GameObject closest = nearItems [0];
+			foreach (GameObject item in nearItems) {
+				float dist = Vector3.Distance (transform.position, item.transform.position);
+				float closestDist = Vector3.Distance (transform.position, closest.transform.position);
+				if (dist < closestDist) {
+					closest = item;
+				}
+			}
+			nearItems.Remove (closest);
+			heldItem = closest;
+			heldItem.transform.parent = transform;
+
+			heldItem.GetComponent<Item>().pickupItem(playerSprite.flipX);
+
+			//Set the items position and rotation
+			positionHeldItem ();
 		}
 	}
 
 	void checkDrop() {
 		if (Input.GetButtonDown ("drop")) {
-			heldItem.transform.position = new Vector2 (heldItem.transform.position.x, -2.77f);
+			heldItem.GetComponent<Item> ().dropItem ();
+			nearItems.Add(heldItem);
 			heldItem = null;
 		}
 	}
 
-	void moveHeldItem() {
-		//Debug.Log (heldItem);
+	void positionHeldItem() {
 		if (heldItem) {
-			Transform playerPos = gameObject.transform;
-			float newX = playerPos.position.x;
-			float newY = playerPos.position.y;
-			float heldItemOffset = 0.5f;
+			float newX = transform.position.x;
+			float newY = transform.position.y;
+			float currentXOffset = heldItem.GetComponent<Item>().xOffset;
+			float currentYOffset = heldItem.GetComponent<Item>().yOffset;
+			float currentZRotation = heldItem.GetComponent<Item> ().zRotation;
 
 			if (playerSprite.flipX) {
-				heldItemOffset *= -1;
+				currentXOffset *= -1;
+				currentZRotation *= -1;
 			}
-			newX += heldItemOffset;
+			newX += currentXOffset;
+			newY += currentYOffset;
 
 			heldItem.transform.position = new Vector2 (newX, newY);
+			heldItem.transform.eulerAngles = new Vector3 (0, 0, currentZRotation);
 		}
 	}	
 }
