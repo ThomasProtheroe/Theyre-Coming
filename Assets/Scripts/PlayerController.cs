@@ -160,8 +160,10 @@ public class PlayerController : MonoBehaviour {
 			nearItems.Remove (closest);
 			heldItem = closest;
 			heldItem.transform.parent = transform;
+			Item itemController = heldItem.GetComponent<Item> ();
+			Physics2D.IgnoreCollision (GetComponent<CapsuleCollider2D>(), itemController.hitCollider);
 
-			heldItem.GetComponent<Item>().pickupItem(playerSprite.flipX);
+			itemController.pickupItem(playerSprite.flipX);
 
 			//Set the items position and rotation
 			positionHeldItem ();

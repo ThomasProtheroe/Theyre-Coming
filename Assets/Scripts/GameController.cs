@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-	public Transform enemy;
+	public Enemy enemy;
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
-		
+		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 	
 	// Update is called once per frame
@@ -19,6 +20,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	void spawnEnemy(float xPos) {
-		Instantiate (enemy, new Vector3(xPos, enemy.transform.position.y, 0), Quaternion.identity);
+		Enemy newEnemy = Instantiate (enemy, new Vector3(xPos, enemy.transform.position.y, 0), Quaternion.identity);
 	}
 }
