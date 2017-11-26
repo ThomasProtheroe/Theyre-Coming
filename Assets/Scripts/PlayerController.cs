@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
 
 	public List<GameObject> nearItems = new List<GameObject>();
 	public GameObject heldItem;
+	public GameObject stashedItem;
+
 	private float moveX;
 	private Animator anim;
 	private Rigidbody2D rigidBody;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
+		Debug.Log ("Item out of range");
 		if (other.gameObject.tag == "Item") {
 			nearItems.Remove(other.gameObject);
 		}
@@ -62,6 +65,7 @@ public class PlayerController : MonoBehaviour {
 			if (!checkThrow ()) {
 				checkUse ();
 			}
+			checkSwapItem ();
 			checkDrop ();
 		}
 	}
@@ -141,7 +145,13 @@ public class PlayerController : MonoBehaviour {
 			body.bodyType = RigidbodyType2D.Dynamic;
 			body.AddForce (new Vector2 (tempThrowStrength, yThrowStrength));
 
+			GameObject tempItem = heldItem;
 			heldItem = null;
+			if (stashedItem) {
+				Physics2D.IgnoreCollision (stashedItem.GetComponent<Item>().hitCollider, tempItem.GetComponent<Item>().hitCollider);
+				equipStashedItem ();
+			}
+
 			return true;
 		}
 		return false;
@@ -157,6 +167,11 @@ public class PlayerController : MonoBehaviour {
 					closest = item;
 				}
 			}
+
+			if (heldItem && !stashedItem) {
+				stashEquippedItem ();
+			}
+
 			nearItems.Remove (closest);
 			heldItem = closest;
 			heldItem.transform.parent = transform;
@@ -170,11 +185,46 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void checkSwapItem () {
+		if (Input.GetButtonDown ("swap")) {
+			if (stashedItem) {
+				swapStashedEquipped ();
+			}
+		}
+	}
+
+	void swapStashedEquipped () {
+		GameObject tempItem = heldItem;
+		equipStashedItem ();
+		stashedItem = tempItem;
+		stashedItem.SetActive (false);
+	}
+
+	void equipStashedItem() {
+		stashedItem.SetActive (true);
+		Item itemController = stashedItem.GetComponent<Item> ();
+		Physics2D.IgnoreCollision (GetComponent<CapsuleCollider2D>(), itemController.hitCollider);
+		heldItem = stashedItem;
+		stashedItem = null;
+		itemController.pickupItem(playerSprite.flipX);
+		positionHeldItem ();
+	}
+
+	void stashEquippedItem() {
+		stashedItem = heldItem;
+		stashedItem.SetActive (false);
+		heldItem = null;
+	}
+
 	void checkDrop() {
 		if (Input.GetButtonDown ("drop")) {
 			heldItem.GetComponent<Item> ().dropItem ();
-			nearItems.Add(heldItem);
-			heldItem = null;
+
+			if (stashedItem) {
+				equipStashedItem ();
+			} else {
+				heldItem = null;
+			}
 		}
 	}
 

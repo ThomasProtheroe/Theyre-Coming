@@ -10,6 +10,14 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+
+		/*
+		UnityEngine.Tilemaps.TilemapCollider2D terrain = GameObject.FindGameObjectWithTag ("Terrain").GetComponent<UnityEngine.Tilemaps.TilemapCollider2D> ();
+		Debug.Log (terrain);
+
+		terrain.enabled = false;
+		terrain.enabled = true;
+		*/
 	}
 	
 	// Update is called once per frame
