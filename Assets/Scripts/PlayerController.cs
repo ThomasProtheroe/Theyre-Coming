@@ -159,6 +159,10 @@ public class PlayerController : MonoBehaviour {
 
 	void checkPickup() {
 		if (Input.GetButtonDown ("pickup")) {
+			if (heldItem && stashedItem) {
+				return;
+			}
+
 			GameObject closest = nearItems [0];
 			foreach (GameObject item in nearItems) {
 				float dist = Vector3.Distance (transform.position, item.transform.position);
