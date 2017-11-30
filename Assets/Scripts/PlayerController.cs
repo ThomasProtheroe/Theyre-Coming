@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPlayerInput() {
-		if (nearItems.Count != 0) {
+		if (nearItems.Count != 0 && !heldItem) {
 			checkPickup ();
 		}
 		if (heldItem) {
@@ -65,9 +65,9 @@ public class PlayerController : MonoBehaviour {
 			if (!checkThrow ()) {
 				checkUse ();
 			}
-			checkSwapItem ();
 			checkDrop ();
 		}
+		checkSwapItem ();
 	}
 
 	void playerMove () {
@@ -140,17 +140,13 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			Item item = heldItem.GetComponent<Item> ();
+			item.isHeld = false;
 			item.isThrown = true;
 
 			body.bodyType = RigidbodyType2D.Dynamic;
 			body.AddForce (new Vector2 (tempThrowStrength, yThrowStrength));
 
-			GameObject tempItem = heldItem;
 			heldItem = null;
-			if (stashedItem) {
-				Physics2D.IgnoreCollision (stashedItem.GetComponent<Item>().hitCollider, tempItem.GetComponent<Item>().hitCollider);
-				equipStashedItem ();
-			}
 
 			return true;
 		}
@@ -159,10 +155,6 @@ public class PlayerController : MonoBehaviour {
 
 	void checkPickup() {
 		if (Input.GetButtonDown ("pickup")) {
-			if (heldItem && stashedItem) {
-				return;
-			}
-
 			GameObject closest = nearItems [0];
 			foreach (GameObject item in nearItems) {
 				float dist = Vector3.Distance (transform.position, item.transform.position);
@@ -170,10 +162,6 @@ public class PlayerController : MonoBehaviour {
 				if (dist < closestDist) {
 					closest = item;
 				}
-			}
-
-			if (heldItem && !stashedItem) {
-				stashEquippedItem ();
 			}
 
 			nearItems.Remove (closest);
@@ -191,8 +179,12 @@ public class PlayerController : MonoBehaviour {
 
 	void checkSwapItem () {
 		if (Input.GetButtonDown ("swap")) {
-			if (stashedItem) {
+			if (stashedItem && heldItem) {
 				swapStashedEquipped ();
+			} else if (stashedItem) {
+				equipStashedItem ();
+			} else if (heldItem) {
+				stashEquippedItem ();
 			}
 		}
 	}
@@ -224,11 +216,7 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetButtonDown ("drop")) {
 			heldItem.GetComponent<Item> ().dropItem ();
 
-			if (stashedItem) {
-				equipStashedItem ();
-			} else {
-				heldItem = null;
-			}
+			heldItem = null;
 		}
 	}
 
