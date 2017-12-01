@@ -23,7 +23,14 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown ("t")) {
-			spawnEnemy (6.0f);
+			float xPos;
+			if (player.transform.position.x < -30) {
+				xPos = -38.0f;
+			} else {
+				xPos = 6.0f;
+			}
+
+			spawnEnemy (xPos);
 		}
 	}
 
