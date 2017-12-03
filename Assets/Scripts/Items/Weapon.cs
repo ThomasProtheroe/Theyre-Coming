@@ -8,7 +8,17 @@ public class Weapon : Item {
 	public int durability;
 	public int knockback;
 
+	public Sprite bloodySprite1;
+	public Sprite bloodySprite2;
+	public Sprite bloodySprite3;
+
+	private int state = 0;
 	private bool enemyHit = false;
+
+	void Update() {
+		Animator anim = GetComponent<Animator> ();
+		//Debug.Log(anim.GetBool ("FacingRight"));
+	}
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
@@ -52,6 +62,17 @@ public class Weapon : Item {
 		durability -= 1;
 		if (durability <= 0) {
 			breakItem ();
+		} else {
+			if ((state == 0) && (bloodySprite1 != null)) {
+				GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
+				state++;
+			} else if ((state == 1) && (bloodySprite2 != null)) {
+				GetComponent<SpriteRenderer> ().sprite = bloodySprite2;
+				state++;
+			} else if ((state == 2) && (bloodySprite3 != null)) {
+				GetComponent<SpriteRenderer> ().sprite = bloodySprite3;
+				state++;
+			}
 		}
 	}
 

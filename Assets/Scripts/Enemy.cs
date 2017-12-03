@@ -159,7 +159,6 @@ public class Enemy : MonoBehaviour {
 		}
 
 		float knockbackTime = 0.15f + ((float)knockbackWeight / 100.0f);  //Calculate the actual time based on knockback stat
-		Debug.Log(knockbackTime);
 		yield return new WaitForSeconds(knockbackTime);
 
 		anim.SetBool ("Knockback", false);

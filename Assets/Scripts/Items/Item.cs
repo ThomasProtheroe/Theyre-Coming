@@ -36,7 +36,6 @@ public class Item : MonoBehaviour {
 			float yVel = itemBody.velocity.y;
 			//Once it has come to rest
 			if (Mathf.Approximately (xVel, 0.0f) && Mathf.Approximately (yVel, 0.0f)) {
-				Debug.Log ("item stopped");
 				isBouncing = false;
 				//Turn physics effects off for the item
 				itemBody.bodyType = RigidbodyType2D.Kinematic;

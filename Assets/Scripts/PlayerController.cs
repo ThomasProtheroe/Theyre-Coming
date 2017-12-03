@@ -44,13 +44,11 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.tag == "Item") {
 			nearItems.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy") {
-			Debug.Log ("Hit by enemy!");
 			takeDamage (1);
 		}
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
-		Debug.Log ("Item out of range");
 		if (other.gameObject.tag == "Item") {
 			nearItems.Remove(other.gameObject);
 		}
