@@ -8,17 +8,14 @@ public class Weapon : Item {
 	public int durability;
 	public int knockback;
 
+	public bool isBroken;
+
 	public Sprite bloodySprite1;
 	public Sprite bloodySprite2;
 	public Sprite bloodySprite3;
 
 	private int state = 0;
 	private bool enemyHit = false;
-
-	void Update() {
-		Animator anim = GetComponent<Animator> ();
-		//Debug.Log(anim.GetBool ("FacingRight"));
-	}
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
@@ -31,6 +28,7 @@ public class Weapon : Item {
 
 			isThrown = false;
 			isBouncing = true;
+			gameObject.layer = 11;
 		}
 
 		if (isAttacking && other.gameObject.tag == "Enemy" && !enemyHit && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
@@ -85,10 +83,54 @@ public class Weapon : Item {
 		if (isHeld) {
 			player.GetComponent<PlayerController> ().heldItem = null;
 		}
-		Destroy (gameObject);
+		gameObject.transform.parent = null;
+
+		Rigidbody2D body = GetComponent<Rigidbody2D>();
+
+		gameObject.layer = 11;
+
+		//Set throw direction	
+		int xBreakForce = 120;
+		int yBreakForce = 100;
+
+		/*
+		if (playerSprite.flipX) {
+			breakForce =* -1;
+		}
+		*/
+
+		isHeld = false;
+		isBroken = true;
+
+		body.bodyType = RigidbodyType2D.Dynamic;
+		body.AddForce (new Vector2 (xBreakForce, yBreakForce));
+		body.AddTorque (25.0f);
+
+		StartCoroutine ("beginSpriteFlash");
+		StartCoroutine ("destroyAfterTime", 1.5f);
 	}
 
 	public virtual void onBreak() {
 
+	}
+
+	/**** Coroutines ****/ 
+	IEnumerator destroyAfterTime(float time) {
+		yield return new WaitForSeconds(time);
+
+		Destroy (gameObject);
+	}
+
+	IEnumerator beginSpriteFlash() {
+		while (true) {
+			SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer> ();
+			if (sprite.enabled) {
+				sprite.enabled = false;
+			} else {
+				sprite.enabled = true;
+			}
+
+			yield return new WaitForSeconds (0.05f);
+		}
 	}
 }

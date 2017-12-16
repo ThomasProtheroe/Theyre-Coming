@@ -129,6 +129,8 @@ public class PlayerController : MonoBehaviour {
 			heldItem.transform.parent = null;
 			Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
 
+			heldItem.layer = 12;
+
 			//Set throw direction	
 			int tempThrowStrength;
 			if (playerSprite.flipX) {
@@ -166,7 +168,7 @@ public class PlayerController : MonoBehaviour {
 			heldItem = closest;
 			heldItem.transform.parent = transform;
 			Item itemController = heldItem.GetComponent<Item> ();
-			Physics2D.IgnoreCollision (GetComponent<CapsuleCollider2D>(), itemController.hitCollider);
+			heldItem.layer = 16;
 
 			itemController.pickupItem(playerSprite.flipX);
 
@@ -197,7 +199,6 @@ public class PlayerController : MonoBehaviour {
 	void equipStashedItem() {
 		stashedItem.SetActive (true);
 		Item itemController = stashedItem.GetComponent<Item> ();
-		Physics2D.IgnoreCollision (GetComponent<CapsuleCollider2D>(), itemController.hitCollider);
 		heldItem = stashedItem;
 		stashedItem = null;
 		itemController.pickupItem(playerSprite.flipX);
@@ -213,6 +214,7 @@ public class PlayerController : MonoBehaviour {
 	void checkDrop() {
 		if (Input.GetButtonDown ("drop")) {
 			heldItem.GetComponent<Item> ().dropItem ();
+			heldItem.layer = 13;
 
 			heldItem = null;
 		}

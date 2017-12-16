@@ -24,7 +24,6 @@ public class Item : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//Physics2D.IgnoreCollision (gameObject.GetComponent<Collider2D>(), GameObject.FindGameObjectWithTag ("Player").GetComponent<Collider2D>());
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
@@ -42,6 +41,7 @@ public class Item : MonoBehaviour {
 
 				pickupCollider.enabled = true;
 				hitCollider.enabled = false;
+				gameObject.layer = 13;
 			}
 		}
 	}
@@ -54,6 +54,7 @@ public class Item : MonoBehaviour {
 
 			isThrown = false;
 			isBouncing = true;
+			gameObject.layer = 11;
 		}
 	}
 
