@@ -1,0 +1,40 @@
+TapedHandle,DuctTape,Broom,Items/TapedHandle
+TapedHandle,DuctTape,Mop,Items/TapedHandle
+TapedBlade,DuctTape,Knife,Items/TapedBlade
+TapedBlade,DuctTape,Scissors,Items/TapedBlade
+TapedShard,DuctTape,GlassShards,Items/TapedShard
+MakeshiftSpear,TapedBlade,Broom,Weapons/MakeshiftSpear
+MakeshiftSpear,TapedBlade,Mop,Weapons/MakeshiftSpear
+MakeshiftSpear,TapedShard,Broom,Weapons/MakeshiftSpear
+MakeshiftSpear,TapedShard,Mop,Weapons/MakeshiftSpear
+MakeshiftSpear,TapedHandle,Knife,Weapons/MakeshiftSpear
+MakeshiftSpear,TapedHandle,Scissors,Weapons/MakeshiftSpear
+MakeshiftSpear,TapedHandle,GlassShards,Weapons/MakeshiftSpear
+SprayBottleBleach,SprayBottle,Bleach,Items/SprayBottleBleach
+SprayBottleAlcohol,SprayBottle,RubbingAlcohol,Items/SprayBottleAlcohol
+Chloroform,SprayBottleAlcohol,Bleach,Weapons/Chloroform
+Chloroform,SprayBottleBleach,RubbingAlcohol,Weapons/Chloroform
+TapedNails,Nails,DuctTape,Items/TapedNails
+TapedBat,BaseballBat,DuctTape,Items/TapedBat
+NailBat,TapedBat,Nails,Weapons/NailBat
+NailBat,TapedNails,BaseballBat,Weapons/NailBat
+SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
+TapedGlove,GardeningGlove,DuctTape,Items/TapedGlove
+Cestus,GardeningGlove,TapedBlade,Weapons/Cestus
+Cestus,TapedGlove,Knife,Weapons/Cestus
+Cestus,TapedGlove,Scissors,Weapons/Cestus
+TripWire,FishingLine,Nails,Traps/Tripwire
+TripWire,Rope,Nails,Traps/Tripwire
+SpikeTrap,Nails,Rug,Traps/SpikeTrap
+PillowcaseFlail,Pillowcase,Toaster,Weapons/Pillowcase Flail
+PillowcaseFlail,Pillowcase,Blender,Weapons/Pillowcase Flail
+PillowcaseFlail,Pillowcase,Dumbell,Weapons/Pillowcase Flail
+TapedPipe,MetalPipe,DuctTape,Items/TapedPipe
+TapedBrick,Brick,DuctTape,Items/TapedBrick
+Skullshatter Hammer,TapedPipe,Brick,Weapons/SkullshatterHammer
+Skullshatter Hammer,TapedBrick,MetalPipe,Weapons/SkullshatterHammer
+MakeshiftFlail,Rope,Baseball,Weapons/MakeshiftFlail
+TapedFlail,MakeshiftFlail,DuctTape,Items/TapedFlail
+TapedFlail,Rope,TapedBaseball,Items/TapedFlail
+SpikedFlail,TapedFlail,Nails,Weapons/SpikedFlail
+SpikedFlail,MakeshiftFlail,TapedNails,Weapons/SpikedFlail

@@ -22,9 +22,9 @@ public class Weapon : Item {
 			if (other.gameObject.tag == "Enemy") {
 				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, knockback);
 				onEnemyImpact (other.gameObject);
+			} else {
+				onTerrainImpact ();
 			}
-
-			onTerrainImpact ();
 
 			isThrown = false;
 			isBouncing = true;
@@ -79,25 +79,26 @@ public class Weapon : Item {
 	}
 
 	public void breakItem() {
-		onBreak ();
+		bool breakImmed = onBreak ();
 		if (isHeld) {
 			player.GetComponent<PlayerController> ().heldItem = null;
+			gameObject.transform.parent = null;
 		}
-		gameObject.transform.parent = null;
+
+		//If we don't want to play the break animation, destroy the object now
+		if (breakImmed) {
+			Destroy (gameObject);
+			return;
+		}
 
 		Rigidbody2D body = GetComponent<Rigidbody2D>();
 
 		gameObject.layer = 11;
 
-		//Set throw direction	
 		int xBreakForce = 120;
 		int yBreakForce = 100;
 
-		/*
-		if (playerSprite.flipX) {
-			breakForce =* -1;
-		}
-		*/
+		//TODO Randomize direction/force of xBreakForce
 
 		isHeld = false;
 		isBroken = true;
@@ -110,8 +111,9 @@ public class Weapon : Item {
 		StartCoroutine ("destroyAfterTime", 1.5f);
 	}
 
-	public virtual void onBreak() {
-
+	//Return true if item should be destroyed immediately (no animation)
+	public virtual bool onBreak() {
+		return false;
 	}
 
 	/**** Coroutines ****/ 

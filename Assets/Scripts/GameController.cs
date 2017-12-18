@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+
+		RecipeBook.loadRecipes ("Assets/Data/RecipeMaster.csv");
 	}
 	
 	// Update is called once per frame

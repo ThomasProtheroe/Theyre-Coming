@@ -55,8 +55,12 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPlayerInput() {
-		if (nearItems.Count != 0 && !heldItem) {
-			checkPickup ();
+		if (nearItems.Count != 0) {
+			if (!heldItem) {
+				checkPickup ();
+			} else {
+				checkCraft ();
+			}
 		}
 		if (heldItem) {
 			//Since we are sharing a key for both, only check for item use if not throwing item
@@ -168,12 +172,45 @@ public class PlayerController : MonoBehaviour {
 			heldItem = closest;
 			heldItem.transform.parent = transform;
 			Item itemController = heldItem.GetComponent<Item> ();
-			heldItem.layer = 16;
 
 			itemController.pickupItem(playerSprite.flipX);
 
 			//Set the items position and rotation
 			positionHeldItem ();
+		}
+	}
+
+	void checkCraft() {
+		if (Input.GetButton ("down") && Input.GetButtonDown ("use")) {
+			GameObject closest = nearItems [0];
+			foreach (GameObject item in nearItems) {
+				float dist = Vector3.Distance (transform.position, item.transform.position);
+				float closestDist = Vector3.Distance (transform.position, closest.transform.position);
+				if (dist < closestDist) {
+					closest = item;
+				}
+			}
+
+			//Try to combine the items
+			string closestType = closest.GetComponent<Item> ().type;
+			string heldType = heldItem.GetComponent<Item> ().type;
+			GameObject product = RecipeBook.tryCraft (closestType, heldType);
+
+			//If crafting is successful
+			if (product) {
+				//destroy both ingredients
+				nearItems.Remove (closest);
+				Destroy(closest);
+				Destroy (heldItem);
+
+				//create new item and place in hands
+				heldItem = product;
+				heldItem.GetComponent<Item> ().pickupItem (playerSprite.flipX);
+				heldItem.transform.parent = transform;
+
+				//Set the items position and rotation
+				positionHeldItem ();
+			}
 		}
 	}
 
