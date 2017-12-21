@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkUse() {
-		if (Input.GetButtonDown ("use")) {
+		if (Input.GetButtonDown ("use") && !Input.GetButton("down")) {
 			rigidBody.velocity = new Vector2 (0, 0);
 			anim.SetInteger("State", 0);
 			heldItem.GetComponent<Item>().use ();
@@ -130,6 +130,9 @@ public class PlayerController : MonoBehaviour {
 
 	bool checkThrow() {
 		if (Input.GetButton("up") && Input.GetButtonDown("use")) {
+			Item item = heldItem.GetComponent<Item> ();
+			item.playThrowSound ();
+
 			heldItem.transform.parent = null;
 			Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
 
@@ -142,8 +145,7 @@ public class PlayerController : MonoBehaviour {
 			} else {
 				tempThrowStrength = xThrowStrength;
 			}
-
-			Item item = heldItem.GetComponent<Item> ();
+				
 			item.isHeld = false;
 			item.isThrown = true;
 
@@ -198,6 +200,8 @@ public class PlayerController : MonoBehaviour {
 
 			//If crafting is successful
 			if (product) {
+				product.GetComponent<Item> ().playCraftingSound();
+
 				//destroy both ingredients
 				nearItems.Remove (closest);
 				Destroy(closest);
@@ -222,6 +226,12 @@ public class PlayerController : MonoBehaviour {
 				equipStashedItem ();
 			} else if (heldItem) {
 				stashEquippedItem ();
+			} else {
+				return;
+			}
+
+			if (heldItem) {
+				heldItem.GetComponent<Item> ().playSwappingSound ();
 			}
 		}
 	}

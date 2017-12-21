@@ -22,11 +22,19 @@ public class Item : MonoBehaviour {
 	public BoxCollider2D pickupCollider;
 	public BoxCollider2D hitCollider;
 
+	protected AudioSource source;
+	public AudioClip throwSound;
+	public AudioClip throwImpact;
+	public AudioClip craftSound;
+	public AudioClip pickupSound;
+	public AudioClip swapSound;
+
 	public GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
+		source = gameObject.GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -37,7 +45,6 @@ public class Item : MonoBehaviour {
 			float yVel = itemBody.velocity.y;
 			//Once it has come to rest
 			if (Mathf.Approximately (xVel, 0.0f) && Mathf.Approximately (yVel, 0.0f)) {
-				Debug.Log ("stop bouncing");
 				isBouncing = false;
 				//Turn physics effects off for the item
 				itemBody.bodyType = RigidbodyType2D.Kinematic;
@@ -52,6 +59,9 @@ public class Item : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
 			if (other.gameObject.tag == "Enemy") {
+				if (throwImpact) {
+					source.PlayOneShot (throwImpact);
+				}
 				other.gameObject.GetComponent<Enemy> ().takeDamage (thrownDamage);
 			}
 
@@ -62,6 +72,10 @@ public class Item : MonoBehaviour {
 	}
 
 	public void pickupItem(bool playerFlipX) {
+		if (pickupSound && source) {
+			source.PlayOneShot (pickupSound);
+		}
+
 		SpriteRenderer itemSprite = gameObject.GetComponent<SpriteRenderer> ();
 		itemSprite.flipX = playerFlipX;
 		gameObject.layer = 16;
@@ -98,6 +112,26 @@ public class Item : MonoBehaviour {
 		itemSprite.flipX = !itemSprite.flipX;
 		if (anim) {
 			anim.SetBool ("FacingRight", !itemSprite.flipX);
+		}
+	}
+
+	public void playCraftingSound() {
+		//Since this object was just created, the source variable is not initialized yet
+		//so we need to get the AudioSource directly
+		if (craftSound) {
+			gameObject.GetComponent<AudioSource>().PlayOneShot (craftSound);
+		}
+	}
+
+	public void playSwappingSound() {
+		if (craftSound) {
+			source.PlayOneShot (swapSound);
+		}
+	}
+
+	public void playThrowSound() {
+		if (throwSound) {
+			source.PlayOneShot (throwSound);
 		}
 	}
 

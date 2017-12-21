@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 
-		RecipeBook.loadRecipes ("Assets/Data/RecipeMaster.csv");
+		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
 	}
 	
 	// Update is called once per frame

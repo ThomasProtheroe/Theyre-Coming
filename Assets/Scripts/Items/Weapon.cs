@@ -14,6 +14,10 @@ public class Weapon : Item {
 	public Sprite bloodySprite2;
 	public Sprite bloodySprite3;
 
+	public AudioClip swingSound;
+	public AudioClip hitSound;
+	public AudioClip breakSound;
+
 	private int state = 0;
 	private bool enemyHit = false;
 
@@ -48,6 +52,9 @@ public class Weapon : Item {
 		isAttacking = true;
 		enemyHit = false;
 
+		if (swingSound) {
+			source.PlayOneShot (swingSound);
+		}
 		anim.SetTrigger ("Attack");
 	}
 
@@ -58,6 +65,11 @@ public class Weapon : Item {
 
 	public void onEnemyImpact(GameObject enemy) {
 		durability -= 1;
+		if (isThrown && throwImpact) {
+			source.PlayOneShot (throwImpact);
+		} else if (!isThrown && hitSound) {
+			source.PlayOneShot (hitSound);
+		}
 		if (durability <= 0) {
 			breakItem ();
 		} else {
@@ -80,6 +92,11 @@ public class Weapon : Item {
 
 	public void breakItem() {
 		bool breakImmed = onBreak ();
+
+		if (breakSound) {
+			source.PlayOneShot (breakSound);
+		}
+
 		if (isHeld) {
 			player.GetComponent<PlayerController> ().heldItem = null;
 			gameObject.transform.parent = null;
