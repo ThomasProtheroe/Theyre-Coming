@@ -20,7 +20,7 @@ public class Item : MonoBehaviour {
 	public string type;
 
 	public BoxCollider2D pickupCollider;
-	public BoxCollider2D hitCollider;
+	public Collider2D hitCollider;
 
 	protected AudioSource source;
 	public AudioClip throwSound;
