@@ -7,6 +7,7 @@ public class Weapon : Item {
 	public int attackDamage;
 	public int durability;
 	public int knockback;
+	public int multiHit = 1;
 
 	public bool isBroken;
 
@@ -19,7 +20,7 @@ public class Weapon : Item {
 	public AudioClip breakSound;
 
 	private int state = 0;
-	private bool enemyHit = false;
+	private int hitCount = 0;
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
@@ -35,8 +36,11 @@ public class Weapon : Item {
 			gameObject.layer = 11;
 		}
 
-		if (isAttacking && other.gameObject.tag == "Enemy" && !enemyHit && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
-			enemyHit = true;
+		if (isAttacking && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
+			if (!canHit ()) {
+				return;
+			}
+			hitCount ++;
 			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback);
 			onEnemyImpact (other.gameObject);
 		}
@@ -50,7 +54,7 @@ public class Weapon : Item {
 		Animator anim = GetComponent<Animator> ();
 		anim.enabled = true;
 		isAttacking = true;
-		enemyHit = false;
+		hitCount = 0;
 
 		if (swingSound) {
 			source.PlayOneShot (swingSound);
@@ -61,6 +65,13 @@ public class Weapon : Item {
 	public void disableAnimator() {
 		GetComponent<Animator> ().enabled = false;
 		isAttacking = false;
+	}
+
+	bool canHit() {
+		if (hitCount >= multiHit) {
+			return false;
+		}
+		return true;
 	}
 
 	public void onEnemyImpact(GameObject enemy) {
