@@ -63,7 +63,7 @@
      <Compile Include="Assets\Scripts\MusicController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Recipe.cs" />
-     <Compile Include="Assets\SoundEffectController.cs" />
+     <Compile Include="Assets\Scripts\Transition.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

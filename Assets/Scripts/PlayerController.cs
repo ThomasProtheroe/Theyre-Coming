@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour {
 	public int xThrowStrength = 500;
 	public int yThrowStrength = 100;
 	public int health = 5;
+	public bool isBusy = false;
 
 	public List<GameObject> nearItems = new List<GameObject>();
+	public List<GameObject> nearTransitions = new List<GameObject>();
 	public GameObject heldItem;
 	public GameObject stashedItem;
 
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour {
 			isAttacking = false;
 		}
 
-		if (!isAttacking) {
+		if (!isAttacking && !isBusy) {
 			playerMove ();
 			checkPlayerInput ();
 		}
@@ -45,12 +47,16 @@ public class PlayerController : MonoBehaviour {
 			nearItems.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy") {
 			takeDamage (1);
+		} else if (other.gameObject.tag == "Transition") {
+			nearTransitions.Add (other.gameObject);
 		}
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
 		if (other.gameObject.tag == "Item") {
 			nearItems.Remove(other.gameObject);
+		} else if (other.gameObject.tag == "Transition") {
+			nearTransitions.Remove(other.gameObject);
 		}
 	}
 
@@ -68,6 +74,9 @@ public class PlayerController : MonoBehaviour {
 				checkUse ();
 			}
 			checkDrop ();
+		}
+		if (nearTransitions.Count != 0) {
+			checkTravel ();
 		}
 		checkSwapItem ();
 	}
@@ -160,7 +169,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPickup() {
-		if (Input.GetButtonDown ("pickup")) {
+		if (Input.GetButtonDown ("interact")) {
 			GameObject closest = nearItems [0];
 			foreach (GameObject item in nearItems) {
 				float dist = Vector3.Distance (transform.position, item.transform.position);
@@ -264,6 +273,24 @@ public class PlayerController : MonoBehaviour {
 			heldItem.layer = 13;
 
 			heldItem = null;
+		}
+	}
+
+	void checkTravel() {
+		if (Input.GetButtonDown ("up")) {
+			isBusy = true;
+
+			GameObject closest = nearTransitions [0];
+			foreach (GameObject item in nearTransitions) {
+				float dist = Vector3.Distance (transform.position, item.transform.position);
+				float closestDist = Vector3.Distance (transform.position, closest.transform.position);
+				if (dist < closestDist) {
+					closest = item;
+				}
+			}
+				
+			Transition transController = closest.GetComponent<Transition> ();
+			transController.playerTravel ();
 		}
 	}
 
