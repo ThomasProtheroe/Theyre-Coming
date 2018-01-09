@@ -9,23 +9,28 @@ public class PlayerController : MonoBehaviour {
 	public int yThrowStrength = 100;
 	public int health = 5;
 	public bool isBusy = false;
+	public bool isTargetable = true;
+	public bool isInvulnerable = false;
 
 	public List<GameObject> nearItems = new List<GameObject>();
 	public List<GameObject> nearTransitions = new List<GameObject>();
 	public GameObject heldItem;
 	public GameObject stashedItem;
+	public Sprite deathSprite;
 
 	private float moveX;
 	private Animator anim;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer playerSprite;
 	private bool isAttacking;
+	private bool isDead;
 
 	void Start() {
 		anim = gameObject.GetComponent<Animator> ();
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
 		isAttacking = false;
+		isDead = false;
 	}
 
 	// Update is called once per frame
@@ -36,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 			isAttacking = false;
 		}
 
-		if (!isAttacking && !isBusy) {
+		if (!isAttacking && !isBusy && !isDead) {
 			playerMove ();
 			checkPlayerInput ();
 		}
@@ -45,8 +50,9 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.tag == "Item") {
 			nearItems.Add (other.gameObject);
-		} else if (other.gameObject.tag == "Enemy") {
+		} else if (other.gameObject.tag == "Enemy" && !isInvulnerable) {
 			takeDamage (1);
+			StartCoroutine ("damageFlash");
 		} else if (other.gameObject.tag == "Transition") {
 			nearTransitions.Add (other.gameObject);
 		}
@@ -119,14 +125,21 @@ public class PlayerController : MonoBehaviour {
 
 	void takeDamage(int damage) {
 		health -= damage;
-		Debug.Log (health);
 		if (health <= 0) {
 			gameOver ();
 		}
 	}
 
 	void gameOver() {
-		Destroy (gameObject);
+		isDead = true;
+		transform.localScale = new Vector3 (1.2f, 1.2f, 1.0f);
+		anim.SetTrigger ("Death");
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		Debug.Log (enemies.Length);
+		foreach (GameObject enemy in enemies) {
+			enemy.GetComponent<Enemy> ().deactivate ();
+		}
 	}
 
 	void checkUse() {
@@ -278,7 +291,10 @@ public class PlayerController : MonoBehaviour {
 
 	void checkTravel() {
 		if (Input.GetButtonDown ("up")) {
+			rigidBody.velocity = new Vector2 (0f, 0f);
+			anim.SetInteger("State", 0);
 			isBusy = true;
+			isInvulnerable = true;
 
 			GameObject closest = nearTransitions [0];
 			foreach (GameObject item in nearTransitions) {
@@ -313,4 +329,26 @@ public class PlayerController : MonoBehaviour {
 			heldItem.transform.eulerAngles = new Vector3 (0, 0, currentZRotation);
 		}
 	}	
+
+	IEnumerator damageFlash() {
+		//Turn red over time
+		for (float f = 1f; f >= 0; f -= 0.2f) {
+			Color c = playerSprite.material.color;
+			c.g = f;
+			c.b = f;
+			playerSprite.material.color = c;
+
+			yield return null;
+		}
+
+		//Turn back to original color
+		for (float f = 0f; f < 1; f += 0.2f) {
+			Color c = playerSprite.material.color;
+			c.g = f;
+			c.b = f;
+			playerSprite.material.color = c;
+
+			yield return null;
+		}
+	}
 }

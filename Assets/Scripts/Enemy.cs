@@ -69,9 +69,14 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void activate() {
+	public void activate() {
 		anim.SetBool ("Active", true);
 		isActive = true;
+	}
+
+	public void deactivate() {
+		anim.SetBool ("Active", false);
+		isActive = false;
 	}
 
 	void move() {			
@@ -105,11 +110,13 @@ public class Enemy : MonoBehaviour {
 
 	public void activateAttackHitbox() {
 		attackHitbox.enabled = true;
+		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x - 0.05f, attackHitbox.transform.position.y);
 	}
 
 	public void finishAttack() {
 		isAttacking = false;
 		attackHitbox.enabled = false;
+		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
 	public void takeHit(int damage, int knockback) {

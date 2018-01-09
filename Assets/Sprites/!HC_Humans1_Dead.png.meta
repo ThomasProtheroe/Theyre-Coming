@@ -1,0 +1,1642 @@
+fileFormatVersion: 2
+guid: e3522687b5d6a9244a8761505b5cad06
+timeCreated: 1515432775
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: '!HC_Humans1_Dead_0'
+    21300002: '!HC_Humans1_Dead_1'
+    21300004: '!HC_Humans1_Dead_2'
+    21300006: '!HC_Humans1_Dead_3'
+    21300008: '!HC_Humans1_Dead_4'
+    21300010: '!HC_Humans1_Dead_5'
+    21300012: '!HC_Humans1_Dead_6'
+    21300014: '!HC_Humans1_Dead_7'
+    21300016: '!HC_Humans1_Dead_8'
+    21300018: '!HC_Humans1_Dead_9'
+    21300020: '!HC_Humans1_Dead_10'
+    21300022: '!HC_Humans1_Dead_11'
+    21300024: '!HC_Humans1_Dead_12'
+    21300026: '!HC_Humans1_Dead_13'
+    21300028: '!HC_Humans1_Dead_14'
+    21300030: '!HC_Humans1_Dead_15'
+    21300032: '!HC_Humans1_Dead_16'
+    21300034: '!HC_Humans1_Dead_17'
+    21300036: '!HC_Humans1_Dead_18'
+    21300038: '!HC_Humans1_Dead_19'
+    21300040: '!HC_Humans1_Dead_20'
+    21300042: '!HC_Humans1_Dead_21'
+    21300044: '!HC_Humans1_Dead_22'
+    21300046: '!HC_Humans1_Dead_23'
+    21300048: '!HC_Humans1_Dead_24'
+    21300050: '!HC_Humans1_Dead_25'
+    21300052: '!HC_Humans1_Dead_26'
+    21300054: '!HC_Humans1_Dead_27'
+    21300056: '!HC_Humans1_Dead_28'
+    21300058: '!HC_Humans1_Dead_29'
+    21300060: '!HC_Humans1_Dead_30'
+    21300062: '!HC_Humans1_Dead_31'
+    21300064: '!HC_Humans1_Dead_32'
+    21300066: '!HC_Humans1_Dead_33'
+    21300068: '!HC_Humans1_Dead_34'
+    21300070: '!HC_Humans1_Dead_35'
+    21300072: '!HC_Humans1_Dead_36'
+    21300074: '!HC_Humans1_Dead_37'
+    21300076: '!HC_Humans1_Dead_38'
+    21300078: '!HC_Humans1_Dead_39'
+    21300080: '!HC_Humans1_Dead_40'
+    21300082: '!HC_Humans1_Dead_41'
+    21300084: '!HC_Humans1_Dead_42'
+    21300086: '!HC_Humans1_Dead_43'
+    21300088: '!HC_Humans1_Dead_44'
+    21300090: '!HC_Humans1_Dead_45'
+    21300092: '!HC_Humans1_Dead_46'
+    21300094: '!HC_Humans1_Dead_47'
+    21300096: '!HC_Humans1_Dead_48'
+    21300098: '!HC_Humans1_Dead_49'
+    21300100: '!HC_Humans1_Dead_50'
+    21300102: '!HC_Humans1_Dead_51'
+    21300104: '!HC_Humans1_Dead_52'
+    21300106: '!HC_Humans1_Dead_53'
+    21300108: '!HC_Humans1_Dead_54'
+    21300110: '!HC_Humans1_Dead_55'
+    21300112: '!HC_Humans1_Dead_56'
+    21300114: '!HC_Humans1_Dead_57'
+    21300116: '!HC_Humans1_Dead_58'
+    21300118: '!HC_Humans1_Dead_59'
+    21300120: '!HC_Humans1_Dead_60'
+    21300122: '!HC_Humans1_Dead_61'
+    21300124: '!HC_Humans1_Dead_62'
+    21300126: '!HC_Humans1_Dead_63'
+    21300128: '!HC_Humans1_Dead_64'
+    21300130: '!HC_Humans1_Dead_65'
+    21300132: '!HC_Humans1_Dead_66'
+    21300134: '!HC_Humans1_Dead_67'
+    21300136: '!HC_Humans1_Dead_68'
+    21300138: '!HC_Humans1_Dead_69'
+    21300140: '!HC_Humans1_Dead_70'
+    21300142: '!HC_Humans1_Dead_71'
+    21300144: '!HC_Humans1_Dead_72'
+    21300146: '!HC_Humans1_Dead_73'
+    21300148: '!HC_Humans1_Dead_74'
+    21300150: '!HC_Humans1_Dead_75'
+    21300152: '!HC_Humans1_Dead_76'
+    21300154: '!HC_Humans1_Dead_77'
+    21300156: '!HC_Humans1_Dead_78'
+    21300158: '!HC_Humans1_Dead_79'
+    21300160: '!HC_Humans1_Dead_80'
+    21300162: '!HC_Humans1_Dead_81'
+    21300164: '!HC_Humans1_Dead_82'
+    21300166: '!HC_Humans1_Dead_83'
+    21300168: '!HC_Humans1_Dead_84'
+    21300170: '!HC_Humans1_Dead_85'
+    21300172: '!HC_Humans1_Dead_86'
+    21300174: '!HC_Humans1_Dead_87'
+    21300176: '!HC_Humans1_Dead_88'
+    21300178: '!HC_Humans1_Dead_89'
+    21300180: '!HC_Humans1_Dead_90'
+    21300182: '!HC_Humans1_Dead_91'
+    21300184: '!HC_Humans1_Dead_92'
+    21300186: '!HC_Humans1_Dead_93'
+    21300188: '!HC_Humans1_Dead_94'
+    21300190: '!HC_Humans1_Dead_95'
+    21300192: '!HC_Humans1_Dead_96'
+    21300194: '!HC_Humans1_Dead_97'
+    21300196: '!HC_Humans1_Dead_98'
+    21300198: '!HC_Humans1_Dead_99'
+    21300200: '!HC_Humans1_Dead_100'
+    21300202: '!HC_Humans1_Dead_101'
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_0'
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 672
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_1'
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 672
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_2'
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 672
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_3'
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 672
+        width: 39
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_4'
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 672
+        width: 39
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_5'
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 672
+        width: 39
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_6'
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 672
+        width: 60
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_7'
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 672
+        width: 60
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_8'
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 672
+        width: 60
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_9'
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 672
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_10'
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 672
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_11'
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 672
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_12'
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 579
+        width: 78
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_13'
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 579
+        width: 78
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_14'
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 579
+        width: 78
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_15'
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 576
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_16'
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 576
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_17'
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 576
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_18'
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 576
+        width: 78
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_19'
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 576
+        width: 78
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_20'
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 576
+        width: 78
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_21'
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 576
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_22'
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 615
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_23'
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 576
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_24'
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 615
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_25'
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 576
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_26'
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 615
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_27'
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 480
+        width: 51
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_28'
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 480
+        width: 51
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_29'
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 480
+        width: 51
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_30'
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 480
+        width: 51
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_31'
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 480
+        width: 51
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_32'
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 480
+        width: 51
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_33'
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 480
+        width: 63
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_34'
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 480
+        width: 63
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_35'
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 480
+        width: 63
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_36'
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 480
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_37'
+      rect:
+        serializedVersion: 2
+        x: 981
+        y: 480
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_38'
+      rect:
+        serializedVersion: 2
+        x: 1077
+        y: 480
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_39'
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 384
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_40'
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 384
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_41'
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 384
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_42'
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 387
+        width: 42
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_43'
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 387
+        width: 42
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_44'
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 387
+        width: 42
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_45'
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 384
+        width: 66
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_46'
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 384
+        width: 66
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_47'
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 384
+        width: 66
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_48'
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 387
+        width: 54
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_49'
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 387
+        width: 54
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_50'
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 387
+        width: 54
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_51'
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 288
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_52'
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 288
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_53'
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 288
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_54'
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 288
+        width: 39
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_55'
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 288
+        width: 39
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_56'
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 288
+        width: 39
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_57'
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 288
+        width: 60
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_58'
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 288
+        width: 60
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_59'
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 288
+        width: 60
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_60'
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 288
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_61'
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 288
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_62'
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 288
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_63'
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 195
+        width: 78
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_64'
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 195
+        width: 78
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_65'
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 195
+        width: 78
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_66'
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 192
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_67'
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 192
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_68'
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 192
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_69'
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 192
+        width: 78
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_70'
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 192
+        width: 78
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_71'
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 192
+        width: 78
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_72'
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 192
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_73'
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 231
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_74'
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 192
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_75'
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 231
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_76'
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 192
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_77'
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 231
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_78'
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 96
+        width: 51
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_79'
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 96
+        width: 51
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_80'
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 96
+        width: 51
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_81'
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 96
+        width: 51
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_82'
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 96
+        width: 51
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_83'
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 96
+        width: 51
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_84'
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 96
+        width: 63
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_85'
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 96
+        width: 63
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_86'
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 96
+        width: 63
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_87'
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 96
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_88'
+      rect:
+        serializedVersion: 2
+        x: 981
+        y: 96
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_89'
+      rect:
+        serializedVersion: 2
+        x: 1077
+        y: 96
+        width: 54
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_90'
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 0
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_91'
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 0
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_92'
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 0
+        width: 54
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_93'
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 3
+        width: 42
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_94'
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 3
+        width: 42
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_95'
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 3
+        width: 42
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_96'
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 0
+        width: 66
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_97'
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 0
+        width: 66
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_98'
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 0
+        width: 66
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_99'
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 3
+        width: 54
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_100'
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 3
+        width: 54
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: '!HC_Humans1_Dead_101'
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 3
+        width: 54
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
