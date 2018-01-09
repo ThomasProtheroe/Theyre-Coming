@@ -75,12 +75,16 @@ public class Weapon : Item {
 	}
 
 	public void onEnemyImpact(GameObject enemy) {
-		durability -= 1;
+		if (hitCount == 1) {
+			durability -= 1;
+		}
+
 		if (isThrown && throwImpact) {
 			source.PlayOneShot (throwImpact);
 		} else if (!isThrown && hitSound) {
 			source.PlayOneShot (hitSound);
 		}
+
 		if (durability <= 0) {
 			breakItem ();
 		} else {
