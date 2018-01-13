@@ -14,6 +14,7 @@ public class Item : MonoBehaviour {
 	public float zRotation;
 	public float restingHeight;
 	public float restingRotation;
+	public bool flipped = false;
 
 	public int thrownDamage;
 
@@ -21,6 +22,9 @@ public class Item : MonoBehaviour {
 
 	public BoxCollider2D pickupCollider;
 	public Collider2D hitCollider;
+
+	public GameObject frontHand;
+	public GameObject backHand;
 
 	protected AudioSource source;
 	public AudioClip throwSound;
@@ -76,19 +80,22 @@ public class Item : MonoBehaviour {
 			source.PlayOneShot (pickupSound);
 		}
 
-		SpriteRenderer itemSprite = gameObject.GetComponent<SpriteRenderer> ();
-		itemSprite.flipX = playerFlipX;
+		if (playerFlipX != flipped)
+		{
+			Vector3 scale = transform.localScale;
+			scale.x *= -1;
+			transform.localScale = scale;
+			flipped = !flipped;
+		}
+			
 		gameObject.layer = 16;
 
 		//disable pickup trigger, enable hit trigger
 		pickupCollider.enabled = false;
 		hitCollider.enabled = true;
 
-		//Make sure the animator knows which way we are facing when the item is picked up
-		Animator anim = GetComponent<Animator> ();
-		if (anim) {
-			anim.SetBool ("FacingRight", !playerFlipX);
-		}
+		frontHand.SetActive (true);
+		backHand.SetActive (true);
 
 		isHeld = true;
 	}
@@ -98,6 +105,10 @@ public class Item : MonoBehaviour {
 		pickupCollider.enabled = true;
 		hitCollider.enabled = false;
 		isHeld = false;
+
+		frontHand.SetActive (false);
+		backHand.SetActive (false);
+
 		moveToResting ();
 	}
 
@@ -107,12 +118,10 @@ public class Item : MonoBehaviour {
 	}
 
 	public void flipItem() {
-		Animator anim = gameObject.GetComponent<Animator> ();
-		SpriteRenderer itemSprite = gameObject.GetComponent<SpriteRenderer> ();
-		itemSprite.flipX = !itemSprite.flipX;
-		if (anim) {
-			anim.SetBool ("FacingRight", !itemSprite.flipX);
-		}
+		Vector3 scale = transform.parent.localScale;
+		scale.x *= -1;
+		transform.parent.localScale = scale;
+		flipped = !flipped;
 	}
 
 	public void playCraftingSound() {

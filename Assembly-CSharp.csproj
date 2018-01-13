@@ -54,7 +54,6 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
-     <Compile Include="Assets\Scripts\Items\BaseballBat.cs" />
      <Compile Include="Assets\Scripts\Items\ButterKnife.cs" />
      <Compile Include="Assets\Scripts\Items\GlassBottle.cs" />
      <Compile Include="Assets\Scripts\Items\Item.cs" />

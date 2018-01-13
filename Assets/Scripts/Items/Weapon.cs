@@ -9,8 +9,6 @@ public class Weapon : Item {
 	public int knockback;
 	public int multiHit = 1;
 
-	public bool isBroken;
-
 	public Sprite bloodySprite1;
 	public Sprite bloodySprite2;
 	public Sprite bloodySprite3;
@@ -21,6 +19,7 @@ public class Weapon : Item {
 
 	private int state = 0;
 	private int hitCount = 0;
+	private bool isBroken;
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {

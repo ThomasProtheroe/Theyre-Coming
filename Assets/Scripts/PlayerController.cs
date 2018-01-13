@@ -15,7 +15,10 @@ public class PlayerController : MonoBehaviour {
 	public List<GameObject> nearItems = new List<GameObject>();
 	public List<GameObject> nearTransitions = new List<GameObject>();
 	public GameObject heldItem;
+	public GameObject heldItemParent;
 	public GameObject stashedItem;
+	public GameObject frontHand;
+	public GameObject backHand;
 	public Sprite deathSprite;
 
 	private float moveX;
@@ -156,6 +159,9 @@ public class PlayerController : MonoBehaviour {
 			item.playThrowSound ();
 
 			heldItem.transform.parent = null;
+			frontHand.SetActive (true);
+			backHand.SetActive (true);
+
 			Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
 
 			heldItem.layer = 12;
@@ -168,6 +174,8 @@ public class PlayerController : MonoBehaviour {
 				tempThrowStrength = xThrowStrength;
 			}
 				
+			hidePlayerHands ();
+
 			item.isHeld = false;
 			item.isThrown = true;
 
@@ -194,10 +202,11 @@ public class PlayerController : MonoBehaviour {
 
 			nearItems.Remove (closest);
 			heldItem = closest;
-			heldItem.transform.parent = transform;
+			heldItem.transform.parent = heldItemParent.transform;
 			Item itemController = heldItem.GetComponent<Item> ();
 
 			itemController.pickupItem(playerSprite.flipX);
+			hidePlayerHands ();
 
 			//Set the items position and rotation
 			positionHeldItem ();
@@ -232,7 +241,7 @@ public class PlayerController : MonoBehaviour {
 				//create new item and place in hands
 				heldItem = product;
 				heldItem.GetComponent<Item> ().pickupItem (playerSprite.flipX);
-				heldItem.transform.parent = transform;
+				heldItem.transform.parent = heldItemParent.transform;
 
 				//Set the items position and rotation
 				positionHeldItem ();
@@ -272,18 +281,24 @@ public class PlayerController : MonoBehaviour {
 		stashedItem = null;
 		itemController.pickupItem(playerSprite.flipX);
 		positionHeldItem ();
+
+		hidePlayerHands ();
 	}
 
 	void stashEquippedItem() {
 		stashedItem = heldItem;
 		stashedItem.SetActive (false);
 		heldItem = null;
+
+		showPlayerHands ();
 	}
 
 	void checkDrop() {
 		if (Input.GetButtonDown ("drop")) {
 			heldItem.GetComponent<Item> ().dropItem ();
 			heldItem.layer = 13;
+
+			showPlayerHands ();
 
 			heldItem = null;
 		}
@@ -310,23 +325,32 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void hidePlayerHands() {
+		frontHand.SetActive (false);
+		backHand.SetActive (false);
+	}
+
+	void showPlayerHands() {
+		frontHand.SetActive (true);
+		backHand.SetActive (true);
+	}
+
 	void positionHeldItem() {
 		if (heldItem) {
-			float newX = transform.position.x;
-			float newY = transform.position.y;
-			float currentXOffset = heldItem.GetComponent<Item>().xOffset;
-			float currentYOffset = heldItem.GetComponent<Item>().yOffset;
-			float currentZRotation = heldItem.GetComponent<Item> ().zRotation;
+			Item itemCon = heldItem.GetComponent<Item> ();
+			float currentXOffset = itemCon.xOffset;
+			float currentYOffset = itemCon.yOffset;
+			float currentZRotation = itemCon.zRotation;
 
 			if (playerSprite.flipX) {
 				currentXOffset *= -1;
 				currentZRotation *= -1;
 			}
-			newX += currentXOffset;
-			newY += currentYOffset;
 
-			heldItem.transform.position = new Vector2 (newX, newY);
-			heldItem.transform.eulerAngles = new Vector3 (0, 0, currentZRotation);
+			heldItemParent.transform.localPosition = new Vector2 (currentXOffset, currentYOffset);
+			heldItemParent.transform.localEulerAngles = new Vector3 (0, 0, currentZRotation);
+			heldItem.transform.localPosition = Vector2.zero;
+			heldItem.transform.localEulerAngles = Vector3.zero;
 		}
 	}	
 

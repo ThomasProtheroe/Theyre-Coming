@@ -7,8 +7,8 @@ public class GlassBottle : Weapon {
 	public GameObject shards;
 
 	void Start() {
-		xOffset = 0.08f;
-		yOffset = -0.2f;
+		xOffset = 0.04f;
+		yOffset = -0.1f;
 		zRotation = 20.0f;
 		restingHeight = -2.9f;
 		restingRotation = 90;
