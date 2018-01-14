@@ -14,6 +14,7 @@ public class GlassBottle : Weapon {
 		restingRotation = 90;
 
 		player = GameObject.FindGameObjectWithTag("Player");
+		source = gameObject.GetComponent<AudioSource> ();
 	}
 
 	public override bool onBreak() {
