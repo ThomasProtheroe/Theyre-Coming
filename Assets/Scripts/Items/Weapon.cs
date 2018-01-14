@@ -115,6 +115,9 @@ public class Weapon : Item {
 		if (isHeld) {
 			player.GetComponent<PlayerController> ().heldItem = null;
 			gameObject.transform.parent = null;
+			Item itemConn = gameObject.GetComponent<Item> ();
+			itemConn.frontHand.SetActive (false);
+			itemConn.backHand.SetActive (false);
 		}
 
 		//If we don't want to play the break animation, destroy the object now
