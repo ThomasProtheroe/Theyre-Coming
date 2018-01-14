@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidescroller-Seige", "Assembly-CSharp.csproj", "{57EAF59B-737C-25FB-737B-7D7CFA4E6392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidescroller-Seige", "Assembly-CSharp-Editor.csproj", "{DFAF495B-1A5C-7EA1-2766-F2747F6911DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57EAF59B-737C-25FB-737B-7D7CFA4E6392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57EAF59B-737C-25FB-737B-7D7CFA4E6392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57EAF59B-737C-25FB-737B-7D7CFA4E6392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57EAF59B-737C-25FB-737B-7D7CFA4E6392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFAF495B-1A5C-7EA1-2766-F2747F6911DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFAF495B-1A5C-7EA1-2766-F2747F6911DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFAF495B-1A5C-7EA1-2766-F2747F6911DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFAF495B-1A5C-7EA1-2766-F2747F6911DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

@@ -75,17 +75,21 @@ public class Item : MonoBehaviour {
 		}
 	}
 
+	public void flipItem() {
+		Vector3 scale = transform.localScale;
+		scale.x *= -1;
+		transform.localScale = scale;
+		flipped = !flipped;
+	}
+
 	public void pickupItem(bool playerFlipX) {
 		if (pickupSound && source) {
 			source.PlayOneShot (pickupSound);
 		}
-
+			
 		if (playerFlipX != flipped)
 		{
-			Vector3 scale = transform.localScale;
-			scale.x *= -1;
-			transform.localScale = scale;
-			flipped = !flipped;
+			flipItem ();
 		}
 			
 		gameObject.layer = 16;
@@ -115,13 +119,6 @@ public class Item : MonoBehaviour {
 	public void moveToResting() {
 		transform.position = new Vector2 (transform.position.x, restingHeight);
 		transform.eulerAngles = new Vector3 (0, 0, restingRotation);
-	}
-
-	public void flipItem() {
-		Vector3 scale = transform.parent.localScale;
-		scale.x *= -1;
-		transform.parent.localScale = scale;
-		flipped = !flipped;
 	}
 
 	public void playCraftingSound() {

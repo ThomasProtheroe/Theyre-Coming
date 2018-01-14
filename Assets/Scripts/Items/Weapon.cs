@@ -108,6 +108,7 @@ public class Weapon : Item {
 		bool breakImmed = onBreak ();
 
 		if (breakSound) {
+			Debug.Log (breakSound);
 			source.PlayOneShot (breakSound);
 		}
 
