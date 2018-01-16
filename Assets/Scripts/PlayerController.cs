@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	public List<GameObject> nearTransitions = new List<GameObject>();
 	public GameObject heldItem;
 	public GameObject heldItemParent;
+	public GameObject handsParent;
 	public GameObject stashedItem;
 	public GameObject frontHand;
 	public GameObject backHand;
@@ -23,13 +24,16 @@ public class PlayerController : MonoBehaviour {
 
 	private float moveX;
 	private Animator anim;
+	private Animator handsAnim;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer playerSprite;
 	private bool isAttacking;
 	private bool isDead;
+	private bool handsFlipped;
 
 	void Start() {
 		anim = gameObject.GetComponent<Animator> ();
+		handsAnim = handsParent.GetComponent<Animator> ();
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
 		isAttacking = false;
@@ -95,10 +99,13 @@ public class PlayerController : MonoBehaviour {
 
 		if (moveInput > 0.0f) {
 			moveX = 1.0f;
+			handsAnim.SetBool ("Walking", true);
 		} else if (moveInput < 0.0f) {
 			moveX = -1.0f;
+			handsAnim.SetBool ("Walking", true);
 		} else {
 			moveX = 0.0f;
+			handsAnim.SetBool ("Walking", false);
 		}
 
 		if (playerSprite.flipX == true && moveX > 0.0f) {
@@ -123,6 +130,20 @@ public class PlayerController : MonoBehaviour {
 		if (heldItem) {
 			heldItem.GetComponent<Item> ().flipItem ();
 			positionHeldItem ();
+		} else {
+			flipHands ();
+		}
+	}
+
+	void flipHands() {
+		Vector3 scale = handsParent.transform.localScale;
+		scale.x *= -1;
+		handsParent.transform.localScale = scale;
+	}
+
+	void alignHands() {
+		if (handsFlipped != playerSprite.flipX) {
+			flipHands ();
 		}
 	}
 
@@ -159,8 +180,8 @@ public class PlayerController : MonoBehaviour {
 			item.playThrowSound ();
 
 			heldItem.transform.parent = null;
-			frontHand.SetActive (true);
-			backHand.SetActive (true);
+			item.frontHand.SetActive (false);
+			item.backHand.SetActive (false);
 
 			Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
 
@@ -174,7 +195,7 @@ public class PlayerController : MonoBehaviour {
 				tempThrowStrength = xThrowStrength;
 			}
 				
-			hidePlayerHands ();
+			showPlayerHands ();
 
 			item.isHeld = false;
 			item.isThrown = true;
@@ -251,6 +272,10 @@ public class PlayerController : MonoBehaviour {
 
 	void checkSwapItem () {
 		if (Input.GetButtonDown ("swap")) {
+			if (heldItem) {
+				heldItem.GetComponent<Item> ().playSwappingSound ();
+			}
+
 			if (stashedItem && heldItem) {
 				swapStashedEquipped ();
 			} else if (stashedItem) {
@@ -259,10 +284,6 @@ public class PlayerController : MonoBehaviour {
 				stashEquippedItem ();
 			} else {
 				return;
-			}
-
-			if (heldItem) {
-				heldItem.GetComponent<Item> ().playSwappingSound ();
 			}
 		}
 	}
@@ -366,7 +387,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		//Turn back to original color
-		for (float f = 0f; f < 1; f += 0.2f) {
+		for (float f = 0f; f <= 1; f += 0.2f) {
 			Color c = playerSprite.material.color;
 			c.g = f;
 			c.b = f;
