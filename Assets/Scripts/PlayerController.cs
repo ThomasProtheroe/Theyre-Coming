@@ -127,8 +127,12 @@ public class PlayerController : MonoBehaviour {
 	void flipPlayer() {
 		playerSprite.flipX = !playerSprite.flipX;
 
+		Vector3 scale = heldItemParent.transform.localScale;
+		scale.x *= -1;
+		heldItemParent.transform.localScale = scale;
+
 		if (heldItem) {
-			heldItem.GetComponent<Item> ().flipItem ();
+			heldItem.GetComponent<Item> ().flipped = !heldItem.GetComponent<Item> ().flipped;
 			positionHeldItem ();
 		} else {
 			flipHands ();
@@ -160,7 +164,6 @@ public class PlayerController : MonoBehaviour {
 		anim.SetTrigger ("Death");
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
-		Debug.Log (enemies.Length);
 		foreach (GameObject enemy in enemies) {
 			enemy.GetComponent<Enemy> ().deactivate ();
 		}
@@ -300,7 +303,9 @@ public class PlayerController : MonoBehaviour {
 		Item itemController = stashedItem.GetComponent<Item> ();
 		heldItem = stashedItem;
 		stashedItem = null;
+		itemController.flipped = playerSprite.flipX;
 		itemController.pickupItem(playerSprite.flipX);
+
 		positionHeldItem ();
 
 		hidePlayerHands ();
