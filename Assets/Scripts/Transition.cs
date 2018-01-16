@@ -32,6 +32,7 @@ public class Transition : MonoBehaviour {
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
 		SpriteRenderer sprite = player.GetComponent<SpriteRenderer> ();
 		SpriteRenderer itemSprite = null;
+		SpriteRenderer[] handsSprites = null;
 		Color originalItemColor = new Color(255f, 255f, 255f, 255f);
 
 		openSound.Play ();
@@ -39,6 +40,14 @@ public class Transition : MonoBehaviour {
 		if (playerCon.heldItem) {
 			itemSprite = playerCon.heldItem.GetComponent<SpriteRenderer> ();
 			originalItemColor = itemSprite.material.color;
+
+			Item itemCon = playerCon.heldItem.GetComponent<Item> ();
+			handsSprites = new SpriteRenderer[] {
+				itemCon.frontHand.GetComponent<SpriteRenderer> (),
+				itemCon.backHand.GetComponent<SpriteRenderer> ()
+			};
+		} else {
+			handsSprites = playerCon.handsParent.GetComponentsInChildren<SpriteRenderer> ();
 		}
 		anim.SetTrigger ("Open");
 
@@ -55,6 +64,12 @@ public class Transition : MonoBehaviour {
 				itemSprite.material.color = c;
 			}
 
+			Color handC = handsSprites [0].material.color;
+			foreach (SpriteRenderer hand in handsSprites) {
+				handC.a = f;
+				hand.material.color = c;
+			}
+
 			yield return null;
 		}
 
@@ -64,6 +79,9 @@ public class Transition : MonoBehaviour {
 		player.transform.position = destination;
 
 		sprite.material.color = originalPlayerColor;
+		foreach (SpriteRenderer hand in handsSprites) {
+			hand.material.color = originalPlayerColor;
+		}
 		if (itemSprite) {
 			itemSprite.material.color = originalItemColor;
 		}
