@@ -10,7 +10,12 @@ public class Enemy : MonoBehaviour {
 
 	public BoxCollider2D attackHitbox;
 	public BoxCollider2D bodyHitbox;
+	public AudioSource walkingSource;
+	public AudioSource prowlingSource;
+
 	private Animator anim;
+	private AudioClip walkSound;
+	private AudioClip prowlSound;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
 	private GameObject player;
@@ -55,6 +60,11 @@ public class Enemy : MonoBehaviour {
 			distanceToPlayer = transform.position.x - player.transform.position.x;
 		}
 
+		bool inAudioRange = false;
+		if (distanceToPlayer < 22) {
+			inAudioRange = true;
+		}
+
 		if (!isStunned) {
 			if (isActive && !isAttacking && !isDead) {
 				facePlayer ();
@@ -66,6 +76,21 @@ public class Enemy : MonoBehaviour {
 				isMoving = false;
 				rigidBody.velocity = new Vector2 (0, 0);
 			}
+		}
+
+		//Sound effect Control
+		if (inAudioRange) {
+			if (!prowlingSource.isPlaying) {
+				startProwlSound ();
+			}
+			if (isMoving && !walkingSource.isPlaying) {
+				startWalkSound ();
+			} else if (!isMoving && walkingSource.isPlaying) {
+				stopWalkSound ();
+			}
+		} else {
+			stopWalkSound ();
+			stopProwlSound ();
 		}
 	}
 
@@ -134,6 +159,8 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void killEnemy() {
+		stopProwlSound ();
+		stopWalkSound ();
 		if (isAttacking) {
 			finishAttack ();
 		}
@@ -147,6 +174,32 @@ public class Enemy : MonoBehaviour {
 
 	public bool getIsDead() {
 		return isDead;
+	}
+
+	public void setProwlSound(AudioClip sound) {
+		prowlSound = sound;
+		prowlingSource.clip = prowlSound;
+	}
+
+	public void setWalkSound(AudioClip sound) {
+		walkSound = sound;
+		walkingSource.clip = walkSound;
+	}
+
+	public void startProwlSound() {
+		prowlingSource.Play ();
+	}
+
+	public void stopProwlSound() {
+		prowlingSource.Stop ();
+	}
+
+	public void startWalkSound() {
+		walkingSource.Play ();
+	}
+
+	public void stopWalkSound() {
+		walkingSource.Stop ();
 	}
 
 	/**** Coroutines ****/ 

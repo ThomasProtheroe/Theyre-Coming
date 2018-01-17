@@ -5,6 +5,9 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
 	public Enemy enemy;
+	public AudioClip[] prowlingSounds;
+	public AudioClip[] walkSounds;
+
 	private GameObject player;
 
 	// Use this for initialization
@@ -30,5 +33,11 @@ public class GameController : MonoBehaviour {
 
 	void spawnEnemy(float xPos) {
 		Enemy newEnemy = Instantiate (enemy, new Vector3(xPos, enemy.transform.position.y, 0), Quaternion.identity);
+
+		//Select a random walk and prowl sound and assign them to the new enemy
+		newEnemy.setProwlSound(prowlingSounds[Random.Range(0,5)]);
+		newEnemy.setWalkSound(walkSounds[Random.Range(0,5)]);
+
+		newEnemy.startProwlSound ();
 	}
 }

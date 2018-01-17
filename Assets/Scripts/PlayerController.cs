@@ -61,7 +61,6 @@ public class PlayerController : MonoBehaviour {
 			nearItems.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy" && !isInvulnerable) {
 			if (isCrafting) {
-				Debug.Log ("cancel Crafting");
 				StopCoroutine ("craftItem");
 				craftingCloud.SetActive (false);
 				isCrafting = false;
@@ -172,6 +171,7 @@ public class PlayerController : MonoBehaviour {
 		isDead = true;
 		transform.localScale = new Vector3 (1.2f, 1.2f, 1.0f);
 		anim.SetTrigger ("Death");
+		hidePlayerHands ();
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 		foreach (GameObject enemy in enemies) {
