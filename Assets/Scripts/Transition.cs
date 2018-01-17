@@ -5,18 +5,20 @@ using UnityEngine;
 public class Transition : MonoBehaviour {
 
 	public Transition sibling;
+	public AudioClip openSound;
+	public AudioClip closeSound;
 
 	private Animator anim;
 	private GameObject player;
 	private GameObject camera;
-	private AudioSource openSound;
+	private AudioSource source;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		camera = GameObject.FindGameObjectWithTag("MainCamera");
 		anim = gameObject.GetComponent<Animator> ();
-		openSound = gameObject.GetComponent<AudioSource> ();
+		source = gameObject.GetComponent<AudioSource> ();
 	}
 
 	// Update is called once per frame
@@ -28,6 +30,20 @@ public class Transition : MonoBehaviour {
 		StartCoroutine ("movePlayer");
 	}
 
+	private void playOpenSound() {
+		if (openSound) {
+			source.clip = openSound;
+			source.Play ();
+		}
+	}
+
+	private void playCloseSound() {
+		if (closeSound) {
+			source.clip = closeSound;
+			source.Play ();
+		}
+	}
+
 	IEnumerator movePlayer() {
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
 		SpriteRenderer sprite = player.GetComponent<SpriteRenderer> ();
@@ -35,7 +51,7 @@ public class Transition : MonoBehaviour {
 		SpriteRenderer[] handsSprites = null;
 		Color originalItemColor = new Color(255f, 255f, 255f, 255f);
 
-		openSound.Play ();
+		playOpenSound ();
 
 		if (playerCon.heldItem) {
 			itemSprite = playerCon.heldItem.GetComponent<SpriteRenderer> ();
@@ -73,7 +89,9 @@ public class Transition : MonoBehaviour {
 			yield return null;
 		}
 
-		yield return new WaitForSeconds (0.3f);
+		yield return new WaitForSeconds (0.35f);
+
+		playCloseSound ();
 			
 		Vector2 destination = new Vector2(sibling.transform.position.x, player.transform.position.y);
 		player.transform.position = destination;
