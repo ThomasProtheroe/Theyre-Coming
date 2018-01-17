@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	public int playerSpeed = 5;
+	public float playerSpeed = 5;
 	public int xThrowStrength = 500;
 	public int yThrowStrength = 100;
 	public int health = 5;
@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject stashedItem;
 	public GameObject frontHand;
 	public GameObject backHand;
+	public GameObject craftingCloud;
 	public Sprite deathSprite;
 
 	private float moveX;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 	private SpriteRenderer playerSprite;
 	private bool isAttacking;
 	private bool isDead;
+	private bool isCrafting;
 	private bool handsFlipped;
 
 	void Start() {
@@ -58,6 +60,14 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.tag == "Item") {
 			nearItems.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy" && !isInvulnerable) {
+			if (isCrafting) {
+				Debug.Log ("cancel Crafting");
+				StopCoroutine ("craftItem");
+				craftingCloud.SetActive (false);
+				isCrafting = false;
+				isBusy = false;
+			}
+
 			takeDamage (1);
 			StartCoroutine ("damageFlash");
 		} else if (other.gameObject.tag == "Transition") {
@@ -198,6 +208,7 @@ public class PlayerController : MonoBehaviour {
 				tempThrowStrength = xThrowStrength;
 			}
 				
+			alignHands ();
 			showPlayerHands ();
 
 			item.isHeld = false;
@@ -239,37 +250,7 @@ public class PlayerController : MonoBehaviour {
 
 	void checkCraft() {
 		if (Input.GetButton ("down") && Input.GetButtonDown ("use")) {
-			GameObject closest = nearItems [0];
-			foreach (GameObject item in nearItems) {
-				float dist = Vector3.Distance (transform.position, item.transform.position);
-				float closestDist = Vector3.Distance (transform.position, closest.transform.position);
-				if (dist < closestDist) {
-					closest = item;
-				}
-			}
-
-			//Try to combine the items
-			string closestType = closest.GetComponent<Item> ().type;
-			string heldType = heldItem.GetComponent<Item> ().type;
-			GameObject product = RecipeBook.tryCraft (closestType, heldType);
-
-			//If crafting is successful
-			if (product) {
-				product.GetComponent<Item> ().playCraftingSound();
-
-				//destroy both ingredients
-				nearItems.Remove (closest);
-				Destroy(closest);
-				Destroy (heldItem);
-
-				//create new item and place in hands
-				heldItem = product;
-				heldItem.GetComponent<Item> ().pickupItem (playerSprite.flipX);
-				heldItem.transform.parent = heldItemParent.transform;
-
-				//Set the items position and rotation
-				positionHeldItem ();
-			}
+			StartCoroutine ("craftItem");
 		}
 	}
 
@@ -316,6 +297,7 @@ public class PlayerController : MonoBehaviour {
 		stashedItem.SetActive (false);
 		heldItem = null;
 
+		alignHands ();
 		showPlayerHands ();
 	}
 
@@ -324,6 +306,7 @@ public class PlayerController : MonoBehaviour {
 			heldItem.GetComponent<Item> ().dropItem ();
 			heldItem.layer = 13;
 
+			alignHands ();
 			showPlayerHands ();
 
 			heldItem = null;
@@ -399,6 +382,49 @@ public class PlayerController : MonoBehaviour {
 			playerSprite.material.color = c;
 
 			yield return null;
+		}
+	}
+
+	IEnumerator craftItem() {
+		GameObject closest = nearItems [0];
+		foreach (GameObject item in nearItems) {
+			float dist = Vector3.Distance (transform.position, item.transform.position);
+			float closestDist = Vector3.Distance (transform.position, closest.transform.position);
+			if (dist < closestDist) {
+				closest = item;
+			}
+		}
+
+		//Try to combine the items
+		string closestType = closest.GetComponent<Item> ().type;
+		string heldType = heldItem.GetComponent<Item> ().type;
+		GameObject product = RecipeBook.tryCraft (closestType, heldType);
+
+		//If crafting is successful
+		if (product) {
+			isBusy = true;
+			isCrafting = true;
+
+			product.GetComponent<Item> ().playCraftingSound();
+			craftingCloud.SetActive (true);
+
+			yield return new WaitForSeconds(2);
+
+			//destroy both ingredients
+			nearItems.Remove (closest);
+			Destroy(closest);
+			Destroy (heldItem);
+
+			//create new item and place in hands
+			heldItem = product;
+			heldItem.GetComponent<Item> ().pickupItem (playerSprite.flipX);
+			heldItem.transform.parent = heldItemParent.transform;
+
+			//Set the items position and rotation
+			positionHeldItem ();
+			craftingCloud.SetActive (false);
+			isCrafting = false;
+			isBusy = false;
 		}
 	}
 }
