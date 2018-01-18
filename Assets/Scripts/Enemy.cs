@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
 	private GameObject player;
+	private Area currentArea;
 
 	private bool isActive;
 	private bool isMoving;
@@ -67,30 +68,48 @@ public class Enemy : MonoBehaviour {
 
 		if (!isStunned) {
 			if (isActive && !isAttacking && !isDead) {
-				facePlayer ();
-				move ();
-				if (distanceToPlayer <= attackRange) {
-					attack ();
+				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
+					moveTowardsPlayer ();
+				} else {
+					//Track player and move towards transition
+					Transition target = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().findRouteToPlayer(currentArea);
+					faceTarget (target.transform.position);
+					move ();
+					if (Vector2.Distance(target.gameObject.transform.position, gameObject.transform.position) < 0.5) {
+						target.enemyTravel (GetComponent<Enemy>());
+					}
 				}
 			} else {
 				isMoving = false;
 				rigidBody.velocity = new Vector2 (0, 0);
 			}
-		}
 
-		//Sound effect Control
-		if (inAudioRange) {
-			if (!prowlingSource.isPlaying) {
-				startProwlSound ();
+			//Sound effect Control
+			if (inAudioRange && !isAttacking) {
+				if (!prowlingSource.isPlaying) {
+					startProwlSound ();
+				}
+				if (isMoving && !walkingSource.isPlaying) {
+					startWalkSound ();
+				} else if (!isMoving && walkingSource.isPlaying) {
+					stopWalkSound ();
+				}
+			} else {
+				if (prowlingSource.isPlaying) {
+					stopProwlSound ();
+				}
+				if (walkingSource.isPlaying) {
+					stopWalkSound ();
+				}
 			}
-			if (isMoving && !walkingSource.isPlaying) {
-				startWalkSound ();
-			} else if (!isMoving && walkingSource.isPlaying) {
-				stopWalkSound ();
-			}
-		} else {
-			stopWalkSound ();
-			stopProwlSound ();
+		}
+	}
+
+	private void moveTowardsPlayer () {
+		facePlayer ();
+		move ();
+		if (distanceToPlayer <= attackRange) {
+			attack ();
 		}
 	}
 
@@ -104,7 +123,7 @@ public class Enemy : MonoBehaviour {
 		isActive = false;
 	}
 
-	void move() {			
+	void move() {
 		if (distanceToPlayer > attackRange && !isMoving) {
 			isMoving = true;
 			float currentSpeed = moveSpeed;
@@ -128,6 +147,16 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	void faceTarget(Vector2 target) {
+		if (target.x > transform.position.x && !enemySprite.flipX) {
+			enemySprite.flipX = true;
+			attackHitbox.offset = new Vector2 (attackHitbox.offset.x * -1, 0);
+		} else if (target.x < transform.position.x && enemySprite.flipX) {
+			enemySprite.flipX = false;
+			attackHitbox.offset = new Vector2 (attackHitbox.offset.x * -1, 0);
+		}
+	}
+
 	void attack() {
 		anim.SetTrigger ("Attack");
 		isAttacking = true;
@@ -145,6 +174,8 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void takeHit(int damage, int knockback) {
+		stopProwlSound ();
+		stopWalkSound ();
 		if (!getIsDead ()) {
 			StartCoroutine ("setHitFrame", knockback);
 		}
@@ -159,8 +190,6 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void killEnemy() {
-		stopProwlSound ();
-		stopWalkSound ();
 		if (isAttacking) {
 			finishAttack ();
 		}
@@ -174,6 +203,14 @@ public class Enemy : MonoBehaviour {
 
 	public bool getIsDead() {
 		return isDead;
+	}
+
+	public Area getCurrentArea() {
+		return currentArea;
+	}
+
+	public void setCurrentArea(Area area) {
+		currentArea = area;
 	}
 
 	public void setProwlSound(AudioClip sound) {
@@ -191,7 +228,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void stopProwlSound() {
-		prowlingSource.Stop ();
+		prowlingSource.Pause ();
 	}
 
 	public void startWalkSound() {
@@ -199,13 +236,14 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void stopWalkSound() {
-		walkingSource.Stop ();
+		walkingSource.Pause ();
 	}
 
 	/**** Coroutines ****/ 
 	IEnumerator setHitFrame(int knockbackWeight) {
 		isStunned = true;
 		isMoving = false;
+		stopProwlSound ();
 		if (isAttacking) {
 			finishAttack ();
 		}

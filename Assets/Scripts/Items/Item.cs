@@ -8,21 +8,18 @@ public class Item : MonoBehaviour {
 	public bool isThrown = false;
 	public bool isBouncing = false;
 	public bool isAttacking = false;
+	public bool flipped = false;
 
 	public float xOffset;
 	public float yOffset;
 	public float zRotation;
 	public float restingHeight;
 	public float restingRotation;
-	public bool flipped = false;
-
 	public int thrownDamage;
-
 	public string type;
 
 	public BoxCollider2D pickupCollider;
 	public Collider2D hitCollider;
-
 	public GameObject frontHand;
 	public GameObject backHand;
 
