@@ -30,6 +30,10 @@ public class Transition : MonoBehaviour {
 		StartCoroutine ("movePlayer");
 	}
 
+	public void enemyTravel(Enemy enemy) {
+		StartCoroutine ("moveEnemy", enemy);
+	}
+
 	private void playOpenSound() {
 		if (openSound) {
 			source.clip = openSound;
@@ -96,6 +100,8 @@ public class Transition : MonoBehaviour {
 		Vector2 destination = new Vector2(sibling.transform.position.x, player.transform.position.y);
 		player.transform.position = destination;
 
+		playerCon.setCurrentArea (sibling.gameObject.transform.parent.gameObject.GetComponent<Area>());
+
 		sprite.material.color = originalPlayerColor;
 		foreach (SpriteRenderer hand in handsSprites) {
 			hand.material.color = originalPlayerColor;
@@ -105,13 +111,16 @@ public class Transition : MonoBehaviour {
 		}
 
 		camera.transform.position = new Vector3 (player.transform.position.x, camera.transform.position.y, camera.transform.position.z);
+		GameObject parallax = camera.transform.GetChild (0).gameObject;
+		parallax.transform.localPosition = new Vector3 (0.0f, -1.5f, 10.0f);
 
 		playerCon.isBusy = false;
 		playerCon.isInvulnerable = false;
 	}
 
 	IEnumerator moveEnemy(Enemy enemy) {
-		SpriteRenderer sprite = enemy.GetComponent<SpriteRenderer> ();
+		enemy.deactivate ();
+		SpriteRenderer sprite = enemy.gameObject.GetComponent<SpriteRenderer> ();
 
 		anim.SetTrigger ("Open");
 		sibling.GetComponent<Animator> ().SetTrigger ("Open");
@@ -126,11 +135,20 @@ public class Transition : MonoBehaviour {
 			yield return null;
 		}
 
-		yield return new WaitForSeconds (0.3f);
+		yield return new WaitForSeconds (0.35f);
 
 		Vector2 destination = new Vector2(sibling.transform.position.x, player.transform.position.y);
-		enemy.transform.position = destination;
+		enemy.gameObject.transform.position = destination;
+		enemy.setCurrentArea (sibling.transform.parent.gameObject.GetComponent<Area> ());
 
-		sprite.material.color = originalEnemyColor;
+		for (float f = 0f; f <= 1; f += 0.03f) {
+			Color c = sprite.material.color;
+			c.a = f;
+			sprite.material.color = c;
+
+			yield return null;
+		}
+
+		enemy.activate ();
 	}
 }

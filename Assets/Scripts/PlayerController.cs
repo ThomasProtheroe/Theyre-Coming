@@ -23,11 +23,13 @@ public class PlayerController : MonoBehaviour {
 	public GameObject craftingCloud;
 	public Sprite deathSprite;
 
-	private float moveX;
+	public Area currentArea;
 	private Animator anim;
 	private Animator handsAnim;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer playerSprite;
+	private GameObject beingCrafted;
+	private float moveX;
 	private bool isAttacking;
 	private bool isDead;
 	private bool isCrafting;
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour {
 		} else if (other.gameObject.tag == "Enemy" && !isInvulnerable) {
 			if (isCrafting) {
 				StopCoroutine ("craftItem");
+				Destroy (beingCrafted);
 				craftingCloud.SetActive (false);
 				isCrafting = false;
 				isBusy = false;
@@ -149,6 +152,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void flipHands() {
+		handsFlipped = !handsFlipped;
 		Vector3 scale = handsParent.transform.localScale;
 		scale.x *= -1;
 		handsParent.transform.localScale = scale;
@@ -317,6 +321,7 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetButtonDown ("up")) {
 			rigidBody.velocity = new Vector2 (0f, 0f);
 			anim.SetInteger("State", 0);
+			handsAnim.SetBool ("Walking", false);
 			isBusy = true;
 			isInvulnerable = true;
 
@@ -363,6 +368,14 @@ public class PlayerController : MonoBehaviour {
 		}
 	}	
 
+	public Area getCurrentArea() {
+		return currentArea;
+	}
+
+	public void setCurrentArea(Area area) {
+		currentArea = area;
+	}
+
 	IEnumerator damageFlash() {
 		//Turn red over time
 		for (float f = 1f; f >= 0; f -= 0.2f) {
@@ -386,6 +399,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator craftItem() {
+		rigidBody.velocity = Vector2.zero;
 		GameObject closest = nearItems [0];
 		foreach (GameObject item in nearItems) {
 			float dist = Vector3.Distance (transform.position, item.transform.position);
@@ -398,14 +412,16 @@ public class PlayerController : MonoBehaviour {
 		//Try to combine the items
 		string closestType = closest.GetComponent<Item> ().type;
 		string heldType = heldItem.GetComponent<Item> ().type;
-		GameObject product = RecipeBook.tryCraft (closestType, heldType);
+		beingCrafted = RecipeBook.tryCraft (closestType, heldType);
 
 		//If crafting is successful
-		if (product) {
+		if (beingCrafted) {
 			isBusy = true;
 			isCrafting = true;
 
-			product.GetComponent<Item> ().playCraftingSound();
+			Item prodItem = beingCrafted.GetComponent<Item> ();
+			prodItem.playCraftingSound ();
+			beingCrafted.transform.position = new Vector2 (0.0f, -50.0f);
 			craftingCloud.SetActive (true);
 
 			yield return new WaitForSeconds(2);
@@ -416,7 +432,7 @@ public class PlayerController : MonoBehaviour {
 			Destroy (heldItem);
 
 			//create new item and place in hands
-			heldItem = product;
+			heldItem = beingCrafted;
 			heldItem.GetComponent<Item> ().pickupItem (playerSprite.flipX);
 			heldItem.transform.parent = heldItemParent.transform;
 
@@ -425,6 +441,7 @@ public class PlayerController : MonoBehaviour {
 			craftingCloud.SetActive (false);
 			isCrafting = false;
 			isBusy = false;
+			beingCrafted = null;
 		}
 	}
 }

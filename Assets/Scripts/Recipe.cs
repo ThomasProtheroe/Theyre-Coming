@@ -51,6 +51,17 @@ public static class RecipeBook {
 		return product;
 	}
 
+	public static bool canCraft(string item1, string item2) {
+		bool craftable = false;
+		foreach (Recipe current in recipes) {
+			if (current.areIngredients(item1, item2)) {
+				craftable = true;
+				break;
+			}
+		}
+		return craftable;
+	}
+
 	public static void loadRecipes(string path) {
 		string line = "";
 		StreamReader reader = new StreamReader(path); 

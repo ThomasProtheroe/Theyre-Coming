@@ -17,9 +17,16 @@ public class Weapon : Item {
 	public AudioClip hitSound;
 	public AudioClip breakSound;
 
+	private int maxDurability;
 	private int state = 0;
 	private int hitCount = 0;
 	private bool isBroken;
+
+	void Start() {
+		maxDurability = durability;
+		player = GameObject.FindGameObjectWithTag("Player");
+		source = gameObject.GetComponent<AudioSource> ();
+	}
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
