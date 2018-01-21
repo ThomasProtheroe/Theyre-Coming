@@ -137,7 +137,11 @@ public class Transition : MonoBehaviour {
 
 		yield return new WaitForSeconds (0.35f);
 
-		Vector2 destination = new Vector2(sibling.transform.position.x, player.transform.position.y);
+		//Randomly offset the position they appear at the destination door
+		float xOffset = Random.Range(-0.3f, 0.3f);
+		Debug.Log (xOffset);
+		Vector2 destination = new Vector2(sibling.transform.position.x + xOffset, enemy.gameObject.transform.position.y);
+
 		enemy.gameObject.transform.position = destination;
 		enemy.setCurrentArea (sibling.transform.parent.gameObject.GetComponent<Area> ());
 

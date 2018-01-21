@@ -22,8 +22,12 @@ public class PlayerController : MonoBehaviour {
 	public GameObject backHand;
 	public GameObject craftingCloud;
 	public Sprite deathSprite;
-
 	public Area currentArea;
+
+	private AudioSource source;
+	public AudioClip[] hitSounds;
+	public AudioClip deathSound;
+
 	private Animator anim;
 	private Animator handsAnim;
 	private Rigidbody2D rigidBody;
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start() {
 		anim = gameObject.GetComponent<Animator> ();
+		source = gameObject.GetComponent<AudioSource> ();
 		handsAnim = handsParent.GetComponent<Animator> ();
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
@@ -165,9 +170,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void takeDamage(int damage) {
-		health -= damage;
-		if (health <= 0) {
-			gameOver ();
+		if (health > 0) {
+			health -= damage;
+			if (health <= 0) {
+				source.PlayOneShot (deathSound);
+				gameOver ();
+			} else {
+				source.PlayOneShot (hitSounds [Random.Range (0, 3)]);
+			}
 		}
 	}
 
@@ -194,6 +204,7 @@ public class PlayerController : MonoBehaviour {
 	bool checkThrow() {
 		if (Input.GetButton("up") && Input.GetButtonDown("use")) {
 			Item item = heldItem.GetComponent<Item> ();
+			item.disableAnimator ();
 			item.playThrowSound ();
 
 			heldItem.transform.parent = null;

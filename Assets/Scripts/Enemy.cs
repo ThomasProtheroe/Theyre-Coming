@@ -11,11 +11,12 @@ public class Enemy : MonoBehaviour {
 	public BoxCollider2D attackHitbox;
 	public BoxCollider2D bodyHitbox;
 	public AudioSource walkingSource;
-	public AudioSource prowlingSource;
+	public AudioSource vocalSource;
 
 	private Animator anim;
 	private AudioClip walkSound;
 	private AudioClip prowlSound;
+	private List<AudioClip> attackSounds;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
 	private GameObject player;
@@ -27,7 +28,6 @@ public class Enemy : MonoBehaviour {
 	private bool isStunned;
 	private bool isDead;
 	private float distanceToPlayer;
-
 
 	// Use this for initialization
 	void Start () {
@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour {
 
 			//Sound effect Control
 			if (inAudioRange && !isAttacking) {
-				if (!prowlingSource.isPlaying) {
+				if (!vocalSource.isPlaying) {
 					startProwlSound ();
 				}
 				if (isMoving && !walkingSource.isPlaying) {
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour {
 					stopWalkSound ();
 				}
 			} else {
-				if (prowlingSource.isPlaying) {
+				if (vocalSource.isPlaying) {
 					stopProwlSound ();
 				}
 				if (walkingSource.isPlaying) {
@@ -158,6 +158,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void attack() {
+		playAttackSound ();
 		anim.SetTrigger ("Attack");
 		isAttacking = true;
 	}
@@ -215,7 +216,12 @@ public class Enemy : MonoBehaviour {
 
 	public void setProwlSound(AudioClip sound) {
 		prowlSound = sound;
-		prowlingSource.clip = prowlSound;
+		vocalSource.clip = prowlSound;
+	}
+
+	public void addAttackSound(AudioClip[] sounds) {
+		attackSounds = new List<AudioClip> ();
+		attackSounds.AddRange(sounds);
 	}
 
 	public void setWalkSound(AudioClip sound) {
@@ -224,11 +230,15 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void startProwlSound() {
-		prowlingSource.Play ();
+		vocalSource.Play ();
 	}
 
 	public void stopProwlSound() {
-		prowlingSource.Pause ();
+		vocalSource.Pause ();
+	}
+
+	private void playAttackSound() {
+		vocalSource.PlayOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
 	}
 
 	public void startWalkSound() {
