@@ -7,7 +7,13 @@ public class GameController : MonoBehaviour {
 	public Enemy enemy;
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
+	public AudioClip[] attackSounds1;
+	public AudioClip[] attackSounds2;
+	public AudioClip[] attackSounds3;
+	public AudioClip[] attackSounds4;
+	public AudioClip[] attackSounds5;
 
+	private AudioClip[][] attackSoundMaster;
 	private List<Area> areas = new List<Area>();
 
 	private GameObject player;
@@ -15,6 +21,13 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+
+		attackSoundMaster = new AudioClip[5][];
+		attackSoundMaster [0] = attackSounds1;
+		attackSoundMaster [1] = attackSounds2;
+		attackSoundMaster [2] = attackSounds3;
+		attackSoundMaster [3] = attackSounds4;
+		attackSoundMaster [4] = attackSounds5;
 
 		foreach (GameObject area in GameObject.FindGameObjectsWithTag ("Area")) {
 			areas.Add(area.GetComponent<Area>());
@@ -26,12 +39,7 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown ("t")) {
-			float xPos;
-			if (player.transform.position.x < -30) {
-				xPos = -38.0f;
-			} else {
-				xPos = 6.0f;
-			}
+			float xPos = 6.0f;
 
 			spawnEnemy (xPos);
 		}
@@ -41,10 +49,16 @@ public class GameController : MonoBehaviour {
 		Enemy newEnemy = Instantiate (enemy, new Vector3(xPos, enemy.transform.position.y, 0), Quaternion.identity);
 
 		//TODO Change this to use the spawners area once enemy spawners are built
-		newEnemy.setCurrentArea (player.GetComponent<PlayerController> ().getCurrentArea ());
+		foreach (Area area in areas) {
+			if (area.name == "Yard") {
+				newEnemy.setCurrentArea (area);
+			}
+		}
 
-		//Select a random walk and prowl sound and assign them to the new enemy
-		newEnemy.setProwlSound(prowlingSounds[Random.Range(0,5)]);
+		//Select a random walk, prowl and attack sound and assign them to the new enemy
+		int vocalType = Random.Range(0,5);
+		newEnemy.setProwlSound(prowlingSounds[vocalType]);
+		newEnemy.addAttackSound (attackSoundMaster[vocalType]);
 		newEnemy.setWalkSound(walkSounds[Random.Range(0,5)]);
 	}
 

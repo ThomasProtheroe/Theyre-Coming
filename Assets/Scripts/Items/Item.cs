@@ -72,6 +72,20 @@ public class Item : MonoBehaviour {
 		}
 	}
 
+	public void disableAnimator() {
+		Animator anim = GetComponent<Animator> ();
+		if (anim) {
+			anim.enabled = false;
+		}
+	}
+
+	public void enableAnimator() {
+		Animator anim = GetComponent<Animator> ();
+		if (anim) {
+			anim.enabled = true;
+		}
+	}
+
 	public void flipItem() {
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
@@ -95,6 +109,8 @@ public class Item : MonoBehaviour {
 		pickupCollider.enabled = false;
 		hitCollider.enabled = true;
 
+		enableAnimator ();
+
 		frontHand.SetActive (true);
 		backHand.SetActive (true);
 
@@ -106,6 +122,8 @@ public class Item : MonoBehaviour {
 		pickupCollider.enabled = true;
 		hitCollider.enabled = false;
 		isHeld = false;
+
+		disableAnimator ();
 
 		frontHand.SetActive (false);
 		backHand.SetActive (false);

@@ -58,7 +58,7 @@ public class Weapon : Item {
 
 	public void attack() {
 		Animator anim = GetComponent<Animator> ();
-		anim.enabled = true;
+		//anim.enabled = true;
 		isAttacking = true;
 		hitCount = 0;
 
@@ -68,8 +68,7 @@ public class Weapon : Item {
 		anim.SetTrigger ("Attack");
 	}
 
-	public void disableAnimator() {
-		GetComponent<Animator> ().enabled = false;
+	public void finishAttack() {
 		isAttacking = false;
 	}
 
@@ -115,16 +114,16 @@ public class Weapon : Item {
 		bool breakImmed = onBreak ();
 
 		if (breakSound) {
-			Debug.Log (breakSound);
 			source.PlayOneShot (breakSound);
 		}
 
 		if (isHeld) {
 			player.GetComponent<PlayerController> ().heldItem = null;
 			gameObject.transform.parent = null;
-			Item itemConn = gameObject.GetComponent<Item> ();
-			itemConn.frontHand.SetActive (false);
-			itemConn.backHand.SetActive (false);
+
+			disableAnimator ();
+			frontHand.SetActive (false);
+			backHand.SetActive (false);
 		}
 
 		//If we don't want to play the break animation, destroy the object now
@@ -137,13 +136,14 @@ public class Weapon : Item {
 
 		gameObject.layer = 11;
 
-		int xBreakForce = 120;
-		int yBreakForce = 100;
-
-		//TODO Randomize direction/force of xBreakForce
+		int xBreakForce = Random.Range(-100, 100);
+		int yBreakForce = Random.Range(60, 100);
 
 		isHeld = false;
 		isBroken = true;
+
+		//Reset the x and y rotation as these can change during attack animations
+		transform.eulerAngles = new Vector3 (0, 0, transform.rotation.z);
 
 		body.bodyType = RigidbodyType2D.Dynamic;
 		body.AddForce (new Vector2 (xBreakForce, yBreakForce));
