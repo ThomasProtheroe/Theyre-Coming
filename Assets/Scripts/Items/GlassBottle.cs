@@ -10,7 +10,7 @@ public class GlassBottle : Weapon {
 		xOffset = -0.03f;
 		yOffset = -0.05f;
 		zRotation = 25.0f;
-		restingHeight = -2.9f;
+		restingHeight = -2.96f;
 		restingRotation = 90;
 
 		player = GameObject.FindGameObjectWithTag("Player");

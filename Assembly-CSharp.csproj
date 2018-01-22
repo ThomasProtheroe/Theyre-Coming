@@ -63,7 +63,9 @@
      <Compile Include="Assets\Scripts\MusicController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Recipe.cs" />
+     <Compile Include="Assets\Scripts\SpriteOutline.cs" />
      <Compile Include="Assets\Scripts\Transition.cs" />
+     <None Include="Assets\Shaders\Sprite-Outline.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
