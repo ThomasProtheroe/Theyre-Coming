@@ -86,6 +86,14 @@ public class Item : MonoBehaviour {
 		}
 	}
 
+	public void disableHighlight() {
+		GetComponent<SpriteOutline> ().enabled = false;
+	}
+
+	public void enableHighlight() {
+		GetComponent<SpriteOutline> ().enabled = true;
+	}
+
 	public void flipItem() {
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
