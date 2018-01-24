@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.tag == "Item") {
 			nearItems.Add (other.gameObject);
-			Debug.Log ("adding item");
 		} else if (other.gameObject.tag == "Enemy" && !isInvulnerable) {
 			if (isCrafting) {
 				StopCoroutine ("craftItem");
@@ -373,12 +372,12 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void hidePlayerHands() {
+	public void hidePlayerHands() {
 		frontHand.SetActive (false);
 		backHand.SetActive (false);
 	}
 
-	void showPlayerHands() {
+	public void showPlayerHands() {
 		frontHand.SetActive (true);
 		backHand.SetActive (true);
 	}
