@@ -71,19 +71,20 @@ public class Transition : MonoBehaviour {
 		}
 		anim.SetTrigger ("Open");
 
-		Color originalPlayerColor = sprite.material.color;
-
 		for (float f = 1f; f >= 0; f -= 0.03f) {
+			//Fade out the player
 			Color c = sprite.material.color;
 			c.a = f;
 			sprite.material.color = c;
 
+			//Fade out any item they are holding
 			if (playerCon.heldItem) {
 				Color itemC = itemSprite.material.color;
 				itemC.a = f;
 				itemSprite.material.color = c;
 			}
 
+			//Fade out the player hand sprites
 			Color handC = handsSprites [0].material.color;
 			foreach (SpriteRenderer hand in handsSprites) {
 				handC.a = f;
@@ -102,9 +103,11 @@ public class Transition : MonoBehaviour {
 
 		playerCon.setCurrentArea (sibling.gameObject.transform.parent.gameObject.GetComponent<Area>());
 
-		sprite.material.color = originalPlayerColor;
+		Color orig = sprite.material.color;
+		orig.a = 1.0f;
+		sprite.material.color = orig;
 		foreach (SpriteRenderer hand in handsSprites) {
-			hand.material.color = originalPlayerColor;
+			hand.material.color = orig;
 		}
 		if (itemSprite) {
 			itemSprite.material.color = originalItemColor;

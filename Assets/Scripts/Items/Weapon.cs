@@ -66,6 +66,19 @@ public class Weapon : Item {
 			source.PlayOneShot (swingSound);
 		}
 		anim.SetTrigger ("Attack");
+
+		Collider2D[] colliders = new Collider2D[10];
+		hitCollider.OverlapCollider(new ContactFilter2D(), colliders);
+		foreach (Collider2D collider in colliders) {
+			if (collider && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
+				if (!canHit ()) {
+					break;
+				}
+				hitCount ++;
+				collider.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback);
+				onEnemyImpact (collider.gameObject);
+			}
+		}
 	}
 
 	public void finishAttack() {
@@ -118,12 +131,15 @@ public class Weapon : Item {
 		}
 
 		if (isHeld) {
-			player.GetComponent<PlayerController> ().heldItem = null;
+			PlayerController playerCon = player.GetComponent<PlayerController> ();
+			playerCon.heldItem = null;
 			gameObject.transform.parent = null;
 
 			disableAnimator ();
 			frontHand.SetActive (false);
 			backHand.SetActive (false);
+
+			playerCon.showPlayerHands ();
 		}
 
 		//If we don't want to play the break animation, destroy the object now
