@@ -152,6 +152,9 @@ public class PlayerController : MonoBehaviour {
 		scale.x *= -1;
 		heldItemParent.transform.localScale = scale;
 
+		float newX = craftingCloud.transform.localPosition.x * -1;
+		craftingCloud.transform.localPosition = new Vector2 (newX, craftingCloud.transform.localPosition.y);
+
 		if (heldItem) {
 			heldItem.GetComponent<Item> ().flipped = !heldItem.GetComponent<Item> ().flipped;
 			positionHeldItem ();
@@ -457,7 +460,7 @@ public class PlayerController : MonoBehaviour {
 			beingCrafted.transform.position = new Vector2 (0.0f, -50.0f);
 			craftingCloud.SetActive (true);
 
-			yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(0.6f);
 
 			//destroy both ingredients
 			nearItems.Remove (closest);
