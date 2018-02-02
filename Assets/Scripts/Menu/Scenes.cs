@@ -7,19 +7,15 @@ public static class Scenes {
 
 	private static Dictionary<string, string> parameters;
 
-	public static AsyncOperation Load(string sceneName, Dictionary<string, string> parameters = null) {
+	public static void Load(string sceneName, Dictionary<string, string> parameters = null) {
 		Scenes.parameters = parameters;
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-		asyncLoad.allowSceneActivation = false;
-		return asyncLoad;
+		SceneManager.LoadScene(sceneName);
 	}
 
-	public static AsyncOperation Load(string sceneName, string paramKey, string paramValue) {
+	public static void Load(string sceneName, string paramKey, string paramValue) {
 		Scenes.parameters = new Dictionary<string, string>();
 		Scenes.parameters.Add(paramKey, paramValue);
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-		asyncLoad.allowSceneActivation = false;
-		return asyncLoad;
+		SceneManager.LoadScene(sceneName);
 	}
 
 	public static Dictionary<string, string> getSceneParameters() {

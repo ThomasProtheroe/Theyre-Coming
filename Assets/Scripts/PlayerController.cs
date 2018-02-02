@@ -95,6 +95,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPlayerInput() {
+		//TODO TESTING ONLY - to be replaced with pause menu
+		if (Input.GetKeyDown("escape")) {
+			#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+			#else
+			Application.Quit();
+			#endif
+		}
+
 		if (nearItems.Count != 0) {
 			if (!heldItem) {
 				checkPickup ();
