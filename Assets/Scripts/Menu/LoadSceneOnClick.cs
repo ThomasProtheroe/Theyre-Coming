@@ -6,24 +6,15 @@ using UnityEngine.UI;
 
 public class LoadSceneOnClick : MonoBehaviour {
 
-	private AsyncOperation asyncLoad;
-
 	public void startNewGame() {
-		asyncLoad = Scenes.Load ("Main", "dev", "false");
-		StartCoroutine ("fadeToBlack");
+		StartCoroutine ("fadeToBlack", "false");
 	}
 
 	public void startSandboxGame() {
-		asyncLoad = Scenes.Load ("Main", "dev", "true");
-		StartCoroutine ("fadeToBlack");
+		StartCoroutine ("fadeToBlack", "false");
 	}
 
-	public void runScene() {
-		asyncLoad.allowSceneActivation = true;
-	}
-
-
-	IEnumerator fadeToBlack()
+	IEnumerator fadeToBlack(string devMode)
 	{
 		Button[] buttons = Button.FindObjectsOfType<Button> ();
 		for (float f = 1.0f; f > 0.0f; f -= 0.02f) {
@@ -44,8 +35,6 @@ public class LoadSceneOnClick : MonoBehaviour {
 			yield return null;
 		}
 
-		yield return new WaitForSeconds (1.5f);
-
-		asyncLoad.allowSceneActivation = true;
+		Scenes.Load ("Main", "dev", devMode);
 	}
 }
