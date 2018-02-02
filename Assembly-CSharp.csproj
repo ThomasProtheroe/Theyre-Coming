@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\QuitOnClick.cs" />
      <Compile Include="Assets\Scripts\Area.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
@@ -60,6 +61,8 @@
      <Compile Include="Assets\Scripts\Items\Item.cs" />
      <Compile Include="Assets\Scripts\Items\Scissors.cs" />
      <Compile Include="Assets\Scripts\Items\Weapon.cs" />
+     <Compile Include="Assets\Scripts\Menu\LoadSceneOnClick.cs" />
+     <Compile Include="Assets\Scripts\Menu\Scenes.cs" />
      <Compile Include="Assets\Scripts\MusicController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Recipe.cs" />
