@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject craftingCloud;
 	public Sprite deathSprite;
 	public Area currentArea;
+	public GameController gameCon;
 
 	public AudioClip[] hitSounds;
 	public AudioClip deathSound;
@@ -203,10 +204,7 @@ public class PlayerController : MonoBehaviour {
 		anim.SetTrigger ("Death");
 		hidePlayerHands ();
 
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
-		foreach (GameObject enemy in enemies) {
-			enemy.GetComponent<Enemy> ().deactivate ();
-		}
+		gameCon.fadeToMenu ();
 	}
 
 	void checkUse() {

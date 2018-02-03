@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
 	public Enemy enemy;
+	public GameObject blackFade;
+
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
 	public AudioClip[] attackSounds1;
@@ -72,5 +74,15 @@ public class GameController : MonoBehaviour {
 		}
 		//Should never happen (handle as error)
 		return new Transition();
+	}
+
+	public void fadeToMenu() {
+		//Set any existing enemies to idle
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enemy in enemies) {
+			enemy.GetComponent<Enemy> ().deactivate ();
+		}
+
+
 	}
 }
