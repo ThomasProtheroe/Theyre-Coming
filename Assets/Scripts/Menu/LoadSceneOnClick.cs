@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class LoadSceneOnClick : MonoBehaviour {
 
+	public Text title;
+
 	public void startNewGame() {
 		StartCoroutine ("fadeToBlack", "false");
 	}
@@ -31,6 +33,10 @@ public class LoadSceneOnClick : MonoBehaviour {
 				buttonImage.color = imageColor;
 				buttonText.color = textColor;
 			}
+
+			Color c = title.color;
+			c.a = f;
+			title.color = c;
 
 			yield return null;
 		}
