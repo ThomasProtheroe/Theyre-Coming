@@ -42,7 +42,7 @@ public class Weapon : Item {
 			gameObject.layer = 11;
 		}
 
-		if (isAttacking && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
+		if (isAttacking && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvunlerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
 			if (!canHit ()) {
 				return;
 			}
