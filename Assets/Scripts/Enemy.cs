@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
 	public int health = 10;
+	public bool isInvunlerable;
 
 	public BoxCollider2D attackHitbox;
 	public BoxCollider2D bodyHitbox;
@@ -49,8 +50,6 @@ public class Enemy : MonoBehaviour {
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
-
-		activate ();
 	}
 	
 	// Update is called once per frame
