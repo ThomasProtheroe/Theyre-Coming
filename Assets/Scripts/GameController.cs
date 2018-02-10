@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,10 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
+	public int prepTime;
 	public Enemy enemy;
 	public GameObject blackFade;
 	public Text gameOverText;
+	public Text timerText;
 
+	public MusicController musicPlayer;
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
 	public AudioClip[] attackSounds1;
@@ -25,6 +29,8 @@ public class GameController : MonoBehaviour {
 
 	private GameObject player;
 	private SpawnInstance nextSpawn;
+	private float timer;
+	private string phase;
 	private string devMode;
 
 	// Use this for initialization
@@ -49,23 +55,46 @@ public class GameController : MonoBehaviour {
 
 		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
 
+		timer = 0.0f;
 		if (devMode == "false") {
+			changePhase("prep");
+			timerText.enabled = true;
 			nextSpawn = SpawnMap.getNextSpawn ();
+		} else {
+			changePhase("siege");
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		timer += Time.deltaTime;
+
+		if (phase == "prep") {
+			TimeSpan timeSpan = TimeSpan.FromSeconds((prepTime - Mathf.Floor (timer)));
+			timerText.text = string.Format ("{0:D2}:{1:d2}", timeSpan.Minutes, timeSpan.Seconds);
+			//timerText.text = (prepTime - Mathf.Floor (timer)).ToString();
+			if (Mathf.Floor (timer) >= prepTime) {
+				timerText.enabled = false;
+				changePhase ("siege");
+			}
+		} else if (phase == "siege") {
+			if (nextSpawn != null && timer >= nextSpawn.spawnTime && Scenes.getParam ("devMode") == "false") {
+				for (int i = 0; i < nextSpawn.spawnCount; i++) {
+					Invoke("spawnEnemyRand", i * 0.4f);
+				}
+				nextSpawn = SpawnMap.getNextSpawn ();
+			}
+		}
+
 		if ((Scenes.getParam("devMode") == "true") && Input.GetKeyDown ("t")) {
 			spawnEnemyRand ();
 		}
+	}
 
-		if (nextSpawn != null && Time.timeSinceLevelLoad >= nextSpawn.spawnTime && Scenes.getParam("devMode") == "false") {
-			for (int i = 0; i < nextSpawn.spawnCount; i++) {
-				spawnEnemyRand ();
-			}
-			nextSpawn = SpawnMap.getNextSpawn ();
-		}
+	void changePhase(string newPhase) {
+		phase = newPhase;
+		musicPlayer.changeMusic (phase);
+		timer = 0.0f;
 	}
 
 	void spawnEnemyRand() {
@@ -76,25 +105,23 @@ public class GameController : MonoBehaviour {
 				randomizer.Add (spawner);
 			}
 		}
-		EnemySpawn spawnZone = randomizer[Random.Range(0, randomizer.Count)];
+		EnemySpawn spawnZone = randomizer[UnityEngine.Random.Range(0, randomizer.Count)];
 		float spawnLocX = spawnZone.transform.position.x;
-		spawnLocX += Random.Range (spawnZone.maxOffset * -1, spawnZone.maxOffset + 1);
+		spawnLocX += UnityEngine.Random.Range (spawnZone.maxOffset * -1, spawnZone.maxOffset + 1);
 
 		//Create and position the enemy
 		Enemy newEnemy = Instantiate (enemy, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
 		//Invulnerable while they are spawning in
 		enemy.isInvunlerable = true;
 
-		//TODO Change this to use the spawners area once enemy spawners are built
 		Area spawnArea = spawnZone.GetComponentInParent<Area>();
 		newEnemy.setCurrentArea (spawnArea);
-		Debug.Log (newEnemy.getCurrentArea());
 
 		//Select a random walk, prowl and attack sound and assign them to the new enemy
-		int vocalType = Random.Range(0,5);
+		int vocalType = UnityEngine.Random.Range(0,5);
 		newEnemy.setProwlSound(prowlingSounds[vocalType]);
 		newEnemy.addAttackSound (attackSoundMaster[vocalType]);
-		newEnemy.setWalkSound(walkSounds[Random.Range(0,5)]);
+		newEnemy.setWalkSound(walkSounds[UnityEngine.Random.Range(0,5)]);
 
 		//Fade the enemy sprite in from black
 		StartCoroutine("spawnFade", newEnemy);
@@ -126,7 +153,7 @@ public class GameController : MonoBehaviour {
 		SpriteRenderer enemySprite = enemy.gameObject.GetComponent<SpriteRenderer> ();
 		enemySprite.color = new Color(0.0f, 0.0f, 0.0f);
 
-		for (float f = 0.0f; f < 1.0f; f += 0.02f) {
+		for (float f = 0.0f; f < 1.0f; f += 0.015f) {
 			Color c = enemySprite.color;
 			c.r = f;
 			c.g = f;
