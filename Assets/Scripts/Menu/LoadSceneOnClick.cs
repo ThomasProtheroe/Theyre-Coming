@@ -13,7 +13,7 @@ public class LoadSceneOnClick : MonoBehaviour {
 	}
 
 	public void startSandboxGame() {
-		StartCoroutine ("fadeToBlack", "false");
+		StartCoroutine ("fadeToBlack", "true");
 	}
 
 	IEnumerator fadeToBlack(string devMode)
@@ -41,6 +41,6 @@ public class LoadSceneOnClick : MonoBehaviour {
 			yield return null;
 		}
 
-		Scenes.Load ("Main", "dev", devMode);
+		Scenes.Load ("Main", "devMode", devMode);
 	}
 }

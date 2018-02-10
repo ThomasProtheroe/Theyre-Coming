@@ -18,10 +18,14 @@ public class GameController : MonoBehaviour {
 	public AudioClip[] attackSounds4;
 	public AudioClip[] attackSounds5;
 
+	public List<EnemySpawn> spawnZones = new List<EnemySpawn> ();
+
 	private AudioClip[][] attackSoundMaster;
-	private List<Area> areas = new List<Area>();
+	private List<Area> areas = new List<Area> ();
 
 	private GameObject player;
+	private SpawnInstance nextSpawn;
+	private string devMode;
 
 	// Use this for initialization
 	void Start () {
@@ -34,33 +38,57 @@ public class GameController : MonoBehaviour {
 		attackSoundMaster [3] = attackSounds4;
 		attackSoundMaster [4] = attackSounds5;
 
+		devMode = Scenes.getParam ("devMode");
+		if (devMode == null) {
+			devMode = "false";
+		}
+
 		foreach (GameObject area in GameObject.FindGameObjectsWithTag ("Area")) {
 			areas.Add(area.GetComponent<Area>());
 		}
 
 		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
+
+		if (devMode == "false") {
+			nextSpawn = SpawnMap.getNextSpawn ();
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown ("t")) {
-			float xPos = 6.0f;
+		if ((Scenes.getParam("devMode") == "true") && Input.GetKeyDown ("t")) {
+			spawnEnemyRand ();
+		}
 
-			spawnEnemy (xPos);
+		if (nextSpawn != null && Time.timeSinceLevelLoad >= nextSpawn.spawnTime && Scenes.getParam("devMode") == "false") {
+			for (int i = 0; i < nextSpawn.spawnCount; i++) {
+				spawnEnemyRand ();
+			}
+			nextSpawn = SpawnMap.getNextSpawn ();
 		}
 	}
 
-	void spawnEnemy(float xPos) {
+	void spawnEnemyRand() {
+		//Randomly select a spawn location based on spawn weighting
+		List<EnemySpawn> randomizer = new List<EnemySpawn>();
+		foreach (EnemySpawn spawner in spawnZones) {
+			for(int i=0; i < spawner.weight; i++) {
+				randomizer.Add (spawner);
+			}
+		}
+		EnemySpawn spawnZone = randomizer[Random.Range(0, randomizer.Count)];
+		float spawnLocX = spawnZone.transform.position.x;
+		spawnLocX += Random.Range (spawnZone.maxOffset * -1, spawnZone.maxOffset + 1);
+
 		//Create and position the enemy
-		Enemy newEnemy = Instantiate (enemy, new Vector3(xPos, enemy.transform.position.y, 0), Quaternion.identity);
+		Enemy newEnemy = Instantiate (enemy, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
+		//Invulnerable while they are spawning in
 		enemy.isInvunlerable = true;
 
 		//TODO Change this to use the spawners area once enemy spawners are built
-		foreach (Area area in areas) {
-			if (area.name == "Yard") {
-				newEnemy.setCurrentArea (area);
-			}
-		}
+		Area spawnArea = spawnZone.GetComponentInParent<Area>();
+		newEnemy.setCurrentArea (spawnArea);
+		Debug.Log (newEnemy.getCurrentArea());
 
 		//Select a random walk, prowl and attack sound and assign them to the new enemy
 		int vocalType = Random.Range(0,5);
