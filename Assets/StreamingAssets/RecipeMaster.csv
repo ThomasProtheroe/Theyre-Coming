@@ -18,7 +18,11 @@ TapedNails,Nails,DuctTape,Items/TapedNails
 TapedBat,BaseballBat,DuctTape,Weapons/TapedBat
 NailBat,TapedBat,Nails,Weapons/NailBat
 NailBat,TapedNails,BaseballBat,Weapons/NailBat
+ShardBat,TapedBat,GlassShards,Weapons/ShardBat
+ShardBat,TapedShard,BaseballBat,Weapons/ShardBat
 SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
+SpikedBaseball,TapedNails,Baseball,Throwables/SpikedBaseball
+ShardBaseball,TapedShard,Baseball,Throwables/ShardBaseball
 TapedGlove,GardeningGlove,DuctTape,Items/TapedGlove
 Cestus,GardeningGlove,TapedBlade,Weapons/Cestus
 Cestus,TapedGlove,KitchenKnife,Weapons/Cestus
@@ -33,8 +37,14 @@ TapedPipe,MetalPipe,DuctTape,Weapons/TapedPipe
 TapedBrick,Brick,DuctTape,Items/TapedBrick
 Skullshatter Hammer,TapedPipe,Brick,Weapons/SkullshatterHammer
 Skullshatter Hammer,TapedBrick,MetalPipe,Weapons/SkullshatterHammer
+TapedSkullshatterHammer,SkullshatterHammer,DuctTape,Weapons/TapedSkullshatterHammer
+BloodbathHammerNails,TapedSkullshatterHammer,Nails,Weapons/BloodbathHammerNails
+BloodbathHammerNails,SkullshatterHammer,TapedNails,Weapons/BloodbathHammerNails
+BloodbathHammerShards,TapedSkullshatterHammer,GlassShards,Weapons/BloodbathHammerShards
+BloodbathHammerShards,SkullshatterHammer,TapedShard,Weapons/BloodbathHammerShards
 MakeshiftFlail,Rope,Baseball,Weapons/MakeshiftFlail
 TapedFlail,MakeshiftFlail,DuctTape,Weapons/TapedFlail
 TapedFlail,Rope,TapedBaseball,Weapons/TapedFlail
 SpikedFlail,TapedFlail,Nails,Weapons/SpikedFlail
 SpikedFlail,MakeshiftFlail,TapedNails,Weapons/SpikedFlail
+CorrosivePlunger,Plunger,Bleach,Weapns/CorrosivePlunger

@@ -24,11 +24,11 @@ public static class SpawnMap {
 
 	private static void buildMap() {
 		map.Enqueue (new SpawnInstance(5.0f, 1));
-		map.Enqueue (new SpawnInstance(10.0f, 2));
-		map.Enqueue (new SpawnInstance(20.0f, 5));
-		map.Enqueue (new SpawnInstance(40.0f, 6));
-		map.Enqueue (new SpawnInstance(45.0f, 2));
-		map.Enqueue (new SpawnInstance(65.0f, 20));
+		map.Enqueue (new SpawnInstance(25.0f, 2));
+		map.Enqueue (new SpawnInstance(45.0f, 5));
+		map.Enqueue (new SpawnInstance(70.0f, 6));
+		map.Enqueue (new SpawnInstance(80.0f, 2));
+		map.Enqueue (new SpawnInstance(110.0f, 20));
 	}
 }
 
