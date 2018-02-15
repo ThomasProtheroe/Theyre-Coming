@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour {
+public class Item : Interactive {
 
 	public bool isHeld = false;
 	public bool isThrown = false;
@@ -86,12 +86,13 @@ public class Item : MonoBehaviour {
 		}
 	}
 
-	public void disableHighlight() {
+	override public void disableHighlight() {
 		StopCoroutine ("highlightGlow");
 		GetComponent<SpriteOutline> ().enabled = false;
 	}
 
-	public void enableHighlight() {
+	override public void enableHighlight() {
+		Debug.Log ("item call");
 		GetComponent<SpriteOutline> ().enabled = true;
 		StartCoroutine ("highlightGlow");
 	}

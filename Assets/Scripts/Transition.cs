@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Transition : MonoBehaviour {
+public class Transition : Interactive {
 
 	public Transition sibling;
 	public AudioClip openSound;
@@ -46,6 +46,16 @@ public class Transition : MonoBehaviour {
 			source.clip = closeSound;
 			source.Play ();
 		}
+	}
+
+	override public void disableHighlight() {
+		StopCoroutine ("highlightGlow");
+		GetComponent<SpriteOutline> ().enabled = false;
+	}
+
+	override public void enableHighlight() {
+		GetComponent<SpriteOutline> ().enabled = true;
+		StartCoroutine ("highlightGlow");
 	}
 
 	IEnumerator movePlayer() {
@@ -157,5 +167,31 @@ public class Transition : MonoBehaviour {
 		}
 
 		enemy.activate ();
+	}
+
+	IEnumerator highlightGlow() {
+		SpriteOutline outline = GetComponent<SpriteOutline> ();
+		//Fade out the highlight
+		for (float f = 1f; f >= 0.3; f -= 0.01f) {
+			Color c = outline.color;
+			c.a = f;
+			outline.color = c;
+
+			yield return null;
+		}
+		//Fade the highlight back in
+		for (float f = 0.3f; f <= 1; f += 0.01f) {
+			Color c = outline.color;
+			c.a = f;
+			outline.color = c;
+
+			yield return null;
+		}
+		Color orig = outline.color;
+		orig.a = 1;
+		outline.color = orig;
+
+
+		StartCoroutine ("highlightGlow");
 	}
 }

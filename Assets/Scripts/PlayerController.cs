@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
 	public bool isTargetable = true;
 	public bool isInvulnerable = false;
 
-	public List<GameObject> nearItems = new List<GameObject>();
+	public List<GameObject> nearInteractives = new List<GameObject>();
 	public List<GameObject> nearTransitions = new List<GameObject>();
 	public GameObject heldItem;
 	public GameObject heldItemParent;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 	private AudioSource source;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer playerSprite;
-	private GameObject closestItem;
+	private GameObject closestInteractive;
 	private GameObject beingCrafted;
 	private float moveX;
 	private bool isAttacking;
@@ -64,12 +64,12 @@ public class PlayerController : MonoBehaviour {
 			checkPlayerInput ();
 		}
 			
-		updateClosestItem ();
+		updateClosestInteractive ();
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
-		if (other.gameObject.tag == "Item") {
-			nearItems.Add (other.gameObject);
+		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
+			nearInteractives.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy" && !isInvulnerable) {
 			if (isCrafting) {
 				StopCoroutine ("craftItem");
@@ -81,17 +81,13 @@ public class PlayerController : MonoBehaviour {
 
 			takeDamage (1);
 			StartCoroutine ("damageFlash");
-		} else if (other.gameObject.tag == "Transition") {
-			nearTransitions.Add (other.gameObject);
 		}
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
-		if (other.gameObject.tag == "Item") {
-			other.GetComponent<Item> ().disableHighlight ();
-			nearItems.Remove(other.gameObject);
-		} else if (other.gameObject.tag == "Transition") {
-			nearTransitions.Remove(other.gameObject);
+		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
+			other.GetComponent<Interactive> ().disableHighlight ();
+			nearInteractives.Remove(other.gameObject);
 		}
 	}
 
@@ -105,7 +101,9 @@ public class PlayerController : MonoBehaviour {
 			#endif
 		}
 
-		if (nearItems.Count != 0) {
+		if (nearInteractives.Count != 0) {
+			checkTravel ();
+
 			if (!heldItem) {
 				checkPickup ();
 			} else {
@@ -118,9 +116,6 @@ public class PlayerController : MonoBehaviour {
 				checkUse ();
 			}
 			checkDrop ();
-		}
-		if (nearTransitions.Count != 0) {
-			checkTravel ();
 		}
 		checkSwapItem ();
 	}
@@ -254,9 +249,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPickup() {
-		if (Input.GetButtonDown ("interact")) {
-			nearItems.Remove (closestItem);
-			heldItem = closestItem;
+		if (Input.GetButtonDown ("interact") && closestInteractive.tag == "Item") {
+			nearInteractives.Remove (closestInteractive);
+			heldItem = closestInteractive;
 			heldItem.transform.parent = heldItemParent.transform;
 			Item itemController = heldItem.GetComponent<Item> ();
 
@@ -268,31 +263,35 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void updateClosestItem() {
-		if (nearItems.Count == 0) {
-			closestItem = null;
+	void updateClosestInteractive() {
+		if (nearInteractives.Count == 0) {
+			closestInteractive = null;
 			return;
 		}
-		GameObject closest = nearItems [0];
-		foreach (GameObject item in nearItems) {
-			float dist = Vector3.Distance (transform.position, item.transform.position);
+		GameObject closest = nearInteractives [0];
+		foreach (GameObject interactive in nearInteractives) {
+			float dist = Vector3.Distance (transform.position, interactive.transform.position);
 			float closestDist = Vector3.Distance (transform.position, closest.transform.position);
 			if (dist < closestDist) {
-				closest = item;
+				closest = interactive;
 			}
 		}
 
-		if (closest == closestItem) {
+		Interactive interCon = closest.GetComponent<Interactive> ();
+		interCon.updateHighlightColor ();
+
+		if (closest == closestInteractive) {
 			return;
 		}
 
-		if (closestItem) {
-			closestItem.GetComponent<Item>().disableHighlight ();
+		if (closestInteractive) {
+			interCon.disableHighlight ();
 		}
 
-		closestItem = closest;
+		closestInteractive = closest;
 
-		closestItem.GetComponent<Item>().enableHighlight ();
+		Debug.Log ("highlight enable");
+		interCon.enableHighlight ();
 	}
 
 	void checkCraft() {
@@ -361,23 +360,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkTravel() {
-		if (Input.GetButtonDown ("up")) {
+		if (Input.GetButtonDown ("interact") && closestInteractive.tag == "Transition") {
 			rigidBody.velocity = new Vector2 (0f, 0f);
 			anim.SetInteger("State", 0);
 			handsAnim.SetBool ("Walking", false);
 			isBusy = true;
 			isInvulnerable = true;
 
-			GameObject closest = nearTransitions [0];
-			foreach (GameObject item in nearTransitions) {
-				float dist = Vector3.Distance (transform.position, item.transform.position);
-				float closestDist = Vector3.Distance (transform.position, closest.transform.position);
-				if (dist < closestDist) {
-					closest = item;
-				}
-			}
-
-			Transition transController = closest.GetComponent<Transition> ();
+			Transition transController = closestInteractive.GetComponent<Transition> ();
 			transController.playerTravel ();
 		}
 	}
@@ -443,8 +433,8 @@ public class PlayerController : MonoBehaviour {
 
 	IEnumerator craftItem() {
 		rigidBody.velocity = Vector2.zero;
-		GameObject closest = nearItems [0];
-		foreach (GameObject item in nearItems) {
+		GameObject closest = nearInteractives [0];
+		foreach (GameObject item in nearInteractives) {
 			float dist = Vector3.Distance (transform.position, item.transform.position);
 			float closestDist = Vector3.Distance (transform.position, closest.transform.position);
 			if (dist < closestDist) {
@@ -470,7 +460,7 @@ public class PlayerController : MonoBehaviour {
 			yield return new WaitForSeconds(0.6f);
 
 			//destroy both ingredients
-			nearItems.Remove (closest);
+			nearInteractives.Remove (closest);
 			Destroy(closest);
 			Destroy (heldItem);
 
