@@ -16,7 +16,14 @@ public class Item : Interactive {
 	public float restingHeight;
 	public float restingRotation;
 	public int thrownDamage;
+	public int thrownKnockback;
 	public string type;
+
+	protected int state = 0;
+
+	public Sprite bloodySprite1;
+	public Sprite bloodySprite2;
+	public Sprite bloodySprite3;
 
 	public BoxCollider2D pickupCollider;
 	public Collider2D hitCollider;
@@ -63,7 +70,17 @@ public class Item : Interactive {
 				if (throwImpact) {
 					source.PlayOneShot (throwImpact);
 				}
-				other.gameObject.GetComponent<Enemy> ().takeDamage (thrownDamage);
+				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback);
+				if ((state == 0) && (bloodySprite1 != null)) {
+					GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
+					state++;
+				} else if ((state == 1) && (bloodySprite2 != null)) {
+					GetComponent<SpriteRenderer> ().sprite = bloodySprite2;
+					state++;
+				} else if ((state == 2) && (bloodySprite3 != null)) {
+					GetComponent<SpriteRenderer> ().sprite = bloodySprite3;
+					state++;
+				}
 			}
 
 			isThrown = false;
