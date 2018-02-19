@@ -92,9 +92,18 @@ public class Item : Interactive {
 	}
 
 	override public void enableHighlight() {
-		Debug.Log ("item call");
 		GetComponent<SpriteOutline> ().enabled = true;
 		StartCoroutine ("highlightGlow");
+	}
+
+	override public void updateHighlightColor() {
+		GameObject heldItem = player.GetComponent<PlayerController> ().heldItem;
+		if (heldItem && !RecipeBook.canCraft(type, heldItem.GetComponent<Item>().type)) {
+			GetComponent<SpriteOutline> ().color = negativeColor;
+		} else {
+			GetComponent<SpriteOutline> ().color = positiveColor;
+		}
+
 	}
 
 	public void flipItem() {

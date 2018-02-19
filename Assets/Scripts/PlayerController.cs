@@ -120,6 +120,37 @@ public class PlayerController : MonoBehaviour {
 		checkSwapItem ();
 	}
 
+	void updateClosestInteractive() {
+		if (nearInteractives.Count == 0) {
+			closestInteractive = null;
+			return;
+		}
+		GameObject closest = nearInteractives [0];
+		foreach (GameObject interactive in nearInteractives) {
+			float dist = Vector3.Distance (transform.position, interactive.transform.position);
+			float closestDist = Vector3.Distance (transform.position, closest.transform.position);
+			if (dist < closestDist) {
+				closest = interactive;
+			}
+		}
+
+		Interactive interCon = closest.GetComponent<Interactive> ();
+		interCon.updateHighlightColor ();
+
+		if (closest == closestInteractive) {
+			return;
+		}
+
+		if (closestInteractive) {
+			closestInteractive.GetComponent<Interactive> ().disableHighlight ();
+		}
+
+		closestInteractive = closest;
+
+		interCon.enableHighlight ();
+	}
+
+
 	void playerMove () {
 		float moveInput = Input.GetAxis ("Horizontal");
 
@@ -202,6 +233,7 @@ public class PlayerController : MonoBehaviour {
 		gameCon.fadeToMenu ();
 	}
 
+
 	void checkUse() {
 		if (Input.GetButtonDown ("use") && !Input.GetButton("down")) {
 			rigidBody.velocity = new Vector2 (0, 0);
@@ -262,38 +294,7 @@ public class PlayerController : MonoBehaviour {
 			positionHeldItem ();
 		}
 	}
-
-	void updateClosestInteractive() {
-		if (nearInteractives.Count == 0) {
-			closestInteractive = null;
-			return;
-		}
-		GameObject closest = nearInteractives [0];
-		foreach (GameObject interactive in nearInteractives) {
-			float dist = Vector3.Distance (transform.position, interactive.transform.position);
-			float closestDist = Vector3.Distance (transform.position, closest.transform.position);
-			if (dist < closestDist) {
-				closest = interactive;
-			}
-		}
-
-		Interactive interCon = closest.GetComponent<Interactive> ();
-		interCon.updateHighlightColor ();
-
-		if (closest == closestInteractive) {
-			return;
-		}
-
-		if (closestInteractive) {
-			interCon.disableHighlight ();
-		}
-
-		closestInteractive = closest;
-
-		Debug.Log ("highlight enable");
-		interCon.enableHighlight ();
-	}
-
+		
 	void checkCraft() {
 		if (Input.GetButton ("down") && Input.GetButtonDown ("use")) {
 			StartCoroutine ("craftItem");
@@ -361,6 +362,11 @@ public class PlayerController : MonoBehaviour {
 
 	void checkTravel() {
 		if (Input.GetButtonDown ("interact") && closestInteractive.tag == "Transition") {
+			Debug.Log (closestInteractive.GetComponent<Transition> ().inUse);
+			if (closestInteractive.GetComponent<Transition> ().inUse) {
+				return;
+			}
+
 			rigidBody.velocity = new Vector2 (0f, 0f);
 			anim.SetInteger("State", 0);
 			handsAnim.SetBool ("Walking", false);
