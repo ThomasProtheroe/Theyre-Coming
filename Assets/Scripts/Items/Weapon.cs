@@ -9,16 +9,11 @@ public class Weapon : Item {
 	public int knockback;
 	public int multiHit = 1;
 
-	public Sprite bloodySprite1;
-	public Sprite bloodySprite2;
-	public Sprite bloodySprite3;
-
 	public AudioClip swingSound;
 	public AudioClip hitSound;
 	public AudioClip breakSound;
 
 	private int maxDurability;
-	private int state = 0;
 	private int hitCount = 0;
 	private bool isBroken;
 
