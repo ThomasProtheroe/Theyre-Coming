@@ -13,12 +13,15 @@ public class Transition : Interactive {
 	private GameObject camera;
 	private AudioSource source;
 
+	public bool inUse;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		camera = GameObject.FindGameObjectWithTag("MainCamera");
 		anim = gameObject.GetComponent<Animator> ();
 		source = gameObject.GetComponent<AudioSource> ();
+		inUse = false;
 	}
 
 	// Update is called once per frame
@@ -56,6 +59,14 @@ public class Transition : Interactive {
 	override public void enableHighlight() {
 		GetComponent<SpriteOutline> ().enabled = true;
 		StartCoroutine ("highlightGlow");
+	}
+
+	override public void updateHighlightColor() {
+		if (inUse) {
+			GetComponent<SpriteOutline> ().color = negativeColor;
+		} else {
+			GetComponent<SpriteOutline> ().color = positiveColor;
+		}
 	}
 
 	IEnumerator movePlayer() {
@@ -132,6 +143,8 @@ public class Transition : Interactive {
 	}
 
 	IEnumerator moveEnemy(Enemy enemy) {
+		inUse = true;
+		sibling.inUse = true;
 		enemy.deactivate ();
 		SpriteRenderer sprite = enemy.gameObject.GetComponent<SpriteRenderer> ();
 
@@ -152,7 +165,6 @@ public class Transition : Interactive {
 
 		//Randomly offset the position they appear at the destination door
 		float xOffset = Random.Range(-0.3f, 0.3f);
-		Debug.Log (xOffset);
 		Vector2 destination = new Vector2(sibling.transform.position.x + xOffset, enemy.gameObject.transform.position.y);
 
 		enemy.gameObject.transform.position = destination;
@@ -167,6 +179,8 @@ public class Transition : Interactive {
 		}
 
 		enemy.activate ();
+		inUse = false;
+		sibling.inUse = false;
 	}
 
 	IEnumerator highlightGlow() {
