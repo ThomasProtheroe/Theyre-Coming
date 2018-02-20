@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
@@ -28,6 +29,11 @@ public class PlayerController : MonoBehaviour {
 	public AudioClip[] hitSounds;
 	public AudioClip deathSound;
 
+	public ItemSlot itemSlot1;
+	public ItemSlot itemSlot2;
+	public ItemSlot activeSlot;
+	public DescriptionPanel descriptionPanel;
+
 	private Animator anim;
 	private Animator handsAnim;
 	private AudioSource source;
@@ -47,6 +53,9 @@ public class PlayerController : MonoBehaviour {
 		handsAnim = handsParent.GetComponent<Animator> ();
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
+
+		activeSlot = itemSlot1;
+		activeSlot.setActive (true);
 		isAttacking = false;
 		isDead = false;
 	}
@@ -275,6 +284,9 @@ public class PlayerController : MonoBehaviour {
 
 			heldItem = null;
 
+			//Update UI box
+			activeSlot.setEmpty();
+
 			return true;
 		}
 		return false;
@@ -292,6 +304,13 @@ public class PlayerController : MonoBehaviour {
 
 			//Set the items position and rotation
 			positionHeldItem ();
+
+			//Update UI
+			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
+			if (itemController.description != "") {
+				descriptionPanel.showDescription (itemController.description);
+			}
+
 		}
 	}
 		
@@ -313,9 +332,9 @@ public class PlayerController : MonoBehaviour {
 				equipStashedItem ();
 			} else if (heldItem) {
 				stashEquippedItem ();
-			} else {
-				return;
 			}
+
+			switchActiveItemSlot ();
 		}
 	}
 
@@ -357,12 +376,14 @@ public class PlayerController : MonoBehaviour {
 			showPlayerHands ();
 
 			heldItem = null;
+
+			//Update UI box
+			activeSlot.setEmpty();
 		}
 	}
 
 	void checkTravel() {
 		if (Input.GetButtonDown ("interact") && closestInteractive.tag == "Transition") {
-			Debug.Log (closestInteractive.GetComponent<Transition> ().inUse);
 			if (closestInteractive.GetComponent<Transition> ().inUse) {
 				return;
 			}
@@ -406,6 +427,26 @@ public class PlayerController : MonoBehaviour {
 			heldItem.transform.localEulerAngles = Vector3.zero;
 		}
 	}	
+
+	private void switchActiveItemSlot() {
+		activeSlot.setActive (false);
+
+		if (activeSlot == itemSlot1) {
+			activeSlot = itemSlot2;
+		} else {
+			activeSlot = itemSlot1;
+		}
+
+		activeSlot.setActive (true);
+	}
+
+	private void updateItemSlot(Sprite sprite) {
+		if (sprite) {
+			activeSlot.setImage (sprite);
+		} else {
+			activeSlot.setEmpty ();
+		}
+	}
 
 	public Area getCurrentArea() {
 		return currentArea;
@@ -481,6 +522,9 @@ public class PlayerController : MonoBehaviour {
 			isCrafting = false;
 			isBusy = false;
 			beingCrafted = null;
+
+			//Update UI box
+			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
 		}
 	}
 }

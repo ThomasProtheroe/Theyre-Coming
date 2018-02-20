@@ -128,6 +128,7 @@ public class Weapon : Item {
 		if (isHeld) {
 			PlayerController playerCon = player.GetComponent<PlayerController> ();
 			playerCon.heldItem = null;
+			playerCon.activeSlot.setEmpty();
 			gameObject.transform.parent = null;
 
 			disableAnimator ();
