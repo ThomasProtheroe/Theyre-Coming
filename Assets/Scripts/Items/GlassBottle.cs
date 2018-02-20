@@ -15,6 +15,7 @@ public class GlassBottle : Weapon {
 
 		player = GameObject.FindGameObjectWithTag("Player");
 		source = gameObject.GetComponent<AudioSource> ();
+		description = description.Replace ("\\n", "\n");
 	}
 
 	public override bool onBreak() {

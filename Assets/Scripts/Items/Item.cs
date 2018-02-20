@@ -44,6 +44,7 @@ public class Item : Interactive {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		source = gameObject.GetComponent<AudioSource> ();
+		description = description.Replace ("\\n", "\n");
 	}
 	
 	// Update is called once per frame
