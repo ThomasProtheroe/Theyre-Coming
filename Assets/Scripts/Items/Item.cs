@@ -18,6 +18,7 @@ public class Item : Interactive {
 	public int thrownDamage;
 	public int thrownKnockback;
 	public string type;
+	public string description;
 
 	protected int state = 0;
 
