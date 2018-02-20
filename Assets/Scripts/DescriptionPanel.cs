@@ -9,6 +9,7 @@ public class DescriptionPanel : MonoBehaviour {
 
 	public void showDescription(string text) {
 		gameObject.SetActive(true);
+		StopCoroutine ("ShowDescription");
 		StartCoroutine ("ShowDescription", text);
 	}
 

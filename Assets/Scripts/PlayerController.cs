@@ -513,7 +513,8 @@ public class PlayerController : MonoBehaviour {
 
 			//create new item and place in hands
 			heldItem = beingCrafted;
-			heldItem.GetComponent<Item> ().pickupItem (playerSprite.flipX);
+			Item itemCon = heldItem.GetComponent<Item> ();
+			itemCon.pickupItem (playerSprite.flipX);
 			heldItem.transform.parent = heldItemParent.transform;
 
 			//Set the items position and rotation
@@ -525,6 +526,9 @@ public class PlayerController : MonoBehaviour {
 
 			//Update UI box
 			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
+			if (itemCon.description != "") {
+				descriptionPanel.showDescription (itemCon.description);
+			}
 		}
 	}
 }

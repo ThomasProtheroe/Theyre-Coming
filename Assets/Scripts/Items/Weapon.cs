@@ -21,6 +21,7 @@ public class Weapon : Item {
 		maxDurability = durability;
 		player = GameObject.FindGameObjectWithTag("Player");
 		source = gameObject.GetComponent<AudioSource> ();
+		description = description.Replace ("\\n", "\n");
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
