@@ -5,8 +5,10 @@ TapedBlade,DuctTape,Scissors,Weapons/TapedBlade
 TapedShard,DuctTape,GlassShards,Weapons/TapedShard
 MakeshiftSpearBlade,TapedBlade,Broom,Weapons/MakeshiftSpearBlade
 MakeshiftSpearBlade,TapedBlade,Mop,Weapons/MakeshiftSpearBlade
+MakeshiftSpearBlade,TapedBlade,TapedHandle,Weapons/MakeshiftSpearBlade
 MakeshiftSpearShard,TapedShard,Broom,Weapons/MakeshiftSpearShard
 MakeshiftSpearShard,TapedShard,Mop,Weapons/MakeshiftSpearShard
+MakeshiftSpearShard,TapedShard,TapedHandle,Weapons/MakeshiftSpearShard
 MakeshiftSpearBlade,TapedHandle,KitchenKnife,Weapons/MakeshiftSpearBlade
 MakeshiftSpearBlade,TapedHandle,Scissors,Weapons/MakeshiftSpearBlade
 MakeshiftSpearShard,TapedHandle,GlassShards,Weapons/MakeshiftSpearShard
@@ -37,14 +39,21 @@ TapedPipe,MetalPipe,DuctTape,Weapons/TapedPipe
 TapedBrick,Brick,DuctTape,Items/TapedBrick
 Skullshatter Hammer,TapedPipe,Brick,Weapons/SkullshatterHammer
 Skullshatter Hammer,TapedBrick,MetalPipe,Weapons/SkullshatterHammer
+Skullshatter Hammer,TapedBrick,TapedPipe,Weapons/SkullshatterHammer
 TapedSkullshatterHammer,SkullshatterHammer,DuctTape,Weapons/TapedSkullshatterHammer
 BloodbathHammerNails,TapedSkullshatterHammer,Nails,Weapons/BloodbathHammerNails
 BloodbathHammerNails,SkullshatterHammer,TapedNails,Weapons/BloodbathHammerNails
 BloodbathHammerShards,TapedSkullshatterHammer,GlassShards,Weapons/BloodbathHammerShards
 BloodbathHammerShards,SkullshatterHammer,TapedShard,Weapons/BloodbathHammerShards
+BloodbathHammerShards,TapedSkullshatterHammer,TapedShard,Weapons/BloodbathHammerShards
 MakeshiftFlail,Rope,Baseball,Weapons/MakeshiftFlail
 TapedFlail,MakeshiftFlail,DuctTape,Weapons/TapedFlail
 TapedFlail,Rope,TapedBaseball,Weapons/TapedFlail
 SpikedFlail,TapedFlail,Nails,Weapons/SpikedFlail
 SpikedFlail,MakeshiftFlail,TapedNails,Weapons/SpikedFlail
-CorrosivePlunger,Plunger,Bleach,Weapns/CorrosivePlunger
+CorrosivePlunger,Plunger,Bleach,Weapons/CorrosivePlunger
+HeavyBoxTrap,Box,Blender,Traps/HeavyBoxTrap
+HeavyBoxTrap,Box,Brick,Traps/HeavyBoxTrap
+HeavyBoxTrap,Box,TapedBrick,Traps/HeavyBoxTrap
+HeavyBoxTrap,Box,Dumbell,Traps/HeavyBoxTrap
+HeavyBoxTrap,Box,Toaster,Traps/HeavyBoxTrap
