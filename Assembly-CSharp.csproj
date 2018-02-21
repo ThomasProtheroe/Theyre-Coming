@@ -58,11 +58,10 @@
      <Compile Include="Assets\Scripts\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Interactives\Interactive.cs" />
-     <Compile Include="Assets\Scripts\Items\ButterKnife.cs" />
-     <Compile Include="Assets\Scripts\Items\GlassBottle.cs" />
-     <Compile Include="Assets\Scripts\Items\Item.cs" />
-     <Compile Include="Assets\Scripts\Items\Scissors.cs" />
-     <Compile Include="Assets\Scripts\Items\Weapon.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Transition.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Weapons\GlassBottle.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\ItemSlot.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonAudioController.cs" />
      <Compile Include="Assets\Scripts\Menu\DisableMenuNavigation.cs" />
@@ -75,7 +74,6 @@
      <Compile Include="Assets\Scripts\Recipe.cs" />
      <Compile Include="Assets\Scripts\SpawnMap.cs" />
      <Compile Include="Assets\Scripts\SpriteOutline.cs" />
-     <Compile Include="Assets\Scripts\Transition.cs" />
      <None Include="Assets\Shaders\Sprite-Outline.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
