@@ -8,6 +8,7 @@ public class Weapon : Item {
 	public int durability;
 	public int knockback;
 	public int multiHit = 1;
+	public bool instantAttack;
 
 	public AudioClip swingSound;
 	public AudioClip hitSound;
@@ -16,6 +17,7 @@ public class Weapon : Item {
 	private int maxDurability;
 	private int hitCount = 0;
 	private bool isBroken;
+	private bool hitWindowActive = false;
 
 	void Start() {
 		maxDurability = durability;
@@ -38,7 +40,7 @@ public class Weapon : Item {
 			gameObject.layer = 11;
 		}
 
-		if (isAttacking && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvunlerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
+		if (isAttacking && hitWindowActive && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvunlerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
 			if (!canHit ()) {
 				return;
 			}
@@ -54,19 +56,14 @@ public class Weapon : Item {
 
 	public void attack() {
 		Animator anim = GetComponent<Animator> ();
-		//anim.enabled = true;
 		isAttacking = true;
 		hitCount = 0;
-
-		if (swingSound) {
-			source.PlayOneShot (swingSound);
-		}
 		anim.SetTrigger ("Attack");
 
 		Collider2D[] colliders = new Collider2D[10];
 		hitCollider.OverlapCollider(new ContactFilter2D(), colliders);
 		foreach (Collider2D collider in colliders) {
-			if (collider && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
+			if (collider && instantAttack && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().isInvunlerable&& !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
 				if (!canHit ()) {
 					break;
 				}
@@ -75,6 +72,20 @@ public class Weapon : Item {
 				onEnemyImpact (collider.gameObject);
 			}
 		}
+	}
+
+	protected void playAttackSound() {
+		if (swingSound) {
+			source.PlayOneShot (swingSound);
+		}
+	}
+
+	protected void startHitWindow() {
+		hitWindowActive = true;
+	}
+
+	protected void endHitWindow() {
+		hitWindowActive = false;
 	}
 
 	public void finishAttack() {
