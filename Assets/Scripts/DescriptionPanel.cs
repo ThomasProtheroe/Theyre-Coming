@@ -13,6 +13,13 @@ public class DescriptionPanel : MonoBehaviour {
 		StartCoroutine ("ShowDescription", text);
 	}
 
+	public void hideDescription() {
+		StopCoroutine ("ShowDescription");
+
+		panelText.text = "";
+		gameObject.SetActive(false);
+	}
+
 	IEnumerator ShowDescription(string text) {
 		gameObject.SetActive(true);
 		panelText.text = text;
