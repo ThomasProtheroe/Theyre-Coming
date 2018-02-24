@@ -379,6 +379,7 @@ public class PlayerController : MonoBehaviour {
 
 			//Update UI box
 			activeSlot.setEmpty();
+			descriptionPanel.hideDescription ();
 		}
 	}
 
