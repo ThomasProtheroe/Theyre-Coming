@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
 	private GameObject player;
-	private Area currentArea;
+	public Area currentArea;
 
 	private bool isActive;
 	private bool isMoving;
@@ -68,8 +68,10 @@ public class Enemy : MonoBehaviour {
 		if (!isStunned) {
 			if (isActive && !isAttacking && !isDead) {
 				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
+					Debug.Log ("same room");
 					moveTowardsPlayer ();
 				} else {
+					Debug.Log ("different room");
 					//Track player and move towards transition
 					Transition target = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().findRouteToPlayer(currentArea);
 					faceTarget (target.transform.position);

@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour {
 
 	private AudioClip[][] attackSoundMaster;
 	private List<Area> areas = new List<Area> ();
+	private List<Area> checkedAreas = new List<Area> ();
+	private List<Area> searchedAreas = new List<Area> ();
 
 	private GameObject player;
 	private SpawnInstance nextSpawn;
@@ -127,6 +129,51 @@ public class GameController : MonoBehaviour {
 		StartCoroutine("spawnFade", newEnemy);
 	}
 
+
+	public Transition findRouteToPlayer(Area currentArea) {
+		checkedAreas = new List<Area> ();
+		searchedAreas = new List<Area> ();
+
+		return searchForPlayer(currentArea, player.GetComponent<PlayerController> ().getCurrentArea ());
+
+		//Should never happen (handle as error)
+		return new Transition();
+	}
+
+	private Transition searchForPlayer(Area startingArea, Area playerArea, Transition closest=null) {
+		Area transArea;
+		foreach (Transition transition in startingArea.transitions) {
+			transArea = transition.sibling.transform.parent.GetComponent<Area> ();
+			if (checkedAreas.Contains(transArea)) {
+				continue;
+			}
+			if (transArea == playerArea) {
+				return transition;
+			}
+			checkedAreas.Add(transArea);
+		}
+		searchedAreas.Add(startingArea);
+
+		Transition target = null;
+		foreach(Transition transition in startingArea.transitions) {
+			transArea = transition.sibling.transform.parent.GetComponent<Area> ();
+			if (searchedAreas.Contains(transArea)) {
+				continue;
+			}
+			if (closest == null) {
+				closest = transition;
+			}
+
+			target = searchForPlayer(transArea, playerArea, closest);
+			if (target) {
+				return closest;
+			}
+		}
+
+		return null;
+	}
+
+/*
 	public Transition findRouteToPlayer(Area currentArea) {
 		Area playerArea = player.GetComponent<PlayerController> ().getCurrentArea ();
 
@@ -138,6 +185,8 @@ public class GameController : MonoBehaviour {
 		//Should never happen (handle as error)
 		return new Transition();
 	}
+
+*/
 
 	public void fadeToMenu() {
 		//Set any existing enemies to idle
