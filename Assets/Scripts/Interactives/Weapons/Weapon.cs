@@ -12,11 +12,9 @@ public class Weapon : Item {
 
 	public AudioClip swingSound;
 	public AudioClip hitSound;
-	public AudioClip breakSound;
 
 	private int maxDurability;
 	private int hitCount = 0;
-	private bool isBroken;
 	private bool hitWindowActive = false;
 
 	void Start() {
@@ -100,9 +98,7 @@ public class Weapon : Item {
 	}
 
 	public void onEnemyImpact(GameObject enemy) {
-		if (hitCount == 1) {
-			durability -= 1;
-		}
+		durability -= 1;
 
 		if (isThrown && throwImpact) {
 			source.PlayOneShot (throwImpact);
@@ -123,82 +119,6 @@ public class Weapon : Item {
 				GetComponent<SpriteRenderer> ().sprite = bloodySprite3;
 				state++;
 			}
-		}
-	}
-
-	public virtual void onTerrainImpact() {
-
-	}
-
-	public void breakItem() {
-		bool breakImmed = onBreak ();
-
-		if (breakSound) {
-			source.PlayOneShot (breakSound);
-		}
-
-		if (isHeld) {
-			PlayerController playerCon = player.GetComponent<PlayerController> ();
-			playerCon.heldItem = null;
-			playerCon.activeSlot.setEmpty();
-			gameObject.transform.parent = null;
-
-			disableAnimator ();
-			frontHand.SetActive (false);
-			backHand.SetActive (false);
-
-			playerCon.showPlayerHands ();
-		}
-
-		//If we don't want to play the break animation, destroy the object now
-		if (breakImmed) {
-			Destroy (gameObject);
-			return;
-		}
-
-		Rigidbody2D body = GetComponent<Rigidbody2D>();
-
-		gameObject.layer = 11;
-
-		int xBreakForce = Random.Range(-100, 100);
-		int yBreakForce = Random.Range(60, 100);
-
-		isHeld = false;
-		isBroken = true;
-
-		//Reset the x and y rotation as these can change during attack animations
-		transform.eulerAngles = new Vector3 (0, 0, transform.rotation.z);
-
-		body.bodyType = RigidbodyType2D.Dynamic;
-		body.AddForce (new Vector2 (xBreakForce, yBreakForce));
-		body.AddTorque (25.0f);
-
-		StartCoroutine ("beginSpriteFlash");
-		StartCoroutine ("destroyAfterTime", 1.5f);
-	}
-
-	//Return true if item should be destroyed immediately (no animation)
-	public virtual bool onBreak() {
-		return false;
-	}
-
-	/**** Coroutines ****/ 
-	IEnumerator destroyAfterTime(float time) {
-		yield return new WaitForSeconds(time);
-
-		Destroy (gameObject);
-	}
-
-	IEnumerator beginSpriteFlash() {
-		while (true) {
-			SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer> ();
-			if (sprite.enabled) {
-				sprite.enabled = false;
-			} else {
-				sprite.enabled = true;
-			}
-
-			yield return new WaitForSeconds (0.05f);
 		}
 	}
 }
