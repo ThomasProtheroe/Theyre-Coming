@@ -135,9 +135,6 @@ public class GameController : MonoBehaviour {
 		searchedAreas = new List<Area> ();
 
 		return searchForPlayer(currentArea, player.GetComponent<PlayerController> ().getCurrentArea ());
-
-		//Should never happen (handle as error)
-		return new Transition();
 	}
 
 	private Transition searchForPlayer(Area startingArea, Area playerArea, Transition closest=null) {

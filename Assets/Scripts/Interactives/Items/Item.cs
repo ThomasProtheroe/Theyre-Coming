@@ -37,6 +37,7 @@ public class Item : Interactive {
 	public AudioClip craftSound;
 	public AudioClip pickupSound;
 	public AudioClip swapSound;
+	public AudioClip breakSound;
 
 	public GameObject player;
 
@@ -167,6 +168,7 @@ public class Item : Interactive {
 		frontHand.SetActive (false);
 		backHand.SetActive (false);
 
+		gameObject.layer = 13;
 		moveToResting ();
 	}
 
@@ -197,6 +199,81 @@ public class Item : Interactive {
 
 	public virtual void use() {
 
+	}
+
+	public virtual void onTerrainImpact() {
+
+	}
+
+	public void breakItem() {
+		bool breakImmed = onBreak ();
+
+		if (breakSound) {
+			source.PlayOneShot (breakSound);
+		}
+
+		if (isHeld) {
+			PlayerController playerCon = player.GetComponent<PlayerController> ();
+			playerCon.heldItem = null;
+			playerCon.activeSlot.setEmpty();
+			gameObject.transform.parent = null;
+
+			disableAnimator ();
+			frontHand.SetActive (false);
+			backHand.SetActive (false);
+
+			playerCon.showPlayerHands ();
+		}
+
+		//If we don't want to play the break animation, destroy the object now
+		if (breakImmed) {
+			Destroy (gameObject);
+			return;
+		}
+
+		Rigidbody2D body = GetComponent<Rigidbody2D>();
+
+		gameObject.layer = 11;
+
+		int xBreakForce = Random.Range(-100, 100);
+		int yBreakForce = Random.Range(60, 100);
+
+		isHeld = false;
+
+		//Reset the x and y rotation as these can change during attack animations
+		transform.eulerAngles = new Vector3 (0, 0, transform.rotation.z);
+
+		body.bodyType = RigidbodyType2D.Dynamic;
+		body.AddForce (new Vector2 (xBreakForce, yBreakForce));
+		body.AddTorque (25.0f);
+
+		StartCoroutine ("beginSpriteFlash");
+		StartCoroutine ("destroyAfterTime", 1.5f);
+	}
+
+	//Return true if item should be destroyed immediately (no animation)
+	public virtual bool onBreak() {
+		return false;
+	}
+
+	/**** Coroutines ****/ 
+	IEnumerator destroyAfterTime(float time) {
+		yield return new WaitForSeconds(time);
+
+		Destroy (gameObject);
+	}
+
+	IEnumerator beginSpriteFlash() {
+		while (true) {
+			SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer> ();
+			if (sprite.enabled) {
+				sprite.enabled = false;
+			} else {
+				sprite.enabled = true;
+			}
+
+			yield return new WaitForSeconds (0.05f);
+		}
 	}
 
 	IEnumerator highlightGlow() {

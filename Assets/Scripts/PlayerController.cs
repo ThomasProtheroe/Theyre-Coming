@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour {
 		handsParent.transform.localScale = scale;
 	}
 
-	void alignHands() {
+	public void alignHands() {
 		if (handsFlipped != playerSprite.flipX) {
 			flipHands ();
 		}
@@ -370,7 +370,6 @@ public class PlayerController : MonoBehaviour {
 	void checkDrop() {
 		if (Input.GetButtonDown ("drop")) {
 			heldItem.GetComponent<Item> ().dropItem ();
-			heldItem.layer = 13;
 
 			alignHands ();
 			showPlayerHands ();
