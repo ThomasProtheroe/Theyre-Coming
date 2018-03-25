@@ -5,9 +5,11 @@ using UnityEngine;
 public class SpikeTrap : Trap {
 
 	public int damage;
+	public AudioClip hitSound;
 
 	override public void trigger(GameObject victim) {
 		victim.GetComponent<Enemy> ().takeHit (damage, 0);
+		source.PlayOneShot (hitSound);
 		//Apply status effect here
 
 		durability--;

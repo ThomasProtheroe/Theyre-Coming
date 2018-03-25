@@ -155,6 +155,8 @@ public class Item : Interactive {
 		backHand.SetActive (true);
 
 		isHeld = true;
+
+		onPickup ();
 	}
 
 	public void dropItem() {
@@ -170,6 +172,8 @@ public class Item : Interactive {
 
 		gameObject.layer = 13;
 		moveToResting ();
+
+		onDrop ();
 	}
 
 	public void moveToResting() {
@@ -203,6 +207,18 @@ public class Item : Interactive {
 
 	public virtual void onTerrainImpact() {
 
+	}
+
+	public virtual void onPickup() {
+		return;
+	}
+
+	public virtual void onDrop() {
+		return;
+	}
+
+	public virtual void onThrow() {
+		return;
 	}
 
 	public void breakItem() {
