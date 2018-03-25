@@ -1,15 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Interactives\Traps\Trap.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="387" Column="1" />
-      <File FileName="Assets\Scripts\GameController.cs" Line="153" Column="32" />
-      <File FileName="Assets\Scripts\ItemSlot.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DescriptionPanel.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Recipe.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interactives\Items\Item.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\SpawnMap.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemy.cs" Line="74" Column="27" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="218" Column="9" />
+      <File FileName="Assets\Scripts\GameController.cs" Line="117" Column="31" />
+      <File FileName="Assets\Scripts\Interactives\Items\Item.cs" Line="166" Column="22" />
+      <File FileName="Assets\Scripts\Interactives\Weapons\Weapon.cs" Line="37" Column="7" />
+      <File FileName="Assets\Scripts\Interactives\Traps\Trap.cs" Line="40" Column="24" />
+      <File FileName="Assets\Scripts\Interactives\Traps\SpikeTrap.cs" Line="9" Column="51" />
+      <File FileName="Assets\Scripts\Enemy.cs" Line="281" Column="4" />
+      <File FileName="Assets\Scripts\Interactives\Throwables\Throwable.cs" Line="8" Column="10" />
+      <File FileName="Assets\Scripts\Interactives\Weapons\GlassBottle.cs" Line="34" Column="15" />
+      <File FileName="Assets\Scripts\EnemySpawn.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SpawnMap.cs" Line="32" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

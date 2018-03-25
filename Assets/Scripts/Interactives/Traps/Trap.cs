@@ -37,7 +37,7 @@ public class Trap : Item {
 		frontHand.SetActive (false);
 		backHand.SetActive (false);
 
-		gameObject.layer = 13;
+		gameObject.layer = 18;
 		moveToDeployPos ();
 
 		isDeployed = true;

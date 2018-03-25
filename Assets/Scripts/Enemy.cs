@@ -278,6 +278,6 @@ public class Enemy : MonoBehaviour {
 			xVelocity *= -1;
 		}
 		rigidBody.velocity = new Vector2 (xVelocity, rigidBody.velocity.y);
-	}
+	} 
 }
 	
