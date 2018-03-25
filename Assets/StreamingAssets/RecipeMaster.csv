@@ -13,9 +13,9 @@ MakeshiftSpearShard,TapedShard,TapedHandle,Weapons/MakeshiftSpearShard
 MakeshiftSpearBlade,TapedHandle,KitchenKnife,Weapons/MakeshiftSpearBlade
 MakeshiftSpearBlade,TapedHandle,Scissors,Weapons/MakeshiftSpearBlade
 MakeshiftSpearShard,TapedHandle,GlassShards,Weapons/MakeshiftSpearShard
-Executioner,TapedHandle,Cleaver,Weapons/Executioner
-Executioner,Broom,TapedCleaver,Weapons/Executioner
-Executioner,TapedHandle,TapedCleaver,Weapons/Executioner
+Halberd,TapedHandle,Cleaver,Weapons/Halberd
+Halberd,Broom,TapedCleaver,Weapons/Halberd
+Halberd,TapedHandle,TapedCleaver,Weapons/Halberd
 SprayBottleBleach,SprayBottle,Bleach,Items/SprayBottleBleach
 SprayBottleAlcohol,SprayBottle,RubbingAlcohol,Items/SprayBottleAlcohol
 Chloroform,SprayBottleAlcohol,Bleach,Weapons/Chloroform
