@@ -8,7 +8,6 @@ public class RangedWeapon : Item {
 	public int capacity;
 	public int knockback;
 	public int multiHit = 1;
-	public bool isAttacking;
 
 	private int ammunition;
 

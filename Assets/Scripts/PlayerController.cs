@@ -278,6 +278,7 @@ public class PlayerController : MonoBehaviour {
 
 			item.isHeld = false;
 			item.isThrown = true;
+			item.onThrow ();
 
 			body.bodyType = RigidbodyType2D.Dynamic;
 			body.AddForce (new Vector2 (tempThrowStrength, yThrowStrength));
