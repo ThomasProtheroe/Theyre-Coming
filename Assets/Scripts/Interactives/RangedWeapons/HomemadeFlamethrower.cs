@@ -7,7 +7,14 @@ public class HomemadeFlamethrower : RangedWeapon {
 	public ParticleSystem pilot;
 	public ParticleSystem stream;
 
+	public void Update() {
+		if (isAttacking && !stream.isEmitting) {
+			isAttacking = false;
+		}
+	}
+
 	override public void fire() {
+		isAttacking = true;
 		pilot.Stop ();
 		stream.Play ();
 	}
