@@ -144,6 +144,7 @@ public class Item : Interactive {
 		}
 			
 		gameObject.layer = 16;
+		GetComponent<SpriteRenderer> ().sortingLayerName = "Items";
 
 		//disable pickup trigger, enable hit trigger
 		pickupCollider.enabled = false;
