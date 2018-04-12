@@ -51,10 +51,6 @@ public class Enemy : MonoBehaviour {
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
 	}
-
-	void OnTriggerEnter2D (Collider2D other) {
-
-	}
 	
 	// Update is called once per frame
 	void Update () {

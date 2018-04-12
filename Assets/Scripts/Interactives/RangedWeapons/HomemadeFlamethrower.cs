@@ -10,6 +10,7 @@ public class HomemadeFlamethrower : RangedWeapon {
 	public void Update() {
 		if (isAttacking && !stream.isEmitting) {
 			isAttacking = false;
+			pilot.Play ();
 		}
 	}
 
