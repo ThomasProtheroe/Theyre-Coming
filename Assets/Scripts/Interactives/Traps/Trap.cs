@@ -38,6 +38,7 @@ public class Trap : Item {
 		backHand.SetActive (false);
 
 		gameObject.layer = 18;
+		GetComponent<SpriteRenderer> ().sortingLayerName = "Background Items";
 		moveToDeployPos ();
 
 		isDeployed = true;
