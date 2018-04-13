@@ -1,5 +1,6 @@
 TapedHandle,DuctTape,Broom,Weapons/TapedHandle
 TapedHandle,DuctTape,Mop,Weapons/TapedHandle
+TapedCurtainRod,DuctTape,CurtainRod,Weapons/TapedCurtainRod
 TapedBlade,DuctTape,KitchenKnife,Weapons/TapedBlade
 TapedBlade,DuctTape,Scissors,Weapons/TapedBlade
 TapedShard,DuctTape,GlassShards,Weapons/TapedShard
@@ -13,6 +14,11 @@ MakeshiftSpearShard,TapedShard,TapedHandle,Weapons/MakeshiftSpearShard
 MakeshiftSpearBlade,TapedHandle,KitchenKnife,Weapons/MakeshiftSpearBlade
 MakeshiftSpearBlade,TapedHandle,Scissors,Weapons/MakeshiftSpearBlade
 MakeshiftSpearShard,TapedHandle,GlassShards,Weapons/MakeshiftSpearShard
+LongSpear,TapedCurtainRod,GlassShards,Weapons/LongSpear
+LongSpear,TapedCurtainRod,KitchenKnife,Weapons/LongSpear
+LongSpear,TapedCurtainRod,Scissors,Weapons/LongSpear
+LongSpear,CurtainRod,TapedBlade,Weapons/LongSpear
+LongSpear,CurtainRod,TapedShard,Weapons/LongSpear
 Halberd,TapedHandle,Cleaver,Weapons/Halberd
 Halberd,Broom,TapedCleaver,Weapons/Halberd
 Halberd,TapedHandle,TapedCleaver,Weapons/Halberd
@@ -20,14 +26,11 @@ SprayBottleBleach,SprayBottle,Bleach,Items/SprayBottleBleach
 SprayBottleAlcohol,SprayBottle,RubbingAlcohol,Items/SprayBottleAlcohol
 Chloroform,SprayBottleAlcohol,Bleach,Weapons/Chloroform
 Chloroform,SprayBottleBleach,RubbingAlcohol,Weapons/Chloroform
-TapedNails,Nails,DuctTape,Items/TapedNails
 TapedBat,BaseballBat,DuctTape,Weapons/TapedBat
 NailBat,TapedBat,Nails,Weapons/NailBat
-NailBat,TapedNails,BaseballBat,Weapons/NailBat
 ShardBat,TapedBat,GlassShards,Weapons/ShardBat
 ShardBat,TapedShard,BaseballBat,Weapons/ShardBat
 SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
-SpikedBaseball,TapedNails,Baseball,Throwables/SpikedBaseball
 ShardBaseball,TapedShard,Baseball,Throwables/ShardBaseball
 TapedGlove,GardeningGlove,DuctTape,Items/TapedGlove
 Cestus,GardeningGlove,TapedBlade,Weapons/Cestus
@@ -45,7 +48,6 @@ Skullshatter Hammer,TapedBrick,MetalPipe,Weapons/SkullshatterHammer
 Skullshatter Hammer,TapedBrick,TapedPipe,Weapons/SkullshatterHammer
 TapedSkullshatterHammer,SkullshatterHammer,DuctTape,Weapons/TapedSkullshatterHammer
 BloodbathHammerNails,TapedSkullshatterHammer,Nails,Weapons/BloodbathHammerNails
-BloodbathHammerNails,SkullshatterHammer,TapedNails,Weapons/BloodbathHammerNails
 BloodbathHammerNails,TapedSkullshatterHammer,TapedNails,Weapons/BloodbathHammerNails
 BloodbathHammerShards,TapedSkullshatterHammer,GlassShards,Weapons/BloodbathHammerShards
 BloodbathHammerShards,SkullshatterHammer,TapedShard,Weapons/BloodbathHammerShards
@@ -54,7 +56,6 @@ MakeshiftFlail,Rope,Baseball,Weapons/MakeshiftFlail
 TapedFlail,MakeshiftFlail,DuctTape,Weapons/TapedFlail
 TapedFlail,Rope,TapedBaseball,Weapons/TapedFlail
 SpikedFlail,TapedFlail,Nails,Weapons/SpikedFlail
-SpikedFlail,MakeshiftFlail,TapedNails,Weapons/SpikedFlail
 CorrosivePlunger,Plunger,Bleach,Weapons/CorrosivePlunger
 HeavyBoxTrap,Box,Blender,Traps/HeavyBoxTrap
 HeavyBoxTrap,Box,Brick,Traps/HeavyBoxTrap
@@ -63,3 +64,25 @@ HeavyBoxTrap,Box,Dumbell,Traps/HeavyBoxTrap
 HeavyBoxTrap,Box,Toaster,Traps/HeavyBoxTrap
 SpikeTrapNails,Nails,Doormat,Traps/SpikeTrapNails
 SpikeTrapShards,GlassShards,Doormat,Traps/SpikeTrapShards
+ShortRangeFlamethrower,Hairspray,TapedLighter,RangedWeapons/ShortRangeFlamethrower
+ShortRangeFlamethrower,TapedHairspray,Lighter,RangedWeapons/ShortRangeFlamethrower
+TapedSuperSoaker,SuperSoaker,DuctTape,Items/TapedSuperSoaker
+TapedSuperSoakerFull,TapedSuperSoaker,LighterFluid,Items/TapedSuperSoakerFull
+TapedSuperSoakerFull,TapedSuperSoaker,GasCan,Items/TapedSuperSoakerFull
+TapedSuperSoakerFull,SuperSoakerFull,DuctTape,Items/TapedSuperSoakerFull
+SuperSoakerFull,SuperSoaker,LighterFluid,Items/SuperSoakerFull
+SuperSoakerFull,SuperSoaker,GasCan,Items/SuperSoakerFull
+HomemadeFlamethrowerEmpty,SuperSoaker,TapedLighter,Items/HomemadeFlamethrowerEmpty
+HomemadeFlamethrowerEmpty,TapedSuperSoaker,Lighter,Items/HomemadeFlamethrowerEmpty
+HomemadeFlamethrowerFull,SuperSoakerFull,TapedLighter,Items/HomemadeFlamethrowerFull
+HomemadeFlamethrowerFull,TapedSuperSoakerFull,Lighter,Items/HomemadeFlamethrowerFull
+HomemadeFlamethrowerFull,HomemadeFlamethrowerEmpty,GasCan,Items/HomemadeFlamethrowerFull
+HomemadeFlamethrowerFull,HomemadeFlamethrowerEmpty,LighterFluid,Items/HomemadeFlamethrowerFull
+SpicyBlaster,SuperSoaker,Bleach,RangedWeapons/SpicyBlaster
+BleachBlaster,SuperSoaker,ReaperHotSauce,RangedWeapons/BleachBlaster
+TapedSpicyBlaster,SpicyBlaster,DuctTape,RangedWeapons/TapedSpicyBlaster
+TapedBleachBlaster,BleachBlaster,DuctTape,RangedWeapons/TapedBleachBlaster
+TapedSpicyBlaster,TapedSuperSoaker,Bleach,RangedWeapons/TapedSpicyBlaster
+TapedBleachBlaster,TapedSuperSoaker,ReaperHotSauce,RangedWeapons/TapedBleachBlaster
+DelFuego,SquirtGun,ReaperHotSauce,RangedWeapons/DelFuego
+BleachShot,SquirtGun,Bleach,RangedWeapons/BleachShot
