@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour {
 
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
+	public float burnDamageInterval = 1.0f;
 	public int health = 10;
 	public bool isInvunlerable;
 
@@ -13,6 +14,7 @@ public class Enemy : MonoBehaviour {
 	public BoxCollider2D bodyHitbox;
 	public AudioSource walkingSource;
 	public AudioSource vocalSource;
+	public Area currentArea;
 
 	private Animator anim;
 	private AudioClip walkSound;
@@ -21,14 +23,16 @@ public class Enemy : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
 	private GameObject player;
-	public Area currentArea;
 
 	private bool isActive;
 	private bool isMoving;
 	private bool isAttacking;
 	private bool isStunned;
+	private bool isBurning;
 	private bool isDead;
 	private float distanceToPlayer;
+	private float burnTimer;
+	private float burnImmunityTimer;
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +42,8 @@ public class Enemy : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		isMoving = false;
 		isAttacking = false;
+		burnTimer = 0.0f;
+		burnImmunityTimer = 0.0f;
 
 		foreach (BoxCollider2D collider in gameObject.GetComponents<BoxCollider2D> ()) {
 			if (collider.isTrigger) {
@@ -100,6 +106,21 @@ public class Enemy : MonoBehaviour {
 				if (walkingSource.isPlaying) {
 					stopWalkSound ();
 				}
+			}
+		}
+
+		//Periodic effects
+		if (isBurning) {
+			if (burnTimer > 0.0f) {
+				burnTimer -= Time.deltaTime;
+			} else {
+				burnTimer = burnDamageInterval;
+				takeDamage (1);
+				Debug.Log ("burn damage tick");
+			}
+
+			if (burnImmunityTimer > 0.0f) {
+				burnImmunityTimer -= Time.deltaTime; 
 			}
 		}
 	}
@@ -183,6 +204,10 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void takeDamage(int damage) {
+		if (isDead) {
+			return;
+		}
+
 		health -= damage;
 		if (health <= 0) {
 			killEnemy ();
@@ -199,6 +224,23 @@ public class Enemy : MonoBehaviour {
 
 	public void destroyEnemy() {
 		Destroy (gameObject);
+	}
+
+	public void takeFireHit(int damage) {
+		if (burnImmunityTimer > 0.0f) {
+			return;
+		}
+
+		burnImmunityTimer = 1.0f;
+		takeDamage (damage);
+		setBurning ();
+	}
+
+	public void setBurning () {
+		if (!isBurning) {
+			isBurning = true;
+			burnTimer = burnDamageInterval;
+		}
 	}
 
 	public bool getIsDead() {
