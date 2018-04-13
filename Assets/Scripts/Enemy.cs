@@ -24,6 +24,11 @@ public class Enemy : MonoBehaviour {
 	private SpriteRenderer enemySprite;
 	private GameObject player;
 
+	[SerializeField]
+	private ParticleSystem bloodSprayPS;
+	[SerializeField]
+	private ParticleSystem burningPS;
+
 	private bool isActive;
 	private bool isMoving;
 	private bool isAttacking;
@@ -197,6 +202,7 @@ public class Enemy : MonoBehaviour {
 	public void takeHit(int damage, int knockback) {
 		stopProwlSound ();
 		stopWalkSound ();
+		bloodSprayPS.Play ();
 		if (!getIsDead ()) {
 			StartCoroutine ("setHitFrame", knockback);
 		}
@@ -240,6 +246,7 @@ public class Enemy : MonoBehaviour {
 		if (!isBurning) {
 			isBurning = true;
 			burnTimer = burnDamageInterval;
+			burningPS.Play ();
 		}
 	}
 
