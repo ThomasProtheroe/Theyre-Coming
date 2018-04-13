@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour {
 	private List<AudioClip> attackSounds;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
-	private GameObject player; 
+	private GameObject player;
 
 	[SerializeField]
 	private ParticleSystem bloodSprayPS;
@@ -125,7 +125,7 @@ public class Enemy : MonoBehaviour {
 			}
 
 			if (burnImmunityTimer > 0.0f) {
-				burnImmunityTimer -= Time.deltaTime; 
+				burnImmunityTimer -= Time.deltaTime;
 			}
 		}
 	}

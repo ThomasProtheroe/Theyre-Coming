@@ -13,12 +13,10 @@ public class Weapon : Item {
 	public AudioClip swingSound;
 	public AudioClip hitSound;
 
-	private int maxDurability;
 	private int hitCount = 0;
 	private bool hitWindowActive = false;
 
 	void Start() {
-		maxDurability = durability;
 		player = GameObject.FindGameObjectWithTag("Player");
 		source = gameObject.GetComponent<AudioSource> ();
 		description = description.Replace ("\\n", "\n");
