@@ -294,7 +294,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPickup() {
-		if (Input.GetButtonDown ("interact") && closestInteractive.tag == "Item") {
+		if (Input.GetButtonDown ("interact") && closestInteractive && closestInteractive.tag == "Item") {
 			nearInteractives.Remove (closestInteractive);
 			heldItem = closestInteractive;
 			heldItem.transform.parent = heldItemParent.transform;
@@ -384,7 +384,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkTravel() {
-		if (Input.GetButtonDown ("interact") && closestInteractive.tag == "Transition") {
+		if (Input.GetButtonDown ("interact") && closestInteractive && closestInteractive.tag == "Transition") {
 			if (closestInteractive.GetComponent<Transition> ().inUse) {
 				return;
 			}
