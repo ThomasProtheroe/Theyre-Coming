@@ -13,7 +13,6 @@ public class HomemadeFlamethrower : RangedWeapon {
 	[SerializeField]
 	private float projectileSpeed;
 
-
 	public void Update() {
 		if (isAttacking) {
 			nextProjectileTime -= Time.deltaTime;
@@ -23,8 +22,8 @@ public class HomemadeFlamethrower : RangedWeapon {
 			}
 
 			if (!stream.isEmitting) {
-				if (capacity <= 0) {
-					//swap with empty weapon
+				if (ammunition <= 0) {
+					setEmpty ();
 				}
 				isAttacking = false;
 				pilot.Play ();
@@ -34,6 +33,7 @@ public class HomemadeFlamethrower : RangedWeapon {
 
 	override public void fire() {
 		isAttacking = true;
+		ammunition -= 1;
 		nextProjectileTime = 0.0f;
 		pilot.Stop ();
 		stream.Play ();

@@ -66,6 +66,7 @@ SpikeTrapNails,Nails,Doormat,Traps/SpikeTrapNails
 SpikeTrapShards,GlassShards,Doormat,Traps/SpikeTrapShards
 ShortRangeFlamethrower,Hairspray,TapedLighter,RangedWeapons/ShortRangeFlamethrower
 ShortRangeFlamethrower,TapedHairspray,Lighter,RangedWeapons/ShortRangeFlamethrower
+TapedLighter,Lighter,DuctTape,Items/TapedLighter
 TapedSuperSoaker,SuperSoaker,DuctTape,Items/TapedSuperSoaker
 TapedSuperSoakerFull,TapedSuperSoaker,LighterFluid,RangedWeapons/TapedSuperSoakerFull
 TapedSuperSoakerFull,TapedSuperSoaker,GasCan,RangedWeapons/TapedSuperSoakerFull
