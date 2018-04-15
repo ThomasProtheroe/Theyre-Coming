@@ -23,6 +23,9 @@ public class HomemadeFlamethrower : RangedWeapon {
 			}
 
 			if (!stream.isEmitting) {
+				if (capacity <= 0) {
+					//swap with empty weapon
+				}
 				isAttacking = false;
 				pilot.Play ();
 			}
