@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Interactives\Interactive.cs" />
      <Compile Include="Assets\Scripts\Interactives\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\Interactives\RangedWeapons\AerosolFlamethrower.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\HomemadeFlamethrower.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\RangedWeapon.cs" />
      <Compile Include="Assets\Scripts\Interactives\Throwables\Throwable.cs" />
