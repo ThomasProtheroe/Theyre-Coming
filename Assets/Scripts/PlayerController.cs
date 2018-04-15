@@ -13,13 +13,17 @@ public class PlayerController : MonoBehaviour {
 	public bool isTargetable = true;
 	public bool isInvulnerable = false;
 
+	[HideInInspector]
 	public List<GameObject> nearInteractives = new List<GameObject>();
-	public List<GameObject> nearTransitions = new List<GameObject>();
 	public GameObject heldItem;
+	[HideInInspector]
 	public GameObject heldItemParent;
+	[HideInInspector]
 	public GameObject handsParent;
 	public GameObject stashedItem;
+	[HideInInspector]
 	public GameObject frontHand;
+	[HideInInspector]
 	public GameObject backHand;
 	public GameObject craftingCloud;
 	public Sprite deathSprite;
@@ -33,12 +37,13 @@ public class PlayerController : MonoBehaviour {
 	public ItemSlot itemSlot2;
 	public ItemSlot activeSlot;
 	public DescriptionPanel descriptionPanel;
+	[HideInInspector]
+	public SpriteRenderer playerSprite;
 
 	private Animator anim;
 	private Animator handsAnim;
 	private AudioSource source;
 	private Rigidbody2D rigidBody;
-	private SpriteRenderer playerSprite;
 	private GameObject closestInteractive;
 	private GameObject beingCrafted;
 	private float moveX;
@@ -410,7 +415,7 @@ public class PlayerController : MonoBehaviour {
 		backHand.SetActive (true);
 	}
 
-	void positionHeldItem() {
+	public void positionHeldItem() {
 		if (heldItem) {
 			Item itemCon = heldItem.GetComponent<Item> ();
 			float currentXOffset = itemCon.xOffset;

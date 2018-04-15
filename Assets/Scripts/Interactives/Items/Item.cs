@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Item : Interactive {
 
+	[HideInInspector]
 	public bool isHeld = false;
+	[HideInInspector]
 	public bool isThrown = false;
+	[HideInInspector]
 	public bool isBouncing = false;
+	[HideInInspector]
 	public bool isAttacking = false;
+	[HideInInspector]
 	public bool flipped = false;
 
 	public float xOffset;
@@ -133,8 +138,8 @@ public class Item : Interactive {
 		flipped = !flipped;
 	}
 
-	public void pickupItem(bool playerFlipX) {
-		if (pickupSound && source) {
+	public void pickupItem(bool playerFlipX, bool playSound=true) {
+		if (playSound && pickupSound && source) {
 			source.PlayOneShot (pickupSound);
 		}
 			
