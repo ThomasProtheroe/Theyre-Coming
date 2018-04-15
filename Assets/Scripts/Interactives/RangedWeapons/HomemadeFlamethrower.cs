@@ -43,6 +43,7 @@ public class HomemadeFlamethrower : RangedWeapon {
 		FlameProjectile fp = Instantiate (projectile, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
 		float speed = projectileSpeed;
 		fp.GetComponent<Rigidbody2D> ().velocity = new Vector2 (speed, 0.0f);
+		fp.lifetime = 0.8f;
 	}
 
 	override public void onPickup() {

@@ -64,8 +64,9 @@ HeavyBoxTrap,Box,Dumbell,Traps/HeavyBoxTrap
 HeavyBoxTrap,Box,Toaster,Traps/HeavyBoxTrap
 SpikeTrapNails,Nails,Doormat,Traps/SpikeTrapNails
 SpikeTrapShards,GlassShards,Doormat,Traps/SpikeTrapShards
-ShortRangeFlamethrower,Hairspray,TapedLighter,RangedWeapons/ShortRangeFlamethrower
-ShortRangeFlamethrower,TapedHairspray,Lighter,RangedWeapons/ShortRangeFlamethrower
+TapedHairspray,Hairspray,DuctTape,Items/TapedHairspray
+AerosolFlamethrower,Hairspray,TapedLighter,RangedWeapons/AerosolFlamethrower
+AerosolFlamethrower,TapedHairspray,Lighter,RangedWeapons/AerosolFlamethrower
 TapedLighter,Lighter,DuctTape,Items/TapedLighter
 TapedSuperSoaker,SuperSoaker,DuctTape,Items/TapedSuperSoaker
 TapedSuperSoakerFull,TapedSuperSoaker,LighterFluid,RangedWeapons/TapedSuperSoakerFull

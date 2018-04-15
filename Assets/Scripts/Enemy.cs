@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour {
 	private ParticleSystem bloodSprayPS;
 	[SerializeField]
 	private ParticleSystem burningPS;
+	[SerializeField]
+	ParticleSystem[] burningDetailPS;
 
 	private bool isActive;
 	private bool isMoving;
@@ -225,6 +227,14 @@ public class Enemy : MonoBehaviour {
 			finishAttack ();
 		}
 		isDead = true;
+
+		//Kill the burning detail particle systems before playing death animation (if active)
+		if (isBurning) {
+			foreach (ParticleSystem detailPS in burningDetailPS) {
+				detailPS.Stop ();
+			}
+		}
+
 		anim.SetTrigger ("Death");
 	}
 
@@ -247,6 +257,9 @@ public class Enemy : MonoBehaviour {
 			isBurning = true;
 			burnTimer = burnDamageInterval;
 			burningPS.Play ();
+			foreach (ParticleSystem detailPS in burningDetailPS) {
+				detailPS.Play ();
+			}
 		}
 	}
 
