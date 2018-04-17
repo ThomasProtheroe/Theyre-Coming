@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour {
 
 	public BoxCollider2D attackHitbox;
 	public BoxCollider2D bodyHitbox;
+	public BoxCollider2D proximityHitbox;
 	public AudioSource walkingSource;
 	public AudioSource vocalSource;
 	public Area currentArea;
@@ -51,15 +52,6 @@ public class Enemy : MonoBehaviour {
 		isAttacking = false;
 		burnTimer = 0.0f;
 		burnImmunityTimer = 0.0f;
-
-		foreach (BoxCollider2D collider in gameObject.GetComponents<BoxCollider2D> ()) {
-			if (collider.isTrigger) {
-				collider.enabled = false;
-				attackHitbox = collider;
-			} else {
-				bodyHitbox = collider;
-			}
-		}
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
@@ -128,6 +120,17 @@ public class Enemy : MonoBehaviour {
 
 			if (burnImmunityTimer > 0.0f) {
 				burnImmunityTimer -= Time.deltaTime;
+			}
+		}
+	}
+
+	void OnTriggerEnter2D (Collider2D other) {
+		if (other.gameObject.tag == "Enemy") {
+			if (isBurning) {
+				Enemy otherEnemy = other.GetComponent<Enemy> ();
+				if (!otherEnemy.isBurning) {
+					otherEnemy.setBurning ();
+				}
 			}
 		}
 	}
