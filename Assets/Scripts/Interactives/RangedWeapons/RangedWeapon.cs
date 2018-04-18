@@ -12,12 +12,12 @@ public class RangedWeapon : Item {
 	protected int ammunition;
 	[SerializeField]
 	private GameObject emptyPrefab;
+	[SerializeField]
+	protected AudioClip fireSound;
 
-	void Start () {
-		player = GameObject.FindGameObjectWithTag("Player");
-		source = gameObject.GetComponent<AudioSource> ();
-		description = description.Replace ("\\n", "\n");
+	private new void Start () {
 		ammunition = capacity;
+		base.Start ();
 	}
 
 	public void setEmpty() {

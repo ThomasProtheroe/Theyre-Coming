@@ -16,12 +16,6 @@ public class Weapon : Item {
 	private int hitCount = 0;
 	private bool hitWindowActive = false;
 
-	void Start() {
-		player = GameObject.FindGameObjectWithTag("Player");
-		source = gameObject.GetComponent<AudioSource> ();
-		description = description.Replace ("\\n", "\n");
-	}
-
 	void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
 			if (other.gameObject.tag == "Enemy") {

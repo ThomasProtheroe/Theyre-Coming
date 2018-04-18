@@ -16,7 +16,7 @@ public class Trap : Item {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (isDeployed) { 
-			if (other.gameObject.tag == "Enemy" || (other.gameObject.tag == "Player" && friendlyFire)) {
+			if ((other.gameObject.tag == "Enemy" && !other.isTrigger) || (other.gameObject.tag == "Player" && friendlyFire)) {
 				trigger (other.gameObject);
 			}
 		}
