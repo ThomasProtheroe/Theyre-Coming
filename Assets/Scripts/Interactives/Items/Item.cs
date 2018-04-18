@@ -43,18 +43,23 @@ public class Item : Interactive {
 	public AudioClip pickupSound;
 	public AudioClip swapSound;
 	public AudioClip breakSound;
+	public AudioClip craftOverrideSound;
 
+	[HideInInspector]
 	public GameObject player;
+	[HideInInspector]
+	public PlayerController playerCon;
 
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
+		playerCon = player.GetComponent<PlayerController> ();
 		source = gameObject.GetComponent<AudioSource> ();
 		description = description.Replace ("\\n", "\n");
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 		if (isBouncing) {
 			Rigidbody2D itemBody = gameObject.GetComponent<Rigidbody2D> ();
 			float xVel = itemBody.velocity.x;
@@ -187,11 +192,14 @@ public class Item : Interactive {
 		transform.eulerAngles = new Vector3 (0, 0, restingRotation);
 	}
 
-	public void playCraftingSound() {
+	public void playCraftingSound(AudioClip overrideSound=null) {
 		//Since this object was just created, the source variable is not initialized yet
 		//so we need to get the AudioSource directly
-		if (craftSound) {
-			gameObject.GetComponent<AudioSource>().PlayOneShot (craftSound);
+		AudioSource tempSource = gameObject.GetComponent<AudioSource>();
+		if (overrideSound) {
+			tempSource.PlayOneShot (overrideSound);
+		} else if (craftSound) {
+			tempSource.PlayOneShot (craftSound);
 		}
 	}
 
@@ -230,9 +238,7 @@ public class Item : Interactive {
 	public void breakItem() {
 		bool breakImmed = onBreak ();
 
-		if (breakSound) {
-			source.PlayOneShot (breakSound);
-		}
+		playBreakSound ();
 
 		if (isHeld) {
 			PlayerController playerCon = player.GetComponent<PlayerController> ();
@@ -271,6 +277,12 @@ public class Item : Interactive {
 
 		StartCoroutine ("beginSpriteFlash");
 		StartCoroutine ("destroyAfterTime", 1.5f);
+	}
+
+	public void playBreakSound() {
+		if (breakSound) {
+			source.PlayOneShot (breakSound);
+		}
 	}
 
 	//Return true if item should be destroyed immediately (no animation)

@@ -496,9 +496,17 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		//Try to combine the items
-		string closestType = closest.GetComponent<Item> ().type;
-		string heldType = heldItem.GetComponent<Item> ().type;
-		beingCrafted = RecipeBook.tryCraft (closestType, heldType);
+		Item closestItem = closest.GetComponent<Item> ();
+		Item equippedItem = heldItem.GetComponent<Item> ();
+		beingCrafted = RecipeBook.tryCraft (closestItem.type, equippedItem.type);
+
+		//Check for crafting sound overrides
+		AudioClip overrideSound = null;
+		if (equippedItem.craftOverrideSound) {
+			overrideSound = equippedItem.craftOverrideSound;
+		} else if (closestItem.craftOverrideSound) {
+			overrideSound = closestItem.craftOverrideSound;
+		}
 
 		//If crafting is successful
 		if (beingCrafted) {
@@ -506,7 +514,7 @@ public class PlayerController : MonoBehaviour {
 			isCrafting = true;
 
 			Item prodItem = beingCrafted.GetComponent<Item> ();
-			prodItem.playCraftingSound ();
+			prodItem.playCraftingSound (overrideSound);
 			beingCrafted.transform.position = new Vector2 (0.0f, -50.0f);
 			craftingCloud.SetActive (true);
 

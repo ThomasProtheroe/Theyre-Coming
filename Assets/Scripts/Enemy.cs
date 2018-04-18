@@ -15,11 +15,14 @@ public class Enemy : MonoBehaviour {
 	public BoxCollider2D proximityHitbox;
 	public AudioSource walkingSource;
 	public AudioSource vocalSource;
+	public AudioSource miscSource;
 	public Area currentArea;
 
 	private Animator anim;
 	private AudioClip walkSound;
 	private AudioClip prowlSound;
+	[SerializeField]
+	private AudioClip burnSound;
 	private List<AudioClip> attackSounds;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
@@ -207,7 +210,9 @@ public class Enemy : MonoBehaviour {
 	public void takeHit(int damage, int knockback) {
 		stopProwlSound ();
 		stopWalkSound ();
-		bloodSprayPS.Play ();
+		if (damage > 0) {
+			bloodSprayPS.Play ();
+		}
 		if (!getIsDead ()) {
 			StartCoroutine ("setHitFrame", knockback);
 		}
@@ -263,6 +268,7 @@ public class Enemy : MonoBehaviour {
 			foreach (ParticleSystem detailPS in burningDetailPS) {
 				detailPS.Play ();
 			}
+			playBurnSound ();
 		}
 	}
 
@@ -301,16 +307,20 @@ public class Enemy : MonoBehaviour {
 		vocalSource.Pause ();
 	}
 
-	private void playAttackSound() {
-		vocalSource.PlayOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
-	}
-
 	public void startWalkSound() {
 		walkingSource.Play ();
 	}
 
 	public void stopWalkSound() {
 		walkingSource.Pause ();
+	}
+
+	private void playAttackSound() {
+		vocalSource.PlayOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
+	}
+
+	private void playBurnSound() {
+		miscSource.PlayOneShot (burnSound);
 	}
 
 	/**** Coroutines ****/ 

@@ -13,7 +13,7 @@ public class HomemadeFlamethrower : RangedWeapon {
 	[SerializeField]
 	private float projectileSpeed;
 
-	public void Update() {
+	public new void Update() {
 		if (isAttacking) {
 			nextProjectileTime -= Time.deltaTime;
 			if (nextProjectileTime <= 0) {
@@ -29,6 +29,8 @@ public class HomemadeFlamethrower : RangedWeapon {
 				pilot.Play ();
 			}
 		}
+
+		base.Update ();
 	}
 
 	override public void fire() {
@@ -37,13 +39,25 @@ public class HomemadeFlamethrower : RangedWeapon {
 		nextProjectileTime = 0.0f;
 		pilot.Stop ();
 		stream.Play ();
+		source.PlayOneShot (fireSound);
+	}
+
+	public new void setEmpty() {
+		stream.transform.parent = null;
+		stream.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 1.0f);
+		base.setEmpty ();
 	}
 
 	private void fireProjectile() {
 		FlameProjectile fp = Instantiate (projectile, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+
 		float speed = projectileSpeed;
+		if (playerCon.playerSprite.flipX) {
+			speed *= -1;
+		}
+
 		fp.GetComponent<Rigidbody2D> ().velocity = new Vector2 (speed, 0.0f);
-		fp.lifetime = 0.8f;
+		fp.lifetime = 0.7f;
 	}
 
 	override public void onPickup() {
