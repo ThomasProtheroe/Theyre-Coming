@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\RangedWeapon.cs" />
      <Compile Include="Assets\Scripts\Interactives\Throwables\Throwable.cs" />
      <Compile Include="Assets\Scripts\Interactives\Transition.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Traps\HeavyBoxTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\SpikeTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\Trap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Weapons\GlassBottle.cs" />

@@ -22,10 +22,10 @@ public class AerosolFlamethrower : RangedWeapon {
 			}
 
 			if (!stream.isEmitting) {
+				isAttacking = false;
 				if (ammunition <= 0) {
 					breakItem ();
 				} else {
-					isAttacking = false;
 					pilot.Play ();
 				}
 			}
@@ -71,5 +71,13 @@ public class AerosolFlamethrower : RangedWeapon {
 
 	override public void onThrow() {
 		pilot.Stop ();
+	}
+
+	override public void onTravel() {
+		pilot.Stop ();
+	}
+
+	override public void onArrival() {
+		pilot.Play ();
 	}
 }

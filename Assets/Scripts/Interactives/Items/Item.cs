@@ -77,7 +77,7 @@ public class Item : Interactive {
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D other) {
+	protected void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
 			if (other.gameObject.tag == "Enemy") {
 				if (throwImpact) {
@@ -127,7 +127,7 @@ public class Item : Interactive {
 	}
 
 	override public void updateHighlightColor() {
-		GameObject heldItem = player.GetComponent<PlayerController> ().heldItem;
+		GameObject heldItem = playerCon.heldItem;
 		if (heldItem && !RecipeBook.canCraft(type, heldItem.GetComponent<Item>().type)) {
 			GetComponent<SpriteOutline> ().color = negativeColor;
 		} else {
@@ -241,7 +241,6 @@ public class Item : Interactive {
 		playBreakSound ();
 
 		if (isHeld) {
-			PlayerController playerCon = player.GetComponent<PlayerController> ();
 			playerCon.heldItem = null;
 			playerCon.activeSlot.setEmpty();
 			gameObject.transform.parent = null;
@@ -250,6 +249,7 @@ public class Item : Interactive {
 			frontHand.SetActive (false);
 			backHand.SetActive (false);
 
+			playerCon.alignHands ();
 			playerCon.showPlayerHands ();
 		}
 
@@ -288,6 +288,14 @@ public class Item : Interactive {
 	//Return true if item should be destroyed immediately (no animation)
 	public virtual bool onBreak() {
 		return false;
+	}
+		
+	public virtual void onTravel() {
+
+	}
+
+	public virtual void onArrival() {
+		
 	}
 
 	/**** Coroutines ****/ 

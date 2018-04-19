@@ -211,7 +211,23 @@ public class Enemy : MonoBehaviour {
 		stopProwlSound ();
 		stopWalkSound ();
 		if (damage > 0) {
-			bloodSprayPS.Play ();
+			var sh = bloodSprayPS.shape;
+			var main = bloodSprayPS.main;
+			int particleCount = 15;
+			if (damage >= 10) {
+				sh.arc = 120.0f;
+				particleCount = 260;
+				main.startLifetime = 1.5f;
+			} else if (damage >= 7) {
+				sh.arc = 60;
+				particleCount = 120;
+				main.startLifetime = 0.7f;
+			} else {
+				sh.arc = 20;
+				particleCount = 20;
+				main.startLifetime = 0.5f;
+			}
+			bloodSprayPS.Emit (particleCount);
 		}
 		if (!getIsDead ()) {
 			StartCoroutine ("setHitFrame", knockback);

@@ -8,6 +8,9 @@ public class Transition : Interactive {
 	public AudioClip openSound;
 	public AudioClip closeSound;
 
+	[HideInInspector]
+	public Trap readiedTrap;
+
 	private Animator anim;
 	private GameObject player;
 	private GameObject camera;
@@ -79,6 +82,9 @@ public class Transition : Interactive {
 		playOpenSound ();
 
 		if (playerCon.heldItem) {
+			//Trigger item specific travel effects
+			playerCon.heldItem.GetComponent<Item> ().onTravel();
+
 			itemSprite = playerCon.heldItem.GetComponent<SpriteRenderer> ();
 			originalItemColor = itemSprite.material.color;
 
@@ -118,6 +124,11 @@ public class Transition : Interactive {
 		yield return new WaitForSeconds (0.35f);
 
 		playCloseSound ();
+
+		//Trigger item specific travel effects
+		if (playerCon.heldItem) {
+			playerCon.heldItem.GetComponent<Item> ().onArrival();
+		}
 			
 		Vector2 destination = new Vector2(sibling.transform.position.x, player.transform.position.y);
 		player.transform.position = destination;
@@ -176,6 +187,10 @@ public class Transition : Interactive {
 			sprite.material.color = c;
 
 			yield return null;
+		}
+
+		if (sibling.readiedTrap != null) {
+			sibling.readiedTrap.trigger ();
 		}
 
 		enemy.activate ();
