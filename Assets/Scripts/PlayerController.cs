@@ -454,6 +454,10 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	public GameObject getClosestInteractive() {
+		return closestInteractive;
+	}
+
 	public Area getCurrentArea() {
 		return currentArea;
 	}

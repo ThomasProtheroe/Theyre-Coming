@@ -71,5 +71,13 @@ public class HomemadeFlamethrower : RangedWeapon {
 	override public void onThrow() {
 		pilot.Stop ();
 	}
+
+	override public void onTravel() {
+		pilot.Stop ();
+	}
+
+	override public void onArrival() {
+		pilot.Play ();
+	}
 }
  
