@@ -39,6 +39,8 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 
+		SpawnMap.rebuildMap ();
+
 		attackSoundMaster = new AudioClip[5][];
 		attackSoundMaster [0] = attackSounds1;
 		attackSoundMaster [1] = attackSounds2;
@@ -81,7 +83,9 @@ public class GameController : MonoBehaviour {
 			}
 		} else if (phase == "siege") {
 			if (nextSpawn != null && timer >= nextSpawn.spawnTime && Scenes.getParam ("devMode") == "false") {
+				Debug.Log ("attempt spawn");
 				for (int i = 0; i < nextSpawn.spawnCount; i++) {
+					Debug.Log ("invoke enemy spawn");
 					Invoke("spawnEnemyRand", i * 0.4f);
 				}
 				nextSpawn = SpawnMap.getNextSpawn ();
@@ -169,21 +173,6 @@ public class GameController : MonoBehaviour {
 
 		return null;
 	}
-
-/*
-	public Transition findRouteToPlayer(Area currentArea) {
-		Area playerArea = player.GetComponent<PlayerController> ().getCurrentArea ();
-
-		foreach (Transition transition in currentArea.transitions) {
-			if (transition.sibling.transform.parent.gameObject.GetComponent<Area> () == playerArea) {
-				return transition;
-			}
-		}
-		//Should never happen (handle as error)
-		return new Transition();
-	}
-
-*/
 
 	public void fadeToMenu() {
 		//Set any existing enemies to idle

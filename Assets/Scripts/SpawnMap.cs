@@ -11,6 +11,10 @@ public static class SpawnMap {
 		buildMap ();
 	}
 
+	public static void rebuildMap() {
+		buildMap();
+	}
+
 	public static SpawnInstance getNextSpawn() {
 		SpawnInstance nextSpawn;
 		if (map.Count > 0) {
@@ -23,6 +27,7 @@ public static class SpawnMap {
 
 
 	private static void buildMap() {
+		map = new Queue<SpawnInstance> ();
 		map.Enqueue (new SpawnInstance(5.0f, 1));
 		map.Enqueue (new SpawnInstance(25.0f, 2));
 		map.Enqueue (new SpawnInstance(45.0f, 5));
