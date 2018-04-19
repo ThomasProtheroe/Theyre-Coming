@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
 			nearInteractives.Add (other.gameObject);
-		} else if (other.gameObject.tag == "Enemy" && !isInvulnerable) {
+		} else if (other.gameObject.tag == "Enemy" && other == other.gameObject.GetComponent<Enemy> ().attackHitbox && !isInvulnerable) {
 			if (isCrafting) {
 				StopCoroutine ("craftItem");
 				Destroy (beingCrafted);
