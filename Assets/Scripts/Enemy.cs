@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 	public AudioSource miscSource;
 	public Area currentArea;
 
+	public SoundController soundCon;
 	private Animator anim;
 	private AudioClip walkSound;
 	private AudioClip prowlSound;
@@ -42,6 +43,10 @@ public class Enemy : MonoBehaviour {
 	private bool isBurning;
 	private bool isDead;
 	private float distanceToPlayer;
+
+	private bool walkSoundPlaying;
+	private bool prowlSoundPlaying;
+
 	private float burnTimer;
 	private float burnImmunityTimer;
 
@@ -51,6 +56,7 @@ public class Enemy : MonoBehaviour {
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		enemySprite = gameObject.GetComponent<SpriteRenderer> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
+		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		isMoving = false;
 		isAttacking = false;
 		burnTimer = 0.0f;
@@ -92,20 +98,20 @@ public class Enemy : MonoBehaviour {
 			}
 
 			//Sound effect Control
-			if (inAudioRange && !isAttacking) {
-				if (!vocalSource.isPlaying) {
+			if (inAudioRange && !isAttacking && !isDead) {
+				if (!prowlSoundPlaying) {
 					startProwlSound ();
 				}
-				if (isMoving && !walkingSource.isPlaying) {
+				if (isMoving && !walkSoundPlaying) {
 					startWalkSound ();
-				} else if (!isMoving && walkingSource.isPlaying) {
+				} else if (!isMoving && walkSoundPlaying) {
 					stopWalkSound ();
 				}
 			} else {
-				if (vocalSource.isPlaying) {
+				if (prowlSoundPlaying) {
 					stopProwlSound ();
 				}
-				if (walkingSource.isPlaying) {
+				if (walkSoundPlaying) {
 					stopWalkSound ();
 				}
 			}
@@ -118,7 +124,6 @@ public class Enemy : MonoBehaviour {
 			} else {
 				burnTimer = burnDamageInterval;
 				takeDamage (1);
-				Debug.Log ("burn damage tick");
 			}
 
 			if (burnImmunityTimer > 0.0f) {
@@ -221,25 +226,21 @@ public class Enemy : MonoBehaviour {
 			} else if (damage >= 7) {
 				sh.arc = 60;
 				particleCount = 120;
-				main.startLifetime = 0.7f;
+				main.startLifetime = 1.0f;
 			} else {
 				sh.arc = 20;
 				particleCount = 20;
-				main.startLifetime = 0.5f;
+				main.startLifetime = 0.6f;
 			}
 			bloodSprayPS.Emit (particleCount);
 		}
 		if (!getIsDead ()) {
 			StartCoroutine ("setHitFrame", knockback);
+			takeDamage (damage);
 		}
-		takeDamage (damage);
 	}
 
 	public void takeDamage(int damage) {
-		if (isDead) {
-			return;
-		}
-
 		health -= damage;
 		if (health <= 0) {
 			killEnemy ();
@@ -251,6 +252,17 @@ public class Enemy : MonoBehaviour {
 			finishAttack ();
 		}
 		isDead = true;
+
+		if (walkSoundPlaying) {
+			soundCon.stopEnemyWalk (walkSound);
+		}
+		if (prowlSoundPlaying) {
+			soundCon.stopEnemyProwl (prowlSound);
+		}
+
+		//De-parent the blood Particle System so the particles dont disappear when the enemy is destroyed
+		bloodSprayPS.transform.parent = null;
+		bloodSprayPS.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 2.0f);
 
 		//Kill the burning detail particle systems before playing death animation (if active)
 		if (isBurning) {
@@ -302,7 +314,6 @@ public class Enemy : MonoBehaviour {
 
 	public void setProwlSound(AudioClip sound) {
 		prowlSound = sound;
-		vocalSource.clip = prowlSound;
 	}
 
 	public void addAttackSound(AudioClip[] sounds) {
@@ -312,23 +323,34 @@ public class Enemy : MonoBehaviour {
 
 	public void setWalkSound(AudioClip sound) {
 		walkSound = sound;
-		walkingSource.clip = walkSound;
 	}
 
 	public void startProwlSound() {
-		vocalSource.Play ();
+		if (!prowlSoundPlaying) {
+			prowlSoundPlaying = true;
+			soundCon.playEnemyProwl (prowlSound);
+		}
 	}
 
 	public void stopProwlSound() {
-		vocalSource.Pause ();
+		if (prowlSoundPlaying) {
+			prowlSoundPlaying = false;
+			soundCon.stopEnemyProwl (prowlSound);
+		}
 	}
 
 	public void startWalkSound() {
-		walkingSource.Play ();
+		if (!walkSoundPlaying) {
+			walkSoundPlaying = true;
+			soundCon.playEnemyWalk (walkSound);
+		}
 	}
 
 	public void stopWalkSound() {
-		walkingSource.Pause ();
+		if (walkSoundPlaying) {
+			walkSoundPlaying = false;
+			soundCon.stopEnemyWalk (walkSound);
+		}
 	}
 
 	private void playAttackSound() {
