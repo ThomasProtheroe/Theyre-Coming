@@ -10,6 +10,7 @@ public class HeavyBoxTrap : Trap {
 	private Transition parentTransition;
 	private bool isFalling = false;
 	private bool hitSoundPlayed = false;
+	private bool playerHit = false;
 
 	protected void OnTriggerEnter2D(Collider2D other) {
 		if (isFalling) {
@@ -18,6 +19,11 @@ public class HeavyBoxTrap : Trap {
 				if (!hitSoundPlayed) {
 					hitSoundPlayed = true;
 					source.PlayOneShot (hitSound);
+				}
+			} else if (other.gameObject.tag == "Player") {
+				if (!playerHit) {
+					playerHit = true;
+					playerCon.takeHit (1);
 				}
 			} else if (other.gameObject.tag == "Terrain") {
 				isFalling = false;
