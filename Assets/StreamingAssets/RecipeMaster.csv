@@ -33,11 +33,12 @@ NailBat,TapedBat,Nails,Weapons/NailBat
 ShardBat,TapedBat,GlassShards,Weapons/ShardBat
 ShardBat,TapedShard,BaseballBat,Weapons/ShardBat
 ShardBat,TapedShard,TapedBat,Weapons/ShardBat
-SoakedBat,BaseballBat,GasCan,Weapons/SoakedBat
-SoakedBat,BaseballBat,LighterFluid,Weapons/SoakedBat
-SoakedBat,TapedBat,GasCan,Weapons/SoakedBat
-SoakedBat,TapedBat,GasCan,Weapons/SoakedBat
-FlamingBat,SoakedBat,Lighter,Weapons/FlamingBat
+FlammableBat,BaseballBat,GasCan,Weapons/FlammableBat
+FlammableBat,BaseballBat,LighterFluid,Weapons/FlammableBat
+FlammableBat,TapedBat,GasCan,Weapons/FlammableBat
+FlammableBat,TapedBat,GasCan,Weapons/FlammableBat
+FlamingBat,FlammableBat,Lighter,Weapons/FlamingBat
+FlamingBat,FlammableBat,Taped,Weapons/FlamingBat
 SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
 ShardBaseball,TapedShard,Baseball,Throwables/ShardBaseball
 TapedGlove,GardeningGlove,DuctTape,Items/TapedGlove
