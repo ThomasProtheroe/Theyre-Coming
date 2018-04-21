@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour {
 				source.PlayOneShot (deathSound);
 				gameOver ();
 			} else {
-				source.PlayOneShot (hitSounds [Random.Range (0, 3)]);
+				playHitSound ();
 			}
 		}
 	}
@@ -464,6 +464,10 @@ public class PlayerController : MonoBehaviour {
 
 	public void setCurrentArea(Area area) {
 		currentArea = area;
+	}
+
+	private void playHitSound() {
+		source.PlayOneShot (hitSounds [Random.Range (0, hitSounds.Length - 1)]);
 	}
 
 	IEnumerator damageFlash() {

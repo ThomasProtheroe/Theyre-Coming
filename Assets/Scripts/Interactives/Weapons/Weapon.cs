@@ -16,7 +16,7 @@ public class Weapon : Item {
 	private int hitCount = 0;
 	private bool hitWindowActive = false;
 
-	void OnCollisionEnter2D(Collision2D other) {
+	new void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
 			if (other.gameObject.tag == "Enemy") {
 				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, knockback);
@@ -89,7 +89,8 @@ public class Weapon : Item {
 		return true;
 	}
 
-	public void onEnemyImpact(GameObject enemy) {
+	public virtual void onEnemyImpact(GameObject enemy) {
+		Debug.Log ("dammit");
 		durability -= 1;
 
 		if (isThrown && throwImpact) {
