@@ -85,16 +85,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
 			nearInteractives.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy" && other == other.gameObject.GetComponent<Enemy> ().attackHitbox && !isInvulnerable) {
-			if (isCrafting) {
-				StopCoroutine ("craftItem");
-				Destroy (beingCrafted);
-				craftingCloud.SetActive (false);
-				isCrafting = false;
-				isBusy = false;
-			}
-
-			takeDamage (1);
-			StartCoroutine ("damageFlash");
+			takeHit (1);
 		}
 	}
 
@@ -452,6 +443,19 @@ public class PlayerController : MonoBehaviour {
 		} else {
 			activeSlot.setEmpty ();
 		}
+	}
+
+	public void takeHit(int damage) {
+		if (isCrafting) {
+			StopCoroutine ("craftItem");
+			Destroy (beingCrafted);
+			craftingCloud.SetActive (false);
+			isCrafting = false;
+			isBusy = false;
+		}
+
+		takeDamage (damage);
+		StartCoroutine ("damageFlash");
 	}
 
 	public GameObject getClosestInteractive() {
