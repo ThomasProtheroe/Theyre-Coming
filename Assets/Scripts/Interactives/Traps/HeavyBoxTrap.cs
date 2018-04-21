@@ -72,6 +72,8 @@ public class HeavyBoxTrap : Trap {
 		isFalling = true;
 		triggerCollider.enabled = true;
 		parentTransition.readiedTrap = null;
+		transform.parent = null;
+		GetComponent<SpriteRenderer> ().sortingLayerName = "Items";
 
 		Rigidbody2D body = GetComponent<Rigidbody2D>();
 		body.bodyType = RigidbodyType2D.Dynamic;
