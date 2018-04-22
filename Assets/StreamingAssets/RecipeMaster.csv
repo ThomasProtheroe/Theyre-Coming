@@ -100,3 +100,10 @@ TapedSpicyBlaster,TapedSuperSoaker,Bleach,RangedWeapons/TapedSpicyBlaster
 TapedBleachBlaster,TapedSuperSoaker,ReaperHotSauce,RangedWeapons/TapedBleachBlaster
 DelFuego,SquirtGun,ReaperHotSauce,RangedWeapons/DelFuego
 BleachShot,SquirtGun,Bleach,RangedWeapons/BleachShot
+BottleGas,GlassBottle,GasCan,Items/BottleGas
+BottleGas,GlassBottle,LighterFluid,Items/BottleGas
+BottleRag,GlassBottle,Rag,Items/BottleRag
+MolotovUnlit,BottleGas,Rag,Items/MolotovUnlit
+MolotovUnlit,BottleRag,GasCan,Items/MolotovUnlit
+MolotovUnlit,BottleRag,LighterFluid,Items/MolotovUnlit
+Molotov,MolotovUnlit,Lighter,Throwables/Molotov
