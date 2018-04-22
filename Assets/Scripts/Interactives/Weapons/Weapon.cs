@@ -90,7 +90,6 @@ public class Weapon : Item {
 	}
 
 	public virtual void onEnemyImpact(GameObject enemy) {
-		Debug.Log ("dammit");
 		durability -= 1;
 
 		if (isThrown && throwImpact) {
