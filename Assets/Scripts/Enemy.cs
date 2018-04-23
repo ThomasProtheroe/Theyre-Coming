@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-
-	public float moveSpeed = 1.5f;
-	public float attackRange = 0.8f;
-	public float burnDamageInterval = 1.0f;
-	public float bleedDamageInterval = 1.0f;
-	public int health = 10;
-	public bool isInvunlerable;
-
 	public BoxCollider2D attackHitbox;
 	public BoxCollider2D bodyHitbox;
 	public BoxCollider2D proximityHitbox;
+	[HideInInspector]
+	public Area currentArea;
+
+	private GameController gc;
+	private Animator anim;
+	private Rigidbody2D rigidBody;
+	private SpriteRenderer enemySprite;
+	private GameObject player;
+	[SerializeField]
+	private EnemyCorpse enemyCorpse;
+
+	/* Audio Components */
+	[HideInInspector]
+	public SoundController soundCon;
 	public AudioSource walkingSource;
 	public AudioSource vocalSource;
 	public AudioSource miscSource;
-	public Area currentArea;
-
-	public SoundController soundCon;
-	private Animator anim;
 	private AudioClip walkSound;
 	private AudioClip prowlSound;
 	[SerializeField]
 	private AudioClip burnSound;
 	private List<AudioClip> attackSounds;
-	private Rigidbody2D rigidBody;
-	private SpriteRenderer enemySprite;
-	private GameObject player;
 
+	/* Particle Systems */
 	[SerializeField]
 	private ParticleSystem bloodSprayPS;
 	[SerializeField]
@@ -39,6 +39,12 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	private ParticleSystem[] burningDetailPS;
 
+	public float moveSpeed = 1.5f;
+	public float attackRange = 0.8f;
+	public float burnDamageInterval = 1.0f;
+	public float bleedDamageInterval = 1.0f;
+	public int health = 10;
+	public bool isInvunlerable;
 	private bool isActive;
 	private bool isMoving;
 	private bool isAttacking;
@@ -62,6 +68,7 @@ public class Enemy : MonoBehaviour {
 		enemySprite = gameObject.GetComponent<SpriteRenderer> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
+		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		isMoving = false;
 		isAttacking = false;
 		burnTimer = 0.0f;
@@ -294,7 +301,18 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void destroyEnemy() {
+		spawnCorpse ();
 		Destroy (gameObject);
+	}
+
+	private void spawnCorpse() {
+		EnemyCorpse corpse = Instantiate (enemyCorpse);
+		if (isBurning) {
+			corpse.setBurntSprite ();
+		}
+		corpse.positionOnGround (transform.position.x);
+
+		gc.addEnemyCorpse (corpse, currentArea.name);
 	}
 
 	public void takeFireHit(int damage) {

@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
 	public AudioClip[] attackSounds5;
 
 	public List<EnemySpawn> spawnZones = new List<EnemySpawn> ();
+	public Dictionary<string, List<EnemyCorpse>> corpseDict = new Dictionary<string, List<EnemyCorpse>> ();
 
 	private AudioClip[][] attackSoundMaster;
 	private List<Area> areas = new List<Area> ();
@@ -34,6 +35,10 @@ public class GameController : MonoBehaviour {
 	private float timer;
 	private string phase;
 	private string devMode;
+	[SerializeField]
+	private int maxCorpseCount;
+	[SerializeField]
+	private int corpseCount;
 
 	// Use this for initialization
 	void Start () {
@@ -129,6 +134,40 @@ public class GameController : MonoBehaviour {
 
 		//Fade the enemy sprite in from black
 		StartCoroutine("spawnFade", newEnemy);
+	}
+
+	public void addEnemyCorpse(EnemyCorpse corpse, string areaName) {
+		List<EnemyCorpse> corpseList;
+		if (corpseDict.ContainsKey (areaName)) {
+			corpseList = corpseDict [areaName];
+		} else {
+			corpseList = new List<EnemyCorpse> ();
+		}
+
+		corpseList.Add (corpse);
+		corpseDict[areaName] = corpseList;
+		corpseCount++;
+	}
+
+	public void clearCorpses() {
+		PlayerController playerCon = player.GetComponent<PlayerController> ();
+
+		while (corpseCount > maxCorpseCount) {
+			//Pick a random area, excluding the players current area so they don't see the despawns
+			List<string> keyList = new List<string> (corpseDict.Keys);
+			keyList.Remove(playerCon.currentArea.name);
+			List<EnemyCorpse> corpseList = corpseDict [keyList [UnityEngine.Random.Range (0, keyList.Count)]];
+			corpseList.RemoveAt(0);
+			corpseCount--;
+
+			if (corpseList.Count == 0) {
+				corpseDict.Remove (playerCon.currentArea.name);
+			} else {
+				corpseDict [playerCon.currentArea.name] = corpseList;
+			}
+
+			return;
+		}
 	}
 
 

@@ -15,6 +15,7 @@ public class Transition : Interactive {
 	private GameObject player;
 	private GameObject camera;
 	private AudioSource source;
+	private GameController gc;
 
 	public bool inUse;
 
@@ -24,6 +25,7 @@ public class Transition : Interactive {
 		camera = GameObject.FindGameObjectWithTag("MainCamera");
 		anim = gameObject.GetComponent<Animator> ();
 		source = gameObject.GetComponent<AudioSource> ();
+		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		inUse = false;
 	}
 
@@ -148,6 +150,8 @@ public class Transition : Interactive {
 		camera.transform.position = new Vector3 (player.transform.position.x, camera.transform.position.y, camera.transform.position.z);
 		GameObject parallax = camera.transform.GetChild (0).gameObject;
 		parallax.transform.localPosition = new Vector3 (0.0f, -1.5f, 10.0f);
+
+		gc.clearCorpses ();
 
 		playerCon.isBusy = false;
 		playerCon.isInvulnerable = false;
