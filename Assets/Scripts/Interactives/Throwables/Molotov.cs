@@ -43,7 +43,7 @@ public class Molotov : Throwable {
 			FireGlob newGlob = Instantiate (fireGlob, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
 
 			Rigidbody2D rb = newGlob.GetComponent<Rigidbody2D> ();
-			rb.velocity = new Vector2 (UnityEngine.Random.Range(minXVel, maxXVel), UnityEngine.Random.Range(minYVel, maxYVel));
+			rb.velocity = new Vector2 (UnityEngine.Random.Range(minXVel, maxXVel) * throwDirection, UnityEngine.Random.Range(minYVel, maxYVel));
 		}
 
 		//Play break sound somehow

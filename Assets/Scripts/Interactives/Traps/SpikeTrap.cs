@@ -16,9 +16,11 @@ public class SpikeTrap : Trap {
 	}
 
 	override public void trigger(GameObject victim) {
-		victim.GetComponent<Enemy> ().takeHit (damage, 0);
+		Enemy enemy = victim.GetComponent<Enemy> ();
+		enemy.takeHit (damage, 0);
+		enemy.setBleeding ();
 		source.PlayOneShot (hitSound);
-		//Apply status effect here
+
 
 		durability--;
 		if (durability <= 0) {

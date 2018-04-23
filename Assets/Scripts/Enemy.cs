@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
 	public float burnDamageInterval = 1.0f;
+	public float bleedDamageInterval = 1.0f;
 	public int health = 10;
 	public bool isInvunlerable;
 
@@ -32,15 +33,18 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	private ParticleSystem bloodSprayPS;
 	[SerializeField]
+	private ParticleSystem bleedingPS;
+	[SerializeField]
 	private ParticleSystem burningPS;
 	[SerializeField]
-	ParticleSystem[] burningDetailPS;
+	private ParticleSystem[] burningDetailPS;
 
 	private bool isActive;
 	private bool isMoving;
 	private bool isAttacking;
 	private bool isStunned;
 	private bool isBurning;
+	private bool isBleeding;
 	private bool isDead;
 	private float distanceToPlayer;
 
@@ -49,6 +53,7 @@ public class Enemy : MonoBehaviour {
 
 	private float burnTimer;
 	private float burnImmunityTimer;
+	private float bleedTimer;
 
 	// Use this for initialization
 	void Start () {
@@ -61,6 +66,7 @@ public class Enemy : MonoBehaviour {
 		isAttacking = false;
 		burnTimer = 0.0f;
 		burnImmunityTimer = 0.0f;
+		bleedTimer = 0.0f;
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
@@ -130,6 +136,15 @@ public class Enemy : MonoBehaviour {
 				burnImmunityTimer -= Time.deltaTime;
 			}
 		}
+		if (isBleeding) {
+			if (bleedTimer > 0.0f) {
+				bleedTimer -= Time.deltaTime;
+			} else {
+				bleedTimer = bleedDamageInterval;
+				takeDamage (1);
+				StartCoroutine ("bleedDamageFlash");
+			}
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
@@ -141,6 +156,10 @@ public class Enemy : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	void OnParticleCollision(GameObject other) {
+
 	}
 
 	private void moveTowardsPlayer () {
@@ -300,6 +319,14 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	public void setBleeding() {
+		if (!isBleeding) {
+			isBleeding = true;
+			bleedTimer = bleedDamageInterval;
+			bleedingPS.Play ();
+		}
+	}
+
 	public bool getIsDead() {
 		return isDead;
 	}
@@ -383,6 +410,28 @@ public class Enemy : MonoBehaviour {
 
 		anim.SetBool ("Knockback", false);
 		isStunned = false;
+	}
+
+	IEnumerator bleedDamageFlash() {
+		//Turn red over time
+		for (float f = 1f; f >= 0; f -= 0.2f) {
+			Color c = enemySprite.material.color;
+			c.g = f;
+			c.b = f;
+			enemySprite.material.color = c;
+
+			yield return null;
+		}
+
+		//Turn back to original color
+		for (float f = 0f; f <= 1; f += 0.2f) {
+			Color c = enemySprite.material.color;
+			c.g = f;
+			c.b = f;
+			enemySprite.material.color = c;
+
+			yield return null;
+		}
 	}
 
 	private void knockbackEnemy(int knockbackWeight) {

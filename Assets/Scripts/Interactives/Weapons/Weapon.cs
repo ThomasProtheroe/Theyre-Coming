@@ -8,6 +8,7 @@ public class Weapon : Item {
 	public int durability;
 	public int knockback;
 	public int multiHit = 1;
+	public bool inflictsBleed;
 	public bool instantAttack;
 
 	public AudioClip swingSound;
@@ -92,12 +93,6 @@ public class Weapon : Item {
 	public virtual void onEnemyImpact(GameObject enemy) {
 		durability -= 1;
 
-		if (isThrown && throwImpact) {
-			source.PlayOneShot (throwImpact);
-		} else if (!isThrown && hitSound) {
-			source.PlayOneShot (hitSound);
-		}
-
 		if (durability <= 0) {
 			breakItem ();
 		} else {
@@ -111,6 +106,16 @@ public class Weapon : Item {
 				GetComponent<SpriteRenderer> ().sprite = bloodySprite3;
 				state++;
 			}
+		}
+
+		if (inflictsBleed) {
+			enemy.GetComponent<Enemy> ().setBleeding();
+		}
+
+		if (isThrown && throwImpact) {
+			source.PlayOneShot (throwImpact);
+		} else if (!isThrown && hitSound) {
+			source.PlayOneShot (hitSound);
 		}
 	}
 }

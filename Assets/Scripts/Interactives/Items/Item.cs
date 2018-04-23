@@ -22,6 +22,7 @@ public class Item : Interactive {
 	public float restingRotation;
 	public int thrownDamage;
 	public int thrownKnockback;
+	public int throwDirection = 0;
 	public string type;
 	public string description;
 

@@ -83,9 +83,7 @@ public class GameController : MonoBehaviour {
 			}
 		} else if (phase == "siege") {
 			if (nextSpawn != null && timer >= nextSpawn.spawnTime && Scenes.getParam ("devMode") == "false") {
-				Debug.Log ("attempt spawn");
 				for (int i = 0; i < nextSpawn.spawnCount; i++) {
-					Debug.Log ("invoke enemy spawn");
 					Invoke("spawnEnemyRand", i * 0.4f);
 				}
 				nextSpawn = SpawnMap.getNextSpawn ();
