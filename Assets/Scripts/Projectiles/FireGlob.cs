@@ -14,13 +14,13 @@ public class FireGlob : MonoBehaviour {
 	private bool isAirborn = true;
 
 	void Update () {
-		if (transform.position.y < -2.9f) {
+		if (isAirborn && transform.position.y < -2.9f) {
 			Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 			rb.bodyType = RigidbodyType2D.Kinematic;
 			rb.velocity = Vector2.zero;
 			isAirborn = false;
 
-			GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 10.0f);
+			StartCoroutine ("ExtinguishAfterTime", 2.0f);
 		}
 	}
 
@@ -38,5 +38,24 @@ public class FireGlob : MonoBehaviour {
 				other.gameObject.GetComponent<PlayerController> ().takeFireHit ();
 			}
 		}
+	}
+
+	IEnumerator ExtinguishAfterTime(float time) {
+		yield return new WaitForSeconds(time);
+
+		StartCoroutine ("Extinguish");
+	}
+
+	IEnumerator Extinguish() {
+		ParticleSystem ps = GetComponent<ParticleSystem> ();
+		var main = ps.main;
+		float newStartSize = main.startSize.constant;
+		for (float f = 1f; f >= 0.0f; f -= 0.01f) {
+			main.startSize = newStartSize * f;
+
+			yield return null;
+		}
+
+		Destroy (gameObject);
 	}
 }
