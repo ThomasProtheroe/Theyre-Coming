@@ -152,12 +152,15 @@ public class GameController : MonoBehaviour {
 	public void clearCorpses() {
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
 
+
 		while (corpseCount > maxCorpseCount) {
 			//Pick a random area, excluding the players current area so they don't see the despawns
 			List<string> keyList = new List<string> (corpseDict.Keys);
 			keyList.Remove(playerCon.currentArea.name);
 			List<EnemyCorpse> corpseList = corpseDict [keyList [UnityEngine.Random.Range (0, keyList.Count)]];
+			GameObject targetCorpse = corpseList [0].gameObject;
 			corpseList.RemoveAt(0);
+			Destroy(targetCorpse);
 			corpseCount--;
 
 			if (corpseList.Count == 0) {
@@ -165,8 +168,6 @@ public class GameController : MonoBehaviour {
 			} else {
 				corpseDict [playerCon.currentArea.name] = corpseList;
 			}
-
-			return;
 		}
 	}
 

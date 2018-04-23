@@ -161,7 +161,7 @@ public class Item : Interactive {
 			
 		gameObject.layer = 16;
 		sprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
-		sprite.sortingOrder = playerCon.playerSprite.sortingOrder - 1;
+		sprite.sortingOrder = playerCon.playerSprite.sortingOrder + 1;
 
 		//disable pickup trigger, enable hit trigger
 		pickupCollider.enabled = false;
