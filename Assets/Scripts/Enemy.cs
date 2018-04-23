@@ -267,6 +267,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void takeDamage(int damage) {
+		if (isDead) {
+			return;
+		}
 		health -= damage;
 		if (health <= 0) {
 			killEnemy ();
@@ -309,7 +312,10 @@ public class Enemy : MonoBehaviour {
 		EnemyCorpse corpse = Instantiate (enemyCorpse);
 		if (isBurning) {
 			corpse.setBurntSprite ();
+		} else {
+			corpse.setGenericSprite ();
 		}
+
 		corpse.positionOnGround (transform.position.x);
 
 		gc.addEnemyCorpse (corpse, currentArea.name);

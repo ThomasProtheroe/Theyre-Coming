@@ -8,9 +8,11 @@ public class EnemyCorpse : MonoBehaviour {
 	public float yPosVariance;
 
 	[SerializeField]
-	private SpriteRenderer corpseSprite;
+	private SpriteRenderer sprite;
 	[SerializeField]
-	private Sprite burntSprite;
+	private Sprite[] genericSprites;
+	[SerializeField]
+	private Sprite[] burntSprites;
 
 	public void positionOnGround(float xPos) {
 		float yOffset = UnityEngine.Random.Range (yPosVariance * -1, yPosVariance);
@@ -18,13 +20,17 @@ public class EnemyCorpse : MonoBehaviour {
 		transform.position = new Vector3 (xPos, newYPos, 1.0f);
 
 		if (newYPos > yPos) {
-			corpseSprite.sortingOrder = 2;
+			sprite.sortingOrder = 1;
 		} else {
-			corpseSprite.sortingOrder = 7;
+			sprite.sortingOrder = 10;
 		}
 	}
 
 	public void setBurntSprite() {
-		corpseSprite.sprite = burntSprite;
+		sprite.sprite = genericSprites[UnityEngine.Random.Range(0, genericSprites.Length)];
+	}
+
+	public void setGenericSprite() {
+		sprite.sprite = genericSprites[UnityEngine.Random.Range(0, burntSprites.Length)];
 	}
 }
