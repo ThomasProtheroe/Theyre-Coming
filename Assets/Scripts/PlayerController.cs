@@ -270,10 +270,11 @@ public class PlayerController : MonoBehaviour {
 			//Set throw direction	
 			int tempThrowStrength;
 			if (playerSprite.flipX) {
-				tempThrowStrength = xThrowStrength * -1;
+				item.throwDirection = -1;
 			} else {
-				tempThrowStrength = xThrowStrength;
+				item.throwDirection = 1;
 			}
+			tempThrowStrength = xThrowStrength * item.throwDirection;
 				
 			alignHands ();
 			showPlayerHands ();

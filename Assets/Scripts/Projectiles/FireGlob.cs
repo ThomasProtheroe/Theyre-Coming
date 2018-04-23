@@ -13,20 +13,24 @@ public class FireGlob : MonoBehaviour {
 
 	private bool isAirborn = true;
 
-	void Update () {
+	void FixedUpdate () {
 		if (isAirborn && transform.position.y < -2.9f) {
-			Rigidbody2D rb = GetComponent<Rigidbody2D> ();
-			rb.bodyType = RigidbodyType2D.Kinematic;
-			rb.velocity = Vector2.zero;
-			isAirborn = false;
-
-			StartCoroutine ("ExtinguishAfterTime", 2.0f);
+			freezePosition ();
 		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
-		if (isAirborn && other.gameObject.tag == "Enemy") {
-			other.gameObject.GetComponent<Enemy> ().takeFireHit(activeDamage);
+		if (isAirborn) {
+			if (other.gameObject.tag == "Enemy") {
+				other.gameObject.GetComponent<Enemy> ().takeFireHit (activeDamage);
+			} else if (other.gameObject.tag == "AreaWall") {
+				if (UnityEngine.Random.Range (0, 2) == 0) {
+					freezePosition ();
+				} else {
+					Rigidbody2D rb = GetComponent<Rigidbody2D> ();
+					rb.velocity = new Vector2 (rb.velocity.x * -0.5f, 0.0f);
+				}
+			}
 		}
 	}
 
@@ -40,8 +44,17 @@ public class FireGlob : MonoBehaviour {
 		}
 	}
 
-	IEnumerator ExtinguishAfterTime(float time) {
-		yield return new WaitForSeconds(time);
+	private void freezePosition () {
+		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
+		rb.bodyType = RigidbodyType2D.Kinematic;
+		rb.velocity = Vector2.zero;
+		isAirborn = false;
+
+		StartCoroutine ("ExtinguishAfterTime");
+	}
+
+	IEnumerator ExtinguishAfterTime() {
+		yield return new WaitForSeconds(lifetime);
 
 		StartCoroutine ("Extinguish");
 	}
