@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private GameObject closestInteractive;
 	private GameObject beingCrafted;
+	private float burnImmunityTimer;
 	private float moveX;
 	private bool isAttacking;
 	private bool isDead;
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour {
 		activeSlot.setActive (true);
 		isAttacking = false;
 		isDead = false;
+		burnImmunityTimer = 0.0f;
 	}
 
 	// Update is called once per frame
@@ -79,6 +81,10 @@ public class PlayerController : MonoBehaviour {
 		}
 			
 		updateClosestInteractive ();
+
+		if (burnImmunityTimer > 0.0f) {
+			burnImmunityTimer -= Time.deltaTime;
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
@@ -455,6 +461,16 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		takeDamage (damage);
+		StartCoroutine ("damageFlash");
+	}
+
+	public void takeFireHit() {
+		if (burnImmunityTimer > 0.0f) {
+			return;
+		}
+
+		burnImmunityTimer = 1.0f;
+		takeDamage (1);
 		StartCoroutine ("damageFlash");
 	}
 
