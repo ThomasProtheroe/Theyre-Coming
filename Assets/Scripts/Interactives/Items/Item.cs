@@ -46,6 +46,8 @@ public class Item : Interactive {
 	public AudioClip breakSound;
 	public AudioClip craftOverrideSound;
 
+	private SpriteRenderer sprite;
+
 	[HideInInspector]
 	public GameObject player;
 	[HideInInspector]
@@ -57,6 +59,7 @@ public class Item : Interactive {
 		playerCon = player.GetComponent<PlayerController> ();
 		source = gameObject.GetComponent<AudioSource> ();
 		description = description.Replace ("\\n", "\n");
+		sprite = GetComponent<SpriteRenderer> ();
 	}
 	
 	// Update is called once per frame
@@ -100,6 +103,8 @@ public class Item : Interactive {
 			isThrown = false;
 			isBouncing = true;
 			gameObject.layer = 11;
+			sprite.sortingLayerName = "Items";
+			sprite.sortingOrder = 5;
 		}
 	}
 
@@ -155,7 +160,8 @@ public class Item : Interactive {
 		}
 			
 		gameObject.layer = 16;
-		GetComponent<SpriteRenderer> ().sortingLayerName = "Items";
+		sprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
+		sprite.sortingOrder = playerCon.playerSprite.sortingOrder - 1;
 
 		//disable pickup trigger, enable hit trigger
 		pickupCollider.enabled = false;
@@ -191,6 +197,9 @@ public class Item : Interactive {
 	public void moveToResting() {
 		transform.position = new Vector2 (transform.position.x, restingHeight);
 		transform.eulerAngles = new Vector3 (0, 0, restingRotation);
+
+		sprite.sortingLayerName = "Items";
+		sprite.sortingOrder = 5;
 	}
 
 	public void playCraftingSound(AudioClip overrideSound=null) {

@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\DescriptionPanel.cs" />
      <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Scripts\EnemyCorpse.cs" />
      <Compile Include="Assets\Scripts\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Interactives\Interactive.cs" />
