@@ -11,6 +11,10 @@ public class Enemy : MonoBehaviour {
 
 	private GameController gc;
 	private Animator anim;
+	[SerializeField]
+	private AnimatorOverrideController blindController;
+	[SerializeField]
+	private RuntimeAnimatorController defaultController;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
 	private GameObject player;
@@ -51,19 +55,23 @@ public class Enemy : MonoBehaviour {
 	private bool isStunned;
 	private bool isBurning;
 	private bool isBleeding;
+	private bool isBlind;
 	private bool isDead;
 	private float distanceToPlayer;
 
 	private bool walkSoundPlaying;
 	private bool prowlSoundPlaying;
 
-	private float burnTimer;
-	private float burnImmunityTimer;
-	private float bleedTimer;
+	private float burnTimer = 0.0f;
+	private float burnImmunityTimer = 0.0f;
+	private float bleedTimer = 0.0f;
+	private float blindTimer = 0.0f;
+	private float blindDuration = 20.0f;
 
 	// Use this for initialization
 	void Start () {
 		anim = gameObject.GetComponent<Animator> ();
+		defaultController = anim.runtimeAnimatorController;
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		enemySprite = gameObject.GetComponent<SpriteRenderer> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -71,9 +79,6 @@ public class Enemy : MonoBehaviour {
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		isMoving = false;
 		isAttacking = false;
-		burnTimer = 0.0f;
-		burnImmunityTimer = 0.0f;
-		bleedTimer = 0.0f;
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
@@ -150,6 +155,13 @@ public class Enemy : MonoBehaviour {
 				bleedTimer = bleedDamageInterval;
 				takeDamage (1);
 				StartCoroutine ("bleedDamageFlash");
+			}
+		}
+		if (isBlind) {
+			if (blindTimer > 0.0f) {
+				blindTimer -= Time.deltaTime;
+			} else {
+				endBlind ();
 			}
 		}
 	}
@@ -349,6 +361,19 @@ public class Enemy : MonoBehaviour {
 			bleedTimer = bleedDamageInterval;
 			bleedingPS.Play ();
 		}
+	}
+
+	public void setBlind() {
+		if (!isBlind) {
+			isBlind = true;
+			blindTimer = blindDuration;
+			anim.runtimeAnimatorController = blindController;
+		}
+	}
+
+	public void endBlind() {
+		isBlind = false;
+		anim.runtimeAnimatorController = defaultController;
 	}
 
 	public bool getIsDead() {

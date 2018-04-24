@@ -9,6 +9,7 @@ public class Weapon : Item {
 	public int knockback;
 	public int multiHit = 1;
 	public bool inflictsBleed;
+	public bool inflictsBlind;
 	public bool instantAttack;
 
 	public AudioClip swingSound;
@@ -110,6 +111,10 @@ public class Weapon : Item {
 
 		if (inflictsBleed) {
 			enemy.GetComponent<Enemy> ().setBleeding();
+		}
+
+		if (inflictsBlind) {
+			enemy.GetComponent<Enemy> ().setBlind();
 		}
 
 		if (isThrown && throwImpact) {
