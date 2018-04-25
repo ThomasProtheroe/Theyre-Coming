@@ -98,7 +98,9 @@ public class Enemy : MonoBehaviour {
 		}
 
 		if (!isStunned) {
-			if (isActive && !isAttacking && !isDead) {
+			if (isBlind) {
+
+			} else if (isActive && !isAttacking && !isDead) {
 				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
 					moveTowardsPlayer ();
 				} else {
@@ -316,7 +318,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void destroyEnemy() {
-		spawnCorpse ();
+		//spawnCorpse ();
 		Destroy (gameObject);
 	}
 
@@ -367,13 +369,13 @@ public class Enemy : MonoBehaviour {
 		if (!isBlind) {
 			isBlind = true;
 			blindTimer = blindDuration;
-			anim.runtimeAnimatorController = blindController;
+			anim.SetLayerWeight (1, 1.0f);
 		}
 	}
 
 	public void endBlind() {
 		isBlind = false;
-		anim.runtimeAnimatorController = defaultController;
+		anim.SetLayerWeight (1, 0.0f);
 	}
 
 	public bool getIsDead() {

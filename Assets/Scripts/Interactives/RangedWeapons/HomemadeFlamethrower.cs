@@ -22,11 +22,12 @@ public class HomemadeFlamethrower : RangedWeapon {
 			}
 
 			if (!stream.isEmitting) {
+				isAttacking = false;
 				if (ammunition <= 0) {
 					setEmpty ();
+				} else {
+					pilot.Play ();
 				}
-				isAttacking = false;
-				pilot.Play ();
 			}
 		}
 

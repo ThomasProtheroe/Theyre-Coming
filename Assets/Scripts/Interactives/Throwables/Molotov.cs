@@ -45,8 +45,8 @@ public class Molotov : Throwable {
 			Rigidbody2D rb = newGlob.GetComponent<Rigidbody2D> ();
 			rb.velocity = new Vector2 (UnityEngine.Random.Range(minXVel, maxXVel) * throwDirection, UnityEngine.Random.Range(minYVel, maxYVel));
 		}
-
-		//Play break sound somehow
+			
+		soundController.playPriorityOneShot (breakSound);
 
 		return true;
 	}

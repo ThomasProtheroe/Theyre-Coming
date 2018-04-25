@@ -47,6 +47,7 @@ public class Item : Interactive {
 	public AudioClip craftOverrideSound;
 
 	private SpriteRenderer sprite;
+	protected SoundController soundController;
 
 	[HideInInspector]
 	public GameObject player;
@@ -58,6 +59,7 @@ public class Item : Interactive {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerCon = player.GetComponent<PlayerController> ();
 		source = gameObject.GetComponent<AudioSource> ();
+		soundController = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		description = description.Replace ("\\n", "\n");
 		sprite = GetComponent<SpriteRenderer> ();
 	}
@@ -160,6 +162,10 @@ public class Item : Interactive {
 		}
 			
 		gameObject.layer = 16;
+		//Sometimes while manually instantiating prefabs Start() has not yet been called
+		if (!playerCon) {
+			Start ();
+		}
 		sprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
 		sprite.sortingOrder = playerCon.playerSprite.sortingOrder + 1;
 
