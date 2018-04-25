@@ -19,7 +19,7 @@ public class GlassBottle : Weapon {
 		rb.bodyType = RigidbodyType2D.Dynamic;
 		rb.velocity = new Vector2 (0f,0.5f);
 
-		item.GetComponent<AudioSource> ().PlayOneShot(item.breakSound);
+		soundController.playPriorityOneShot(item.breakSound);
 
 		return true;
 	}
