@@ -12,6 +12,7 @@ public class SoundController : MonoBehaviour {
 	private AudioSource[] enemyWalkSources;
 	private AudioSource[] enemyProwlSources;
 	private AudioSource[] enemyOneShotSources;
+	private AudioSource[] priorityOneShotSources;
 
 	private List<AudioClip> walkQueue = new List<AudioClip>();
 	private List<AudioClip> prowlQueue = new List<AudioClip>();
@@ -21,6 +22,7 @@ public class SoundController : MonoBehaviour {
 		enemyWalkSources = new AudioSource[queuedSourceMax];
 		enemyProwlSources = new AudioSource[queuedSourceMax];
 		enemyOneShotSources = new AudioSource[oneShotSouceMax];
+		priorityOneShotSources = new AudioSource[oneShotSouceMax];
 
 		for (int i = 0; i < queuedSourceMax; i++) {
 			enemyWalkSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
@@ -32,6 +34,7 @@ public class SoundController : MonoBehaviour {
 
 		for (int i = 0; i < oneShotSouceMax; i++) {
 			enemyOneShotSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
+			priorityOneShotSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 		}
 	}
 	
@@ -137,6 +140,18 @@ public class SoundController : MonoBehaviour {
 			}
 
 			enemyOneShotSources [i].PlayOneShot (requestedClip);
+			break;
+		}
+		//If we get to this point without playing the clip, then all sources are full and we ignore the play request
+	}
+
+	public void playPriorityOneShot(AudioClip requestedClip) {
+		for (int i = 0; i < priorityOneShotSources.Length; i++) {
+			if (priorityOneShotSources [i].isPlaying) {
+				continue;
+			}
+
+			priorityOneShotSources [i].PlayOneShot (requestedClip);
 			break;
 		}
 		//If we get to this point without playing the clip, then all sources are full and we ignore the play request
