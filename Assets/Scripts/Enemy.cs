@@ -11,10 +11,6 @@ public class Enemy : MonoBehaviour {
 
 	private GameController gc;
 	private Animator anim;
-	[SerializeField]
-	private AnimatorOverrideController blindController;
-	[SerializeField]
-	private RuntimeAnimatorController defaultController;
 	private Rigidbody2D rigidBody;
 	private SpriteRenderer enemySprite;
 	private GameObject player;
@@ -62,16 +58,20 @@ public class Enemy : MonoBehaviour {
 	private bool walkSoundPlaying;
 	private bool prowlSoundPlaying;
 
+	private float wanderTimer = 0.0f;
+	private int wanderDirection;
+	private int wanderTurnChance = 1;
+	private float wanderAttackTimer = 0.0f;
 	private float burnTimer = 0.0f;
 	private float burnImmunityTimer = 0.0f;
 	private float bleedTimer = 0.0f;
 	private float blindTimer = 0.0f;
 	private float blindDuration = 20.0f;
+	private float blindMoveModifier = 0.5f;
 
 	// Use this for initialization
 	void Start () {
 		anim = gameObject.GetComponent<Animator> ();
-		defaultController = anim.runtimeAnimatorController;
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		enemySprite = gameObject.GetComponent<SpriteRenderer> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -98,8 +98,19 @@ public class Enemy : MonoBehaviour {
 		}
 
 		if (!isStunned) {
-			if (isBlind) {
+			if (isBlind && !isAttacking) {
+				//Move randomly back and forth
+				if (wanderTimer > 0) {
+					wanderBlind ();
+				} else {
+					startWander ();
+				}
 
+				//Attack randomly
+				if (wanderAttackTimer <= 0) {
+					attack ();
+					wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
+				}
 			} else if (isActive && !isAttacking && !isDead) {
 				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
 					moveTowardsPlayer ();
@@ -160,6 +171,13 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 		if (isBlind) {
+			if (wanderTimer > 0 && !isAttacking) {
+				wanderTimer -= Time.deltaTime;
+			}
+			if (wanderAttackTimer > 0 && !isAttacking) {
+				wanderAttackTimer -= Time.deltaTime;
+			}
+
 			if (blindTimer > 0.0f) {
 				blindTimer -= Time.deltaTime;
 			} else {
@@ -170,6 +188,11 @@ public class Enemy : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.tag == "Enemy") {
+			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
+			if (enemy.isBlind && other == enemy.attackHitbox) {
+				takeHit (4, 0);
+			}
+
 			if (isBurning) {
 				Enemy otherEnemy = other.GetComponent<Enemy> ();
 				if (!otherEnemy.isBurning) {
@@ -177,10 +200,6 @@ public class Enemy : MonoBehaviour {
 				}
 			}
 		}
-	}
-
-	void OnParticleCollision(GameObject other) {
-
 	}
 
 	private void moveTowardsPlayer () {
@@ -233,6 +252,33 @@ public class Enemy : MonoBehaviour {
 			enemySprite.flipX = false;
 			attackHitbox.offset = new Vector2 (attackHitbox.offset.x * -1, 0);
 		}
+	}
+
+	void startWander() {
+		//Pick a direction to wander in
+		wanderDirection = UnityEngine.Random.Range (0, 2);
+		if (wanderDirection == 0) {
+			wanderDirection = -1;
+		}
+
+		//Face the direction enemy is moving
+		if (enemySprite.flipX && wanderDirection == -1) {
+			enemySprite.flipX = false;
+			attackHitbox.offset = new Vector2 (attackHitbox.offset.x * -1, 0);
+		} else if (!enemySprite.flipX && wanderDirection == 1) {
+			enemySprite.flipX = true;
+			attackHitbox.offset = new Vector2 (attackHitbox.offset.x * -1, 0);
+		}
+
+		//Start wandering
+		wanderTimer = UnityEngine.Random.Range (2.0f, 3.2f);
+	}
+
+	void wanderBlind() {
+		isMoving = true;
+		float currentSpeed = moveSpeed;
+		currentSpeed *= wanderDirection;
+		rigidBody.velocity = new Vector2 (currentSpeed, rigidBody.velocity.y);
 	}
 
 	void attack() {
@@ -369,12 +415,20 @@ public class Enemy : MonoBehaviour {
 		if (!isBlind) {
 			isBlind = true;
 			blindTimer = blindDuration;
+
+			moveSpeed -= blindMoveModifier;
+			startWander ();
 			anim.SetLayerWeight (1, 1.0f);
+		} else {
+			blindTimer = blindDuration;
 		}
 	}
 
 	public void endBlind() {
 		isBlind = false;
+		isMoving = false;
+		wanderTimer = 0.0f;
+		moveSpeed += blindMoveModifier;
 		anim.SetLayerWeight (1, 0.0f);
 	}
 
