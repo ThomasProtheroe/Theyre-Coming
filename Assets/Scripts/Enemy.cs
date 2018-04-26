@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour {
 	private float burnImmunityTimer = 0.0f;
 	private float bleedTimer = 0.0f;
 	private float blindTimer = 0.0f;
-	private float blindDuration = 20.0f;
+	private float blindDuration = 15.0f;
 	private float blindMoveModifier = 0.5f;
 
 	// Use this for initialization
@@ -82,6 +82,8 @@ public class Enemy : MonoBehaviour {
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
+
+		setBlind ();
 	}
 	
 	// Update is called once per frame
@@ -175,6 +177,7 @@ public class Enemy : MonoBehaviour {
 				wanderTimer -= Time.deltaTime;
 			}
 			if (wanderAttackTimer > 0 && !isAttacking) {
+				Debug.Log (wanderAttackTimer);
 				wanderAttackTimer -= Time.deltaTime;
 			}
 
@@ -199,6 +202,20 @@ public class Enemy : MonoBehaviour {
 					otherEnemy.setBurning ();
 				}
 			}
+		}
+	}
+
+	void OnCollisionStay2D(Collision2D other) {
+		if (other.gameObject.tag == "AreaWall") {
+			float wallPosition = other.gameObject.transform.position.x;
+			float diff = other.gameObject.GetComponent<BoxCollider2D> ().bounds.extents.x + bodyHitbox.bounds.extents.x;
+			var direction = transform.position - other.transform.position;
+			if (direction.x > 0) {
+				direction.x = 1;
+			} else {
+				direction.x = -1;
+			}
+			transform.position = new Vector3 (wallPosition + (diff * direction.x), transform.position.y);
 		}
 	}
 
@@ -298,10 +315,10 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public void takeHit(int damage, int knockback) {
+	public void takeHit(int damage, int knockback, bool noBlood=false) {
 		stopProwlSound ();
 		stopWalkSound ();
-		if (damage > 0) {
+		if (damage > 0 && !noBlood) {
 			var sh = bloodSprayPS.shape;
 			var main = bloodSprayPS.main;
 			int particleCount = 15;
@@ -418,6 +435,7 @@ public class Enemy : MonoBehaviour {
 
 			moveSpeed -= blindMoveModifier;
 			startWander ();
+			wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
 			anim.SetLayerWeight (1, 1.0f);
 		} else {
 			blindTimer = blindDuration;

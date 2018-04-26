@@ -33,8 +33,11 @@ public class PlayerController : MonoBehaviour {
 	public AudioClip[] hitSounds;
 	public AudioClip deathSound;
 
+	[HideInInspector]
 	public ItemSlot itemSlot1;
+	[HideInInspector]
 	public ItemSlot itemSlot2;
+	[HideInInspector]
 	public ItemSlot activeSlot;
 	public DescriptionPanel descriptionPanel;
 	[HideInInspector]
@@ -60,8 +63,11 @@ public class PlayerController : MonoBehaviour {
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
 
+		itemSlot1 = GameObject.FindGameObjectWithTag ("ItemSlot1").GetComponent<ItemSlot> ();
+		itemSlot2 = GameObject.FindGameObjectWithTag ("ItemSlot2").GetComponent<ItemSlot> ();
 		activeSlot = itemSlot1;
 		activeSlot.setActive (true);
+
 		isAttacking = false;
 		isDead = false;
 		burnImmunityTimer = 0.0f;
