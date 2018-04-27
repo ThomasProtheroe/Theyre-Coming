@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour {
 	/* Audio Components */
 	[HideInInspector]
 	public SoundController soundCon;
-	public AudioSource walkingSource;
 	public AudioSource vocalSource;
 	public AudioSource miscSource;
 	private AudioClip walkSound;
@@ -32,6 +31,8 @@ public class Enemy : MonoBehaviour {
 	/* Particle Systems */
 	[SerializeField]
 	private ParticleSystem bloodSprayPS;
+	[SerializeField]
+	private ParticleSystem splashPS;
 	[SerializeField]
 	private ParticleSystem bleedingPS;
 	[SerializeField]
@@ -60,13 +61,13 @@ public class Enemy : MonoBehaviour {
 
 	private float wanderTimer = 0.0f;
 	private int wanderDirection;
-	private int wanderTurnChance = 1;
 	private float wanderAttackTimer = 0.0f;
 	private float burnTimer = 0.0f;
 	private float burnImmunityTimer = 0.0f;
 	private float bleedTimer = 0.0f;
+	[SerializeField]
+	private float blindDuration;
 	private float blindTimer = 0.0f;
-	private float blindDuration = 15.0f;
 	private float blindMoveModifier = 0.5f;
 
 	// Use this for initialization
@@ -82,12 +83,11 @@ public class Enemy : MonoBehaviour {
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
-
-		setBlind ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log (isBlind);
 		if (player.transform.position.x > transform.position.x) {
 			distanceToPlayer = player.transform.position.x - transform.position.x;
 		} else {
@@ -177,7 +177,6 @@ public class Enemy : MonoBehaviour {
 				wanderTimer -= Time.deltaTime;
 			}
 			if (wanderAttackTimer > 0 && !isAttacking) {
-				Debug.Log (wanderAttackTimer);
 				wanderAttackTimer -= Time.deltaTime;
 			}
 
@@ -193,7 +192,8 @@ public class Enemy : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 			if (enemy.isBlind && other == enemy.attackHitbox) {
-				takeHit (4, 0);
+				float direction = transform.position.x - other.transform.position.x;
+				takeHit (4, 0, direction);
 			}
 
 			if (isBurning) {
@@ -315,7 +315,7 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public void takeHit(int damage, int knockback, bool noBlood=false) {
+	public void takeHit(int damage, int knockback, float direction, bool noBlood=false) {
 		stopProwlSound ();
 		stopWalkSound ();
 		if (damage > 0 && !noBlood) {
@@ -335,9 +335,20 @@ public class Enemy : MonoBehaviour {
 				particleCount = 20;
 				main.startLifetime = 0.6f;
 			}
+			float bloodDirection;
+			if (direction > 0) {
+				bloodDirection = 180;
+			} else {
+				bloodDirection = 0;
+			}
+			sh.rotation = new Vector3 (sh.rotation.x, direction, sh.rotation.z);
 			bloodSprayPS.Emit (particleCount);
 		}
 		if (!getIsDead ()) {
+			if (direction > 0) {
+				knockback *= -1;
+				Debug.Log (knockback);
+			}
 			StartCoroutine ("setHitFrame", knockback);
 			takeDamage (damage);
 		}
@@ -450,6 +461,12 @@ public class Enemy : MonoBehaviour {
 		anim.SetLayerWeight (1, 0.0f);
 	}
 
+	public void triggerSplash(Color color) {
+		var main = splashPS.main;
+		main.startColor = color;
+		splashPS.Play ();
+	}
+
 	public bool getIsDead() {
 		return isDead;
 	}
@@ -522,13 +539,13 @@ public class Enemy : MonoBehaviour {
 
 		anim.SetBool ("Knockback", true);
 
-		if (knockbackWeight > 0) {
+		if (knockbackWeight != 0) {
 			knockbackEnemy (knockbackWeight);
 		} else {
 			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
 		}
 
-		float knockbackTime = 0.15f + ((float)knockbackWeight / 100.0f);  //Calculate the actual time based on knockback stat
+		float knockbackTime = 0.17f + ((float)knockbackWeight / 100.0f);  //Calculate the actual time based on knockback stat
 		yield return new WaitForSeconds(knockbackTime);
 
 		anim.SetBool ("Knockback", false);
@@ -559,9 +576,6 @@ public class Enemy : MonoBehaviour {
 
 	private void knockbackEnemy(int knockbackWeight) {
 		float xVelocity = (float)knockbackWeight * 2.0f;
-		if (enemySprite.flipX) {
-			xVelocity *= -1;
-		}
 		rigidBody.velocity = new Vector2 (xVelocity, rigidBody.velocity.y);
 	} 
 }

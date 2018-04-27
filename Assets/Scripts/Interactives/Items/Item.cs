@@ -89,7 +89,8 @@ public class Item : Interactive {
 				if (throwImpact) {
 					source.PlayOneShot (throwImpact);
 				}
-				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback);
+				float direction = transform.position.x - other.transform.position.x;
+				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback, direction);
 				if ((state == 0) && (bloodySprite1 != null)) {
 					GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
 					state++;

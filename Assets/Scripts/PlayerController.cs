@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour {
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
 
+		gameCon = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		itemSlot1 = GameObject.FindGameObjectWithTag ("ItemSlot1").GetComponent<ItemSlot> ();
 		itemSlot2 = GameObject.FindGameObjectWithTag ("ItemSlot2").GetComponent<ItemSlot> ();
 		activeSlot = itemSlot1;

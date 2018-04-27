@@ -21,7 +21,8 @@ public class Weapon : Item {
 	new void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
 			if (other.gameObject.tag == "Enemy") {
-				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, knockback);
+				float direction = transform.position.x - other.transform.position.x;
+				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, knockback, direction);
 				onEnemyImpact (other.gameObject);
 			} else {
 				onTerrainImpact ();
@@ -37,7 +38,8 @@ public class Weapon : Item {
 				return;
 			}
 			hitCount ++;
-			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback);
+			float direction = player.transform.position.x - other.transform.position.x;
+			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction);
 			onEnemyImpact (other.gameObject);
 		}
 	}
@@ -60,7 +62,8 @@ public class Weapon : Item {
 					break;
 				}
 				hitCount ++;
-				collider.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback);
+				float direction = player.transform.position.x - collider.transform.position.x;
+				collider.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction);
 				onEnemyImpact (collider.gameObject);
 			}
 		}

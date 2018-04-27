@@ -17,7 +17,7 @@ public class SpikeTrap : Trap {
 
 	override public void trigger(GameObject victim) {
 		Enemy enemy = victim.GetComponent<Enemy> ();
-		enemy.takeHit (damage, 0, true);
+		enemy.takeHit (damage, 0, 0, true);
 		enemy.setBleeding ();
 		source.PlayOneShot (hitSound);
 

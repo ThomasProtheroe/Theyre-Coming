@@ -15,7 +15,7 @@ public class HeavyBoxTrap : Trap {
 	protected void OnTriggerEnter2D(Collider2D other) {
 		if (isFalling) {
 			if (other.gameObject.tag == "Enemy") {
-				other.gameObject.GetComponent<Enemy> ().takeHit (damage, 0);
+				other.gameObject.GetComponent<Enemy> ().takeHit (damage, 0, 0);
 				if (!hitSoundPlayed) {
 					hitSoundPlayed = true;
 					source.PlayOneShot (hitSound);
