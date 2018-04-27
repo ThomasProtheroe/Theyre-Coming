@@ -92,8 +92,8 @@ SuperSoakerFlamethrower,TapedSuperSoakerFull,Lighter,RangedWeapons/SuperSoakerFl
 SuperSoakerFlamethrower,TapedSuperSoakerFull,TapedLighter,RangedWeapons/SuperSoakerFlamethrower
 SuperSoakerFlamethrower,SuperSoakerFlamethrowerEmpty,GasCan,RangedWeapons/SuperSoakerFlamethrower
 SuperSoakerFlamethrower,SuperSoakerFlamethrowerEmpty,LighterFluid,RangedWeapons/SuperSoakerFlamethrower
-SpicyBlaster,SuperSoaker,Bleach,RangedWeapons/SpicyBlaster
-BleachBlaster,SuperSoaker,ReaperHotSauce,RangedWeapons/BleachBlaster
+SpicyBlaster,SuperSoaker,ReaperHotSauce,RangedWeapons/SpicyBlaster
+BleachBlaster,SuperSoaker,Bleach,RangedWeapons/BleachBlaster
 TapedSpicyBlaster,SpicyBlaster,DuctTape,RangedWeapons/TapedSpicyBlaster
 TapedBleachBlaster,BleachBlaster,DuctTape,RangedWeapons/TapedBleachBlaster
 TapedSpicyBlaster,TapedSuperSoaker,Bleach,RangedWeapons/TapedSpicyBlaster
@@ -107,3 +107,8 @@ MolotovUnlit,BottleGas,Rag,Items/MolotovUnlit
 MolotovUnlit,BottleRag,GasCan,Items/MolotovUnlit
 MolotovUnlit,BottleRag,LighterFluid,Items/MolotovUnlit
 Molotov,MolotovUnlit,Lighter,Throwables/Molotov
+Molotov,MolotovUnlit,TapedLighter,Throwables/Molotov
+TapedRemoteCar,RemoteCar,DuctTape,Items/TapedRemoteCar
+BladeWheels,TapedRemoteCar,GlassShards,Traps/BladeWheels
+BladeWheels,TapedRemoteCar,Nails,Traps/BladeWheels
+BladeWheels,RemoteCar,TapedShard,Traps/BladeWheels

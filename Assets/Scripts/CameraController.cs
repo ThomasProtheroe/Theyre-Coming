@@ -35,7 +35,6 @@ public class CameraController : MonoBehaviour {
 			gameObject.transform.position = Vector3.MoveTowards (gameObject.transform.position, targetPos, cameraSpeed * Time.deltaTime);
 
 			//Move parallax background
-
 			SpriteRenderer backgroundSprite = gameObject.GetComponentInChildren<SpriteRenderer> ();
 			backgroundSprite.transform.localPosition = new Vector3 (backgroundSprite.transform.localPosition.x + backgroundSpeed, backgroundSprite.transform.localPosition.y, backgroundSprite.transform.localPosition.z);
 		}
