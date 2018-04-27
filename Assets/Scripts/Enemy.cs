@@ -25,7 +25,9 @@ public class Enemy : MonoBehaviour {
 	private AudioClip walkSound;
 	private AudioClip prowlSound;
 	[SerializeField]
-	private AudioClip burnSound;
+	private AudioClip igniteSound;
+	[SerializeField]
+	private AudioClip burningSound;
 	private List<AudioClip> attackSounds;
 
 	/* Particle Systems */
@@ -58,6 +60,7 @@ public class Enemy : MonoBehaviour {
 
 	private bool walkSoundPlaying;
 	private bool prowlSoundPlaying;
+	private bool burnSoundPlaying;
 
 	private float wanderTimer = 0.0f;
 	private int wanderDirection;
@@ -87,7 +90,6 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (isBlind);
 		if (player.transform.position.x > transform.position.x) {
 			distanceToPlayer = player.transform.position.x - transform.position.x;
 		} else {
@@ -341,13 +343,12 @@ public class Enemy : MonoBehaviour {
 			} else {
 				bloodDirection = 0;
 			}
-			sh.rotation = new Vector3 (sh.rotation.x, direction, sh.rotation.z);
+			sh.rotation = new Vector3 (sh.rotation.x, bloodDirection, sh.rotation.z);
 			bloodSprayPS.Emit (particleCount);
 		}
 		if (!getIsDead ()) {
 			if (direction > 0) {
 				knockback *= -1;
-				Debug.Log (knockback);
 			}
 			StartCoroutine ("setHitFrame", knockback);
 			takeDamage (damage);
@@ -386,6 +387,7 @@ public class Enemy : MonoBehaviour {
 			foreach (ParticleSystem detailPS in burningDetailPS) {
 				detailPS.Stop ();
 			}
+			stopBurningSound ();
 		}
 
 		anim.SetTrigger ("Death");
@@ -427,7 +429,10 @@ public class Enemy : MonoBehaviour {
 			foreach (ParticleSystem detailPS in burningDetailPS) {
 				detailPS.Play ();
 			}
-			playBurnSound ();
+			playIgniteSound ();
+			if (!burnSoundPlaying) {
+				startBurningSound ();
+			}
 		}
 	}
 
@@ -520,12 +525,26 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	public void startBurningSound() {
+		if (!burnSoundPlaying) {
+			burnSoundPlaying = true;
+			soundCon.playBurning (burningSound);
+		}
+	}
+
+	public void stopBurningSound() {
+		if (burnSoundPlaying) {
+			burnSoundPlaying = false;
+			soundCon.stopBurning (burningSound);
+		}
+	}
+
 	private void playAttackSound() {
 		vocalSource.PlayOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
 	}
 
-	private void playBurnSound() {
-		miscSource.PlayOneShot (burnSound);
+	private void playIgniteSound() {
+		miscSource.PlayOneShot (igniteSound);
 	}
 
 	/**** Coroutines ****/ 
