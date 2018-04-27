@@ -5,31 +5,40 @@ using UnityEngine;
 public class SoundController : MonoBehaviour {
 
 	[SerializeField]
-	private int queuedSourceMax;
+	private int enemyQueuedSourceMax;
+	[SerializeField]
+	private int burningSourceMax;
 	[SerializeField]
 	private int oneShotSouceMax;
 
 	private AudioSource[] enemyWalkSources;
 	private AudioSource[] enemyProwlSources;
+	private AudioSource[] burningSources;
 	private AudioSource[] enemyOneShotSources;
 	private AudioSource[] priorityOneShotSources;
 
 	private List<AudioClip> walkQueue = new List<AudioClip>();
 	private List<AudioClip> prowlQueue = new List<AudioClip>();
+	private List<AudioClip> burningQueue = new List<AudioClip>();
 
 	// Use this for initialization
 	void Start () {
-		enemyWalkSources = new AudioSource[queuedSourceMax];
-		enemyProwlSources = new AudioSource[queuedSourceMax];
+		enemyWalkSources = new AudioSource[enemyQueuedSourceMax];
+		enemyProwlSources = new AudioSource[enemyQueuedSourceMax];
+		burningSources = new AudioSource[burningSourceMax];
 		enemyOneShotSources = new AudioSource[oneShotSouceMax];
 		priorityOneShotSources = new AudioSource[oneShotSouceMax];
 
-		for (int i = 0; i < queuedSourceMax; i++) {
+		for (int i = 0; i < enemyQueuedSourceMax; i++) {
 			enemyWalkSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 			enemyProwlSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 
 			enemyWalkSources [i].loop = true;
 			enemyProwlSources [i].loop = true;
+		}
+
+		for (int i = 0; i < burningSourceMax; i++) {
+			burningSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 		}
 
 		for (int i = 0; i < oneShotSouceMax; i++) {
@@ -132,6 +141,52 @@ public class SoundController : MonoBehaviour {
 			}
 		}
 	}
+
+	public void playBurning(AudioClip request) {
+		bool played = false;
+		for (int i = 0; i < burningSources.Length; i++) {
+			if (burningSources [i].isPlaying) {
+				continue;
+			}
+
+			burningSources [i].clip = request;
+			burningSources [i].Play ();
+			played = true;
+			break;
+		}
+
+		//If we didn't have a free source to play the clip, queue it 
+		if (!played) {
+			queueRequest (request, burningQueue);
+		}
+	}
+
+	public void stopBurning(AudioClip clip) {
+		bool found = false;
+		for (int i = 0; i < burningSources.Length; i++) {
+			//We don't actually care if we ge tthe same source the request is playing on, as long as it is the same clip
+			if (burningSources [i].isPlaying && burningSources [i].clip == clip) {
+				found = true;
+				burningSources [i].Stop ();
+				burningSources [i].clip = null;
+
+				playNextQueued (burningQueue, burningSources [i]);
+				break;
+			}
+		}
+
+		if (!found) {
+			for (int i = 0; i < burningQueue.Count; i++) {
+				if (burningQueue [i] != clip) {
+					continue;
+				}
+
+				burningQueue.RemoveAt (i);
+				break;
+			}
+		}
+	}
+
 
 	public void playEnemyOneShot(AudioClip requestedClip) {
 		for (int i = 0; i < enemyOneShotSources.Length; i++) {

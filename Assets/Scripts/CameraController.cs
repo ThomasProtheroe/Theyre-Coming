@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void LateUpdate () {
+	void FixedUpdate () {
 		float backgroundSpeed = (cameraSpeed * Time.deltaTime) / backgroundSpeedDivisor;
 
 		if (player.transform.position.x > gameObject.transform.position.x) {
