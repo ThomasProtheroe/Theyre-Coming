@@ -97,8 +97,13 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
 			nearInteractives.Add (other.gameObject);
-		} else if (other.gameObject.tag == "Enemy" && other == other.gameObject.GetComponent<Enemy> ().attackHitbox && !isInvulnerable) {
-			takeHit (1);
+		} else if (other.gameObject.tag == "Enemy") {
+			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
+			if (other == enemy.attackHitbox && !isInvulnerable && !enemy.hitPlayer) {
+				enemy.hitPlayer = true;
+				takeHit (enemy.attackDamage);
+			}
+
 		}
 	}
 
