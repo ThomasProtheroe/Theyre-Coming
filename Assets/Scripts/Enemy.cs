@@ -44,10 +44,14 @@ public class Enemy : MonoBehaviour {
 
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
+	private float distanceToPlayer;
 	public float burnDamageInterval = 1.0f;
 	public float bleedDamageInterval = 1.0f;
 	public int health = 10;
+	public int attackDamage = 1;
+	public bool hitPlayer;
 	public bool isInvunlerable;
+
 	private bool isActive;
 	private bool isMoving;
 	private bool isAttacking;
@@ -56,7 +60,6 @@ public class Enemy : MonoBehaviour {
 	private bool isBleeding;
 	private bool isBlind;
 	private bool isDead;
-	private float distanceToPlayer;
 
 	private bool walkSoundPlaying;
 	private bool prowlSoundPlaying;
@@ -86,6 +89,8 @@ public class Enemy : MonoBehaviour {
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
+
+		StartCoroutine ("pushEnemiesAway");
 	}
 	
 	// Update is called once per frame
@@ -204,8 +209,22 @@ public class Enemy : MonoBehaviour {
 					otherEnemy.setBurning ();
 				}
 			}
+		} 
+	}
+
+	/*
+	void OnTriggerStay2D (Collider2D other) {
+		if (other.gameObject.tag == "Enemy" && other == other.gameObject.GetComponent<Enemy>().proximityHitbox) {
+			Debug.Log ("enemy collision");
+			float diff = 0.005f;
+			float direction = transform.position.x - other.gameObject.transform.position.x;
+			if (direction < 0) {
+				diff *= -1;
+			}
+			transform.position = new Vector3(transform.position.x + diff, transform.position.y, transform.position.z);
 		}
 	}
+	*/
 
 	void OnCollisionStay2D(Collision2D other) {
 		if (other.gameObject.tag == "AreaWall") {
@@ -240,7 +259,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void move() {
-		if (distanceToPlayer > attackRange && !isMoving) {
+		if (distanceToPlayer > attackRange) {
 			isMoving = true;
 			float currentSpeed = moveSpeed;
 			if (!enemySprite.flipX) {
@@ -301,6 +320,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void attack() {
+		hitPlayer = false;
 		playAttackSound ();
 		anim.SetTrigger ("Attack");
 		isAttacking = true;
@@ -592,6 +612,29 @@ public class Enemy : MonoBehaviour {
 			yield return null;
 		}
 	}
+		
+	IEnumerator pushEnemiesAway() {
+		Collider2D[] colliders = new Collider2D[100];
+		ContactFilter2D filter = new ContactFilter2D ();
+		filter.useTriggers = true;
+		proximityHitbox.OverlapCollider(filter, colliders);
+		foreach (Collider2D collider in colliders) {
+			if (collider && collider.gameObject.tag == "Enemy" && collider == collider.gameObject.GetComponent<Enemy> ().proximityHitbox) {
+				Debug.Log ("triggered");
+				float diff = 0.01f;
+				float direction = transform.position.x - collider.gameObject.transform.position.x;
+				if (direction < 0) {
+					diff *= -1;
+				}
+				transform.position = new Vector3(transform.position.x + diff, transform.position.y, transform.position.z);
+			}
+		}
+
+		yield return new WaitForSeconds(0.1f);
+
+		StartCoroutine ("pushEnemiesAway");
+	}
+
 
 	private void knockbackEnemy(int knockbackWeight) {
 		float xVelocity = (float)knockbackWeight * 2.0f;

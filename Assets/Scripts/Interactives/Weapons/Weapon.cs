@@ -32,8 +32,8 @@ public class Weapon : Item {
 			isBouncing = true;
 			gameObject.layer = 11;
 		}
-
 		if (isAttacking && hitWindowActive && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvunlerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
+			
 			if (!canHit ()) {
 				return;
 			}
@@ -51,22 +51,8 @@ public class Weapon : Item {
 	public void attack() {
 		Animator anim = GetComponent<Animator> ();
 		isAttacking = true;
-		hitCount = 0;
-		anim.SetTrigger ("Attack");
 
-		Collider2D[] colliders = new Collider2D[10];
-		hitCollider.OverlapCollider(new ContactFilter2D(), colliders);
-		foreach (Collider2D collider in colliders) {
-			if (collider && instantAttack && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().isInvunlerable&& !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
-				if (!canHit ()) {
-					break;
-				}
-				hitCount ++;
-				float direction = player.transform.position.x - collider.transform.position.x;
-				collider.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction);
-				onEnemyImpact (collider.gameObject);
-			}
-		}
+		anim.SetTrigger ("Attack");
 	}
 
 	protected void playAttackSound() {
@@ -77,6 +63,21 @@ public class Weapon : Item {
 
 	protected void startHitWindow() {
 		hitWindowActive = true;
+		//Hit any enemies inside the hitbox when it's activated
+		hitCount = 0;
+		Collider2D[] colliders = new Collider2D[10];
+		hitCollider.OverlapCollider(new ContactFilter2D(), colliders);
+		foreach (Collider2D collider in colliders) {
+			if (collider && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().isInvunlerable&& !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
+				if (!canHit ()) {
+					break;
+				}
+				hitCount ++;
+				float direction = player.transform.position.x - collider.transform.position.x;
+				collider.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction);
+				onEnemyImpact (collider.gameObject);
+			}
+		}
 	}
 
 	protected void endHitWindow() {
