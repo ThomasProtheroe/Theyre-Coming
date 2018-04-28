@@ -83,5 +83,6 @@ public class HeavyBoxTrap : Trap {
 
 		Rigidbody2D body = GetComponent<Rigidbody2D>();
 		body.bodyType = RigidbodyType2D.Dynamic;
+		body.gravityScale = 2.0f;
 	}
 }

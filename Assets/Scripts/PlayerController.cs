@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour {
 
 
 	void checkUse() {
-		if (Input.GetButtonDown ("use") && !Input.GetButton("down")) {
+		if (Input.GetButtonDown ("use") && Input.GetAxis ("Vertical") >= 0) {
 			rigidBody.velocity = new Vector2 (0, 0);
 			anim.SetInteger("State", 0);
 			heldItem.GetComponent<Item>().use ();
@@ -266,7 +266,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	bool checkThrow() {
-		if (Input.GetButton("up") && Input.GetButtonDown("use")) {
+		if (Input.GetAxis ("Vertical") > 0 && Input.GetButtonDown("use")) {
 			Item item = heldItem.GetComponent<Item> ();
 			item.disableAnimator ();
 			item.playThrowSound ();
@@ -331,7 +331,7 @@ public class PlayerController : MonoBehaviour {
 	}
 		
 	void checkCraft() {
-		if (Input.GetButton ("down") && Input.GetButtonDown ("use")) {
+		if (Input.GetAxis ("Vertical") < 0 && Input.GetButtonDown ("interact")) {
 			StartCoroutine ("craftItem");
 		}
 	}
