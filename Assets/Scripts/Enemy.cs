@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour {
 	private AudioClip igniteSound;
 	[SerializeField]
 	private AudioClip burningSound;
+	[SerializeField]
+	private AudioClip attackImpactSound;
 	private List<AudioClip> attackSounds;
 
 	/* Particle Systems */
@@ -200,6 +202,8 @@ public class Enemy : MonoBehaviour {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 			if (enemy.isBlind && other == enemy.attackHitbox) {
 				float direction = transform.position.x - other.transform.position.x;
+				//Invoke ("playAttackImpactSound", 0.4f);
+				playAttackImpactSound();
 				takeHit (4, 0, direction);
 			}
 
@@ -211,20 +215,6 @@ public class Enemy : MonoBehaviour {
 			}
 		} 
 	}
-
-	/*
-	void OnTriggerStay2D (Collider2D other) {
-		if (other.gameObject.tag == "Enemy" && other == other.gameObject.GetComponent<Enemy>().proximityHitbox) {
-			Debug.Log ("enemy collision");
-			float diff = 0.005f;
-			float direction = transform.position.x - other.gameObject.transform.position.x;
-			if (direction < 0) {
-				diff *= -1;
-			}
-			transform.position = new Vector3(transform.position.x + diff, transform.position.y, transform.position.z);
-		}
-	}
-	*/
 
 	void OnCollisionStay2D(Collision2D other) {
 		if (other.gameObject.tag == "AreaWall") {
@@ -557,6 +547,10 @@ public class Enemy : MonoBehaviour {
 			burnSoundPlaying = false;
 			soundCon.stopBurning (burningSound);
 		}
+	}
+
+	public void playAttackImpactSound() {
+		miscSource.PlayOneShot(attackImpactSound);
 	}
 
 	private void playAttackSound() {
