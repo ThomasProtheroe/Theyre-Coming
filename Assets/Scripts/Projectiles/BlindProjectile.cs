@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlindProjectile : MonoBehaviour {
 
 	public float lifetime;
+	public bool destroyOnContact;
 	public Color color;
 
 	// Update is called once per frame
@@ -21,6 +22,7 @@ public class BlindProjectile : MonoBehaviour {
 			if (!enemy.isInvunlerable && !enemy.getIsDead ()) {
 				enemy.triggerSplash (color);
 				enemy.setBlind ();
+				Destroy (gameObject);
 			}
 		}
 	}

@@ -486,6 +486,10 @@ public class Enemy : MonoBehaviour {
 		return isDead;
 	}
 
+	public bool getIsBurning() {
+		return isBurning;
+	}
+
 	public Area getCurrentArea() {
 		return currentArea;
 	}
@@ -614,7 +618,6 @@ public class Enemy : MonoBehaviour {
 		proximityHitbox.OverlapCollider(filter, colliders);
 		foreach (Collider2D collider in colliders) {
 			if (collider && collider.gameObject.tag == "Enemy" && collider == collider.gameObject.GetComponent<Enemy> ().proximityHitbox) {
-				Debug.Log ("triggered");
 				float diff = 0.01f;
 				float direction = transform.position.x - collider.gameObject.transform.position.x;
 				if (direction < 0) {
