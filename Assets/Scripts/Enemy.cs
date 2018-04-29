@@ -29,6 +29,8 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	private AudioClip burningSound;
 	[SerializeField]
+	private AudioClip splashSound;
+	[SerializeField]
 	private AudioClip attackImpactSound;
 	private List<AudioClip> attackSounds;
 
@@ -480,6 +482,7 @@ public class Enemy : MonoBehaviour {
 		var main = splashPS.main;
 		main.startColor = color;
 		splashPS.Play ();
+		playSplashSound ();
 	}
 
 	public bool getIsDead() {
@@ -563,6 +566,10 @@ public class Enemy : MonoBehaviour {
 
 	private void playIgniteSound() {
 		miscSource.PlayOneShot (igniteSound);
+	}
+
+	private void playSplashSound() {
+		soundCon.playSpash (splashSound);
 	}
 
 	/**** Coroutines ****/ 
