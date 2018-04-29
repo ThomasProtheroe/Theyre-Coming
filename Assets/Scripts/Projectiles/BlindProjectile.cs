@@ -22,7 +22,9 @@ public class BlindProjectile : MonoBehaviour {
 			if (!enemy.isInvunlerable && !enemy.getIsDead ()) {
 				enemy.triggerSplash (color);
 				enemy.setBlind ();
-				Destroy (gameObject);
+				if (destroyOnContact) {
+					Destroy (gameObject);
+				}
 			}
 		}
 	}

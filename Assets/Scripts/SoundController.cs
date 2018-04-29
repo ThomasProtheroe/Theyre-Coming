@@ -9,23 +9,33 @@ public class SoundController : MonoBehaviour {
 	[SerializeField]
 	private int burningSourceMax;
 	[SerializeField]
+	private int splashSourceMax;
+	[SerializeField]
 	private int oneShotSouceMax;
-
+	//Audio Sources
 	private AudioSource[] enemyWalkSources;
 	private AudioSource[] enemyProwlSources;
 	private AudioSource[] burningSources;
+	private AudioSource[] splashSources;
 	private AudioSource[] enemyOneShotSources;
 	private AudioSource[] priorityOneShotSources;
 
+	//Queues
 	private List<AudioClip> walkQueue = new List<AudioClip>();
 	private List<AudioClip> prowlQueue = new List<AudioClip>();
 	private List<AudioClip> burningQueue = new List<AudioClip>();
+
+	//Timers
+	[SerializeField]
+	private float splashInterval;
+	private float splashTimer;
 
 	// Use this for initialization
 	void Start () {
 		enemyWalkSources = new AudioSource[enemyQueuedSourceMax];
 		enemyProwlSources = new AudioSource[enemyQueuedSourceMax];
 		burningSources = new AudioSource[burningSourceMax];
+		splashSources = new AudioSource[splashSourceMax];
 		enemyOneShotSources = new AudioSource[oneShotSouceMax];
 		priorityOneShotSources = new AudioSource[oneShotSouceMax];
 
@@ -41,15 +51,20 @@ public class SoundController : MonoBehaviour {
 			burningSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 		}
 
+		for (int i = 0; i < splashSourceMax; i++) {
+			splashSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
+		}
+
 		for (int i = 0; i < oneShotSouceMax; i++) {
 			enemyOneShotSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 			priorityOneShotSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void Update() {
+		if (splashTimer > 0) {
+			splashTimer -= Time.deltaTime;
+		}
 	}
 
 	public void playEnemyWalk(AudioClip request) {
@@ -184,6 +199,24 @@ public class SoundController : MonoBehaviour {
 				burningQueue.RemoveAt (i);
 				break;
 			}
+		}
+	}
+
+	public void playSpash(AudioClip clip) {
+		if (splashTimer > 0) {
+			return;
+		}
+
+		for (int i = 0; i < splashSources.Length; i++) {
+			//We don't actually care if we ge tthe same source the request is playing on, as long as it is the same clip
+			if (splashSources [i].isPlaying) {
+				continue;
+			}
+
+			splashSources [i].clip = clip;
+			splashSources [i].Play ();
+			splashTimer = splashInterval;
+			break;
 		}
 	}
 

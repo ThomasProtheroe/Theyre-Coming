@@ -50,5 +50,6 @@ public class BlindSquirtGun : RangedWeapon {
 		bp.GetComponent<Rigidbody2D> ().velocity = new Vector2 (speed, 0.0f);
 		bp.lifetime = 0.75f;
 		bp.color = splashColor;
+		bp.destroyOnContact = true;
 	}
 }
