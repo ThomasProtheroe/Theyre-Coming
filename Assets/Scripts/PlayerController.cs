@@ -103,7 +103,6 @@ public class PlayerController : MonoBehaviour {
 				enemy.hitPlayer = true;
 				takeHit (enemy.attackDamage);
 			}
-
 		}
 	}
 
@@ -111,6 +110,15 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
 			other.GetComponent<Interactive> ().disableHighlight ();
 			nearInteractives.Remove(other.gameObject);
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D other) {
+		if (other.gameObject.tag == "Enemy") {
+			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
+			if (enemy.getIsBurning() && other == enemy.proximityHitbox && burnImmunityTimer <= 0.0f && !isInvulnerable) {
+				takeFireHit ();
+			}
 		}
 	}
 
@@ -331,7 +339,7 @@ public class PlayerController : MonoBehaviour {
 	}
 		
 	void checkCraft() {
-		if (Input.GetAxis ("Vertical") < 0 && Input.GetButtonDown ("interact")) {
+		if (Input.GetAxis ("Vertical") < 0 && (Input.GetButtonDown ("interact") || Input.GetButtonDown ("use"))) {
 			StartCoroutine ("craftItem");
 		}
 	}
