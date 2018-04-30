@@ -11,13 +11,24 @@ public class Transition : Interactive {
 	[HideInInspector]
 	public Trap readiedTrap;
 
+	[SerializeField]
+	private Collider2D safeZone;
+	[SerializeField]
+	private Transform[] buffers;
 	private Animator anim;
 	private GameObject player;
 	private GameObject camera;
 	private AudioSource source;
 	private GameController gc;
 
+	[SerializeField]
+	private float safeZoneClearCooldown;
+	private float safeZoneClearTimer;
+	[SerializeField]
+	private float enemyBufferOffset;
+
 	public bool inUse;
+	public bool inUseByPlayer;
 
 	// Use this for initialization
 	void Start () {
@@ -29,9 +40,10 @@ public class Transition : Interactive {
 		inUse = false;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	void Update() {
+		if (safeZoneClearTimer > 0) {
+			safeZoneClearTimer -= Time.deltaTime;
+		}
 	}
 
 	public void playerTravel() {
@@ -54,6 +66,30 @@ public class Transition : Interactive {
 			source.clip = closeSound;
 			source.Play ();
 		}
+	}
+
+	private void clearSafeZone() {
+		Collider2D[] colliders = new Collider2D[200];
+		safeZone.OverlapCollider(new ContactFilter2D(), colliders);
+		foreach (Collider2D collider in colliders) {
+			if (collider && collider.gameObject.tag == "Enemy") {
+				//We need to activate any nearby enemies since they will have gone into hibernation while waiting for the player
+				collider.gameObject.GetComponent<Enemy> ().activate();
+
+				if (safeZoneClearTimer > 0) {
+					continue;
+				}
+
+				if (!collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
+					Transform buffer = buffers[UnityEngine.Random.Range(0, buffers.Length)];
+					float offset = UnityEngine.Random.Range (enemyBufferOffset * -1, enemyBufferOffset);
+					collider.transform.position = new Vector3 (buffer.position.x + offset, collider.transform.position.y, collider.transform.position.z);
+				}
+			}
+		}
+
+		safeZoneClearTimer = safeZoneClearCooldown;
+		sibling.safeZoneClearTimer = sibling.safeZoneClearCooldown;
 	}
 
 	override public void disableHighlight() {
@@ -80,6 +116,9 @@ public class Transition : Interactive {
 		SpriteRenderer itemSprite = null;
 		SpriteRenderer[] handsSprites = null;
 		Color originalItemColor = new Color(255f, 255f, 255f, 255f);
+
+		inUseByPlayer = true;
+		sibling.inUseByPlayer = true;
 
 		playOpenSound ();
 
@@ -125,6 +164,8 @@ public class Transition : Interactive {
 
 		yield return new WaitForSeconds (0.35f);
 
+		sibling.clearSafeZone ();
+
 		playCloseSound ();
 
 		//Trigger item specific travel effects
@@ -152,6 +193,9 @@ public class Transition : Interactive {
 		parallax.transform.localPosition = new Vector3 (0.0f, -1.5f, 10.0f);
 
 		gc.clearCorpses ();
+
+		inUseByPlayer = false;
+		sibling.inUseByPlayer = false;
 
 		playerCon.isBusy = false;
 		playerCon.isInvulnerable = false;

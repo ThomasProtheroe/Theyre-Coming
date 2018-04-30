@@ -65,10 +65,10 @@ public class Weapon : Item {
 		hitWindowActive = true;
 		//Hit any enemies inside the hitbox when it's activated
 		hitCount = 0;
-		Collider2D[] colliders = new Collider2D[10];
+		Collider2D[] colliders = new Collider2D[50];
 		hitCollider.OverlapCollider(new ContactFilter2D(), colliders);
 		foreach (Collider2D collider in colliders) {
-			if (collider && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().isInvunlerable&& !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
+			if (collider && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().isInvunlerable && !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
 				if (!canHit ()) {
 					break;
 				}
