@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject craftingCloud;
 	public Sprite deathSprite;
 	public Area currentArea;
+	[HideInInspector]
 	public GameController gameCon;
 
 	public AudioClip[] hitSounds;
@@ -39,7 +40,6 @@ public class PlayerController : MonoBehaviour {
 	public ItemSlot itemSlot2;
 	[HideInInspector]
 	public ItemSlot activeSlot;
-	public DescriptionPanel descriptionPanel;
 	[HideInInspector]
 	public SpriteRenderer playerSprite;
 
@@ -55,6 +55,17 @@ public class PlayerController : MonoBehaviour {
 	private bool isDead;
 	private bool isCrafting;
 	private bool handsFlipped;
+	[SerializeField]
+	private bool startLeft;
+
+	//Player input storage
+	private bool cinematicControl;
+	public float moveInput;
+	public float verticalInput;
+	public bool useInput;
+	public bool interactInput;
+	public bool swapInput;
+	public bool dropInput;
 
 	void Start() {
 		anim = gameObject.GetComponent<Animator> ();
@@ -72,10 +83,18 @@ public class PlayerController : MonoBehaviour {
 		isAttacking = false;
 		isDead = false;
 		burnImmunityTimer = 0.0f;
+
+		if (startLeft) {
+			flipPlayer ();
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
+		if (!cinematicControl) {
+			getPlayerInput ();
+		}
+
 		if (heldItem) {
 			isAttacking = heldItem.GetComponent<Item> ().isAttacking;
 		} else {
@@ -120,6 +139,15 @@ public class PlayerController : MonoBehaviour {
 				takeFireHit ();
 			}
 		}
+	}
+
+	void getPlayerInput() {
+		moveInput = Input.GetAxis ("Horizontal");
+		verticalInput = Input.GetAxis ("Vertical");
+		useInput = Input.GetButtonDown ("use");
+		interactInput = Input.GetButtonDown ("interact");
+		swapInput = Input.GetButtonDown ("swap");
+		dropInput = Input.GetButtonDown ("drop");
 	}
 
 	void checkPlayerInput() {
@@ -183,8 +211,6 @@ public class PlayerController : MonoBehaviour {
 
 
 	void playerMove () {
-		float moveInput = Input.GetAxis ("Horizontal");
-
 		if (moveInput > 0.0f) {
 			moveX = 1.0f;
 			handsAnim.SetBool ("Walking", true);
@@ -212,7 +238,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void flipPlayer() {
+	public void flipPlayer() {
 		playerSprite.flipX = !playerSprite.flipX;
 
 		Vector3 scale = heldItemParent.transform.localScale;
@@ -266,7 +292,7 @@ public class PlayerController : MonoBehaviour {
 
 
 	void checkUse() {
-		if (Input.GetButtonDown ("use") && Input.GetAxis ("Vertical") >= 0) {
+		if (useInput && verticalInput == 0) {
 			rigidBody.velocity = new Vector2 (0, 0);
 			anim.SetInteger("State", 0);
 			heldItem.GetComponent<Item>().use ();
@@ -274,7 +300,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	bool checkThrow() {
-		if (Input.GetAxis ("Vertical") > 0 && Input.GetButtonDown("use")) {
+		if (verticalInput > 0 && useInput) {
 			Item item = heldItem.GetComponent<Item> ();
 			item.disableAnimator ();
 			item.playThrowSound ();
@@ -317,7 +343,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPickup() {
-		if (Input.GetButtonDown ("interact") && closestInteractive && closestInteractive.tag == "Item") {
+		if (interactInput && closestInteractive && closestInteractive.tag == "Item") {
 			nearInteractives.Remove (closestInteractive);
 			heldItem = closestInteractive;
 			heldItem.transform.parent = heldItemParent.transform;
@@ -332,20 +358,20 @@ public class PlayerController : MonoBehaviour {
 			//Update UI
 			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
 			if (itemController.description != "") {
-				descriptionPanel.showDescription (itemController.description);
+				gameCon.showDescription (itemController.description);
 			}
 
 		}
 	}
 		
 	void checkCraft() {
-		if (Input.GetAxis ("Vertical") < 0 && (Input.GetButtonDown ("interact") || Input.GetButtonDown ("use"))) {
+		if (verticalInput < 0 && (interactInput || useInput)) {
 			StartCoroutine ("craftItem");
 		}
 	}
 
 	void checkSwapItem () {
-		if (Input.GetButtonDown ("swap")) {
+		if (swapInput) {
 			if (heldItem) {
 				heldItem.GetComponent<Item> ().playSwappingSound ();
 			}
@@ -392,7 +418,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkDrop() {
-		if (Input.GetButtonDown ("drop")) {
+		if (dropInput) {
 			heldItem.GetComponent<Item> ().dropItem ();
 
 			alignHands ();
@@ -402,12 +428,12 @@ public class PlayerController : MonoBehaviour {
 
 			//Update UI box
 			activeSlot.setEmpty();
-			descriptionPanel.hideDescription ();
+			gameCon.hideDescription ();
 		}
 	}
 
 	void checkTravel() {
-		if (Input.GetButtonDown ("interact") && closestInteractive && closestInteractive.tag == "Transition") {
+		if (interactInput && closestInteractive && closestInteractive.tag == "Transition") {
 			if (closestInteractive.GetComponent<Transition> ().inUse) {
 				return;
 			}
@@ -511,6 +537,10 @@ public class PlayerController : MonoBehaviour {
 		source.PlayOneShot (hitSounds [Random.Range (0, hitSounds.Length - 1)]);
 	}
 
+	public void enableCinematicControl(bool flag) {
+		cinematicControl = flag;
+	}
+
 	IEnumerator damageFlash() {
 		//Turn red over time
 		for (float f = 1f; f >= 0; f -= 0.2f) {
@@ -590,7 +620,7 @@ public class PlayerController : MonoBehaviour {
 			//Update UI box
 			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
 			if (itemCon.description != "") {
-				descriptionPanel.showDescription (itemCon.description);
+				gameCon.showDescription (itemCon.description);
 			}
 		}
 	}

@@ -64,7 +64,6 @@ public class SpikeTrap : Trap {
 
 		//Update UI box
 		playerCon.activeSlot.setEmpty();
-		playerCon.descriptionPanel.hideDescription ();
 	}
 
 	public void moveToDeployPos () {

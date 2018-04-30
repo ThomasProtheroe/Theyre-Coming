@@ -66,7 +66,6 @@ public class HeavyBoxTrap : Trap {
 
 		//Update UI box
 		playerCon.activeSlot.setEmpty ();
-		playerCon.descriptionPanel.hideDescription ();
 	}
 
 	public void moveToDeployPos () {

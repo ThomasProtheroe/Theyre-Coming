@@ -10,9 +10,22 @@ public class GameController : MonoBehaviour {
 	public int prepTime;
 	public Enemy enemy;
 	public GameObject blackFade;
-	public Text gameOverText;
-	public Text timerText;
+	[SerializeField]
+	private Text gameOverText;
+	[SerializeField]
+	private Text timerText;
+	[SerializeField]
+	private Text skipText;
+	[SerializeField]
+	private DialogPanel dialogPanel;
+	[SerializeField]
+	private DescriptionPanel descriptionPanel;
+	[SerializeField]
+	private Sprite[] dialogSprites;
+	[SerializeField]
+	private AudioClip[] cinematicSounds;
 
+	public AudioSource source;
 	public MusicController musicPlayer;
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
@@ -31,9 +44,11 @@ public class GameController : MonoBehaviour {
 	private List<Area> searchedAreas = new List<Area> ();
 
 	private GameObject player;
+	private PlayerController playerCon;
 	private SpawnInstance nextSpawn;
 	private float timer;
 	private string phase;
+	private string currentCinematic;
 	private string devMode;
 	[SerializeField]
 	private int maxCorpseCount;
@@ -43,6 +58,8 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+		playerCon = player.GetComponent<PlayerController> ();
+		source = GetComponent<AudioSource> ();
 
 		SpawnMap.rebuildMap ();
 
@@ -66,9 +83,7 @@ public class GameController : MonoBehaviour {
 
 		timer = 0.0f;
 		if (devMode == "false") {
-			changePhase("prep");
-			timerText.enabled = true;
-			nextSpawn = SpawnMap.getNextSpawn ();
+			startIntro ();
 		} else {
 			changePhase("siege");
 			onSiegePhase ();
@@ -97,7 +112,19 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		if ((Scenes.getParam("devMode") == "true") && Input.GetKeyDown ("t")) {
+		//Skip cinematics
+		if (currentCinematic != null && Input.GetButtonDown("interact")) {
+			switch (currentCinematic) {
+			case "playIntro":
+				StopCoroutine ("playIntro");
+				StopCoroutine ("introFade");
+				hideDialog ();
+				stopIntro ();
+				break;
+			}
+		}
+
+		if ((Scenes.getParam("devMode") != "false") && Input.GetKeyDown ("t")) {
 			spawnEnemyRand ();
 		}
 	}
@@ -111,6 +138,10 @@ public class GameController : MonoBehaviour {
 	private void onSiegePhase() {
 		//Change front door to broken version
 		GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
+		if (Scenes.getParam("devMode") != "false") {
+			return;
+		}
+		spawnEnemy (spawnZones[1]);
 	}
 
 	void spawnEnemyRand() {
@@ -122,6 +153,11 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		EnemySpawn spawnZone = randomizer[UnityEngine.Random.Range(0, randomizer.Count)];
+
+		spawnEnemy (spawnZone);
+	}
+
+	void spawnEnemy(EnemySpawn spawnZone) {
 		float spawnLocX = spawnZone.transform.position.x;
 		spawnLocX += UnityEngine.Random.Range (spawnZone.maxOffset * -1, spawnZone.maxOffset + 1);
 
@@ -229,6 +265,122 @@ public class GameController : MonoBehaviour {
 		StartCoroutine ("deathFade");
 	}
 
+	public void showDialog(Dialog dialog) {
+		if (descriptionPanel.gameObject.activeSelf) {
+			hideDescription ();
+		}
+		dialogPanel.showDialog (dialog);
+	}
+
+	public void hideDialog() {
+		dialogPanel.hideDialog ();
+	}
+
+	public void showDescription(string description) {
+		if (dialogPanel.gameObject.activeSelf) {
+			return;
+		}
+		descriptionPanel.showDescription (description);
+	}
+
+	public void hideDescription() {
+		descriptionPanel.hideDescription ();
+	}
+
+	private void startIntro() {
+		skipText.gameObject.SetActive (true);
+		playerCon.itemSlot1.gameObject.SetActive(false);
+		playerCon.itemSlot2.gameObject.SetActive(false);
+
+		playerCon.enableCinematicControl (true);
+
+		StartCoroutine ("introFade");
+		StartCoroutine ("playIntro");
+	}
+
+	private void stopIntro() {
+		blackFade.SetActive (false);
+		changePhase("prep");
+		timerText.enabled = true;
+		nextSpawn = SpawnMap.getNextSpawn ();
+
+		skipText.gameObject.SetActive (false);
+		playerCon.itemSlot1.gameObject.SetActive(true);
+		playerCon.itemSlot2.gameObject.SetActive(true);
+		playerCon.enableCinematicControl (false);
+		currentCinematic = null;
+	}
+
+	IEnumerator playIntro() {
+		currentCinematic = "playIntro";
+
+		source.PlayOneShot (cinematicSounds[0]);
+		playerCon.moveInput = -1.0f;
+
+		yield return new WaitForSeconds (0.7f);
+
+		playerCon.moveInput = 0.0f;
+
+		yield return new WaitForSeconds (1.0f);
+
+		showDialog (new Dialog("Fiona:\nThat was way too close...", dialogSprites[0], 4.0f));
+
+		yield return new WaitForSeconds (5.0f);
+
+		playerCon.flipPlayer ();
+
+		yield return new WaitForSeconds (1.0f);
+
+		showDialog (new Dialog("What the hell were those things?", dialogSprites[0], 4.0f));
+
+		yield return new WaitForSeconds (5.0f);
+
+		playerCon.flipPlayer ();
+
+		yield return new WaitForSeconds (1.0f);
+
+		showDialog (new Dialog("They were right behind me, they'll be here any minute. Need to get ready for them. This knife isn't going to cut it.", dialogSprites[0], 5.0f));
+
+		yield return new WaitForSeconds (3.0f);
+
+		stopIntro ();
+	}
+
+	IEnumerator introFade() {
+		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
+		Color startColor = sprite.color;
+		startColor.a = 1.0f;
+		blackFade.SetActive (true);
+		for (float f = 1.0f; f > 0.9f; f -= 0.0015f) {
+			Color spriteColor = sprite.color;
+
+			spriteColor.a = f;
+
+			sprite.color = spriteColor;
+
+			yield return null;
+		}
+		for (float f = 0.9f; f > 0.6f; f -= 0.003f) {
+			Color spriteColor = sprite.color;
+
+			spriteColor.a = f;
+
+			sprite.color = spriteColor;
+
+			yield return null;
+		}
+		for (float f = 0.6f; f > 0.0f; f -= 0.006f) {
+			Color spriteColor = sprite.color;
+
+			spriteColor.a = f;
+
+			sprite.color = spriteColor;
+
+			yield return null;
+		}
+		blackFade.SetActive (false);
+	}
+
 	IEnumerator spawnFade(Enemy enemy) {
 		SpriteRenderer enemySprite = enemy.gameObject.GetComponent<SpriteRenderer> ();
 		enemySprite.color = new Color(0.0f, 0.0f, 0.0f);
@@ -248,8 +400,11 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator deathFade() {
-		blackFade.SetActive (true);
 		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
+		Color startColor = sprite.color;
+		startColor.a = 0.0f;
+		sprite.color = startColor;
+		blackFade.SetActive (true);
 		for (float f = 0.0f; f < 1.0f; f += 0.003f) {
 			Color spriteColor = sprite.color;
 			Color textColor = gameOverText.color;
