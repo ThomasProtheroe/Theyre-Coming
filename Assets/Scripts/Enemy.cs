@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour {
 		}
 
 		if (!isStunned) {
-			if (isBlind && !isAttacking) {
+			if (isActive && isBlind && !isAttacking) {
 				//Move randomly back and forth
 				if (wanderTimer > 0) {
 					wanderBlind ();
@@ -133,7 +133,12 @@ public class Enemy : MonoBehaviour {
 					faceTarget (target.transform.position);
 					move ();
 					if (Vector2.Distance(target.gameObject.transform.position, gameObject.transform.position) < 0.5) {
-						target.enemyTravel (GetComponent<Enemy>());
+						if (target.inUseByPlayer) {
+							deactivate ();
+						} else {
+							target.enemyTravel (GetComponent<Enemy>());
+						}
+
 					}
 				}
 			} else {
