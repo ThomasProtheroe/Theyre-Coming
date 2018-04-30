@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\EnemyCorpse.cs" />
      <Compile Include="Assets\Scripts\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\Interactives\FrontDoor.cs" />
      <Compile Include="Assets\Scripts\Interactives\Interactive.cs" />
      <Compile Include="Assets\Scripts\Interactives\Items\Item.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\AerosolFlamethrower.cs" />

@@ -71,6 +71,7 @@ public class GameController : MonoBehaviour {
 			nextSpawn = SpawnMap.getNextSpawn ();
 		} else {
 			changePhase("siege");
+			onSiegePhase ();
 		}
 	}
 	
@@ -85,6 +86,7 @@ public class GameController : MonoBehaviour {
 			if (Mathf.Floor (timer) >= prepTime) {
 				timerText.enabled = false;
 				changePhase ("siege");
+				onSiegePhase ();
 			}
 		} else if (phase == "siege") {
 			if (nextSpawn != null && timer >= nextSpawn.spawnTime && Scenes.getParam ("devMode") == "false") {
@@ -104,6 +106,11 @@ public class GameController : MonoBehaviour {
 		phase = newPhase;
 		musicPlayer.changeMusic (phase);
 		timer = 0.0f;
+	}
+
+	private void onSiegePhase() {
+		//Change front door to broken version
+		GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
 	}
 
 	void spawnEnemyRand() {
