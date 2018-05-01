@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
 	public MusicController musicPlayer;
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
+	private AudioClip[][] attackSoundMaster;
 	public AudioClip[] attackSounds1;
 	public AudioClip[] attackSounds2;
 	public AudioClip[] attackSounds3;
@@ -38,10 +39,12 @@ public class GameController : MonoBehaviour {
 	public List<EnemySpawn> spawnZones = new List<EnemySpawn> ();
 	public Dictionary<string, List<EnemyCorpse>> corpseDict = new Dictionary<string, List<EnemyCorpse>> ();
 
-	private AudioClip[][] attackSoundMaster;
+	//Pathfinding vars
 	private List<Area> areas = new List<Area> ();
-	private List<Area> checkedAreas = new List<Area> ();
-	private List<Area> searchedAreas = new List<Area> ();
+	private List<Area> visitedAreas;
+	private Queue<Area> areasToSearch;
+
+	private Dictionary<string, Dictionary<string, string>> pathfindingMap;
 
 	private GameObject player;
 	private PlayerController playerCon;
@@ -69,6 +72,8 @@ public class GameController : MonoBehaviour {
 		attackSoundMaster [2] = attackSounds3;
 		attackSoundMaster [3] = attackSounds4;
 		attackSoundMaster [4] = attackSounds5;
+
+		buildPathingMap ();
 
 		devMode = Scenes.getParam ("devMode");
 		if (devMode == null) {
@@ -214,46 +219,117 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	private void buildPathingMap() {
+		//Build pathing map
+		pathfindingMap = new Dictionary<string, Dictionary<string, string>>();
+		Dictionary<string, string> livingroomMap = new Dictionary<string, string> ();
+		livingroomMap.Add ("Bathroom", "TrLivingroomBathroom");
+		livingroomMap.Add ("Hallway", "TrLivingroomHallway");
+		livingroomMap.Add ("Kitchen", "TrLivingroomKitchen");
+		livingroomMap.Add ("Bedroom", "TrLivingroomHallway");
+		livingroomMap.Add ("Yard", "TrLivingroomKitchen");
+		livingroomMap.Add ("Garage", "TrLivingroomKitchen");
+		pathfindingMap.Add ("Livingroom", livingroomMap);
 
-	public Transition findRouteToPlayer(Area currentArea) {
-		checkedAreas = new List<Area> ();
-		searchedAreas = new List<Area> ();
+		Dictionary<string, string> bathroomMap = new Dictionary<string, string> ();
+		bathroomMap.Add ("Livingroom", "TrBathroomLivingroom");
+		bathroomMap.Add ("Hallway", "TrBathroomLivingroom");
+		bathroomMap.Add ("Kitchen", "TrBathroomLivingroom");
+		bathroomMap.Add ("Bedroom", "TrBathroomLivingroom");
+		bathroomMap.Add ("Yard", "TrBathroomLivingroom");
+		bathroomMap.Add ("Garage", "TrBathroomLivingroom");
+		pathfindingMap.Add ("Bathroom", bathroomMap);
 
-		return searchForPlayer(currentArea, player.GetComponent<PlayerController> ().getCurrentArea ());
+		Dictionary<string, string> hallwayMap = new Dictionary<string, string> ();
+		hallwayMap.Add ("Livingroom", "TrHallwayLivingroom");
+		hallwayMap.Add ("Bathroom", "TrHallwayLivingroom");
+		hallwayMap.Add ("Kitchen", "TrHallwayKitchen");
+		hallwayMap.Add ("Bedroom", "TrHallwayBedroom");
+		hallwayMap.Add ("Yard", "TrHallwayKitchen");
+		hallwayMap.Add ("Garage", "TrHallwayKitchen");
+		pathfindingMap.Add ("Hallway", hallwayMap);
+
+		Dictionary<string, string> bedroomMap = new Dictionary<string, string> ();
+		bedroomMap.Add ("Livingroom", "TrBedroomHallway");
+		bedroomMap.Add ("Bathroom", "TrBedroomHallway");
+		bedroomMap.Add ("Kitchen", "TrBedroomHallway");
+		bedroomMap.Add ("Hallway", "TrBedroomHallway");
+		bedroomMap.Add ("Yard", "TrBedroomHallway");
+		bedroomMap.Add ("Garage", "TrBedroomHallway");
+		pathfindingMap.Add ("Bedroom", bedroomMap);
+
+		Dictionary<string, string> kitchenMap = new Dictionary<string, string> ();
+		kitchenMap.Add ("Livingroom", "TrKitchenLivingroom");
+		kitchenMap.Add ("Bathroom", "TrKitchenLivingroom");
+		kitchenMap.Add ("Bedroom", "TrKitchenHallway");
+		kitchenMap.Add ("Hallway", "TrKitchenHallway");
+		kitchenMap.Add ("Yard", "TrKitchenYard");
+		kitchenMap.Add ("Garage","TrKitchenYard");
+		pathfindingMap.Add ("Kitchen", kitchenMap);
+
+		Dictionary<string, string> yardMap = new Dictionary<string, string> ();
+		yardMap.Add ("Livingroom", "TrYardKitchen");
+		yardMap.Add ("Bathroom", "TrYardKitchen");
+		yardMap.Add ("Bedroom","TrYardKitchen");
+		yardMap.Add ("Hallway", "TrYardKitchen");
+		yardMap.Add ("Yard", "TrYardKitchen");
+		yardMap.Add ("Garage","TrYardGarage");
+		pathfindingMap.Add ("Yard", yardMap);
 	}
 
-	private Transition searchForPlayer(Area startingArea, Area playerArea, Transition closest=null) {
-		Area transArea;
+	public Transition findRouteToPlayer(Area currentArea) {
+		//visitedAreas = new List<Area> ();
+		//areasToSearch = new Queue<Area> ();
+		//areasToSearch.Enqueue (currentArea);
+
+		return searchForPlayer(currentArea);
+	}
+
+	private Transition searchForPlayer(Area startingArea) {
+		//Before we go mapping out a route, check if player is in an adjacent area (saves a lot of time if they are)
 		foreach (Transition transition in startingArea.transitions) {
-			transArea = transition.sibling.transform.parent.GetComponent<Area> ();
-			if (checkedAreas.Contains(transArea)) {
-				continue;
-			}
-			if (transArea == playerArea) {
+			if (playerCon.currentArea == transition.sibling.transform.parent.GetComponent<Area> ()) {
+				//Hooray!
 				return transition;
 			}
-			checkedAreas.Add(transArea);
 		}
-		searchedAreas.Add(startingArea);
 
+		//Dammit. Ok, let's go find the best route to get to them using our hackish spawn map
+		string transitionName = pathfindingMap[startingArea.name][playerCon.currentArea.name];
 		Transition target = null;
 		foreach(Transition transition in startingArea.transitions) {
-			transArea = transition.sibling.transform.parent.GetComponent<Area> ();
-			if (searchedAreas.Contains(transArea)) {
-				continue;
+			if (transition.name == transitionName) {
+				target = transition;
 			}
-			if (closest == null) {
-				closest = transition;
-			}
+		}
 
-			target = searchForPlayer(transArea, playerArea, closest);
-			if (target) {
-				return closest;
+		return target;
+	}
+
+	/*
+	private Transition searchForPlayer2() {
+		Area currentArea = areasToSearch.Peek ();
+		visitedAreas.Add (currentArea);
+		foreach (Transition transition in currentArea.transitions) {
+			Area neighbor = transition.sibling.transform.parent.GetComponent<Area> ();
+			if (neighbor == playerCon.currentArea) {
+				return transition;
 			}
+			if (!visitedAreas.Contains (neighbor) && !areasToSearch.Contains(neighbor)) {
+				areasToSearch.Enqueue (neighbor);
+			}
+		}
+
+		areasToSearch.Dequeue ();
+
+		if (areasToSearch.Count > 0) {
+			return searchForPlayer2 ();
 		}
 
 		return null;
 	}
+	*/
+
 
 	public void fadeToMenu() {
 		//Set any existing enemies to idle
