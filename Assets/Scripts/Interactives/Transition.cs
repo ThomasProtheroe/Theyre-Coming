@@ -111,6 +111,7 @@ public class Transition : Interactive {
 	}
 
 	IEnumerator movePlayer() {
+		Debug.Log (name);
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
 		SpriteRenderer sprite = player.GetComponent<SpriteRenderer> ();
 		SpriteRenderer itemSprite = null;
