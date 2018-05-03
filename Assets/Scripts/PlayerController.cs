@@ -151,15 +151,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void checkPlayerInput() {
-		//TODO TESTING ONLY - to be replaced with pause menu
-		if (Input.GetKeyDown("escape")) {
-			#if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;
-			#else
-			Application.Quit();
-			#endif
-		}
-
 		if (nearInteractives.Count != 0) {
 			checkTravel ();
 
@@ -287,6 +278,7 @@ public class PlayerController : MonoBehaviour {
 		anim.SetTrigger ("Death");
 		hidePlayerHands ();
 
+		gameCon.pauseTimer ();
 		gameCon.fadeToMenu ();
 	}
 

@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 
 	public int prepTime;
 	public Enemy enemy;
+	public GameObject pauseMenu;
 	public GameObject blackFade;
 	[SerializeField]
 	private Text gameOverText;
@@ -49,6 +50,12 @@ public class GameController : MonoBehaviour {
 	private GameObject player;
 	private PlayerController playerCon;
 	private SpawnInstance nextSpawn;
+	private Cinematic nextCinematic;
+
+	[HideInInspector]
+	public bool isPaused;
+	[HideInInspector]
+	private bool timerRunning;
 	private float timer;
 	private string phase;
 	private string currentCinematic;
@@ -65,6 +72,10 @@ public class GameController : MonoBehaviour {
 		source = GetComponent<AudioSource> ();
 
 		SpawnMap.rebuildMap ();
+		CinematicMap.rebuildMap ();
+
+		nextSpawn = SpawnMap.getNextSpawn ();
+		nextCinematic = CinematicMap.getNextCinematic ();
 
 		attackSoundMaster = new AudioClip[5][];
 		attackSoundMaster [0] = attackSounds1;
@@ -87,6 +98,7 @@ public class GameController : MonoBehaviour {
 		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
 
 		timer = 0.0f;
+		timerRunning = true;
 		if (devMode == "false") {
 			startIntro ();
 		} else {
@@ -97,25 +109,25 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		timer += Time.deltaTime;
+		if (timerRunning) {
+			timer += Time.deltaTime;
+		}
 
 		if (phase == "prep") {
 			TimeSpan timeSpan = TimeSpan.FromSeconds((prepTime - Mathf.Floor (timer)));
 			timerText.text = string.Format ("{0:D2}:{1:d2}", timeSpan.Minutes, timeSpan.Seconds);
-			//timerText.text = (prepTime - Mathf.Floor (timer)).ToString();
 			if (Mathf.Floor (timer) >= prepTime) {
 				timerText.enabled = false;
 				changePhase ("siege");
 				onSiegePhase ();
 			}
 		} else if (phase == "siege") {
-			if (nextSpawn != null && timer >= nextSpawn.spawnTime && Scenes.getParam ("devMode") == "false") {
-				for (int i = 0; i < nextSpawn.spawnCount; i++) {
-					Invoke("spawnEnemyRand", i * 0.4f);
-				}
-				nextSpawn = SpawnMap.getNextSpawn ();
+			if (Scenes.getParam ("devMode") == "false") {
+				checkForEnemySpawns ();
 			}
 		}
+
+		checkForCinematics ();
 
 		//Skip cinematics
 		if (currentCinematic != null && Input.GetButtonDown("interact")) {
@@ -129,9 +141,30 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		//Pause Menu
+		if (Input.GetKeyDown("escape")) {
+			if (isPaused) {
+				unpauseGame ();
+			} else {
+				pauseGame ();
+			}
+		}
+
 		if ((Scenes.getParam("devMode") != "false") && Input.GetKeyDown ("t")) {
 			spawnEnemyRand ();
 		}
+	}
+
+	public void pauseGame() {
+		pauseMenu.SetActive (true);
+		Time.timeScale = 0.0f;
+		isPaused = true;
+	}
+
+	public void unpauseGame() {
+		pauseMenu.SetActive (false);
+		Time.timeScale = 1.0f;
+		isPaused = false;
 	}
 
 	void changePhase(string newPhase) {
@@ -147,6 +180,29 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 		spawnEnemy (spawnZones[1]);
+	}
+
+	private void checkForEnemySpawns() {
+		if (nextSpawn != null && timer >= nextSpawn.spawnTime) {
+			for (int i = 0; i < nextSpawn.spawnCount; i++) {
+				Invoke("spawnEnemyRand", i * 0.3f);
+			}
+			nextSpawn = SpawnMap.getNextSpawn ();
+		}
+	}
+
+	private void checkForCinematics() {
+		if (nextCinematic != null && phase == nextCinematic.phase && timer >= nextCinematic.playTime) {
+			if (nextCinematic.dialog != null) {
+				if (nextCinematic.dialog.Length > 1) {
+					showDialog (nextCinematic.dialog[0]);
+				} else {
+					StartCoroutine ("playConversation", nextCinematic.dialog);
+				}
+			}
+
+			nextCinematic = CinematicMap.getNextCinematic ();
+		}
 	}
 
 	void spawnEnemyRand() {
@@ -330,7 +386,6 @@ public class GameController : MonoBehaviour {
 	}
 	*/
 
-
 	public void fadeToMenu() {
 		//Set any existing enemies to idle
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
@@ -345,6 +400,11 @@ public class GameController : MonoBehaviour {
 		if (descriptionPanel.gameObject.activeSelf) {
 			hideDescription ();
 		}
+		//Use Fiona's sprite if none is provided
+		if (dialog.sprite == null) {
+			dialog.sprite = dialogSprites [0];
+		}
+
 		dialogPanel.showDialog (dialog);
 	}
 
@@ -378,13 +438,32 @@ public class GameController : MonoBehaviour {
 		blackFade.SetActive (false);
 		changePhase("prep");
 		timerText.enabled = true;
-		nextSpawn = SpawnMap.getNextSpawn ();
 
 		skipText.gameObject.SetActive (false);
 		playerCon.itemSlot1.gameObject.SetActive(true);
 		playerCon.itemSlot2.gameObject.SetActive(true);
 		playerCon.enableCinematicControl (false);
 		currentCinematic = null;
+	}
+
+	public void startTimer() {
+		timerRunning = true;
+	}
+
+	public void pauseTimer() {
+		timerRunning = false;
+	}
+
+	public void stopTimer() {
+		timer = 0.0f;
+		timerRunning = false;
+	}
+
+	IEnumerator playConversation(Dialog[] conversation) {
+		foreach(Dialog dialog in conversation) {
+			yield return new WaitForSeconds (dialog.delay);
+			showDialog(dialog);
+		}
 	}
 
 	IEnumerator playIntro() {
@@ -415,7 +494,7 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (1.0f);
 
-		showDialog (new Dialog("They were right behind me, they'll be here any minute. Need to get ready for them. This knife isn't going to cut it.", dialogSprites[0], 5.0f));
+		showDialog (new Dialog("They were right behind me, they'll be here any minute. I need to get ready for them.", dialogSprites[0], 5.0f));
 
 		yield return new WaitForSeconds (3.0f);
 
