@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	private float blindDuration;
 	private float blindTimer = 0.0f;
-	private float blindMoveModifier = 0.5f;
+	private float blindMoveModifier = 0.3f;
 
 	// Use this for initialization
 	void Start () {
