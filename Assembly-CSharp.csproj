@@ -79,7 +79,9 @@
      <Compile Include="Assets\Scripts\ItemSlot.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonAudioController.cs" />
      <Compile Include="Assets\Scripts\Menu\DisableMenuNavigation.cs" />
+     <Compile Include="Assets\Scripts\Menu\LoadAudioSettings.cs" />
      <Compile Include="Assets\Scripts\Menu\LoadSceneOnClick.cs" />
+     <Compile Include="Assets\Scripts\Menu\OptionsAudioController.cs" />
      <Compile Include="Assets\Scripts\Menu\QuitOnClick.cs" />
      <Compile Include="Assets\Scripts\Menu\Scenes.cs" />
      <Compile Include="Assets\Scripts\Menu\SelectOnInput.cs" />
