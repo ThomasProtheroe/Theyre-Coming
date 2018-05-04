@@ -30,7 +30,7 @@ public class BlindSquirtGun : RangedWeapon {
 		ammunition -= 1;
 		stream.Play ();
 		fireProjectile ();
-		source.PlayOneShot (fireSound);
+		soundController.playPriorityOneShot (fireSound);
 	}
 
 	public new void setEmpty() {

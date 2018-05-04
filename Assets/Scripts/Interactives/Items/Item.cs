@@ -37,7 +37,6 @@ public class Item : Interactive {
 	public GameObject frontHand;
 	public GameObject backHand;
 
-	protected AudioSource source;
 	public AudioClip throwSound;
 	public AudioClip throwImpact;
 	public AudioClip craftSound;
@@ -58,7 +57,6 @@ public class Item : Interactive {
 	protected void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerCon = player.GetComponent<PlayerController> ();
-		source = gameObject.GetComponent<AudioSource> ();
 		soundController = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		description = description.Replace ("\\n", "\n");
 		sprite = GetComponent<SpriteRenderer> ();
@@ -87,7 +85,7 @@ public class Item : Interactive {
 		if (isThrown) {
 			if (other.gameObject.tag == "Enemy") {
 				if (throwImpact) {
-					source.PlayOneShot (throwImpact);
+					soundController.playPriorityOneShot (throwImpact);
 				}
 				float direction = transform.position.x - other.transform.position.x;
 				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback, direction);
@@ -153,8 +151,8 @@ public class Item : Interactive {
 	}
 
 	public void pickupItem(bool playerFlipX, bool playSound=true) {
-		if (playSound && pickupSound && source) {
-			source.PlayOneShot (pickupSound);
+		if (playSound && pickupSound) {
+			soundController.playPriorityOneShot (pickupSound);
 		}
 			
 		if (playerFlipX != flipped)
@@ -210,25 +208,25 @@ public class Item : Interactive {
 	}
 
 	public void playCraftingSound(AudioClip overrideSound=null) {
-		//Since this object was just created, the source variable is not initialized yet
-		//so we need to get the AudioSource directly
-		AudioSource tempSource = gameObject.GetComponent<AudioSource>();
+		//Since this object was just created, all variables are not initialized yet
+		//so we need to get the SoundController directly
+		SoundController sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
 		if (overrideSound) {
-			tempSource.PlayOneShot (overrideSound);
+			sc.playPriorityOneShot (overrideSound);
 		} else if (craftSound) {
-			tempSource.PlayOneShot (craftSound);
+			sc.playPriorityOneShot (craftSound);
 		}
 	}
 
 	public void playSwappingSound() {
-		if (craftSound) {
-			source.PlayOneShot (swapSound);
+		if (swapSound) {
+			soundController.playPriorityOneShot (swapSound);
 		}
 	}
 
 	public void playThrowSound() {
 		if (throwSound) {
-			source.PlayOneShot (throwSound);
+			soundController.playPriorityOneShot (throwSound);
 		}
 	}
 
@@ -298,7 +296,7 @@ public class Item : Interactive {
 
 	public void playBreakSound() {
 		if (breakSound) {
-			source.PlayOneShot (breakSound);
+			soundController.playPriorityOneShot (breakSound);
 		}
 	}
 

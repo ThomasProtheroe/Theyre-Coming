@@ -5,10 +5,7 @@ using UnityEngine.UI;
 
 public class ButtonAudioController : MonoBehaviour {
 
-	public AudioSource source;
-
-	public AudioClip click;
-	public AudioClip hover;
+	public OptionsAudioController controller;
 
 	public void pointerEnter() {
 		if (GetComponent<Button> ().interactable) {
@@ -17,10 +14,10 @@ public class ButtonAudioController : MonoBehaviour {
 	}
 
 	public void playClick() {
-		source.PlayOneShot (click);
+		controller.playClick ();
 	}
 
 	public void playhover() {
-		source.PlayOneShot (hover);
+		controller.playHover ();
 	}
 }

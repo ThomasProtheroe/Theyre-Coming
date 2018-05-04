@@ -11,6 +11,14 @@ public class OptionsAudioController : MonoBehaviour {
 	public Slider musicSlider;
 	public Slider effectsSlider;
 
+	public AudioSource musicSource;
+
+	public AudioClip buttonClick;
+	public AudioClip buttonHover;
+	[SerializeField]
+	private int sourceMax;
+	private AudioSource[] buttonSources;
+
 	void Start() {
 		if (!PlayerPrefs.HasKey ("masterVolume")) {
 			PlayerPrefs.SetFloat ("masterVolume", 1.0f);
@@ -24,27 +32,57 @@ public class OptionsAudioController : MonoBehaviour {
 			PlayerPrefs.SetFloat ("masterVolume", 1.0f);
 		}
 
+		//Set up all audio sources
+		buttonSources = new AudioSource[sourceMax];
+		for (int i = 0; i < sourceMax; i++) {
+			buttonSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
+		}
+
 		masterSlider.value = PlayerPrefs.GetFloat ("masterVolume");
 		musicSlider.value = PlayerPrefs.GetFloat ("musicVolume");
 		effectsSlider.value = PlayerPrefs.GetFloat ("effectsVolume");
 	}
 
-	public void setMasterVolume(float volume) {
-		PlayerPrefs.SetFloat ("masterVolume", volume);
+	public void playHover() {
+		for (int i = 0; i < buttonSources.Length; i++) {
+			if (buttonSources [i].isPlaying) {
+				continue;
+			}
+
+			buttonSources [i].PlayOneShot (buttonHover);
+			break;
+		}
+		//If we get to this point without playing the clip, then all sources are full and we ignore the play request
 	}
 
-	public void setMusicVolume(float volume) {
-		PlayerPrefs.SetFloat ("musicVolume", volume);
+	public void playClick() {
+		for (int i = 0; i < buttonSources.Length; i++) {
+			if (buttonSources [i].isPlaying) {
+				continue;
+			}
+
+			buttonSources [i].PlayOneShot (buttonClick);
+			break;
+		}
+		//If we get to this point without playing the clip, then all sources are full and we ignore the play request
 	}
 
-	public void setEffectsVolume(float volume) {
-		PlayerPrefs.SetFloat ("effectsVolume", volume);
+	public void previewAudioSettings() {
+		//Preview effects volume
+		if (buttonSources != null) {
+			foreach (AudioSource source in buttonSources) {
+				source.volume = masterSlider.value * effectsSlider.value;
+			}
+		}
+			
+		//Preview music volume
+		musicSource.volume = masterSlider.value * musicSlider.value;
 	}
 
 	public void saveAudioSettings() {
-		setMasterVolume (masterSlider.value);
-		setMusicVolume (musicSlider.value);
-		setEffectsVolume (effectsSlider.value);
+		PlayerPrefs.SetFloat ("masterVolume", masterSlider.value);
+		PlayerPrefs.SetFloat ("musicVolume", musicSlider.value);
+		PlayerPrefs.SetFloat ("effectsVolume", effectsSlider.value);
 	}
 
 	public void showOptionsMenu() {
@@ -53,6 +91,7 @@ public class OptionsAudioController : MonoBehaviour {
 	}
 
 	public void showMainMenu() {
+		saveAudioSettings ();
 		optionsMenu.SetActive (false);
 		mainMenu.SetActive (true);
 	}
