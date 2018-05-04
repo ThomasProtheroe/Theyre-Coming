@@ -23,6 +23,10 @@ public class OptionsAudioController : MonoBehaviour {
 		if (!PlayerPrefs.HasKey ("effectsVolume")) {
 			PlayerPrefs.SetFloat ("masterVolume", 1.0f);
 		}
+
+		masterSlider.value = PlayerPrefs.GetFloat ("masterVolume");
+		musicSlider.value = PlayerPrefs.GetFloat ("musicVolume");
+		effectsSlider.value = PlayerPrefs.GetFloat ("effectsVolume");
 	}
 
 	public void setMasterVolume(float volume) {
@@ -38,9 +42,9 @@ public class OptionsAudioController : MonoBehaviour {
 	}
 
 	public void saveAudioSettings() {
-		setMasterVolume (masterSlider.normalizedValue);
-		setMusicVolume (musicSlider.normalizedValue);
-		setEffectsVolume (effectsSlider.normalizedValue);
+		setMasterVolume (masterSlider.value);
+		setMusicVolume (musicSlider.value);
+		setEffectsVolume (effectsSlider.value);
 	}
 
 	public void showOptionsMenu() {

@@ -67,6 +67,20 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
+	public void pauseAll() {
+		AudioSource[] sources = GetComponents<AudioSource> ();
+		foreach (AudioSource source in sources) {
+			source.Pause ();
+		}
+	}
+
+	public void playAll() {
+		AudioSource[] sources = GetComponents<AudioSource> ();
+		foreach (AudioSource source in sources) {
+			source.Play ();
+		}
+	}
+
 	public void playEnemyWalk(AudioClip request) {
 		bool played = false;
 		for (int i = 0; i < enemyWalkSources.Length; i++) {

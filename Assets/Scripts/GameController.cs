@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour {
 
 	public AudioSource source;
 	public MusicController musicPlayer;
+	public SoundController soundCon;
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
 	private AudioClip[][] attackSoundMaster;
@@ -91,10 +92,8 @@ public class GameController : MonoBehaviour {
 
 		buildPathingMap ();
 
-		//Load settings
-		masterVolume = float.Parse(Scenes.getParam ("masterVolume"));
-		musicVolume = float.Parse(Scenes.getParam ("musicVolume"));
-		effectsVolume = float.Parse(Scenes.getParam ("effectsVolume"));
+		//TODO Load settings
+
 
 		devMode = Scenes.getParam ("devMode");
 		if (devMode == null) {
@@ -171,12 +170,16 @@ public class GameController : MonoBehaviour {
 		pauseMenu.SetActive (true);
 		Time.timeScale = 0.0f;
 		isPaused = true;
+
+		soundCon.pauseAll ();
 	}
 
 	public void unpauseGame() {
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1.0f;
 		isPaused = false;
+
+		soundCon.playAll ();
 	}
 
 	void changePhase(string newPhase) {
