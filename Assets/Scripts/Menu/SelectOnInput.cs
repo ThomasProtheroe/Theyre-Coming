@@ -19,7 +19,7 @@ public class SelectOnInput : MonoBehaviour {
 		}
 	}
 
-	private void onDisable() {
+	public void OnDisable() {
 		buttonSelected = false;
 	}
 

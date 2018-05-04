@@ -18,7 +18,7 @@ public class HeavyBoxTrap : Trap {
 				other.gameObject.GetComponent<Enemy> ().takeHit (damage, 0, 0);
 				if (!hitSoundPlayed) {
 					hitSoundPlayed = true;
-					source.PlayOneShot (hitSound);
+					soundController.playPriorityOneShot (hitSound);
 				}
 			} else if (other.gameObject.tag == "Player") {
 				if (!playerHit) {

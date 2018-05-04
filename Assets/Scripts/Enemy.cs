@@ -20,8 +20,6 @@ public class Enemy : MonoBehaviour {
 	/* Audio Components */
 	[HideInInspector]
 	public SoundController soundCon;
-	public AudioSource vocalSource;
-	public AudioSource miscSource;
 	private AudioClip walkSound;
 	private AudioClip prowlSound;
 	[SerializeField]
@@ -562,15 +560,15 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void playAttackImpactSound() {
-		miscSource.PlayOneShot(attackImpactSound);
+		soundCon.playEnemyOneShot (attackImpactSound);
 	}
 
 	private void playAttackSound() {
-		vocalSource.PlayOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
+		soundCon.playEnemyOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
 	}
 
 	private void playIgniteSound() {
-		miscSource.PlayOneShot (igniteSound);
+		soundCon.playEnemyOneShot (igniteSound);
 	}
 
 	private void playSplashSound() {
@@ -599,6 +597,9 @@ public class Enemy : MonoBehaviour {
 
 		anim.SetBool ("Knockback", false);
 		isStunned = false;
+
+		deactivate ();
+		Invoke ("activate", 0.3f);
 	}
 
 	IEnumerator bleedDamageFlash() {

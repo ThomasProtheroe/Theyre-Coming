@@ -533,6 +533,10 @@ public class PlayerController : MonoBehaviour {
 		cinematicControl = flag;
 	}
 
+	public void updateVolume(float volume) {
+		source.volume = volume;
+	}
+
 	IEnumerator damageFlash() {
 		//Turn red over time
 		for (float f = 1f; f >= 0; f -= 0.2f) {
@@ -557,6 +561,9 @@ public class PlayerController : MonoBehaviour {
 
 	IEnumerator craftItem() {
 		rigidBody.velocity = Vector2.zero;
+		if (anim.GetInteger ("State") == 1) {
+			anim.SetInteger ("State", 0);
+		}
 		GameObject closest = nearInteractives [0];
 		foreach (GameObject item in nearInteractives) {
 			float dist = Vector3.Distance (transform.position, item.transform.position);

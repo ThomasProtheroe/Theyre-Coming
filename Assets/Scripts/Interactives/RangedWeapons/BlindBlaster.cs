@@ -38,7 +38,7 @@ public class BlindBlaster : RangedWeapon {
 		ammunition -= 1;
 		nextProjectileTime = 0.0f;
 		stream.Play ();
-		source.PlayOneShot (fireSound);
+		soundController.playPriorityOneShot (fireSound);
 	}
 
 	public new void setEmpty() {

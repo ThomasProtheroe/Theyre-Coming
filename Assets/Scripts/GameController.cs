@@ -92,8 +92,8 @@ public class GameController : MonoBehaviour {
 
 		buildPathingMap ();
 
-		//TODO Load settings
-
+		//Load settings
+		updateVolume();
 
 		devMode = Scenes.getParam ("devMode");
 		if (devMode == null) {
@@ -472,6 +472,18 @@ public class GameController : MonoBehaviour {
 	public void stopTimer() {
 		timer = 0.0f;
 		timerRunning = false;
+	}
+
+	public void updateVolume() {
+		float masterVolume = PlayerPrefs.GetFloat ("masterVolume");
+		float musicVolume = PlayerPrefs.GetFloat ("musicVolume");
+		float effectsVolume = PlayerPrefs.GetFloat ("effectsVolume");
+
+		musicPlayer.updateVolume(masterVolume * musicVolume);
+
+		soundCon.updateVolume(masterVolume * effectsVolume);
+		playerCon.updateVolume (masterVolume * effectsVolume);
+		source.volume = masterVolume * effectsVolume;
 	}
 
 	public void returnToMenu() {

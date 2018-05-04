@@ -18,8 +18,8 @@ public class Transition : Interactive {
 	private Animator anim;
 	private GameObject player;
 	private GameObject camera;
-	private AudioSource source;
 	private GameController gc;
+	private SoundController soundCon;
 
 	[SerializeField]
 	private float safeZoneClearCooldown;
@@ -35,8 +35,8 @@ public class Transition : Interactive {
 		player = GameObject.FindGameObjectWithTag("Player");
 		camera = GameObject.FindGameObjectWithTag("MainCamera");
 		anim = gameObject.GetComponent<Animator> ();
-		source = gameObject.GetComponent<AudioSource> ();
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		inUse = false;
 	}
 
@@ -56,15 +56,13 @@ public class Transition : Interactive {
 
 	private void playOpenSound() {
 		if (openSound) {
-			source.clip = openSound;
-			source.Play ();
+			soundCon.playPriorityOneShot (openSound);
 		}
 	}
 
 	private void playCloseSound() {
 		if (closeSound) {
-			source.clip = closeSound;
-			source.Play ();
+			soundCon.playPriorityOneShot (closeSound);
 		}
 	}
 

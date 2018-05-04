@@ -19,7 +19,7 @@ public class SpikeTrap : Trap {
 		Enemy enemy = victim.GetComponent<Enemy> ();
 		enemy.takeHit (damage, 0, 0, true);
 		enemy.setBleeding ();
-		source.PlayOneShot (hitSound);
+		soundController.playPriorityOneShot (hitSound);
 
 
 		durability--;

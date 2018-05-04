@@ -57,7 +57,7 @@ public class Weapon : Item {
 
 	protected void playAttackSound() {
 		if (swingSound) {
-			source.PlayOneShot (swingSound);
+			soundController.playPriorityOneShot (swingSound);
 		}
 	}
 
@@ -122,9 +122,9 @@ public class Weapon : Item {
 		}
 
 		if (isThrown && throwImpact) {
-			source.PlayOneShot (throwImpact);
+			soundController.playPriorityOneShot (throwImpact);
 		} else if (!isThrown && hitSound) {
-			source.PlayOneShot (hitSound);
+			soundController.playPriorityOneShot (hitSound);
 		}
 	}
 }

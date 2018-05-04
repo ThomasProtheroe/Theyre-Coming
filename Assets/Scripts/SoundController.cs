@@ -67,6 +67,13 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
+	public void updateVolume(float volume) {
+		AudioSource[] sources = GetComponents<AudioSource> ();
+		foreach (AudioSource source in sources) {
+			source.volume = volume;
+		}
+	}
+
 	public void pauseAll() {
 		AudioSource[] sources = GetComponents<AudioSource> ();
 		foreach (AudioSource source in sources) {
