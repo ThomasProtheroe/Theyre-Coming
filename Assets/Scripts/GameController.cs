@@ -52,6 +52,11 @@ public class GameController : MonoBehaviour {
 	private SpawnInstance nextSpawn;
 	private Cinematic nextCinematic;
 
+	//Audio multipliers
+	public float masterVolume;
+	public float musicVolume;
+	public float effectsVolume;
+
 	[HideInInspector]
 	public bool isPaused;
 	[HideInInspector]
@@ -86,6 +91,11 @@ public class GameController : MonoBehaviour {
 
 		buildPathingMap ();
 
+		//Load settings
+		masterVolume = float.Parse(Scenes.getParam ("masterVolume"));
+		musicVolume = float.Parse(Scenes.getParam ("musicVolume"));
+		effectsVolume = float.Parse(Scenes.getParam ("effectsVolume"));
+
 		devMode = Scenes.getParam ("devMode");
 		if (devMode == null) {
 			devMode = "false";
@@ -99,6 +109,8 @@ public class GameController : MonoBehaviour {
 
 		timer = 0.0f;
 		timerRunning = true;
+		Time.timeScale = 1.0f;
+
 		if (devMode == "false") {
 			startIntro ();
 		} else {
@@ -459,6 +471,10 @@ public class GameController : MonoBehaviour {
 		timerRunning = false;
 	}
 
+	public void returnToMenu() {
+		SceneManager.LoadScene ("MainMenu");
+	}
+
 	IEnumerator playConversation(Dialog[] conversation) {
 		foreach(Dialog dialog in conversation) {
 			yield return new WaitForSeconds (dialog.delay);
@@ -575,6 +591,6 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (2.0f);
 
-		SceneManager.LoadScene ("MainMenu");
+		returnToMenu ();
 	}
 }
