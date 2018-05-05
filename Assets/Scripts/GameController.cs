@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour {
 
 	//Stat tracking
 	public int[] killTotals;
+	private int itemsCrafted;
 
 	[HideInInspector]
 	public bool isPaused;
@@ -479,9 +480,16 @@ public class GameController : MonoBehaviour {
 		timerRunning = false;
 	}
 
+
+	/*** Stat tracking ***/
 	public void countEnemyKill(int attackType) {
 		killTotals [attackType]++;
 	}
+
+	public void countItemCraft() {
+		itemsCrafted++;
+	}
+
 
 	public void updateVolume() {
 		float masterVolume = PlayerPrefs.GetFloat ("masterVolume");
