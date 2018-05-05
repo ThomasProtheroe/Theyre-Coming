@@ -63,6 +63,7 @@ public class GameController : MonoBehaviour {
 	[HideInInspector]
 	private bool timerRunning;
 	private float timer;
+	public int killTotal;
 	private string phase;
 	private string currentCinematic;
 	private string devMode;
@@ -109,6 +110,8 @@ public class GameController : MonoBehaviour {
 		timer = 0.0f;
 		timerRunning = true;
 		Time.timeScale = 1.0f;
+
+		killTotal = 0;
 
 		if (devMode == "false") {
 			startIntro ();
@@ -472,6 +475,11 @@ public class GameController : MonoBehaviour {
 	public void stopTimer() {
 		timer = 0.0f;
 		timerRunning = false;
+	}
+
+	public void countEnemyKill() {
+		killTotal++;
+		Debug.Log (killTotal);
 	}
 
 	public void updateVolume() {

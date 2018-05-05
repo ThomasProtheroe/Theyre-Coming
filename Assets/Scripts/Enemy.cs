@@ -386,6 +386,9 @@ public class Enemy : MonoBehaviour {
 		}
 		isDead = true;
 
+		//Track enemy kills
+		gc.countEnemyKill();
+
 		if (walkSoundPlaying) {
 			soundCon.stopEnemyWalk (walkSound);
 		}
