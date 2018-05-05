@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour {
 	public float bleedDamageInterval = 1.0f;
 	public int health = 10;
 	public int attackDamage = 1;
+	private int playerAttackType;
 	public bool hitPlayer;
 	public bool isInvunlerable;
 
@@ -170,7 +171,9 @@ public class Enemy : MonoBehaviour {
 				burnTimer -= Time.deltaTime;
 			} else {
 				burnTimer = burnDamageInterval;
+				playerAttackType = Constants.ATTACK_TYPE_FIRE;
 				takeDamage (1);
+				playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 			}
 
 			if (burnImmunityTimer > 0.0f) {
@@ -332,9 +335,10 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public void takeHit(int damage, int knockback, float direction, bool noBlood=false) {
+	public void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
 		stopProwlSound ();
 		stopWalkSound ();
+		playerAttackType = attackType;
 		if (damage > 0 && !noBlood) {
 			var sh = bloodSprayPS.shape;
 			var main = bloodSprayPS.main;
@@ -368,6 +372,7 @@ public class Enemy : MonoBehaviour {
 			StartCoroutine ("setHitFrame", knockback);
 			takeDamage (damage);
 		}
+		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 	}
 
 	public void takeDamage(int damage) {
@@ -387,7 +392,7 @@ public class Enemy : MonoBehaviour {
 		isDead = true;
 
 		//Track enemy kills
-		gc.countEnemyKill();
+		gc.countEnemyKill(playerAttackType);
 
 		if (walkSoundPlaying) {
 			soundCon.stopEnemyWalk (walkSound);
@@ -434,9 +439,11 @@ public class Enemy : MonoBehaviour {
 			return;
 		}
 
+		playerAttackType = Constants.ATTACK_TYPE_FIRE;
 		burnImmunityTimer = 1.0f;
 		takeDamage (damage);
 		setBurning ();
+		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 	}
 
 	public void setBurning () {
