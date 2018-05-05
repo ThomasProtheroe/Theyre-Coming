@@ -58,12 +58,14 @@ public class GameController : MonoBehaviour {
 	public float musicVolume;
 	public float effectsVolume;
 
+	//Stat tracking
+	public int[] killTotals;
+
 	[HideInInspector]
 	public bool isPaused;
 	[HideInInspector]
 	private bool timerRunning;
 	private float timer;
-	public int killTotal;
 	private string phase;
 	private string currentCinematic;
 	private string devMode;
@@ -111,7 +113,7 @@ public class GameController : MonoBehaviour {
 		timerRunning = true;
 		Time.timeScale = 1.0f;
 
-		killTotal = 0;
+		killTotals = new int[6];
 
 		if (devMode == "false") {
 			startIntro ();
@@ -477,9 +479,8 @@ public class GameController : MonoBehaviour {
 		timerRunning = false;
 	}
 
-	public void countEnemyKill() {
-		killTotal++;
-		Debug.Log (killTotal);
+	public void countEnemyKill(int attackType) {
+		killTotals [attackType]++;
 	}
 
 	public void updateVolume() {

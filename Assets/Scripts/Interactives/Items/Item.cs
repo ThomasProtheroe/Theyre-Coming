@@ -27,6 +27,8 @@ public class Item : Interactive {
 	public string description;
 
 	protected int state = 0;
+	[SerializeField]
+	protected int attackType;
 
 	public Sprite bloodySprite1;
 	public Sprite bloodySprite2;
@@ -88,7 +90,7 @@ public class Item : Interactive {
 					soundController.playPriorityOneShot (throwImpact);
 				}
 				float direction = transform.position.x - other.transform.position.x;
-				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback, direction);
+				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback, direction, false, attackType);
 				if ((state == 0) && (bloodySprite1 != null)) {
 					GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
 					state++;
