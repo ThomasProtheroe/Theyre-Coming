@@ -42,6 +42,7 @@ public class SpikeTrap : Trap {
 	public override void deploy() {
 		transform.parent = null;
 		hitCollider.enabled = false;
+		pickupCollider.enabled = false;
 		triggerCollider.enabled = true;
 		isHeld = false;
 
@@ -57,6 +58,7 @@ public class SpikeTrap : Trap {
 		isDeployed = true;
 		tag = "Trap";
 
+		playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
 		playerCon.alignHands ();
 		playerCon.showPlayerHands ();
 
