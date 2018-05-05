@@ -615,6 +615,7 @@ public class PlayerController : MonoBehaviour {
 			isCrafting = false;
 			isBusy = false;
 			beingCrafted = null;
+			gameCon.countItemCraft ();
 
 			//Update UI box
 			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
