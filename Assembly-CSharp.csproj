@@ -84,6 +84,7 @@
      <Compile Include="Assets\Scripts\Menu\LoadSceneOnClick.cs" />
      <Compile Include="Assets\Scripts\Menu\OptionsAudioController.cs" />
      <Compile Include="Assets\Scripts\Menu\QuitOnClick.cs" />
+     <Compile Include="Assets\Scripts\Menu\ResultsController.cs" />
      <Compile Include="Assets\Scripts\Menu\Scenes.cs" />
      <Compile Include="Assets\Scripts\Menu\SelectOnInput.cs" />
      <Compile Include="Assets\Scripts\MusicController.cs" />
