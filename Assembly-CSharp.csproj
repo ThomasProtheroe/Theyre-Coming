@@ -56,9 +56,11 @@
      <Compile Include="Assets\Scripts\CinematicMap.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
      <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
-     <Compile Include="Assets\Scripts\Enemy.cs" />
-     <Compile Include="Assets\Scripts\EnemyCorpse.cs" />
-     <Compile Include="Assets\Scripts\EnemySpawn.cs" />
+     <Compile Include="Assets\Scripts\Enemies\BossGramps.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnemyCorpse.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnemySpawn.cs" />
+     <Compile Include="Assets\Scripts\Enemies\SpawnMap.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Interactives\FrontDoor.cs" />
      <Compile Include="Assets\Scripts\Interactives\Interactive.cs" />
@@ -94,7 +96,6 @@
      <Compile Include="Assets\Scripts\Projectiles\FlameProjectile.cs" />
      <Compile Include="Assets\Scripts\Recipe.cs" />
      <Compile Include="Assets\Scripts\SoundController.cs" />
-     <Compile Include="Assets\Scripts\SpawnMap.cs" />
      <Compile Include="Assets\Scripts\SpriteOutline.cs" />
      <Compile Include="Assets\Scripts\UI\DescriptionPanel.cs" />
      <Compile Include="Assets\Scripts\UI\Dialog.cs" />
