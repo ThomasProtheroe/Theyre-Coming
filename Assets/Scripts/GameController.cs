@@ -472,8 +472,8 @@ public class GameController : MonoBehaviour {
 			hideDescription ();
 		}
 		//Use Fiona's sprite if none is provided
-		if (dialog.sprite == null) {
-			dialog.sprite = dialogSprites [0];
+		if (dialog.sprites == null) {
+			dialog.sprites = new Sprite[] {dialogSprites [0], dialogSprites[1]};
 		}
 
 		dialogPanel.showDialog (dialog);
@@ -576,7 +576,7 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (1.0f);
 
-		showDialog (new Dialog("Fiona:\nThat was way too close...", dialogSprites[0], 4.0f));
+		showDialog (new Dialog("Fiona:\nThat was way too close...", null, 4.0f));
 
 		yield return new WaitForSeconds (5.0f);
 
@@ -584,7 +584,7 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (1.0f);
 
-		showDialog (new Dialog("\nWhat the hell were those things?", dialogSprites[0], 4.0f));
+		showDialog (new Dialog("\nWhat the hell were those things?", null, 4.0f));
 
 		yield return new WaitForSeconds (5.0f);
 
@@ -592,7 +592,7 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (1.0f);
 
-		showDialog (new Dialog("\nThey were right behind me, they'll be here any minute. I need to get ready for them.", dialogSprites[0], 5.0f));
+		showDialog (new Dialog("\nThey were right behind me, they'll be here any minute. I need to get ready for them.", null, 5.0f));
 
 		yield return new WaitForSeconds (3.0f);
 

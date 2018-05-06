@@ -25,7 +25,7 @@ public class FrontDoor : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (!warningPlayed && other.tag == "Player") {
-			Dialog warningDialog = new Dialog (warningString, playerPortrait, 5.0f);
+			Dialog warningDialog = new Dialog (warningString, null, 5.0f);
 			gc.showDialog (warningDialog);
 			warningPlayed = true;
 		}
