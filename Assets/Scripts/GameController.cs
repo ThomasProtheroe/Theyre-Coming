@@ -584,7 +584,7 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (1.0f);
 
-		showDialog (new Dialog("What the hell were those things?", dialogSprites[0], 4.0f));
+		showDialog (new Dialog("\nWhat the hell were those things?", dialogSprites[0], 4.0f));
 
 		yield return new WaitForSeconds (5.0f);
 
@@ -592,7 +592,7 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (1.0f);
 
-		showDialog (new Dialog("They were right behind me, they'll be here any minute. I need to get ready for them.", dialogSprites[0], 5.0f));
+		showDialog (new Dialog("\nThey were right behind me, they'll be here any minute. I need to get ready for them.", dialogSprites[0], 5.0f));
 
 		yield return new WaitForSeconds (3.0f);
 

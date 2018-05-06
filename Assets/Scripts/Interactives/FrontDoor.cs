@@ -10,7 +10,6 @@ public class FrontDoor : MonoBehaviour {
 	private Text textBox;
 	[SerializeField]
 	public BoxCollider2D warningTrigger;
-	[SerializeField]
 	private string warningString;
 	[SerializeField]
 	private Sprite playerPortrait;
@@ -20,6 +19,7 @@ public class FrontDoor : MonoBehaviour {
 
 	void Start() {
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		warningString = "\nThe streets outside are crawling with those things. I won't last 2 minutes out there...";
 		Invoke ("enableWarning", 5.0f);
 	}
 
