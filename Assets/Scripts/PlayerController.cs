@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour {
 		hidePlayerHands ();
 
 		gameCon.pauseTimer ();
-		gameCon.fadeToMenu ();
+		gameCon.gameOver ();
 	}
 
 

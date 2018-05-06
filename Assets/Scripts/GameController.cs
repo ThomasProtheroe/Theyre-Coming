@@ -62,6 +62,7 @@ public class GameController : MonoBehaviour {
 	public int[] killTotals;
 	private int itemsCrafted;
 
+	private bool isGameOver;
 	[HideInInspector]
 	public bool isPaused;
 	[HideInInspector]
@@ -126,6 +127,10 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (isGameOver) {
+			return;
+		}
+
 		if (timerRunning) {
 			timer += Time.deltaTime;
 		}
@@ -407,7 +412,52 @@ public class GameController : MonoBehaviour {
 	}
 	*/
 
-	public void fadeToMenu() {
+	public void gameOver() {
+		isGameOver = true;
+		pauseTimer ();
+
+		int killTotal = 0;
+		int favoredType = 0;
+		int mostTypeKills = 0;
+		for(int i = 0; i < killTotals.Length; i++) {
+			killTotal += killTotals[i];
+			if (killTotals[i] > mostTypeKills) {
+				favoredType = i;
+				mostTypeKills = killTotals [i];
+			}
+		}
+
+		//Convert favored weapon type into a useful string
+		string typeName = "";
+		switch(favoredType) {
+		case Constants.ATTACK_TYPE_BLUNT:
+			typeName = "blunt weapons.";
+			break;
+		case Constants.ATTACK_TYPE_PIERCE:
+			typeName = "sharp weapons.";
+			break;
+		case Constants.ATTACK_TYPE_PROJECTILE:
+			typeName = "ranged weapons.";
+			break;
+		case Constants.ATTACK_TYPE_TRAP:
+			typeName = "devious traps.";
+			break;
+		case Constants.ATTACK_TYPE_FIRE:
+			typeName = "BURNING THEM ALL!";
+			break;
+		default:
+			typeName = "pure ingenuity.";
+			break;
+		}
+
+		Scenes.setParam ("resultsTime", timer.ToString());
+		Scenes.setParam ("resultsKills", killTotal.ToString());
+		Scenes.setParam ("resultsType", typeName);
+
+		fadeToMenu ();
+	}
+
+	private void fadeToMenu() {
 		//Set any existing enemies to idle
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 		foreach (GameObject enemy in enemies) {
@@ -623,6 +673,6 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (2.0f);
 
-		returnToMenu ();
+		SceneManager.LoadScene("ResultsScreen");
 	}
 }
