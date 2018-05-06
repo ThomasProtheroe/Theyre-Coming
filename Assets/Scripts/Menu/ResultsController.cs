@@ -13,20 +13,32 @@ public class ResultsController : MonoBehaviour {
 	[SerializeField]
 	private Text typeText;
 
+	public Camera camera0;
+	public Camera camera1;
+
 	// Use this for initialization
 	void Start () {
 		//Update all stats from Scene params
 		float resultsTime = float.Parse(Scenes.getParam ("resultsTime"));
 		TimeSpan timeSpan = TimeSpan.FromSeconds(resultsTime);
-		timeText.text = "You managed to stay alive for " + timeSpan.Minutes + " minutes and " + timeSpan.Seconds + "seconds";
+		timeText.text = "You managed to stay alive for " + timeSpan.Minutes + " minutes and " + timeSpan.Seconds + " seconds";
 
-		killsText.text = "You killed " + int.Parse (Scenes.getParam ("resultsKills")) + " undead.";
+		int totalKills = int.Parse (Scenes.getParam ("resultsKills"));
+		killsText.text = "You killed " + totalKills + " undead.";
 
 		typeText.text = "Your favorite weapon of destruction was " + Scenes.getParam ("resultsType");
+
+		if (totalKills < 50) {
+			camera0.enabled = true;
+		} else if (totalKills >= 50) {
+			camera1.enabled = true;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.anyKeyDown) {
+			Scenes.Load ("MainMenu");
+		}
 	}
 }
