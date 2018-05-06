@@ -80,6 +80,10 @@ PillowcaseFlail,Pillowcase,TapedBrick,Weapons/Pillowcase Flail
 TapedPipe,MetalPipe,DuctTape,Weapons/TapedPipe
 TapedBrick,Brick,DuctTape,Items/TapedBrick
 TapedDumbell,Dumbell,DuctTape,Items/TapedDumbell
+PickHead,Brick,TapedBlade,Items/PickHead
+PickHead,TapedBrick,KitchenKnife,Items/PickHead
+PickHead,Brick,Scissors,Items/PickHead
+PickHead,TapedBrick,TapedBlade,Items/PickHead
 SkullshatterHammer,TapedPipe,Brick,Weapons/SkullshatterHammer
 SkullshatterHammer,TapedBrick,MetalPipe,Weapons/SkullshatterHammer
 SkullshatterHammer,TapedBrick,TapedPipe,Weapons/SkullshatterHammer
@@ -100,6 +104,10 @@ BloodbathDumbellHammerShards,TapedDumbellHammer,GlassShards,Weapons/BloodbathDum
 BloodbathDumbellHammerShards,DumbellHammer,TapedShard,Weapons/BloodbathDumbellHammerShards
 BloodbathDumbellHammerShards,TapedDumbellHammer,TapedShard,Weapons/BloodbathDumbellHammerShards
 BloodbathDumbellHammerShards,ShardPipe,TapedDumbell,Weapons/BloodbathDumbellHammerShards
+WarPick,TapedSkullshatterHammer,KitchenKnife,Weapons/WarPick
+WarPick,TapedSkullshatterHammer,Scissors,Weapons/WarPick
+WarPick,SkullshatterHammer,TapedBlade,Weapons/WarPick
+WarPick,TapedPipe,PickHead,Weapons/WarPick
 CorrosivePlunger,Plunger,Bleach,Weapons/CorrosivePlunger
 HeavyBoxTrap,CardboardBox,Blender,Traps/HeavyBoxTrap
 HeavyBoxTrap,CardboardBox,Brick,Traps/HeavyBoxTrap
