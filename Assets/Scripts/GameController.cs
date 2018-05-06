@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 
 	public int prepTime;
 	public Enemy enemy;
+	public BossGramps boss;
 	public GameObject pauseMenu;
 	public GameObject blackFade;
 	[SerializeField]
@@ -174,6 +175,8 @@ public class GameController : MonoBehaviour {
 
 		if ((Scenes.getParam("devMode") != "false") && Input.GetKeyDown ("t")) {
 			spawnEnemyRand ();
+		} else if ((Scenes.getParam("devMode") != "false") && Input.GetKeyDown ("y")) {
+			spawnBoss (spawnZones[0]);
 		}
 	}
 
@@ -210,10 +213,15 @@ public class GameController : MonoBehaviour {
 
 	private void checkForEnemySpawns() {
 		if (nextSpawn != null && timer >= nextSpawn.spawnTime) {
-			for (int i = 0; i < nextSpawn.spawnCount; i++) {
-				Invoke("spawnEnemyRand", i * 0.3f);
+			if (!nextSpawn.isBoss) {
+				for (int i = 0; i < nextSpawn.spawnCount; i++) {
+					Invoke ("spawnEnemyRand", i * 0.3f);
+				}
+				nextSpawn = SpawnMap.getNextSpawn ();
+			} else {
+				spawnBoss (spawnZones[0]);
 			}
-			nextSpawn = SpawnMap.getNextSpawn ();
+
 		}
 	}
 
@@ -264,6 +272,31 @@ public class GameController : MonoBehaviour {
 
 		//Fade the enemy sprite in from black
 		StartCoroutine("spawnFade", newEnemy);
+	}
+
+	void spawnBoss(EnemySpawn spawnZone) {
+		float spawnLocX = spawnZone.transform.position.x;
+		spawnLocX += UnityEngine.Random.Range (spawnZone.maxOffset * -1, spawnZone.maxOffset + 1);
+
+		//Create and position the boss
+		BossGramps newBoss = Instantiate (boss, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
+		//Invulnerable while they are spawning in
+		newBoss.isInvunlerable = true;
+
+		Area spawnArea = spawnZone.GetComponentInParent<Area>();
+		newBoss.setCurrentArea (spawnArea);
+
+		//Set unique boss sounds
+		int vocalType = UnityEngine.Random.Range(0,5);
+		newBoss.setProwlSound(prowlingSounds[vocalType]);
+		newBoss.addAttackSound (attackSoundMaster[vocalType]);
+		newBoss.setWalkSound(walkSounds[UnityEngine.Random.Range(0,5)]);
+
+		//Fade the enemy sprite in from black
+		StartCoroutine("spawnFade", newBoss);
+
+		//TODO Play boss arrival dialog
+
 	}
 
 	public void addEnemyCorpse(EnemyCorpse corpse, string areaName) {

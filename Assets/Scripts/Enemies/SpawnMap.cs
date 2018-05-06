@@ -54,10 +54,12 @@ public static class SpawnMap {
 
 public class SpawnInstance {
 	public float spawnTime { get; set; }
-	public int spawnCount { get; set;}
+	public int spawnCount { get; set; }
+	public bool isBoss { get; set; }
 
-	public SpawnInstance(float time, int count) {
+	public SpawnInstance(float time, int count, bool boss=false) {
 		spawnTime = time;
 		spawnCount = count;
+		isBoss = boss;
 	}
 }
