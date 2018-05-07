@@ -506,6 +506,11 @@ public class Enemy : MonoBehaviour {
 		stunTimer = duration;
 	}
 
+	public void endStun() {
+		isStunned = false;
+		stunTimer = 0.0f;
+	}
+
 	public void setBleeding() {
 		if (!isBleeding) {
 			isBleeding = true;
@@ -632,7 +637,8 @@ public class Enemy : MonoBehaviour {
 
 	/**** Coroutines ****/ 
 	IEnumerator setHitFrame(int knockbackWeight) {
-		isStunned = true;
+		float knockbackTime = 0.17f + ((float)knockbackWeight / 100.0f);  //Calculate the actual time based on knockback stat
+		setStun (knockbackTime);
 		isMoving = false;
 		stopProwlSound ();
 		if (isAttacking) {
@@ -646,8 +652,7 @@ public class Enemy : MonoBehaviour {
 		} else {
 			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
 		}
-
-		float knockbackTime = 0.17f + ((float)knockbackWeight / 100.0f);  //Calculate the actual time based on knockback stat
+			
 		yield return new WaitForSeconds(knockbackTime);
 
 		anim.SetBool ("Knockback", false);
