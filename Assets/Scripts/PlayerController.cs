@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 	private GameObject closestInteractive;
 	private GameObject beingCrafted;
 	private float burnImmunityTimer;
+	private float bileImmunityTimer;
 	private float moveX;
 	private bool isAttacking;
 	private bool isDead;
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour {
 		isAttacking = false;
 		isDead = false;
 		burnImmunityTimer = 0.0f;
+		bileImmunityTimer = 0.0f;
 
 		if (startLeft) {
 			flipPlayer ();
@@ -110,6 +112,9 @@ public class PlayerController : MonoBehaviour {
 
 		if (burnImmunityTimer > 0.0f) {
 			burnImmunityTimer -= Time.deltaTime;
+		}
+		if (bileImmunityTimer > 0.0f) {
+			bileImmunityTimer -= Time.deltaTime;
 		}
 	}
 
@@ -491,15 +496,20 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void takeHit(int damage) {
-		if (isCrafting) {
-			StopCoroutine ("craftItem");
-			Destroy (beingCrafted);
-			craftingCloud.SetActive (false);
-			isCrafting = false;
-			isBusy = false;
+		cancelCrafting ();
+		takeDamage (damage);
+		StartCoroutine ("damageFlash");
+	}
+
+	public void takeBileHit(int damage) {
+		if (bileImmunityTimer > 0.0f) {
+			return;
 		}
 
-		takeDamage (damage);
+		cancelCrafting ();
+
+		bileImmunityTimer = 0.6f;
+		takeDamage (1);
 		StartCoroutine ("damageFlash");
 	}
 
@@ -511,6 +521,16 @@ public class PlayerController : MonoBehaviour {
 		burnImmunityTimer = 1.0f;
 		takeDamage (1);
 		StartCoroutine ("damageFlash");
+	}
+
+	private void cancelCrafting() {
+		if (isCrafting) {
+			StopCoroutine ("craftItem");
+			Destroy (beingCrafted);
+			craftingCloud.SetActive (false);
+			isCrafting = false;
+			isBusy = false;
+		}
 	}
 
 	public GameObject getClosestInteractive() {
