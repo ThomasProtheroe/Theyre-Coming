@@ -9,71 +9,72 @@ public class Enemy : MonoBehaviour {
 	[HideInInspector]
 	public Area currentArea;
 
-	private GameController gc;
-	private Animator anim;
-	private Rigidbody2D rigidBody;
-	private SpriteRenderer enemySprite;
-	private GameObject player;
+	protected Animator anim;
+	protected GameController gc;
+	protected Rigidbody2D rigidBody;
+	protected SpriteRenderer enemySprite;
+	protected GameObject player;
 	[SerializeField]
 	private EnemyCorpse enemyCorpse;
 
 	/* Audio Components */
 	[HideInInspector]
 	public SoundController soundCon;
-	private AudioClip walkSound;
-	private AudioClip prowlSound;
+	protected AudioClip walkSound;
+	protected AudioClip prowlSound;
 	[SerializeField]
-	private AudioClip igniteSound;
+	protected AudioClip igniteSound;
 	[SerializeField]
-	private AudioClip burningSound;
+	protected AudioClip burningSound;
 	[SerializeField]
-	private AudioClip splashSound;
+	protected AudioClip splashSound;
 	[SerializeField]
-	private AudioClip attackImpactSound;
-	private List<AudioClip> attackSounds;
+	protected AudioClip attackImpactSound;
+	protected List<AudioClip> attackSounds;
 
 	/* Particle Systems */
 	[SerializeField]
-	private ParticleSystem bloodSprayPS;
+	protected ParticleSystem bloodSprayPS;
 	[SerializeField]
-	private ParticleSystem splashPS;
+	protected ParticleSystem splashPS;
 	[SerializeField]
-	private ParticleSystem bleedingPS;
+	protected ParticleSystem bleedingPS;
 	[SerializeField]
-	private ParticleSystem burningPS;
+	protected ParticleSystem burningPS;
 	[SerializeField]
-	private ParticleSystem[] burningDetailPS;
+	protected ParticleSystem[] burningDetailPS;
 
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
-	private float distanceToPlayer;
+	protected float distanceToPlayer;
 	public float burnDamageInterval = 1.0f;
 	public float bleedDamageInterval = 1.0f;
 	public int health = 10;
 	public int attackDamage = 1;
-	private int playerAttackType;
+	protected int playerAttackType;
 	public bool hitPlayer;
 	public bool isInvunlerable;
 
-	private bool isActive;
-	private bool isMoving;
-	private bool isAttacking;
-	private bool isStunned;
-	private bool isBurning;
-	private bool isBleeding;
-	private bool isBlind;
-	private bool isDead;
+	protected bool isActive;
+	protected bool isMoving;
+	protected bool isAttacking;
+	protected bool isStunned;
+	protected bool isBurning;
+	protected bool isBleeding;
+	protected bool isBlind;
+	protected bool isDead;
 
-	private bool walkSoundPlaying;
-	private bool prowlSoundPlaying;
-	private bool burnSoundPlaying;
+	protected bool walkSoundPlaying;
+	protected bool prowlSoundPlaying;
+	protected bool burnSoundPlaying;
 
 	private float wanderTimer = 0.0f;
 	private int wanderDirection;
 	private float wanderAttackTimer = 0.0f;
-	private float burnTimer = 0.0f;
-	private float burnImmunityTimer = 0.0f;
-	private float bleedTimer = 0.0f;
+	protected float burnTimer = 0.0f;
+	protected float burnImmunityTimer = 0.0f;
+	protected float stunTimer;
+	protected float bleedTimer = 0.0f;
 	[SerializeField]
 	private float blindDuration;
 	private float blindTimer = 0.0f;
@@ -110,58 +111,25 @@ public class Enemy : MonoBehaviour {
 		}
 
 		if (!isStunned) {
-			if (isActive && isBlind && !isAttacking) {
-				//Move randomly back and forth
-				if (wanderTimer > 0) {
-					wanderBlind ();
-				} else {
-					startWander ();
-				}
+			takeAction ();
+		}
 
-				//Attack randomly
-				if (wanderAttackTimer <= 0) {
-					attack ();
-					wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
-				}
-			} else if (isActive && !isAttacking && !isDead) {
-				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
-					moveTowardsPlayer ();
-				} else {
-					//Track player and move towards transition
-					Transition target = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().findRouteToPlayer(currentArea);
-					faceTarget (target.transform.position);
-					move ();
-					if (Vector2.Distance(target.gameObject.transform.position, gameObject.transform.position) < 0.5) {
-						if (target.inUseByPlayer) {
-							deactivate ();
-						} else {
-							target.enemyTravel (GetComponent<Enemy>());
-						}
-
-					}
-				}
-			} else {
-				isMoving = false;
-				rigidBody.velocity = new Vector2 (0, 0);
+		//Sound effect Control
+		if (inAudioRange && !isAttacking && !isDead) {
+			if (!prowlSoundPlaying) {
+				startProwlSound ();
 			}
-
-			//Sound effect Control
-			if (inAudioRange && !isAttacking && !isDead) {
-				if (!prowlSoundPlaying) {
-					startProwlSound ();
-				}
-				if (isMoving && !walkSoundPlaying) {
-					startWalkSound ();
-				} else if (!isMoving && walkSoundPlaying) {
-					stopWalkSound ();
-				}
-			} else {
-				if (prowlSoundPlaying) {
-					stopProwlSound ();
-				}
-				if (walkSoundPlaying) {
-					stopWalkSound ();
-				}
+			if (isMoving && !walkSoundPlaying) {
+				startWalkSound ();
+			} else if (!isMoving && walkSoundPlaying) {
+				stopWalkSound ();
+			}
+		} else {
+			if (prowlSoundPlaying) {
+				stopProwlSound ();
+			}
+			if (walkSoundPlaying) {
+				stopWalkSound ();
 			}
 		}
 
@@ -172,12 +140,21 @@ public class Enemy : MonoBehaviour {
 			} else {
 				burnTimer = burnDamageInterval;
 				playerAttackType = Constants.ATTACK_TYPE_FIRE;
-				takeDamage (1);
+				takeBurnDamage (1);
 				playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 			}
 
 			if (burnImmunityTimer > 0.0f) {
 				burnImmunityTimer -= Time.deltaTime;
+			}
+		}
+		if (isStunned) {
+			if (stunTimer > 0.0f) {
+				stunTimer -= Time.deltaTime;
+			} else {
+				stunTimer = 0.0f;
+				isStunned = false;
+				activate ();
 			}
 		}
 		if (isBleeding) {
@@ -238,9 +215,53 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	private void moveTowardsPlayer () {
+	public virtual void takeAction() {
+		if (isActive && isBlind && !isAttacking) {
+			//Move randomly back and forth
+			if (wanderTimer > 0) {
+				wanderBlind ();
+			} else {
+				startWander ();
+			}
+
+			//Attack randomly
+			if (wanderAttackTimer <= 0) {
+				attack ();
+				wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
+			}
+		} else if (isActive && !isAttacking && !isDead) {
+			if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
+				moveTowardsPlayer ();
+				tryAttack ();
+			} else {
+				seekPlayer ();
+			}
+		} else {
+			isMoving = false;
+			rigidBody.velocity = new Vector2 (0, 0);
+		}
+	}
+
+	protected void moveTowardsPlayer () {
 		facePlayer ();
 		move ();
+	}
+
+	protected void seekPlayer() {
+		//Track player and move towards transition
+		Transition target = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().findRouteToPlayer(currentArea);
+		faceTarget (target.transform.position);
+		move ();
+		if (Vector2.Distance(target.gameObject.transform.position, gameObject.transform.position) < 0.5) {
+			if (target.inUseByPlayer) {
+				deactivate ();
+			} else {
+				target.enemyTravel (GetComponent<Enemy>());
+			}
+		}
+	}
+
+	protected virtual void tryAttack() {
 		if (distanceToPlayer <= attackRange) {
 			attack ();
 		}
@@ -317,7 +338,7 @@ public class Enemy : MonoBehaviour {
 		rigidBody.velocity = new Vector2 (currentSpeed, rigidBody.velocity.y);
 	}
 
-	void attack() {
+	protected void attack() {
 		hitPlayer = false;
 		playAttackSound ();
 		anim.SetTrigger ("Attack");
@@ -335,7 +356,7 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
+	public virtual void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
 		stopProwlSound ();
 		stopWalkSound ();
 		playerAttackType = attackType;
@@ -372,6 +393,18 @@ public class Enemy : MonoBehaviour {
 			StartCoroutine ("setHitFrame", knockback);
 			takeDamage (damage);
 		}
+		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
+	}
+
+	public virtual void takeFireHit(int damage) {
+		if (burnImmunityTimer > 0.0f) {
+			return;
+		}
+
+		playerAttackType = Constants.ATTACK_TYPE_FIRE;
+		burnImmunityTimer = 1.0f;
+		takeDamage (damage);
+		setBurning ();
 		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 	}
 
@@ -434,16 +467,8 @@ public class Enemy : MonoBehaviour {
 		gc.addEnemyCorpse (corpse, currentArea.name);
 	}
 
-	public void takeFireHit(int damage) {
-		if (burnImmunityTimer > 0.0f) {
-			return;
-		}
-
-		playerAttackType = Constants.ATTACK_TYPE_FIRE;
-		burnImmunityTimer = 1.0f;
+	public virtual void takeBurnDamage(int damage) {
 		takeDamage (damage);
-		setBurning ();
-		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 	}
 
 	public void setBurning () {
@@ -459,6 +484,26 @@ public class Enemy : MonoBehaviour {
 				startBurningSound ();
 			}
 		}
+	}
+
+	public void stopBurning () {
+		if (!isBurning) {
+			return;
+		}
+		isBurning = false;
+		burnTimer = 0.0f;
+		burningPS.Stop ();
+		foreach (ParticleSystem detailPS in burningDetailPS) {
+			detailPS.Stop ();
+		}
+		if (burnSoundPlaying) {
+			stopBurningSound ();
+		}
+	}
+
+	public void setStun(float duration) {
+		isStunned = true;
+		stunTimer = duration;
 	}
 
 	public void setBleeding() {
