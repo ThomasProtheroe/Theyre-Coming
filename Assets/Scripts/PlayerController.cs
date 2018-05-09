@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-	public float playerSpeed = 5;
-	public int xThrowStrength = 500;
-	public int yThrowStrength = 100;
-	public int health = 5;
-	public bool isBusy = false;
-	public bool isTargetable = true;
-	public bool isInvulnerable = false;
+	public float playerSpeed;
+	public float slowReduction;
+	private float currentSpeed;
+	public int xThrowStrength;
+	public int yThrowStrength;
+	public int health;
+
 
 	[HideInInspector]
 	public List<GameObject> nearInteractives = new List<GameObject>();
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public GameObject backHand;
 	public GameObject craftingCloud;
+	public ParticleSystem dripPS;
 	public Sprite deathSprite;
 	public Area currentArea;
 	[HideInInspector]
@@ -51,7 +52,14 @@ public class PlayerController : MonoBehaviour {
 	private GameObject beingCrafted;
 	private float burnImmunityTimer;
 	private float bileImmunityTimer;
+	private float slowedTimer;
 	private float moveX;
+	[HideInInspector]
+	public bool isBusy;
+	[HideInInspector]
+	public bool isTargetable;
+	[HideInInspector]
+	public bool isInvulnerable;
 	private bool isAttacking;
 	private bool isDead;
 	private bool isCrafting;
@@ -81,10 +89,11 @@ public class PlayerController : MonoBehaviour {
 		activeSlot = itemSlot1;
 		activeSlot.setActive (true);
 
-		isAttacking = false;
-		isDead = false;
+		currentSpeed = playerSpeed;
+		isTargetable = true;
 		burnImmunityTimer = 0.0f;
 		bileImmunityTimer = 0.0f;
+		slowedTimer = 0.0f;
 
 		if (startLeft) {
 			flipPlayer ();
@@ -115,6 +124,13 @@ public class PlayerController : MonoBehaviour {
 		}
 		if (bileImmunityTimer > 0.0f) {
 			bileImmunityTimer -= Time.deltaTime;
+		}
+		if (slowedTimer > 0.0f) {
+			slowedTimer -= Time.deltaTime;
+			if (slowedTimer <= 0.0f) {
+				//slow condition has ended
+				endSlowed();
+			}
 		}
 	}
 
@@ -224,7 +240,7 @@ public class PlayerController : MonoBehaviour {
 			flipPlayer ();
 		}
 
-		rigidBody.velocity = new Vector2 (moveX * playerSpeed, rigidBody.velocity.y);
+		rigidBody.velocity = new Vector2 (moveX * currentSpeed, rigidBody.velocity.y);
 
 		if (moveX != 0.0f) {
 			anim.SetInteger("State", 1);
@@ -502,15 +518,18 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void takeBileHit(int damage) {
+		setSlowed (0.25f);
 		if (bileImmunityTimer > 0.0f) {
 			return;
 		}
 
-		cancelCrafting ();
-
+		dripPS.Play ();
+		CancelInvoke ("stopDrip");
+		Invoke ("stopDrip", 3.0f);
+			
 		bileImmunityTimer = 0.6f;
-		takeDamage (1);
-		StartCoroutine ("damageFlash");
+
+		takeHit (damage);
 	}
 
 	public void takeFireHit() {
@@ -521,6 +540,22 @@ public class PlayerController : MonoBehaviour {
 		burnImmunityTimer = 1.0f;
 		takeDamage (1);
 		StartCoroutine ("damageFlash");
+	}
+
+	public void setSlowed(float duration) {
+		currentSpeed = playerSpeed * (1.0f - slowReduction);
+		slowedTimer = duration;
+	}
+
+	public void endSlowed() {
+		currentSpeed = playerSpeed;
+		slowedTimer = 0.0f;
+	}
+
+	private void stopDrip() {
+		if (dripPS.isPlaying) {
+			dripPS.Stop ();
+		}
 	}
 
 	private void cancelCrafting() {
