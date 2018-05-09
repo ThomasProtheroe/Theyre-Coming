@@ -26,7 +26,7 @@ public class ResultsController : MonoBehaviour {
 		int totalKills = int.Parse (Scenes.getParam ("resultsKills"));
 		killsText.text = "You killed " + totalKills + " undead.";
 
-		typeText.text = "Your favorite weapon of destruction was " + Scenes.getParam ("resultsType");
+		typeText.text = "Your favorite method of destruction was " + Scenes.getParam ("resultsType");
 
 		if (totalKills < 50) {
 			camera0.enabled = true;
