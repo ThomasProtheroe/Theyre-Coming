@@ -20,6 +20,10 @@ public class RangedWeapon : Item {
 		base.Start ();
 	}
 
+	public override void updateDurabilityIndicator() {
+		playerCon.activeSlot.setDurabilityIndicator(((float)ammunition / capacity));
+	}
+
 	public void setEmpty() {
 		GameObject newWeapon = Instantiate(emptyPrefab, new Vector3(transform.position.x, transform.position.y), transform.rotation);
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
@@ -40,6 +44,6 @@ public class RangedWeapon : Item {
 	}
 
 	public virtual void fire() {
-
+		updateDurabilityIndicator();
 	}
 }
