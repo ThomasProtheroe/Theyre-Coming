@@ -56,7 +56,7 @@ public class Item : Interactive {
 	public PlayerController playerCon;
 
 	// Use this for initialization
-	protected void Start () {
+	protected virtual void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerCon = player.GetComponent<PlayerController> ();
 		soundController = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
@@ -181,6 +181,7 @@ public class Item : Interactive {
 
 		isHeld = true;
 
+		updateDurabilityIndicator ();
 		onPickup ();
 	}
 
@@ -300,6 +301,10 @@ public class Item : Interactive {
 		if (breakSound) {
 			soundController.playPriorityOneShot (breakSound);
 		}
+	}
+
+	public virtual void updateDurabilityIndicator() {
+		playerCon.activeSlot.resetDurabilityIndicator();
 	}
 
 	//Return true if item should be destroyed immediately (no animation)

@@ -6,6 +6,7 @@ public class Weapon : Item {
 
 	public int attackDamage;
 	public int durability;
+	private int maxDurability;
 	public int knockback;
 	public int multiHit = 1;
 	public bool inflictsBleed;
@@ -17,6 +18,11 @@ public class Weapon : Item {
 
 	private int hitCount = 0;
 	private bool hitWindowActive = false;
+
+	protected override void Start() {	
+		maxDurability = durability;
+		base.Start ();
+	}
 
 	new void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
@@ -95,12 +101,19 @@ public class Weapon : Item {
 		return true;
 	}
 
+	public override void updateDurabilityIndicator() {
+		playerCon.activeSlot.setDurabilityIndicator(((float)durability / maxDurability));
+	}
+
 	public virtual void onEnemyImpact(GameObject enemy) {
 		durability -= 1;
 
 		if (durability <= 0) {
 			breakItem ();
 		} else {
+			//Update UI
+			updateDurabilityIndicator();
+
 			if ((state == 0) && (bloodySprite1 != null)) {
 				GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
 				state++;
