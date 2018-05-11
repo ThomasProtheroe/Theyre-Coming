@@ -41,6 +41,8 @@ public class HomemadeFlamethrower : RangedWeapon {
 		pilot.Stop ();
 		stream.Play ();
 		soundController.playPriorityOneShot (fireSound);
+
+		base.fire ();
 	}
 
 	public new void setEmpty() {

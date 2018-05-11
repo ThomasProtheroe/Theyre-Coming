@@ -31,6 +31,8 @@ public class BlindSquirtGun : RangedWeapon {
 		stream.Play ();
 		fireProjectile ();
 		soundController.playPriorityOneShot (fireSound);
+
+		base.fire ();
 	}
 
 	public new void setEmpty() {
