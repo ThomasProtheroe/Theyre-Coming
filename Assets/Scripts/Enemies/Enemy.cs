@@ -187,7 +187,6 @@ public class Enemy : MonoBehaviour {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 			if (enemy.isBlind && other == enemy.attackHitbox) {
 				float direction = transform.position.x - other.transform.position.x;
-				//Invoke ("playAttackImpactSound", 0.4f);
 				playAttackImpactSound();
 				takeHit (4, 0, direction);
 			}

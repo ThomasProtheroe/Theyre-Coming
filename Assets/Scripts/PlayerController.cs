@@ -362,18 +362,17 @@ public class PlayerController : MonoBehaviour {
 			heldItem.transform.parent = heldItemParent.transform;
 			Item itemController = heldItem.GetComponent<Item> ();
 
+			//Update UI
+			updateItemSlot(heldItem.GetComponent<SpriteRenderer>().sprite);
+			if (itemController.description != "") {
+				gameCon.showDescription (itemController.description);
+			}
+
 			itemController.pickupItem(playerSprite.flipX);
 			hidePlayerHands ();
 
 			//Set the items position and rotation
 			positionHeldItem ();
-
-			//Update UI
-			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
-			if (itemController.description != "") {
-				gameCon.showDescription (itemController.description);
-			}
-
 		}
 	}
 		
@@ -389,6 +388,8 @@ public class PlayerController : MonoBehaviour {
 				heldItem.GetComponent<Item> ().playSwappingSound ();
 			}
 
+			switchActiveItemSlot ();
+
 			if (stashedItem && heldItem) {
 				swapStashedEquipped ();
 			} else if (stashedItem) {
@@ -396,8 +397,6 @@ public class PlayerController : MonoBehaviour {
 			} else if (heldItem) {
 				stashEquippedItem ();
 			}
-
-			switchActiveItemSlot ();
 		}
 	}
 
@@ -673,7 +672,7 @@ public class PlayerController : MonoBehaviour {
 			gameCon.countItemCraft ();
 
 			//Update UI box
-			activeSlot.setImage(heldItem.GetComponent<SpriteRenderer>().sprite);
+			updateItemSlot(heldItem.GetComponent<SpriteRenderer>().sprite);
 			if (itemCon.description != "") {
 				gameCon.showDescription (itemCon.description);
 			}
