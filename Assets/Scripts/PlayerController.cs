@@ -328,12 +328,14 @@ public class PlayerController : MonoBehaviour {
 
 			//Set throw direction	
 			int tempThrowStrength;
+			float tempThrowRotation;
 			if (playerSprite.flipX) {
 				item.throwDirection = -1;
 			} else {
 				item.throwDirection = 1;
 			}
 			tempThrowStrength = xThrowStrength * item.throwDirection;
+			tempThrowRotation = item.throwRotation * item.throwDirection;
 				
 			alignHands ();
 			showPlayerHands ();
@@ -344,6 +346,7 @@ public class PlayerController : MonoBehaviour {
 
 			body.bodyType = RigidbodyType2D.Dynamic;
 			body.AddForce (new Vector2 (tempThrowStrength, yThrowStrength));
+			body.AddTorque (tempThrowRotation);
 
 			heldItem = null;
 
