@@ -32,7 +32,6 @@ public class ItemSlot : MonoBehaviour {
 
 	public void setDurabilityIndicator(float durabilityNormalized) {
 		if (image.sprite == null) {
-			Debug.Log ("fail");
 			return;
 		}
 
