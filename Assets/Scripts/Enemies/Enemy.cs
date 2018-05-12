@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected ParticleSystem[] burningDetailPS;
 
+	public float groundLevel;
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
 	protected float distanceToPlayer;
@@ -98,7 +99,7 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 		if (player.transform.position.x > transform.position.x) {
 			distanceToPlayer = player.transform.position.x - transform.position.x;
 		} else {
@@ -110,7 +111,7 @@ public class Enemy : MonoBehaviour {
 			inAudioRange = true;
 		}
 
-		if (!isStunned) {
+		if (!isStunned && !isAttacking) {
 			takeAction ();
 		}
 
@@ -215,7 +216,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public virtual void takeAction() {
-		if (isActive && isBlind && !isAttacking) {
+		if (isActive && isBlind) {
 			//Move randomly back and forth
 			if (wanderTimer > 0) {
 				wanderBlind ();
@@ -228,7 +229,7 @@ public class Enemy : MonoBehaviour {
 				attack ();
 				wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
 			}
-		} else if (isActive && !isAttacking && !isDead) {
+		} else if (isActive && !isDead) {
 			if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
 				moveTowardsPlayer ();
 				tryAttack ();
