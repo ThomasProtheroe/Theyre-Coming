@@ -291,6 +291,11 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	protected void stopMoving() {
+		isMoving = false;
+		rigidBody.velocity = Vector2.zero;
+	}
+
 	void facePlayer() {
 		if (player.transform.position.x > transform.position.x && !enemySprite.flipX) {
 			enemySprite.flipX = true;

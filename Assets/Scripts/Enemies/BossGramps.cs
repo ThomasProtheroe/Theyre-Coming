@@ -36,9 +36,7 @@ public class BossGramps : Enemy {
 	[Space(1)]
 	[Header("Behaviour Parameters")]
 	[SerializeField]
-	private float spitAggroRange;
-	[SerializeField]
-	private float leapAggroRange;
+	private float attackAggroRange;
 
 	protected override void Update() {
 
@@ -56,18 +54,19 @@ public class BossGramps : Enemy {
 				}
 			}
 		} else {
-			isMoving = false;
-			rigidBody.velocity = new Vector2 (0, 0);
+			stopMoving ();
 		}
 	}
 
 	protected override void tryAttack() {
 		if (distanceToPlayer <= attackRange) {
 			attack ();
-		} else if (distanceToPlayer <= leapAggroRange) {
-			leapAttack ();
-		} else if (distanceToPlayer <= spitAggroRange) {
-			spitAttack ();
+		} else if (distanceToPlayer <= attackAggroRange) {
+			if (UnityEngine.Random.Range (0, 2) == 1) {
+				spitAttack ();
+			} else {
+				leapAttack ();
+			}
 		}
 	}
 
@@ -117,6 +116,7 @@ public class BossGramps : Enemy {
 	private void spitAttack() {
 		isSpitting = true;
 		isAttacking = true;
+		stopMoving ();
 		StartCoroutine ("SpitAttack");
 	}
 
@@ -169,7 +169,7 @@ public class BossGramps : Enemy {
 			knockback = 4;
 		} else {
 			knockback = 0;
-			isMoving = false;
+			stopMoving ();
 			anim.enabled = true;
 		}
 
@@ -228,9 +228,7 @@ public class BossGramps : Enemy {
 
 		isMoving = false;
 		anim.enabled = true;
-		activate ();
-		isStunned = false;
-		setStun (2.0f);
+		Invoke ("activate", 2.0f);
 	}
 
 	IEnumerator SpitAttack() {
