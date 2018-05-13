@@ -29,27 +29,65 @@ public class BossGramps : Enemy {
 	private Sprite leapPrepFrame;
 
 	private int currentBurnDamage;
+
+	private bool isPreparing;
+	private float prepTimer;
 	private bool isSpitting;
 	private bool isLeaping;
+	private bool isRecovering;
+	private string selectedAttack;
 
 	//Behaviour control
-	[Space(1)]
 	[Header("Behaviour Parameters")]
 	[SerializeField]
 	private float attackAggroRange;
-
-	protected override void Update() {
-
-		base.Update ();
-	}
+	[SerializeField]
+	private float prepRange;
+	[SerializeField]
+	private float prepDelay;
 
 	public override void takeAction() {
+		Debug.Log (prepTimer);
 		if (isActive) {
 			if (!isDead) {
+				if (isPreparing && prepTimer > 0.0f) {
+					prepTimer -= Time.deltaTime;
+				}
+
 				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
-					moveTowardsPlayer ();
-					tryAttack ();
+					if (isPreparing && prepTimer <= 0.0f) {
+						//Prep has ended, make an attack
+						isPreparing = false;
+						anim.SetBool ("Active", true);
+						if (UnityEngine.Random.Range (0, 2) == 1) {
+							selectedAttack = "spit";
+						} else {
+							selectedAttack = "leap";
+						}
+					}
+
+					if (!isPreparing && !isRecovering) {
+						moveTowardsPlayer ();
+						if (selectedAttack != null) {
+							tryAttack ();
+						} else {
+							if (distanceToPlayer <= prepRange) {
+								isPreparing = true;
+								prepTimer = prepDelay;
+								stopMoving ();
+								anim.SetBool ("Active", false);
+							}
+						}
+					}
+
 				} else {
+					if (isPreparing) {
+						isPreparing = false;
+						prepTimer = 0.0f;
+					}
+					if (selectedAttack != null) {
+						selectedAttack = null;
+					}
 					seekPlayer ();
 				}
 			}
@@ -62,10 +100,10 @@ public class BossGramps : Enemy {
 		if (distanceToPlayer <= attackRange) {
 			attack ();
 		} else if (distanceToPlayer <= attackAggroRange) {
-			if (UnityEngine.Random.Range (0, 2) == 1) {
-				spitAttack ();
-			} else {
+			if (selectedAttack == "leap") {
 				leapAttack ();
+			} else if (selectedAttack == "spit") {
+				spitAttack ();
 			}
 		}
 	}
@@ -83,12 +121,13 @@ public class BossGramps : Enemy {
 			if (newKnockback != 0) {
 				knockback = newKnockback;
 			}
+		} 
+
+		if (distanceToPlayer <= 2.0f) {
+			isRecovering = true;
 		}
 			
 		base.takeHit (damage, knockback, direction, noBlood, attackType);
-
-		//TODO gramps jumps out of attack range after taking a hit. This way the player can't hammer him repeatedly with high speed weapons
-
 	}
 
 	public void takeFireHit(int damage) {
@@ -113,9 +152,18 @@ public class BossGramps : Enemy {
 		}
 	}
 
+	protected override void onKnockbackEnd() {
+		if (!isRecovering) {
+			return;
+		}
+
+		//TODO leap backwards
+	}
+
 	private void spitAttack() {
 		isSpitting = true;
 		isAttacking = true;
+		selectedAttack = null;
 		stopMoving ();
 		StartCoroutine ("SpitAttack");
 	}
@@ -127,6 +175,8 @@ public class BossGramps : Enemy {
 
 		isSpitting = false;
 		isAttacking = false;
+		droolPS.Stop ();
+		spitPS.Stop ();
 		setStun (1.0f);
 		StopCoroutine ("SpitAttack");
 		anim.enabled = true;
@@ -147,6 +197,7 @@ public class BossGramps : Enemy {
 	private void leapAttack() {
 		isLeaping = true;
 		isAttacking = true;
+		selectedAttack = null;
 		hitPlayer = false;
 		stopMoving ();
 		rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
