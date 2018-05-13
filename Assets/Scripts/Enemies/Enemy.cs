@@ -56,9 +56,13 @@ public class Enemy : MonoBehaviour {
 	public bool hitPlayer;
 	public bool isInvunlerable;
 
+	[SerializeField]
 	protected bool isActive;
+	[SerializeField]
 	protected bool isMoving;
+	[SerializeField]
 	protected bool isAttacking;
+	[SerializeField]
 	protected bool isStunned;
 	protected bool isBurning;
 	protected bool isBleeding;
@@ -111,7 +115,7 @@ public class Enemy : MonoBehaviour {
 			inAudioRange = true;
 		}
 
-		if (!isStunned && !isAttacking) {
+		if (!isStunned && !isAttacking && !isDead) {
 			takeAction ();
 		}
 
@@ -153,9 +157,7 @@ public class Enemy : MonoBehaviour {
 			if (stunTimer > 0.0f) {
 				stunTimer -= Time.deltaTime;
 			} else {
-				stunTimer = 0.0f;
-				isStunned = false;
-				activate ();
+				endStun ();
 			}
 		}
 		if (isBleeding) {
@@ -229,7 +231,7 @@ public class Enemy : MonoBehaviour {
 				attack ();
 				wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
 			}
-		} else if (isActive && !isDead) {
+		} else if (isActive) {
 			if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
 				moveTowardsPlayer ();
 				tryAttack ();
@@ -237,8 +239,7 @@ public class Enemy : MonoBehaviour {
 				seekPlayer ();
 			}
 		} else {
-			isMoving = false;
-			rigidBody.velocity = new Vector2 (0, 0);
+			stopMoving ();
 		}
 	}
 
@@ -514,6 +515,7 @@ public class Enemy : MonoBehaviour {
 	public void endStun() {
 		isStunned = false;
 		stunTimer = 0.0f;
+		activate ();
 	}
 
 	public void setBleeding() {
@@ -661,10 +663,10 @@ public class Enemy : MonoBehaviour {
 		yield return new WaitForSeconds(knockbackTime);
 
 		anim.SetBool ("Knockback", false);
-		isStunned = false;
+		stopMoving ();
 
-		deactivate ();
-		Invoke ("activate", 0.3f);
+		//deactivate ();
+		//Invoke ("activate", 0.3f);
 	}
 
 	IEnumerator bleedDamageFlash() {
