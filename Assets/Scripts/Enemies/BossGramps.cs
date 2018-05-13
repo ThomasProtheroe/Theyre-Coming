@@ -45,7 +45,7 @@ public class BossGramps : Enemy {
 
 	public override void takeAction() {
 		if (isActive) {
-			if (!isAttacking && !isDead) {
+			if (!isDead) {
 				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
 					moveTowardsPlayer ();
 					tryAttack ();
@@ -148,7 +148,7 @@ public class BossGramps : Enemy {
 		isLeaping = true;
 		isAttacking = true;
 		hitPlayer = false;
-		isMoving = false;
+		stopMoving ();
 		rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
 		StartCoroutine ("LeapAttack");
 	}
@@ -164,7 +164,7 @@ public class BossGramps : Enemy {
 
 		int knockback = 0;
 		if (transform.position.y > groundLevel) {
-			isStunned = true;
+			setStun (10.0f);
 			StartCoroutine ("Fall");
 			knockback = 4;
 		} else {
@@ -178,7 +178,6 @@ public class BossGramps : Enemy {
 
 	IEnumerator LeapAttack() {
 		//Prepare to leap
-		deactivate();
 		anim.enabled = false;
 		enemySprite.sprite = leapPrepFrame;
 
@@ -206,29 +205,26 @@ public class BossGramps : Enemy {
 
 		yield return new WaitForSeconds(leapDuration * 0.4f);
 
-		rigidBody.velocity = Vector2.zero;
+		stopMoving ();
 
 		anim.enabled = true;
 		finishAttack ();
 		isLeaping = false;
-		isMoving = false;
-
-		yield return new WaitForSeconds (2.0f);
-		activate ();
 	}
 
 	IEnumerator Fall() {
 		while(transform.position.y > groundLevel) {
-			rigidBody.velocity = new Vector2 (rigidBody.velocity.x, rigidBody.velocity.y - 0.2f);
+			rigidBody.velocity = new Vector2 (rigidBody.velocity.x, rigidBody.velocity.y - 0.4f);
 			yield return null;
 		}
 
 		rigidBody.velocity = new Vector2 (rigidBody.velocity.x, 0.0f);
 		transform.position = new Vector3 (transform.position.x, groundLevel, transform.position.z);
 
-		isMoving = false;
+		stopMoving ();
 		anim.enabled = true;
-		Invoke ("activate", 2.0f);
+		deactivate ();
+		setStun (2.0f);
 	}
 
 	IEnumerator SpitAttack() {
