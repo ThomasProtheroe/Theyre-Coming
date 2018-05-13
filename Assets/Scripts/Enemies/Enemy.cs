@@ -56,13 +56,9 @@ public class Enemy : MonoBehaviour {
 	public bool hitPlayer;
 	public bool isInvunlerable;
 
-	[SerializeField]
 	protected bool isActive;
-	[SerializeField]
 	protected bool isMoving;
-	[SerializeField]
 	protected bool isAttacking;
-	[SerializeField]
 	protected bool isStunned;
 	protected bool isBurning;
 	protected bool isBleeding;
@@ -510,6 +506,7 @@ public class Enemy : MonoBehaviour {
 	public void setStun(float duration) {
 		isStunned = true;
 		stunTimer = duration;
+		deactivate ();
 	}
 
 	public void endStun() {
@@ -642,6 +639,10 @@ public class Enemy : MonoBehaviour {
 		soundCon.playSpash (splashSound);
 	}
 
+	protected virtual void onKnockbackEnd() {
+		setStun (0.3f);
+	}
+
 	/**** Coroutines ****/ 
 	IEnumerator setHitFrame(int knockbackWeight) {
 		float knockbackTime = 0.17f + ((float)knockbackWeight / 100.0f);  //Calculate the actual time based on knockback stat
@@ -665,8 +666,7 @@ public class Enemy : MonoBehaviour {
 		anim.SetBool ("Knockback", false);
 		stopMoving ();
 
-		//deactivate ();
-		//Invoke ("activate", 0.3f);
+		onKnockbackEnd ();
 	}
 
 	IEnumerator bleedDamageFlash() {
