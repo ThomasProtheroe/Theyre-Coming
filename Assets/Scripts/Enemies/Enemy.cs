@@ -199,9 +199,6 @@ public class Enemy : MonoBehaviour {
 				}
 			}
 		} 
-	}
-
-	void OnCollisionStay2D(Collision2D other) {
 		if (other.gameObject.tag == "AreaWall") {
 			float wallPosition = other.gameObject.transform.position.x;
 			float diff = other.gameObject.GetComponent<BoxCollider2D> ().bounds.extents.x + bodyHitbox.bounds.extents.x;
@@ -211,8 +208,13 @@ public class Enemy : MonoBehaviour {
 			} else {
 				direction.x = -1;
 			}
+			rigidBody.velocity = new Vector2 (0.0f, rigidBody.velocity.y);
 			transform.position = new Vector3 (wallPosition + (diff * direction.x), transform.position.y);
 		}
+	}
+
+	void OnCollisionStay2D(Collision2D other) {
+		
 	}
 
 	public virtual void takeAction() {
@@ -437,6 +439,7 @@ public class Enemy : MonoBehaviour {
 
 		//Track enemy kills
 		gc.countEnemyKill(playerAttackType);
+		gc.removeEnemy (this);
 
 		stopProwlSound ();
 		stopWalkSound ();

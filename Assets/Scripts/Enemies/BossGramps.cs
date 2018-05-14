@@ -346,9 +346,9 @@ public class BossGramps : Enemy {
 	IEnumerator LeapEvade () {
 		setStun (3.0f);
 		isInvunlerable = true;
+		anim.enabled = false;
 
 		facePlayer();
-		anim.enabled = false;
 		enemySprite.sprite = leapPrepFrame;
 
 		int direction;
@@ -357,6 +357,16 @@ public class BossGramps : Enemy {
 		} else {
 			direction = 1;
 		}
+
+		//If gramps has his back to a wall he will leap past the player instead
+		LayerMask mask = new LayerMask ();
+		mask.value = 21;
+		RaycastHit2D wall = Physics2D.Raycast(transform.position, new Vector2(direction, 0f), 5.0f, mask);
+		Debug.Log (wall.collider);
+		if (wall.collider != null) {
+			direction *= -1;
+		}
+
 		rigidBody.velocity = new Vector2 (leapXVelocity * direction, leapYVelocity);
 		isMoving = true;
 
@@ -372,6 +382,7 @@ public class BossGramps : Enemy {
 
 		endStun ();
 		stopMoving ();
+		facePlayer();
 		anim.SetBool ("Active", false);
 		transform.position = new Vector3 (transform.position.x, groundLevel, transform.position.z);
 		anim.enabled = true;
