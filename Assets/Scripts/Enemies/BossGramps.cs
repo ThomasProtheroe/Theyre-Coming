@@ -115,7 +115,7 @@ public class BossGramps : Enemy {
 		}
 	}
 
-	public void setBlind() {
+	public new void setBlind() {
 		//Zombie gramps needs no eyes!
 		return;
 	}
@@ -153,7 +153,7 @@ public class BossGramps : Enemy {
 		takeHit (damage, knockback, direction, noBlood, attackType);
 	}
 
-	public void takeFireHit(int damage) {
+	public override void takeFireHit(int damage) {
 		if (burnImmunityTimer > 0.0f) {
 			return;
 		}
