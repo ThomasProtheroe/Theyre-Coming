@@ -359,9 +359,7 @@ public class BossGramps : Enemy {
 		}
 
 		//If gramps has his back to a wall he will leap past the player instead
-		LayerMask mask = new LayerMask ();
-		mask.value = 21;
-		RaycastHit2D wall = Physics2D.Raycast(transform.position, new Vector2(direction, 0f), 5.0f, mask);
+		RaycastHit2D wall = Physics2D.Raycast(transform.position, new Vector2(direction, 0f), 4.0f, 1 << LayerMask.NameToLayer("Terrain"));
 		Debug.Log (wall.collider);
 		if (wall.collider != null) {
 			direction *= -1;
