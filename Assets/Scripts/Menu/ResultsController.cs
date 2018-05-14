@@ -21,23 +21,29 @@ public class ResultsController : MonoBehaviour {
 		//Update all stats from Scene params
 		float resultsTime = float.Parse(Scenes.getParam ("resultsTime"));
 		TimeSpan timeSpan = TimeSpan.FromSeconds(resultsTime);
-		timeText.text = "You managed to stay alive for " + timeSpan.Minutes + " minutes and " + timeSpan.Seconds + " seconds";
+		timeText.text = "You managed to stay alive for " + timeSpan.Minutes + " minutes and " + timeSpan.Seconds + " seconds.";
 
 		int totalKills = int.Parse (Scenes.getParam ("resultsKills"));
 		killsText.text = "You killed " + totalKills + " undead.";
 
-		typeText.text = "Your favorite method of destruction was " + Scenes.getParam ("resultsType");
+		typeText.text = "Your favorite method of destruction was " + Scenes.getParam ("resultsType") + ".";
 
-		if (totalKills < 50) {
-			camera0.enabled = true;
-		} else if (totalKills >= 50) {
+		if (Scenes.getParam ("result") == "victory") {
+			//TODO Replace this with victory screen
 			camera1.enabled = true;
+		} else {
+			if (totalKills < 50) {
+				camera0.enabled = true;
+			} else if (totalKills >= 50) {
+				camera1.enabled = true;
+			}
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.anyKeyDown) {
+			Scenes.clearParams ();
 			Scenes.Load ("MainMenu");
 		}
 	}

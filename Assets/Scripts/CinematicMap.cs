@@ -28,7 +28,7 @@ public static class CinematicMap {
 
 	private static void buildMap() {
 		map = new Queue<Cinematic> ();
-		map.Enqueue (new Cinematic("prep", 5.0f, new Dialog[] { new Dialog("\nDoesn't look like Grandpa is home. I hope he's OK...", null, 6.0f) }));
+		map.Enqueue (new Cinematic("prep", 25.0f, new Dialog[] { new Dialog("\nDoesn't look like Grandpa is home. I hope he's OK...", null, 6.0f) }));
 	}
 }
 

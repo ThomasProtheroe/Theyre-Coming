@@ -7,9 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-	public int prepTime;
-	public Enemy enemy;
-	public BossGramps boss;
 	public GameObject pauseMenu;
 	public GameObject blackFade;
 	[SerializeField]
@@ -27,6 +24,10 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private AudioClip[] cinematicSounds;
 
+	[Header("General Settings")]
+	public int prepTime;
+
+	[Header("Audio Control")]
 	public AudioSource source;
 	public MusicController musicPlayer;
 	public SoundController soundCon;
@@ -39,8 +40,18 @@ public class GameController : MonoBehaviour {
 	public AudioClip[] attackSounds4;
 	public AudioClip[] attackSounds5;
 
+	//Audio multipliers
+	public float masterVolume;
+	public float musicVolume;
+	public float effectsVolume;
+
+	[Header("Enemies")]
+	public Enemy enemy;
+	public BossGramps boss;
 	public List<EnemySpawn> spawnZones = new List<EnemySpawn> ();
+	[HideInInspector]
 	public Dictionary<string, List<EnemyCorpse>> corpseDict = new Dictionary<string, List<EnemyCorpse>> ();
+	private List<Enemy> enemies;
 
 	//Pathfinding vars
 	private List<Area> areas = new List<Area> ();
@@ -54,12 +65,8 @@ public class GameController : MonoBehaviour {
 	private SpawnInstance nextSpawn;
 	private Cinematic nextCinematic;
 
-	//Audio multipliers
-	public float masterVolume;
-	public float musicVolume;
-	public float effectsVolume;
-
 	//Stat tracking
+	[HideInInspector]
 	public int[] killTotals;
 	private int itemsCrafted;
 
@@ -68,6 +75,8 @@ public class GameController : MonoBehaviour {
 	public bool isPaused;
 	[HideInInspector]
 	private bool timerRunning;
+	private bool bossKilled;
+	private bool noMoreEnemySpawns;
 	private float timer;
 	private string phase;
 	private string currentCinematic;
@@ -85,6 +94,8 @@ public class GameController : MonoBehaviour {
 
 		SpawnMap.rebuildMap ();
 		CinematicMap.rebuildMap ();
+
+		enemies = new List<Enemy> ();
 
 		nextSpawn = SpawnMap.getNextSpawn ();
 		nextCinematic = CinematicMap.getNextCinematic ();
@@ -124,6 +135,8 @@ public class GameController : MonoBehaviour {
 			changePhase("siege");
 			onSiegePhase ();
 		}
+
+		StartCoroutine ("CheckVictory");
 	}
 	
 	// Update is called once per frame
@@ -145,7 +158,7 @@ public class GameController : MonoBehaviour {
 				onSiegePhase ();
 			}
 		} else if (phase == "siege") {
-			if (Scenes.getParam ("devMode") == "false") {
+			if (Scenes.getParam ("devMode") == "false" && !noMoreEnemySpawns) {
 				checkForEnemySpawns ();
 			}
 		}
@@ -212,7 +225,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void checkForEnemySpawns() {
-		if (nextSpawn != null && timer >= nextSpawn.spawnTime) {
+		if (timer >= nextSpawn.spawnTime) {
 			if (!nextSpawn.isBoss) {
 				for (int i = 0; i < nextSpawn.spawnCount; i++) {
 					Invoke ("spawnEnemyRand", i * 0.3f);
@@ -220,8 +233,11 @@ public class GameController : MonoBehaviour {
 				nextSpawn = SpawnMap.getNextSpawn ();
 			} else {
 				spawnBoss (spawnZones[0]);
+				nextSpawn = SpawnMap.getNextSpawn ();
 			}
-
+			if (nextSpawn == null) {
+				noMoreEnemySpawns = true;
+			}
 		}
 	}
 
@@ -258,6 +274,7 @@ public class GameController : MonoBehaviour {
 
 		//Create and position the enemy
 		Enemy newEnemy = Instantiate (enemy, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
+		enemies.Add (newEnemy);
 		//Invulnerable while they are spawning in
 		enemy.isInvunlerable = true;
 
@@ -280,6 +297,7 @@ public class GameController : MonoBehaviour {
 
 		//Create and position the boss
 		BossGramps newBoss = Instantiate (boss, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
+		enemies.Add (newBoss);
 		//Invulnerable while they are spawning in
 		newBoss.isInvunlerable = true;
 
@@ -297,6 +315,13 @@ public class GameController : MonoBehaviour {
 
 		//TODO Play boss arrival dialog
 
+	}
+
+	public void removeEnemy(Enemy enemy) {
+		if (enemy is BossGramps) {
+			bossKilled = true;
+		}
+		enemies.Remove (enemy);
 	}
 
 	public void addEnemyCorpse(EnemyCorpse corpse, string areaName) {
@@ -393,10 +418,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	public Transition findRouteToPlayer(Area currentArea) {
-		//visitedAreas = new List<Area> ();
-		//areasToSearch = new Queue<Area> ();
-		//areasToSearch.Enqueue (currentArea);
-
 		return searchForPlayer(currentArea);
 	}
 
@@ -419,85 +440,6 @@ public class GameController : MonoBehaviour {
 		}
 
 		return target;
-	}
-
-	/*
-	private Transition searchForPlayer2() {
-		Area currentArea = areasToSearch.Peek ();
-		visitedAreas.Add (currentArea);
-		foreach (Transition transition in currentArea.transitions) {
-			Area neighbor = transition.sibling.transform.parent.GetComponent<Area> ();
-			if (neighbor == playerCon.currentArea) {
-				return transition;
-			}
-			if (!visitedAreas.Contains (neighbor) && !areasToSearch.Contains(neighbor)) {
-				areasToSearch.Enqueue (neighbor);
-			}
-		}
-
-		areasToSearch.Dequeue ();
-
-		if (areasToSearch.Count > 0) {
-			return searchForPlayer2 ();
-		}
-
-		return null;
-	}
-	*/
-
-	public void gameOver() {
-		isGameOver = true;
-		pauseTimer ();
-
-		int killTotal = 0;
-		int favoredType = 0;
-		int mostTypeKills = 0;
-		for(int i = 0; i < killTotals.Length; i++) {
-			killTotal += killTotals[i];
-			if (killTotals[i] > mostTypeKills) {
-				favoredType = i;
-				mostTypeKills = killTotals [i];
-			}
-		}
-
-		//Convert favored weapon type into a useful string
-		string typeName = "";
-		switch(favoredType) {
-		case Constants.ATTACK_TYPE_BLUNT:
-			typeName = "blunt weapons.";
-			break;
-		case Constants.ATTACK_TYPE_PIERCE:
-			typeName = "sharp weapons.";
-			break;
-		case Constants.ATTACK_TYPE_PROJECTILE:
-			typeName = "ranged weapons.";
-			break;
-		case Constants.ATTACK_TYPE_TRAP:
-			typeName = "devious traps.";
-			break;
-		case Constants.ATTACK_TYPE_FIRE:
-			typeName = "BURNING THEM ALL!";
-			break;
-		default:
-			typeName = "pure ingenuity.";
-			break;
-		}
-
-		Scenes.setParam ("resultsTime", timer.ToString());
-		Scenes.setParam ("resultsKills", killTotal.ToString());
-		Scenes.setParam ("resultsType", typeName);
-
-		fadeToMenu ();
-	}
-
-	private void fadeToMenu() {
-		//Set any existing enemies to idle
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
-		foreach (GameObject enemy in enemies) {
-			enemy.GetComponent<Enemy> ().deactivate ();
-		}
-
-		StartCoroutine ("deathFade");
 	}
 
 	public void showDialog(Dialog dialog) {
@@ -586,7 +528,69 @@ public class GameController : MonoBehaviour {
 		source.volume = masterVolume * effectsVolume;
 	}
 
+	public void gameOver() {
+		isGameOver = true;
+		pauseTimer ();
+
+		int killTotal = 0;
+		int favoredType = 0;
+		int mostTypeKills = 0;
+		for(int i = 0; i < killTotals.Length; i++) {
+			killTotal += killTotals[i];
+			if (killTotals[i] > mostTypeKills) {
+				favoredType = i;
+				mostTypeKills = killTotals [i];
+			}
+		}
+
+		//Convert favored weapon type into a useful string
+		string typeName = "";
+		switch(favoredType) {
+		case Constants.ATTACK_TYPE_BLUNT:
+			typeName = "blunt weapons.";
+			break;
+		case Constants.ATTACK_TYPE_PIERCE:
+			typeName = "sharp weapons.";
+			break;
+		case Constants.ATTACK_TYPE_PROJECTILE:
+			typeName = "ranged weapons.";
+			break;
+		case Constants.ATTACK_TYPE_TRAP:
+			typeName = "devious traps.";
+			break;
+		case Constants.ATTACK_TYPE_FIRE:
+			typeName = "BURNING THEM ALL!";
+			break;
+		default:
+			typeName = "pure ingenuity.";
+			break;
+		}
+
+		Scenes.setParam ("resultsTime", timer.ToString());
+		Scenes.setParam ("resultsKills", killTotal.ToString());
+		Scenes.setParam ("resultsType", typeName);
+
+		deathFade ();
+	}
+
+	private void deathFade() {
+		//Set any existing enemies to idle
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enemy in enemies) {
+			enemy.GetComponent<Enemy> ().deactivate ();
+		}
+
+		StartCoroutine ("DeathFade");
+	}
+
+	private void victoryFade() {
+		//Should we make player invulnerable?
+
+		StartCoroutine ("VictoryFade");
+	}
+
 	public void returnToMenu() {
+		Scenes.clearParams ();
 		SceneManager.LoadScene ("MainMenu");
 	}
 
@@ -685,7 +689,7 @@ public class GameController : MonoBehaviour {
 		enemy.activate ();
 	}
 
-	IEnumerator deathFade() {
+	IEnumerator DeathFade() {
 		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
 		Color startColor = sprite.color;
 		startColor.a = 0.0f;
@@ -707,5 +711,41 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (2.0f);
 
 		SceneManager.LoadScene("ResultsScreen");
+	}
+
+	IEnumerator VictoryFade() {
+		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
+		Color startColor = sprite.color;
+		startColor.a = 0.0f;
+		sprite.color = startColor;
+		blackFade.SetActive (true);
+		gameOverText.text = "You Survived";
+		for (float f = 0.0f; f < 1.0f; f += 0.01f) {
+			Color spriteColor = sprite.color;
+			Color textColor = gameOverText.color;
+
+			spriteColor.a = f;
+			textColor.a = f;
+
+			sprite.color = spriteColor;
+			gameOverText.color = textColor;
+
+			yield return null;
+		}
+
+		yield return new WaitForSeconds (2.0f);
+
+		Scenes.setParam ("result", "victory");
+		SceneManager.LoadScene("ResultsScreen");
+	}
+
+	IEnumerator CheckVictory() {
+		if (noMoreEnemySpawns && bossKilled && enemies.Count == 0) {
+			victoryFade ();
+		}
+
+		yield return new WaitForSeconds (3.0f);
+
+		StartCoroutine ("CheckVictory");
 	}
 }

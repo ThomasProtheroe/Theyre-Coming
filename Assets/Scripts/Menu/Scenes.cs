@@ -41,4 +41,8 @@ public static class Scenes {
 
 		Scenes.parameters.Add(paramKey, paramValue);
 	}
+
+	public static void clearParams() {
+		parameters = null;
+	}
 }
