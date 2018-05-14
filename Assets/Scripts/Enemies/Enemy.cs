@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
 	protected Rigidbody2D rigidBody;
 	protected SpriteRenderer enemySprite;
 	protected GameObject player;
+	protected PlayerController playerCon;
 	[SerializeField]
 	private EnemyCorpse enemyCorpse;
 
@@ -87,6 +88,7 @@ public class Enemy : MonoBehaviour {
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		enemySprite = gameObject.GetComponent<SpriteRenderer> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
+		playerCon = player.GetComponent<PlayerController> ();
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		isMoving = false;
@@ -293,7 +295,7 @@ public class Enemy : MonoBehaviour {
 		rigidBody.velocity = Vector2.zero;
 	}
 
-	void facePlayer() {
+	protected void facePlayer() {
 		if (player.transform.position.x > transform.position.x && !enemySprite.flipX) {
 			enemySprite.flipX = true;
 			attackHitbox.offset = new Vector2 (attackHitbox.offset.x * -1, 0);
@@ -359,43 +361,49 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public virtual void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
-		stopProwlSound ();
-		stopWalkSound ();
-		playerAttackType = attackType;
-		if (damage > 0 && !noBlood) {
-			var sh = bloodSprayPS.shape;
-			var main = bloodSprayPS.main;
-			int particleCount = 15;
-			if (damage >= 10) {
-				sh.arc = 120.0f;
-				particleCount = 260;
-				main.startLifetime = 1.5f;
-			} else if (damage >= 7) {
-				sh.arc = 60;
-				particleCount = 120;
-				main.startLifetime = 1.0f;
-			} else {
-				sh.arc = 20;
-				particleCount = 20;
-				main.startLifetime = 0.6f;
-			}
-			float bloodDirection;
-			if (direction > 0) {
-				bloodDirection = 180;
-			} else {
-				bloodDirection = 0;
-			}
-			sh.rotation = new Vector3 (sh.rotation.x, bloodDirection, sh.rotation.z);
-			bloodSprayPS.Emit (particleCount);
-		}
 		if (!getIsDead ()) {
+			stopProwlSound ();
+			stopWalkSound ();
+			playerAttackType = attackType;
+			if (damage > 0 && !noBlood) {
+				var sh = bloodSprayPS.shape;
+				var main = bloodSprayPS.main;
+				int particleCount = 15;
+				if (damage >= 10) {
+					sh.arc = 120.0f;
+					particleCount = 260;
+					main.startLifetime = 1.5f;
+				} else if (damage >= 7) {
+					sh.arc = 60;
+					particleCount = 120;
+					main.startLifetime = 1.0f;
+				} else {
+					sh.arc = 20;
+					particleCount = 20;
+					main.startLifetime = 0.6f;
+				}
+				float bloodDirection;
+				if (direction > 0) {
+					bloodDirection = 180;
+				} else {
+					bloodDirection = 0;
+				}
+				sh.rotation = new Vector3 (sh.rotation.x, bloodDirection, sh.rotation.z);
+				bloodSprayPS.Emit (particleCount);
+			}
+
+			takeDamage (damage);
 			if (direction > 0) {
 				knockback *= -1;
 			}
 			StartCoroutine ("setHitFrame", knockback);
-			takeDamage (damage);
+
+			playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 		}
-		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
+	}
+
+	public virtual void takeThrowHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
+		takeHit (damage, knockback, direction, noBlood, attackType);
 	}
 
 	public virtual void takeFireHit(int damage) {
@@ -411,7 +419,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void takeDamage(int damage) {
-		if (isDead) {
+		if (isDead || isInvunlerable) {
 			return;
 		}
 		health -= damage;
@@ -425,16 +433,13 @@ public class Enemy : MonoBehaviour {
 			finishAttack ();
 		}
 		isDead = true;
+		stopMoving ();
 
 		//Track enemy kills
 		gc.countEnemyKill(playerAttackType);
 
-		if (walkSoundPlaying) {
-			soundCon.stopEnemyWalk (walkSound);
-		}
-		if (prowlSoundPlaying) {
-			soundCon.stopEnemyProwl (prowlSound);
-		}
+		stopProwlSound ();
+		stopWalkSound ();
 
 		//De-parent the blood Particle System so the particles dont disappear when the enemy is destroyed
 		bloodSprayPS.transform.parent = null;

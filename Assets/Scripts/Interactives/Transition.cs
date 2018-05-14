@@ -202,6 +202,7 @@ public class Transition : Interactive {
 	IEnumerator moveEnemy(Enemy enemy) {
 		inUse = true;
 		sibling.inUse = true;
+		enemy.isInvunlerable = true;
 		enemy.deactivate ();
 		SpriteRenderer sprite = enemy.gameObject.GetComponent<SpriteRenderer> ();
 
@@ -242,6 +243,7 @@ public class Transition : Interactive {
 		enemy.activate ();
 		inUse = false;
 		sibling.inUse = false;
+		enemy.isInvunlerable = false;
 	}
 
 	IEnumerator highlightGlow() {
