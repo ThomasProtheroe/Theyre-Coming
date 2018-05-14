@@ -66,9 +66,15 @@ HalberdBlade,HomemadeAxe,TapedBlade,Weapons/HalberdBlade
 HalberdBlade,TapedAxe,KitchenKnife,Weapons/HalberdBlade
 HalberdBlade,TapedAxe,Scissors,Weapons/HalberdBlade
 HalberdBlade,TapedAxe,TapedBlade,Weapons/HalberdBlade
+HalberdBlade,MakeshiftSpearBlade,TapedCleaver,Weapons/HalberdBlade
+HalberdBlade,TapedSpearBlade,Cleaver,Weapons/HalberdBlade
+HalberdBlade,TapedSpearBlade,TapedCleaver,Weapons/HalberdBlade
 HalberdShard,TapedAxe,GlassShards,Weapons/HalberdShard
 HalberdShard,HomemadeAxe,TapedShard,Weapons/HalberdShard
 HalberdShard,TapedAxe,TapedShard,Weapons/HalberdShard
+HalberdShard,MakeshiftSpearShard,TapedCleaver,Weapons/HalberdShard
+HalberdShard,TapedSpearShard,Cleaver,Weapons/HalberdShard
+HalberdShard,TapedSpearShard,TapedCleaver,Weapons/HalberdShard
 NailPipe,TapedPipe,Nails,Weapons/NailPipe
 ShardPipe,TapedPipe,GlassShards,Weapons/ShardPipe
 ShardPipe,TapedShard,MetalPipe,Weapons/ShardPipe

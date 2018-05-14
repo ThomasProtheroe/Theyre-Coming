@@ -26,7 +26,7 @@ public class DescriptionPanel : MonoBehaviour {
 		gameObject.SetActive(true);
 		panelText.text = text;
 
-		yield return new WaitForSeconds (4.0f);
+		yield return new WaitForSeconds (5.0f);
 
 		panelText.text = "";
 		gameObject.SetActive(false);

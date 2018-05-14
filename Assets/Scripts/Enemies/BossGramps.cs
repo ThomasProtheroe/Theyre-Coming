@@ -45,11 +45,18 @@ public class BossGramps : Enemy {
 	private float prepRange;
 	[SerializeField]
 	private float prepDelay;
+	[SerializeField]
+	private float evadeDuration;
 
 	public override void takeAction() {
-		Debug.Log (prepTimer);
 		if (isActive) {
 			if (!isDead) {
+				if (isPreparing && distanceToPlayer < 2.0f && playerCon.isAttacking) {
+					isPreparing = false;
+					isRecovering = true;
+					StartCoroutine("LeapEvade");
+				}
+
 				if (isPreparing && prepTimer > 0.0f) {
 					prepTimer -= Time.deltaTime;
 				}
@@ -114,7 +121,11 @@ public class BossGramps : Enemy {
 	}
 
 	public override void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
-		if (isSpitting) {
+		if (isPreparing) {
+			isPreparing = false;
+			prepTimer = 0.0f;
+		}
+		else if (isSpitting) {
 			interruptSpitAttack ();
 		} else if (isLeaping) {
 			int newKnockback = interruptLeapAttack ();
@@ -128,6 +139,18 @@ public class BossGramps : Enemy {
 		}
 			
 		base.takeHit (damage, knockback, direction, noBlood, attackType);
+	}
+
+	public override void takeThrowHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
+		if (isPreparing) {
+			isPreparing = false;
+			prepTimer = prepDelay / 2;
+			anim.enabled = true;
+			anim.SetTrigger ("Deflect");
+			return;
+		}
+
+		takeHit (damage, knockback, direction, noBlood, attackType);
 	}
 
 	public void takeFireHit(int damage) {
@@ -158,6 +181,7 @@ public class BossGramps : Enemy {
 		}
 
 		//TODO leap backwards
+		StartCoroutine("LeapEvade");
 	}
 
 	private void spitAttack() {
@@ -257,6 +281,7 @@ public class BossGramps : Enemy {
 		yield return new WaitForSeconds(leapDuration * 0.4f);
 
 		stopMoving ();
+		transform.position = new Vector3 (transform.position.x, groundLevel, transform.position.z);
 
 		anim.enabled = true;
 		finishAttack ();
@@ -316,5 +341,41 @@ public class BossGramps : Enemy {
 		activate ();
 		isSpitting = false;
 		isAttacking = false;
+	}
+
+	IEnumerator LeapEvade () {
+		setStun (3.0f);
+		isInvunlerable = true;
+
+		facePlayer();
+		anim.enabled = false;
+		enemySprite.sprite = leapPrepFrame;
+
+		int direction;
+		if (enemySprite.flipX) {
+			direction = -1;
+		} else {
+			direction = 1;
+		}
+		rigidBody.velocity = new Vector2 (leapXVelocity * direction, leapYVelocity);
+		isMoving = true;
+
+		yield return new WaitForSeconds(evadeDuration * 0.4f);
+
+		rigidBody.velocity = new Vector2 (rigidBody.velocity.x, 0.0f);
+
+		yield return new WaitForSeconds(evadeDuration * 0.2f);
+
+		rigidBody.velocity = new Vector2 (rigidBody.velocity.x, leapYVelocity * -1);
+
+		yield return new WaitForSeconds(evadeDuration * 0.4f);
+
+		endStun ();
+		stopMoving ();
+		anim.SetBool ("Active", false);
+		transform.position = new Vector3 (transform.position.x, groundLevel, transform.position.z);
+		anim.enabled = true;
+		isInvunlerable = false;
+		isRecovering = false;
 	}
 }
