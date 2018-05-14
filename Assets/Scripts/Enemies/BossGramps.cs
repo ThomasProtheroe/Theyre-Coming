@@ -176,7 +176,7 @@ public class BossGramps : Enemy {
 	}
 
 	protected override void onKnockbackEnd() {
-		if (!isRecovering) {
+		if (!isRecovering || !isDead) {
 			return;
 		}
 

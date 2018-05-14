@@ -528,7 +528,7 @@ public class GameController : MonoBehaviour {
 		source.volume = masterVolume * effectsVolume;
 	}
 
-	public void gameOver() {
+	private void endGameCalculations() {
 		isGameOver = true;
 		pauseTimer ();
 
@@ -569,6 +569,13 @@ public class GameController : MonoBehaviour {
 		Scenes.setParam ("resultsTime", timer.ToString());
 		Scenes.setParam ("resultsKills", killTotal.ToString());
 		Scenes.setParam ("resultsType", typeName);
+	}
+
+	public void gameOver() {
+		isGameOver = true;
+		pauseTimer ();
+		endGameCalculations ();
+		Scenes.setParam ("result", "death");
 
 		deathFade ();
 	}
@@ -585,7 +592,11 @@ public class GameController : MonoBehaviour {
 
 	private void victoryFade() {
 		//Should we make player invulnerable?
+		isGameOver = true;
+		pauseTimer ();
+		endGameCalculations ();
 
+		StopCoroutine ("CheckVictory");
 		StartCoroutine ("VictoryFade");
 	}
 
@@ -714,13 +725,14 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator VictoryFade() {
+		StopCoroutine ("CheckVictory");
 		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
 		Color startColor = sprite.color;
 		startColor.a = 0.0f;
 		sprite.color = startColor;
 		blackFade.SetActive (true);
 		gameOverText.text = "You Survived";
-		for (float f = 0.0f; f < 1.0f; f += 0.01f) {
+		for (float f = 0.0f; f < 1.0f; f += 0.005f) {
 			Color spriteColor = sprite.color;
 			Color textColor = gameOverText.color;
 
@@ -735,13 +747,13 @@ public class GameController : MonoBehaviour {
 
 		yield return new WaitForSeconds (2.0f);
 
-		Scenes.setParam ("result", "victory");
-		SceneManager.LoadScene("ResultsScreen");
+		Scenes.Load ("ResultsScreen", "result", "victory");
 	}
 
 	IEnumerator CheckVictory() {
 		if (noMoreEnemySpawns && bossKilled && enemies.Count == 0) {
 			victoryFade ();
+			yield break;
 		}
 
 		yield return new WaitForSeconds (3.0f);

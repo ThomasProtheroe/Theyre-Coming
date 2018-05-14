@@ -19,9 +19,13 @@ public class ResultsController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Update all stats from Scene params
-		float resultsTime = float.Parse(Scenes.getParam ("resultsTime"));
-		TimeSpan timeSpan = TimeSpan.FromSeconds(resultsTime);
-		timeText.text = "You managed to stay alive for " + timeSpan.Minutes + " minutes and " + timeSpan.Seconds + " seconds.";
+		if (Scenes.getParam ("result") == "victory") {
+			timeText.text = "You survived the undead horde!";
+		} else {
+			float resultsTime = float.Parse(Scenes.getParam ("resultsTime"));
+			TimeSpan timeSpan = TimeSpan.FromSeconds(resultsTime);
+			timeText.text = "You managed to stay alive for " + timeSpan.Minutes + " minutes and " + timeSpan.Seconds + " seconds.";
+		}
 
 		int totalKills = int.Parse (Scenes.getParam ("resultsKills"));
 		killsText.text = "You killed " + totalKills + " undead.";
