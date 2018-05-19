@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour {
 	public GameObject pauseMenu;
 	public GameObject blackFade;
 	[SerializeField]
+	private GameObject mainCamera;
+	[SerializeField]
 	private Text gameOverText;
 	[SerializeField]
 	private Text timerText;
@@ -440,6 +442,10 @@ public class GameController : MonoBehaviour {
 		}
 
 		return target;
+	}
+
+	public void shakeCamera(float duration, float intensity) {
+		mainCamera.GetComponent<CameraShake> ().startShaking(duration, intensity);
 	}
 
 	public void showDialog(Dialog dialog) {
