@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour {
 	public bool isBusy;
 	[HideInInspector]
 	public bool isTargetable;
-	[HideInInspector]
 	public bool isInvulnerable;
 	[HideInInspector]
 	public bool isAttacking;

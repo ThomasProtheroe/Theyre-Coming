@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Weapon : Item {
 
+	[Header("Basic Attributes")]
 	public int attackDamage;
 	public int durability;
 	private int maxDurability;
 	public int knockback;
+
+	[Header("Special Attributes")]
 	public int multiHit = 1;
 	public bool inflictsBleed;
 	public bool inflictsBlind;
+	public bool inflictsBurning;
 	public bool instantAttack;
+	public bool inflictsShockwave;
 
+	[Header("Weapon Sounds")]
 	public AudioClip swingSound;
 	public AudioClip hitSound;
 
@@ -88,6 +94,10 @@ public class Weapon : Item {
 
 	protected void endHitWindow() {
 		hitWindowActive = false;
+
+		if (inflictsShockwave) {
+			triggerShockwave ();
+		}
 	}
 
 	public void finishAttack() {
@@ -134,10 +144,28 @@ public class Weapon : Item {
 			enemy.GetComponent<Enemy> ().setBlind();
 		}
 
+		if (inflictsBurning) {
+			enemy.GetComponent<Enemy> ().setBurning ();
+		}
+
 		if (isThrown && throwImpact) {
 			soundController.playPriorityOneShot (throwImpact);
 		} else if (!isThrown && hitSound) {
 			soundController.playPriorityOneShot (hitSound);
+		}
+	}
+
+	private void triggerShockwave() {
+		var list = new List<RaycastHit2D> ();
+		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.right, 2.5f, 1 << LayerMask.NameToLayer("Enemy")));
+		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.left, 2.5f, 1 << LayerMask.NameToLayer("Enemy")));
+
+		RaycastHit2D[] enemies = list.ToArray ();
+
+		foreach(RaycastHit2D collision in enemies) {
+			float direction = transform.position.x - collision.transform.position.x;
+
+			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (0, 3, direction, true);
 		}
 	}
 }
