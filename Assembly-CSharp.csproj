@@ -77,7 +77,6 @@
      <Compile Include="Assets\Scripts\Interactives\Traps\HeavyBoxTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\SpikeTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\Trap.cs" />
-     <Compile Include="Assets\Scripts\Interactives\Weapons\FlamingBat.cs" />
      <Compile Include="Assets\Scripts\Interactives\Weapons\GlassBottle.cs" />
      <Compile Include="Assets\Scripts\Interactives\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonAudioController.cs" />
