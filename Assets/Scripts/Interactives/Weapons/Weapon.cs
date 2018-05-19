@@ -157,8 +157,8 @@ public class Weapon : Item {
 
 	private void triggerShockwave() {
 		var list = new List<RaycastHit2D> ();
-		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.right, 2.5f, 1 << LayerMask.NameToLayer("Enemy")));
-		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.left, 2.5f, 1 << LayerMask.NameToLayer("Enemy")));
+		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.right, 3f, 1 << LayerMask.NameToLayer("Enemy")));
+		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.left, 3f, 1 << LayerMask.NameToLayer("Enemy")));
 
 		RaycastHit2D[] enemies = list.ToArray ();
 
@@ -167,5 +167,7 @@ public class Weapon : Item {
 
 			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (0, 3, direction, true);
 		}
+
+		playerCon.gameCon.shakeCamera (0.4f, 0.15f);
 	}
 }

@@ -213,10 +213,6 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionStay2D(Collision2D other) {
-		
-	}
-
 	public virtual void takeAction() {
 		if (isActive && isBlind) {
 			//Move randomly back and forth
@@ -346,6 +342,7 @@ public class Enemy : MonoBehaviour {
 
 	protected void attack() {
 		hitPlayer = false;
+		stopMoving ();
 		playAttackSound ();
 		anim.SetTrigger ("Attack");
 		isAttacking = true;
