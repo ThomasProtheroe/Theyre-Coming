@@ -7,8 +7,9 @@ public class Weapon : Item {
 	[Header("Basic Attributes")]
 	public int attackDamage;
 	public int durability;
-	private int maxDurability;
+	public float attackSpeed;
 	public int knockback;
+	private int maxDurability;
 
 	[Header("Special Attributes")]
 	public int multiHit = 1;
@@ -30,6 +31,10 @@ public class Weapon : Item {
 	protected override void Start() {
 		anim = GetComponent<Animator> ();	
 		maxDurability = durability;
+		if (attackSpeed == 0f) {
+			attackSpeed = 1.0f;
+		}
+
 		base.Start ();
 	}
 
@@ -105,6 +110,7 @@ public class Weapon : Item {
 
 	public void finishAttack() {
 		isAttacking = false;
+		anim.speed = 1.0f;
 	}
 
 	bool canHit() {
