@@ -46,16 +46,15 @@ public static class SpawnMap {
 		map.Enqueue (new SpawnInstance(344.0f, 3));
 		map.Enqueue (new SpawnInstance(345.0f, 4));
 		map.Enqueue (new SpawnInstance(405.0f, 18));
-		map.Enqueue (new SpawnInstance(430.0f, 3));
-		map.Enqueue (new SpawnInstance(440.0f, 1, true));
-		map.Enqueue (new SpawnInstance(450.0f, 2));
-		map.Enqueue (new SpawnInstance(460.0f, 1));
-		map.Enqueue (new SpawnInstance(467.0f, 2));
-		map.Enqueue (new SpawnInstance(470.0f, 1));
-		map.Enqueue (new SpawnInstance(480.0f, 1));
-		map.Enqueue (new SpawnInstance(490.0f, 2));
-		map.Enqueue (new SpawnInstance(550.0f, 22));
-		map.Enqueue (new SpawnInstance(630.0f, 35));
+		map.Enqueue (new SpawnInstance(470.0f, 1, true));
+		map.Enqueue (new SpawnInstance(480.0f, 2));
+		map.Enqueue (new SpawnInstance(490.0f, 1));
+		map.Enqueue (new SpawnInstance(497.0f, 2));
+		map.Enqueue (new SpawnInstance(500.0f, 1));
+		map.Enqueue (new SpawnInstance(510.0f, 1));
+		map.Enqueue (new SpawnInstance(520.0f, 2));
+		map.Enqueue (new SpawnInstance(580.0f, 20));
+		map.Enqueue (new SpawnInstance(660.0f, 35));
 	}
 }
 
