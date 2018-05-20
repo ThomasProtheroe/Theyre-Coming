@@ -453,8 +453,10 @@ public class GameController : MonoBehaviour {
 			hideDescription ();
 		}
 		//Use Fiona's sprite if none is provided
-		if (dialog.sprites == null) {
-			dialog.sprites = new Sprite[] {dialogSprites [0], dialogSprites[1]};
+		if (dialog.character == "boss") {
+			dialog.sprites = new Sprite[] { dialogSprites [2], dialogSprites [3] };
+		} else {
+			dialog.sprites = new Sprite[] { dialogSprites [0], dialogSprites [1] };
 		}
 
 		dialogPanel.showDialog (dialog);
