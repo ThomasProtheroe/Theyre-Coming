@@ -25,7 +25,10 @@ public class Weapon : Item {
 	private int hitCount = 0;
 	private bool hitWindowActive = false;
 
-	protected override void Start() {	
+	private Animator anim;
+
+	protected override void Start() {
+		anim = GetComponent<Animator> ();	
 		maxDurability = durability;
 		base.Start ();
 	}
@@ -61,7 +64,6 @@ public class Weapon : Item {
 	}
 
 	public void attack() {
-		Animator anim = GetComponent<Animator> ();
 		isAttacking = true;
 
 		anim.SetTrigger ("Attack");
@@ -94,6 +96,7 @@ public class Weapon : Item {
 
 	protected void endHitWindow() {
 		hitWindowActive = false;
+		anim.speed = attackSpeed;
 
 		if (inflictsShockwave) {
 			triggerShockwave ();
