@@ -112,7 +112,6 @@ public class Transition : Interactive {
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
 		SpriteRenderer sprite = player.GetComponent<SpriteRenderer> ();
 		SpriteRenderer itemSprite = null;
-		SpriteRenderer[] handsSprites = null;
 		Color originalItemColor = new Color(255f, 255f, 255f, 255f);
 
 		inUseByPlayer = true;
@@ -128,13 +127,9 @@ public class Transition : Interactive {
 			originalItemColor = itemSprite.material.color;
 
 			Item itemCon = playerCon.heldItem.GetComponent<Item> ();
-			handsSprites = new SpriteRenderer[] {
-				itemCon.frontHand.GetComponent<SpriteRenderer> (),
-				itemCon.backHand.GetComponent<SpriteRenderer> ()
-			};
-		} else {
-			handsSprites = playerCon.handsParent.GetComponentsInChildren<SpriteRenderer> ();
 		}
+		SpriteRenderer[] childSprites = playerCon.GetComponentsInChildren<SpriteRenderer> ();
+
 		anim.SetTrigger ("Open");
 
 		for (float f = 1f; f >= 0; f -= 0.03f) {
@@ -149,12 +144,11 @@ public class Transition : Interactive {
 				itemC.a = f;
 				itemSprite.material.color = c;
 			}
-
-			//Fade out the player hand sprites
-			Color handC = handsSprites [0].material.color;
-			foreach (SpriteRenderer hand in handsSprites) {
-				handC.a = f;
-				hand.material.color = c;
+				
+			foreach (SpriteRenderer child in childSprites) {
+				Color childC = child.material.color;
+				childC.a = f;
+				child.material.color = c;
 			}
 
 			yield return null;
@@ -179,9 +173,10 @@ public class Transition : Interactive {
 		Color orig = sprite.material.color;
 		orig.a = 1.0f;
 		sprite.material.color = orig;
-		foreach (SpriteRenderer hand in handsSprites) {
-			hand.material.color = orig;
+		foreach (SpriteRenderer child in childSprites) {
+			child.material.color = orig;
 		}
+
 		if (itemSprite) {
 			itemSprite.material.color = originalItemColor;
 		}
