@@ -133,15 +133,17 @@ public class Weapon : Item {
 			//Update UI
 			updateDurabilityIndicator();
 
-			if ((state == 0) && (bloodySprite1 != null)) {
-				GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
-				state++;
-			} else if ((state == 1) && (bloodySprite2 != null)) {
-				GetComponent<SpriteRenderer> ().sprite = bloodySprite2;
-				state++;
-			} else if ((state == 2) && (bloodySprite3 != null)) {
-				GetComponent<SpriteRenderer> ().sprite = bloodySprite3;
-				state++;
+			if (UnityEngine.Random.Range(0,3) == 1) {
+				if ((state == 0) && (bloodySprite1 != null)) {
+					GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
+					state++;
+				} else if ((state == 1) && (bloodySprite2 != null)) {
+					GetComponent<SpriteRenderer> ().sprite = bloodySprite2;
+					state++;
+				} else if ((state == 2) && (bloodySprite3 != null)) {
+					GetComponent<SpriteRenderer> ().sprite = bloodySprite3;
+					state++;
+				}
 			}
 		}
 

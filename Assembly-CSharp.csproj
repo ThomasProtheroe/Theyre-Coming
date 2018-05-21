@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\Interactives\Throwables\Molotov.cs" />
      <Compile Include="Assets\Scripts\Interactives\Throwables\Throwable.cs" />
      <Compile Include="Assets\Scripts\Interactives\Transition.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Traps\BlazingWheels.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\HeavyBoxTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\RemoteCarTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\SpikeTrap.cs" />
