@@ -26,6 +26,7 @@ MakeshiftSpearBlade,TapedHandle,Scissors,Weapons/MakeshiftSpearBlade
 MakeshiftSpearShard,TapedHandle,GlassShards,Weapons/MakeshiftSpearShard
 TapedSpearBlade,MakeshiftSpearBlade,DuctTape,Weapons/TapedSpearBlade
 TapedSpearShard,MakeshiftSpearShard,DuctTape,Weapons/TapedSpearShard
+TapedSurvivalSpear,SurvivalSpear,DuctTape,Weapons/TapedSurvivalSpear
 ImpalerBlade2,TapedSpearBlade,KitchenKnife,Weapons/ImpalerBlade2
 ImpalerBlade2,TapedSpearBlade,Scissors,Weapons/ImpalerBlade2
 ImpalerBlade2,MakeshiftSpearBlade,TapedBlade,Weapons/ImpalerBlade2
@@ -203,3 +204,11 @@ ReaperWheelsBlade,TapedRemoteCar,TapedSpearBlade,Traps/ReaperWheelsBlade
 ReaperWheelsShard,TapedRemoteCar,MakeshiftSpearShard,Traps/ReaperWheelsShard
 ReaperWheelsShard,RemoteCar,TapedSpearShard,Traps/ReaperWheelsShard
 ReaperWheelsShard,TapedRemoteCar,TapedSpearShard,Traps/ReaperWheelsShard
+ReaperWheelsSurvival,RemoteCar,TapedSurvivalSpear,Traps/ReaperWheelsSurvival
+ReaperWheelsSurvival,TapedRemoteCar,SurvivalSpear,Traps/ReaperWheelsSurvival
+ReaperWheelsSurvival,TapedRemoteCar,TapedSurvivalSpear,Traps/ReaperWheelsSurvival
+RemoteCarRag,RemoteCar,Rag,Traps/RemoteCarRag
+RemoteCarRag,TapedRemoteCar,Rag,Traps/RemoteCarRag
+FlammableRemoteCar,RemoteCarRag,GasCan,Traps/RemoteCarFlammable
+FlammableRemoteCar,RemoteCarRag,LighterFluid,Traps/RemoteCarFlammable
+BlazingWheels,FlammableRemoteCar,Lighter,Traps/BlazingWheels
