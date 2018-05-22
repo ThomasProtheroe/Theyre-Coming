@@ -209,6 +209,6 @@ ReaperWheelsSurvival,TapedRemoteCar,SurvivalSpear,Traps/ReaperWheelsSurvival
 ReaperWheelsSurvival,TapedRemoteCar,TapedSurvivalSpear,Traps/ReaperWheelsSurvival
 RemoteCarRag,RemoteCar,Rag,Traps/RemoteCarRag
 RemoteCarRag,TapedRemoteCar,Rag,Traps/RemoteCarRag
-FlammableRemoteCar,RemoteCarRag,GasCan,Traps/RemoteCarFlammable
-FlammableRemoteCar,RemoteCarRag,LighterFluid,Traps/RemoteCarFlammable
-BlazingWheels,FlammableRemoteCar,Lighter,Traps/BlazingWheels
+RemoteCarFlammable,RemoteCarRag,GasCan,Traps/RemoteCarFlammable
+RemoteCarFlammable,RemoteCarRag,LighterFluid,Traps/RemoteCarFlammable
+BlazingWheels,RemoteCarFlammable,Lighter,Traps/BlazingWheels
