@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 12390
+  controlID: 16214
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 12356
+  controlID: 16194
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 12357
+  controlID: 16195
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -367,9 +367,9 @@ MonoBehaviour:
     height: 513
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
+    m_SelectedIDs: 4a2f0000
     m_LastClickedID: 0
-    m_ExpandedIDs: a281faffa42efcffee5bfdff227affff0ef9ffffa6fbffff00000000a83a0000883b00008a3e0000
+    m_ExpandedIDs: 42c2e4ff82c6fbffd6f5feffa6fbffff00000000dc3a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -419,14 +419,14 @@ MonoBehaviour:
     width: 1223
     height: 513
   m_SceneLighting: 0
-  lastFramingTime: 3857.766199018711
+  lastFramingTime: 1915.2574325833525
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 91.59936, y: -3.1836276, z: 0.1760532}
+    m_Target: {x: 90.840126, y: -2.0326293, z: 1.1168112}
     speed: 2
-    m_Value: {x: 91.59936, y: -3.1836276, z: 0.1760532}
+    m_Value: {x: 90.840126, y: -2.0326293, z: 1.1168112}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -453,9 +453,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1.9559727
+    m_Target: 7.01155
     speed: 2
-    m_Value: 1.9559727
+    m_Value: 7.01155
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -494,9 +494,9 @@ MonoBehaviour:
     height: 513
   m_ResetOnNextRepaint: 1
   m_IgnoreNextPostprocessEvent: 0
-  m_SelectedAssetPath: Assets/Sprites/Weapons/HomemadeFlamethrower.png
+  m_SelectedAssetPath: Assets/Sprites/Items/Super Soaker.png
   m_Selected:
-    m_Name: HomemadeFlamethrower
+    m_Name: Super Soaker
     m_OriginalName: 
     m_Pivot: {x: 0.5, y: 0.5}
     m_Alignment: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 378
+      width: 512
       height: 256
     m_Outline: []
     m_PhysicsShape: []
@@ -632,19 +632,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Resources/Prefabs/RangedWeapons
+    - Assets/Sprites/Items
   m_ViewMode: 1
   m_StartGridSize: 90
   m_LastFolders:
-  - Assets/Resources/Prefabs/RangedWeapons
+  - Assets/Sprites/Items
   m_LastFoldersGridSize: 90
   m_LastProjectPath: D:\GitHub\Unity\Theyre-Coming
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 213}
-    m_SelectedIDs: 92270000
-    m_LastClickedID: 10130
-    m_ExpandedIDs: 000000007427000044290000842b0000722e0000d22e0000dc2e0000782f0000bc3000002a340000303400007e3400008c350000ee3500004e360000c2360000063800002a390000643900007c3900008a39000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 605}
+    m_SelectedIDs: 2e2f0000
+    m_LastClickedID: 12078
+    m_ExpandedIDs: 00000000742700004c290000ac2b00009a2e0000fa2e0000082f00005a2f0000a42f0000e83000005e34000064340000b2340000c03500002236000082360000f63600003a3800005e39000098390000b0390000be39000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -672,7 +672,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 20}
     m_SelectedIDs: 2c53feff
     m_LastClickedID: -109780
-    m_ExpandedIDs: 000000007427000044290000842b0000722e0000d22e0000dc2e0000782f0000bc3000002a340000303400007e3400008c350000ee3500004e360000c2360000063800002a390000643900007c3900008a39000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000742700004c290000ac2b00009a2e0000fa2e0000082f00005a2f0000a42f0000e83000005e34000064340000b2340000c03500002236000082360000f63600003a3800005e39000098390000b0390000be39000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -699,8 +699,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: 0026000048260000ae98feff1c240000be270000de270000482500009c290000a02a0000a82a000078280000f6330000dc6700005a4e0000684d000052270000ae280000523200007a2900003c31000012360000902c0000222d0000a8c2000086320000d8380000da360000d6050000583100004a270000b62d000098280000de320000e4d1feff282c0000862e0000f833000000000000ea2e000032570000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: 0026000048260000ae98feff1c240000be270000de270000482500009c290000a02a0000a82a000078280000f6330000dc6700005a4e0000684d000052270000ae280000523200007a2900003c31000012360000902c0000222d0000a8c2000086320000d8380000da360000d6050000583100004a270000b62d000098280000de320000e4d1feff282c0000862e0000f8330000ea2e00003257000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

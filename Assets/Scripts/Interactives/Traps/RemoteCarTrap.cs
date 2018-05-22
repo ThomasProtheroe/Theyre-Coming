@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class RemoteCarTrap : Trap {
 
+	public AudioClip accelerationSound;
+	public AudioClip stopSound;
 	public AudioClip hitSound;
-	private List<Enemy> enemiesHit;
-	private Animator anim;
+	protected List<Enemy> enemiesHit;
+	protected Animator anim;
+	protected AudioSource source;
 
 	[SerializeField]
-	private int damage;
+	protected int damage;
 	[SerializeField]
-	private int knockback;
+	protected int knockback;
 	[SerializeField]
-	private float speed;
+	protected float speed;
 	[SerializeField]
 	private bool inflictsBleeding;
 	[SerializeField]
@@ -22,6 +25,7 @@ public class RemoteCarTrap : Trap {
 	protected override void Start () {
 		anim = GetComponentInChildren<Animator> ();
 		anim.enabled = false;
+		source = GetComponent<AudioSource> ();
 
 		base.Start ();
 	}
@@ -70,6 +74,9 @@ public class RemoteCarTrap : Trap {
 				gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 				anim.enabled = false;
 
+				source.Stop ();
+				soundController.playPriorityOneShot (stopSound);
+
 				gameObject.layer = 13;
 				gameObject.tag = "Item";
 			}
@@ -112,10 +119,25 @@ public class RemoteCarTrap : Trap {
 
 		anim.enabled = true;
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (speed * direction, 0f);
+
+		source.clip = accelerationSound;
+		source.Play ();
+
+		onDeploy ();
+	}
+
+	protected virtual void onDeploy() {
+
 	}
 
 	public void moveToDeployPos () {
 		transform.position = new Vector2 (transform.position.x, deployY);
 		transform.eulerAngles = new Vector3 (0, 0, deployRotation);
+	}
+
+	public new bool onBreak() {
+		source.Stop ();
+
+		return false;
 	}
 }
