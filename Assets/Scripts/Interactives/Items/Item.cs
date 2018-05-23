@@ -254,7 +254,7 @@ public class Item : Interactive {
 		return;
 	}
 
-	public void breakItem() {
+	public virtual void breakItem() {
 		bool breakImmed = onBreak ();
 
 		playBreakSound ();
@@ -279,6 +279,7 @@ public class Item : Interactive {
 		}
 
 		Rigidbody2D body = GetComponent<Rigidbody2D>();
+		body.velocity = Vector2.zero;
 
 		gameObject.layer = 11;
 
