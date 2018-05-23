@@ -52,17 +52,22 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Area.cs" />
-     <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\CameraShake.cs" />
      <Compile Include="Assets\Scripts\CinematicMap.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
+     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\MusicController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\SoundController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\TutorialController.cs" />
      <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
      <Compile Include="Assets\Scripts\Enemies\BossGramps.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyCorpse.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemySpawn.cs" />
      <Compile Include="Assets\Scripts\Enemies\SpawnMap.cs" />
-     <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\Interactives\FrontDoor.cs" />
      <Compile Include="Assets\Scripts\Interactives\Interactive.cs" />
      <Compile Include="Assets\Scripts\Interactives\Items\AdaptableTrap.cs" />
@@ -92,16 +97,12 @@
      <Compile Include="Assets\Scripts\Menu\ResultsController.cs" />
      <Compile Include="Assets\Scripts\Menu\Scenes.cs" />
      <Compile Include="Assets\Scripts\Menu\SelectOnInput.cs" />
-     <Compile Include="Assets\Scripts\MusicController.cs" />
-     <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BileProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BlindProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\FireGlob.cs" />
      <Compile Include="Assets\Scripts\Projectiles\FlameProjectile.cs" />
      <Compile Include="Assets\Scripts\Recipe.cs" />
-     <Compile Include="Assets\Scripts\SoundController.cs" />
      <Compile Include="Assets\Scripts\SpriteOutline.cs" />
-     <Compile Include="Assets\Scripts\TutorialController.cs" />
      <Compile Include="Assets\Scripts\UI\DescriptionPanel.cs" />
      <Compile Include="Assets\Scripts\UI\Dialog.cs" />
      <Compile Include="Assets\Scripts\UI\DialogPanel.cs" />

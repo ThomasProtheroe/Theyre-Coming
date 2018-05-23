@@ -8,6 +8,8 @@ public class BlastWheels : RemoteCarTrap {
 	private ParticleSystem fusePS;
 	[SerializeField]
 	private ParticleSystem explosionPS;
+	[SerializeField]
+	private GameObject explosion;
 
 	protected new void OnTriggerEnter2D(Collider2D other) {
 		if (isDeployed) {
@@ -18,8 +20,23 @@ public class BlastWheels : RemoteCarTrap {
 	}
 
 	private void explode() {
+		Instantiate (explosion, transform.position, Quaternion.identity);
+
 		//Raycast to get all enemies/players, deal damage to them
-		//TODO
+		var list = new List<RaycastHit2D> ();
+		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.right, 10f, 1 << LayerMask.NameToLayer("Enemy")));
+		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.left, 10f, 1 << LayerMask.NameToLayer("Enemy")));
+
+		RaycastHit2D[] enemies = list.ToArray ();
+
+		foreach(RaycastHit2D collision in enemies) {
+			float direction = transform.position.x - collision.transform.position.x;
+
+			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (Mathf.RoundToInt(15f - collision.distance) , 3, direction, true);
+
+		}
+
+		playerCon.gameCon.shakeCamera (0.5f, 0.2f);
 
 		source.Stop ();
 		breakItem ();
@@ -29,7 +46,7 @@ public class BlastWheels : RemoteCarTrap {
 		var sh = fusePS.shape;
 		var main = fusePS.main;
 		var em = fusePS.emission;
-		main.startLifetime = 2.5f;
+		main.startLifetime = 1f;
 		em.rateOverTimeMultiplier = 2500.0f;
 		sh.position = new Vector3 (0.11f, sh.position.y, sh.position.z);
 	}
@@ -42,10 +59,14 @@ public class BlastWheels : RemoteCarTrap {
 		fusePS.Play ();
 	}
 
-	public new bool onBreak() {
+	public override bool onBreak() {
 		fusePS.Stop ();
 		source.Stop ();
 
-		return false;
+		//De-parent the Particle System so the particles dont disappear when the item is destroyed
+		fusePS.transform.parent = null;
+		fusePS.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 1.0f);
+
+		return true;
 	}
 }

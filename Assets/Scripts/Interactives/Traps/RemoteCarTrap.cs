@@ -135,7 +135,7 @@ public class RemoteCarTrap : Trap {
 		transform.eulerAngles = new Vector3 (0, 0, deployRotation);
 	}
 
-	public new bool onBreak() {
+	public override bool onBreak() {
 		source.Stop ();
 
 		return false;
