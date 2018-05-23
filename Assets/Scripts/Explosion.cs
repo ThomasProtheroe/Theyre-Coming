@@ -14,7 +14,7 @@ public class Explosion : MonoBehaviour {
 		GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ().playPriorityOneShot(explosionSound);
 	}
 	
-	public void destroyOnFinish() {
+	protected void destroyOnFinish() {
 		Destroy (gameObject);
 	}
 }
