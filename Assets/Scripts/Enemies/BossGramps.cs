@@ -30,10 +30,15 @@ public class BossGramps : Enemy {
 
 	private int currentBurnDamage;
 
+	[SerializeField]
 	private bool isPreparing;
+	[SerializeField]
 	private float prepTimer;
+	[SerializeField]
 	private bool isSpitting;
+	[SerializeField]
 	private bool isLeaping;
+	[SerializeField]
 	private bool isRecovering;
 	private string selectedAttack;
 
@@ -176,11 +181,10 @@ public class BossGramps : Enemy {
 	}
 
 	protected override void onKnockbackEnd() {
-		if (!isRecovering || !isDead) {
+		if (!isRecovering || isDead) {
 			return;
 		}
-
-		//TODO leap backwards
+			
 		StartCoroutine("LeapEvade");
 	}
 

@@ -44,6 +44,7 @@ public class Weapon : Item {
 				float direction = transform.position.x - other.transform.position.x;
 				other.gameObject.GetComponent<Enemy> ().takeThrowHit (thrownDamage, knockback, direction, false, attackType);
 				onEnemyImpact (other.gameObject);
+				reduceDurability ();
 			} else {
 				onTerrainImpact ();
 			}
@@ -106,6 +107,10 @@ public class Weapon : Item {
 		if (inflictsShockwave) {
 			triggerShockwave ();
 		}
+
+		if (hitCount > 0) {
+			reduceDurability ();
+		}
 	}
 
 	public void finishAttack() {
@@ -125,6 +130,26 @@ public class Weapon : Item {
 	}
 
 	public virtual void onEnemyImpact(GameObject enemy) {
+		if (inflictsBleed) {
+			enemy.GetComponent<Enemy> ().setBleeding();
+		}
+
+		if (inflictsBlind) {
+			enemy.GetComponent<Enemy> ().setBlind();
+		}
+
+		if (inflictsBurning) {
+			enemy.GetComponent<Enemy> ().setBurning ();
+		}
+
+		if (isThrown && throwImpact) {
+			soundController.playPriorityOneShot (throwImpact);
+		} else if (!isThrown && hitSound) {
+			soundController.playPriorityOneShot (hitSound);
+		}
+	}
+
+	private void reduceDurability() {
 		durability -= 1;
 
 		if (durability <= 0) {
@@ -145,24 +170,6 @@ public class Weapon : Item {
 					state++;
 				}
 			}
-		}
-
-		if (inflictsBleed) {
-			enemy.GetComponent<Enemy> ().setBleeding();
-		}
-
-		if (inflictsBlind) {
-			enemy.GetComponent<Enemy> ().setBlind();
-		}
-
-		if (inflictsBurning) {
-			enemy.GetComponent<Enemy> ().setBurning ();
-		}
-
-		if (isThrown && throwImpact) {
-			soundController.playPriorityOneShot (throwImpact);
-		} else if (!isThrown && hitSound) {
-			soundController.playPriorityOneShot (hitSound);
 		}
 	}
 
