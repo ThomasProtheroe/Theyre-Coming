@@ -36,6 +36,10 @@ public class BlastWheels : RemoteCarTrap {
 
 		}
 
+		if (Mathf.Abs(player.transform.position.x - transform.position.x) < 4) {
+			playerCon.takeHit (2);
+		}
+
 		playerCon.gameCon.shakeCamera (0.5f, 0.2f);
 
 		source.Stop ();

@@ -5,8 +5,6 @@ using UnityEngine;
 public class Explosion : MonoBehaviour {
 
 	[SerializeField]
-	private Animator anim;
-	[SerializeField]
 	private AudioClip explosionSound;
 
 	// Use this for initialization
