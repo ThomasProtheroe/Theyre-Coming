@@ -298,6 +298,9 @@ public class PlayerController : MonoBehaviour {
 		transform.localScale = new Vector3 (1.2f, 1.2f, 1.0f);
 		anim.SetTrigger ("Death");
 		hidePlayerHands ();
+		if (heldItem) {
+			heldItem.GetComponent<Item> ().dropItem ();
+		}
 
 		gameCon.pauseTimer ();
 		gameCon.gameOver ();
