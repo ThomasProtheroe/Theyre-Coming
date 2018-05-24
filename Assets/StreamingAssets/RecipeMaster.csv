@@ -17,10 +17,8 @@ KatarBladeShard,TapedShard,TapedBlade,Weapons/KatarBladeShard
 KatarBladeShard,TapedBlade,GlassShards,Weapons/KatarBladeShard
 MakeshiftSpearBlade,TapedBlade,Broom,Weapons/MakeshiftSpearBlade
 MakeshiftSpearBlade,TapedBlade,Mop,Weapons/MakeshiftSpearBlade
-MakeshiftSpearBlade,TapedBlade,TapedHandle,Weapons/MakeshiftSpearBlade
 MakeshiftSpearShard,TapedShard,Broom,Weapons/MakeshiftSpearShard
 MakeshiftSpearShard,TapedShard,Mop,Weapons/MakeshiftSpearShard
-MakeshiftSpearShard,TapedShard,TapedHandle,Weapons/MakeshiftSpearShard
 MakeshiftSpearBlade,TapedHandle,KitchenKnife,Weapons/MakeshiftSpearBlade
 MakeshiftSpearBlade,TapedHandle,Scissors,Weapons/MakeshiftSpearBlade
 MakeshiftSpearShard,TapedHandle,GlassShards,Weapons/MakeshiftSpearShard
@@ -93,6 +91,13 @@ FlammableBat,TapedBat,GasCan,Weapons/FlammableBat
 FlammableBat,TapedBat,LighterFluid,Weapons/FlammableBat
 FlamingBat,FlammableBat,Lighter,Weapons/FlamingBat
 FlamingBat,FlammableBat,TapedLighter,Weapons/FlamingBat
+BattlePick,TapedBat,KitchenKnife,Weapons/BattlePick
+BattlePick,TapedBat,Scissors,Weapons/BattlePick
+BattlePick,BaseballBat,TapedBlade,Weapons/BattlePick
+BattlePick,TapedBat,TapedBlade,Weapons/BattlePick
+DuelistPick,TapedBat,SurvivalKnife,Weapons/DuelistPick
+DuelistPick,TapedBat,TapedSurvivalKnife,Weapons/DuelistPick
+DuelistPick,BaseballBat,TapedSurvivalKnife,Weapons/DuelistPick
 SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
 ShardBaseball,TapedShard,Baseball,Throwables/ShardBaseball
 ShardBaseball,GlassShards,Baseball,Throwables/ShardBaseball
