@@ -362,7 +362,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void buildPathingMap() {
-		//Build pathing map
 		pathfindingMap = new Dictionary<string, Dictionary<string, string>>();
 		Dictionary<string, string> livingroomMap = new Dictionary<string, string> ();
 		livingroomMap.Add ("Bathroom", "TrLivingroomBathroom");
@@ -414,9 +413,18 @@ public class GameController : MonoBehaviour {
 		yardMap.Add ("Bathroom", "TrYardKitchen");
 		yardMap.Add ("Bedroom","TrYardKitchen");
 		yardMap.Add ("Hallway", "TrYardKitchen");
-		yardMap.Add ("Yard", "TrYardKitchen");
+		yardMap.Add ("Kitchen", "TrYardKitchen");
 		yardMap.Add ("Garage","TrYardGarage");
 		pathfindingMap.Add ("Yard", yardMap);
+
+		Dictionary<string, string> garageMap = new Dictionary<string, string> ();
+		garageMap.Add ("Livingroom", "TrGarageYard");
+		garageMap.Add ("Bathroom", "TrGarageYard");
+		garageMap.Add ("Bedroom","TrGarageYard");
+		garageMap.Add ("Hallway", "TrGarageYard");
+		garageMap.Add ("Yard", "TrGarageYard");
+		garageMap.Add ("Kitchen","TrGarageYard");
+		pathfindingMap.Add ("Garage", garageMap);
 	}
 
 	public Transition findRouteToPlayer(Area currentArea) {
