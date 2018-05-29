@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 	public bool isInvulnerable;
 	[HideInInspector]
 	public bool isAttacking;
-	private bool isDead;
+	public bool isDead;
 	private bool isCrafting;
 	private bool handsFlipped;
 	[SerializeField]

@@ -125,6 +125,8 @@ public class GameController : MonoBehaviour {
 
 		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
 
+		spawnGarageKey ();
+
 		timer = 0.0f;
 		timerRunning = true;
 		Time.timeScale = 1.0f;
@@ -359,6 +361,10 @@ public class GameController : MonoBehaviour {
 				corpseDict [playerCon.currentArea.name] = corpseList;
 			}
 		}
+	}
+
+	private void spawnGarageKey() {
+
 	}
 
 	private void buildPathingMap() {
@@ -767,7 +773,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator CheckVictory() {
-		if (noMoreEnemySpawns && bossKilled && enemies.Count == 0) {
+		if (noMoreEnemySpawns && bossKilled && !playerCon.isDead && enemies.Count == 0) {
 			victoryFade ();
 			yield break;
 		}
