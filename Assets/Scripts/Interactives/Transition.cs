@@ -18,7 +18,7 @@ public class Transition : Interactive {
 	private Animator anim;
 	private GameObject player;
 	private GameObject camera;
-	private GameController gc;
+	protected GameController gc;
 	private SoundController soundCon;
 
 	[SerializeField]
