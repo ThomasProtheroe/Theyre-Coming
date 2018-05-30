@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class KeySpawn : MonoBehaviour {
 
-	public GarageKey keyPrefab;
+	public GameObject garageKey;
 
-	public void spawnKey() {
-		GarageKey newKey =  Instantiate (keyPrefab, transform.position, Quaternion.identity);
+	public void spawnKey(Transform position) {
+		garageKey.transform.position = position.position;
 	}
 }

@@ -22,22 +22,31 @@ public class Transition : Interactive {
 	private SoundController soundCon;
 
 	[SerializeField]
+	private Dialog lockedDialog;
+
+	[SerializeField]
 	private float safeZoneClearCooldown;
 	private float safeZoneClearTimer;
 	[SerializeField]
 	private float enemyBufferOffset;
 
+	[HideInInspector]
 	public bool inUse;
+	[HideInInspector]
 	public bool inUseByPlayer;
+	[HideInInspector]
+	public bool firstOpenAttempt;
+	public bool isLocked;
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		camera = GameObject.FindGameObjectWithTag("MainCamera");
 		anim = gameObject.GetComponent<Animator> ();
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		inUse = false;
+		firstOpenAttempt = true;
 	}
 
 	void Update() {
@@ -90,6 +99,23 @@ public class Transition : Interactive {
 		sibling.safeZoneClearTimer = sibling.safeZoneClearCooldown;
 	}
 
+	public void failOpen() {
+		if (firstOpenAttempt) {
+			firstOpenAttempt = false;
+			if (lockedDialog != null) {
+				displayLockedDialog ();
+			}
+		}
+	}
+
+	public void unlock() {
+		isLocked = false;
+	}
+
+	private void displayLockedDialog() {
+		gc.showDialog (lockedDialog);
+	}
+
 	override public void disableHighlight() {
 		StopCoroutine ("highlightGlow");
 		GetComponent<SpriteOutline> ().enabled = false;
@@ -101,7 +127,7 @@ public class Transition : Interactive {
 	}
 
 	override public void updateHighlightColor() {
-		if (inUse) {
+		if (inUse || isLocked) {
 			GetComponent<SpriteOutline> ().color = negativeColor;
 		} else {
 			GetComponent<SpriteOutline> ().color = positiveColor;

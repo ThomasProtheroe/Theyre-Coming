@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour {
 
 	[Header("General Settings")]
 	public int prepTime;
+	private GameObject[] keySpawns;
 
 	[Header("Audio Control")]
 	public AudioSource source;
@@ -93,6 +94,11 @@ public class GameController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerCon = player.GetComponent<PlayerController> ();
 		source = GetComponent<AudioSource> ();
+
+		//Pick a random spawn location for the garage key
+		keySpawns = GameObject.FindGameObjectsWithTag ("KeySpawn");
+		KeySpawn keySpawn = keySpawns [UnityEngine.Random.Range (0, keySpawns.Length)].GetComponent<KeySpawn> ();
+		keySpawn.spawnKey (keySpawn.transform);
 
 		SpawnMap.rebuildMap ();
 		CinematicMap.rebuildMap ();
