@@ -150,7 +150,7 @@ public class Weapon : Item {
 	}
 
 	private void reduceDurability() {
-		durability -= 1;
+		durability -= ((hitCount + 1) / 2);
 
 		if (durability <= 0) {
 			breakItem ();
