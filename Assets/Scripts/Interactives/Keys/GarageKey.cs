@@ -23,6 +23,7 @@ public class GarageKey : Item {
 	public void unlockDoor(Transition door) {
 		if (door == targetDoor) {
 			door.unlock ();
+			playerCon.emptyPlayerHands ();
 			Destroy (gameObject);
 		}
 	}

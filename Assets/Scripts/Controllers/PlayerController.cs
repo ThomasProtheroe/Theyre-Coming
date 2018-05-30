@@ -439,15 +439,19 @@ public class PlayerController : MonoBehaviour {
 		if (dropInput) {
 			heldItem.GetComponent<Item> ().dropItem ();
 
-			alignHands ();
-			showPlayerHands ();
-
-			heldItem = null;
-
-			//Update UI box
-			activeSlot.setEmpty();
-			gameCon.hideDescription ();
+			emptyPlayerHands ();
 		}
+	}
+
+	public void emptyPlayerHands() {
+		alignHands ();
+		showPlayerHands ();
+
+		heldItem = null;
+
+		//Update UI box
+		activeSlot.setEmpty();
+		gameCon.hideDescription ();
 	}
 
 	void checkTravel() {

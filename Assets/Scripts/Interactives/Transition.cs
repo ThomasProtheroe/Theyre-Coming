@@ -21,8 +21,9 @@ public class Transition : Interactive {
 	protected GameController gc;
 	private SoundController soundCon;
 
-	[SerializeField]
 	private Dialog lockedDialog;
+	[SerializeField]
+	private string lockedDialogText;
 
 	[SerializeField]
 	private float safeZoneClearCooldown;
@@ -47,6 +48,10 @@ public class Transition : Interactive {
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		inUse = false;
 		firstOpenAttempt = true;
+
+		if (lockedDialogText.Length > 0) {
+			lockedDialog = new Dialog (lockedDialogText);
+		}
 	}
 
 	void Update() {
@@ -151,8 +156,6 @@ public class Transition : Interactive {
 
 			itemSprite = playerCon.heldItem.GetComponent<SpriteRenderer> ();
 			originalItemColor = itemSprite.material.color;
-
-			Item itemCon = playerCon.heldItem.GetComponent<Item> ();
 		}
 		SpriteRenderer[] childSprites = playerCon.GetComponentsInChildren<SpriteRenderer> ();
 
