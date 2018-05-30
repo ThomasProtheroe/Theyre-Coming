@@ -5,18 +5,22 @@ using UnityEngine;
 public class GarageKey : Item {
 
 	[SerializeField]
-	private LockedTransition targetDoor;
+	private Transition targetDoor;
 
-	// Use this for initialization
-	void Start () {
-		
+	protected override void Start() {
+
+
+		base.Start ();
 	}
 	
 	public override void use() {
-
+		GameObject closestInteractive = playerCon.getClosestInteractive ();
+		if (closestInteractive.tag == "Transition") {
+			unlockDoor (closestInteractive.GetComponent<Transition> ());
+		}
 	}
 
-	public void unlockDoor(LockedTransition door) {
+	public void unlockDoor(Transition door) {
 		if (door == targetDoor) {
 			door.unlock ();
 			Destroy (gameObject);

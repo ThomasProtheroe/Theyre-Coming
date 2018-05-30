@@ -452,7 +452,13 @@ public class PlayerController : MonoBehaviour {
 
 	void checkTravel() {
 		if (interactInput && closestInteractive && closestInteractive.tag == "Transition") {
-			if (closestInteractive.GetComponent<Transition> ().inUse) {
+			Transition transController = closestInteractive.GetComponent<Transition> ();
+			if (transController.inUse) {
+				return;
+			}
+
+			if (transController.isLocked) {
+				transController.failOpen();
 				return;
 			}
 
@@ -462,7 +468,7 @@ public class PlayerController : MonoBehaviour {
 			isBusy = true;
 			isInvulnerable = true;
 
-			Transition transController = closestInteractive.GetComponent<Transition> ();
+
 			transController.playerTravel ();
 		}
 	}
