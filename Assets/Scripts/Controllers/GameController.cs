@@ -25,10 +25,10 @@ public class GameController : MonoBehaviour {
 	private Sprite[] dialogSprites;
 	[SerializeField]
 	private AudioClip[] cinematicSounds;
+	public KeySpawn[] keySpawns;
 
 	[Header("General Settings")]
 	public int prepTime;
-	private GameObject[] keySpawns;
 
 	[Header("Audio Control")]
 	public AudioSource source;
@@ -55,11 +55,6 @@ public class GameController : MonoBehaviour {
 	[HideInInspector]
 	public Dictionary<string, List<EnemyCorpse>> corpseDict = new Dictionary<string, List<EnemyCorpse>> ();
 	private List<Enemy> enemies;
-
-	//Pathfinding vars
-	private List<Area> areas = new List<Area> ();
-	private List<Area> visitedAreas;
-	private Queue<Area> areasToSearch;
 
 	private Dictionary<string, Dictionary<string, string>> pathfindingMap;
 
@@ -95,11 +90,6 @@ public class GameController : MonoBehaviour {
 		playerCon = player.GetComponent<PlayerController> ();
 		source = GetComponent<AudioSource> ();
 
-		//Pick a random spawn location for the garage key
-		keySpawns = GameObject.FindGameObjectsWithTag ("KeySpawn");
-		KeySpawn keySpawn = keySpawns [UnityEngine.Random.Range (0, keySpawns.Length)].GetComponent<KeySpawn> ();
-		keySpawn.spawnKey (keySpawn.transform);
-
 		SpawnMap.rebuildMap ();
 		CinematicMap.rebuildMap ();
 
@@ -124,11 +114,7 @@ public class GameController : MonoBehaviour {
 		if (devMode == null) {
 			devMode = "false";
 		}
-
-		foreach (GameObject area in GameObject.FindGameObjectsWithTag ("Area")) {
-			areas.Add(area.GetComponent<Area>());
-		}
-
+			
 		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
 
 		spawnGarageKey ();
@@ -370,7 +356,11 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void spawnGarageKey() {
-
+		//Pick a random spawn location for the garage key
+		//GameObject[] keySpawns = GameObject.FindGameObjectsWithTag ("KeySpawn");
+		//KeySpawn keySpawn = keySpawns [UnityEngine.Random.Range (0, keySpawns.Length)].GetComponent<KeySpawn> ();
+		//keySpawn.spawnKey (keySpawn.transform);
+		keySpawns [UnityEngine.Random.Range (0, keySpawns.Length)].spawnKey();
 	}
 
 	private void buildPathingMap() {
