@@ -103,6 +103,7 @@
      <Compile Include="Assets\Scripts\Menu\SelectOnInput.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BaseProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BileProjectile.cs" />
+     <Compile Include="Assets\Scripts\Projectiles\BleedProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BlindProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\FireGlob.cs" />
      <Compile Include="Assets\Scripts\Projectiles\FlameProjectile.cs" />

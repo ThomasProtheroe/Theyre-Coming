@@ -5,6 +5,7 @@ using UnityEngine;
 public class HomemadeCannon : RangedWeapon {
 
 	public ParticleSystem smokePS;
+	public ParticleSystem projectilePS;
 	public BaseProjectile projectile;
 
 	[SerializeField]
@@ -13,6 +14,10 @@ public class HomemadeCannon : RangedWeapon {
 	override public void fire() {
 		isAttacking = true;
 		smokePS.Play ();
+		if (projectilePS != null) {
+			projectilePS.Play ();
+		}
+
 		soundController.playPriorityOneShot (fireSound);
 		fireProjectile ();
 		playerCon.gameCon.shakeCamera (0.2f, 0.1f);
@@ -27,6 +32,11 @@ public class HomemadeCannon : RangedWeapon {
 	public new void setEmpty() {
 		smokePS.transform.parent = null;
 		smokePS.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 1.0f);
+		if (projectilePS != null) {
+			projectilePS.transform.parent = null;
+			projectilePS.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 1.0f);
+		}
+
 		base.setEmpty ();
 	}
 

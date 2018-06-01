@@ -15,7 +15,7 @@ public class SpikeProjectile : BaseProjectile {
 		if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 			if (!enemy.isInvunlerable && !enemy.getIsDead ()) {
-				float direction = transform.position.x - enemy.transform.position.x;
+				float direction = player.transform.position.x - enemy.transform.position.x;
 				enemy.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
 				durability--;
 				if (durability <= 0) {
