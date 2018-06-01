@@ -531,10 +531,14 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void setBlind() {
+	public void setBlind(float duration=0f) {
 		if (!isBlind) {
 			isBlind = true;
-			blindTimer = blindDuration;
+			if (duration == 0f) {
+				blindTimer = blindDuration;
+			} else {
+				blindTimer = duration;
+			}
 
 			moveSpeed -= blindMoveModifier;
 			startWander ();
