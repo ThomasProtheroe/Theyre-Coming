@@ -509,6 +509,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void setStun(float duration) {
+		if (isStunned) {
+			return;
+		}
 		isStunned = true;
 		stunTimer = duration;
 		deactivate ();

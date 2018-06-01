@@ -357,9 +357,6 @@ public class GameController : MonoBehaviour {
 
 	private void spawnGarageKey() {
 		//Pick a random spawn location for the garage key
-		//GameObject[] keySpawns = GameObject.FindGameObjectsWithTag ("KeySpawn");
-		//KeySpawn keySpawn = keySpawns [UnityEngine.Random.Range (0, keySpawns.Length)].GetComponent<KeySpawn> ();
-		//keySpawn.spawnKey (keySpawn.transform);
 		keySpawns [UnityEngine.Random.Range (0, keySpawns.Length)].spawnKey();
 	}
 

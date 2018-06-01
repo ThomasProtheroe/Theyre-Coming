@@ -26,7 +26,6 @@ public class RangedWeapon : Item {
 
 	public void setEmpty() {
 		GameObject newWeapon = Instantiate(emptyPrefab, new Vector3(transform.position.x, transform.position.y), transform.rotation);
-		PlayerController playerCon = player.GetComponent<PlayerController> ();
 		transform.parent = null;
 		playerCon.heldItem = newWeapon;
 		newWeapon.transform.parent = playerCon.heldItemParent.transform;
@@ -45,5 +44,9 @@ public class RangedWeapon : Item {
 
 	public virtual void fire() {
 		updateDurabilityIndicator();
+	}
+
+	public void stopAttacking() {
+		isAttacking = false;
 	}
 }

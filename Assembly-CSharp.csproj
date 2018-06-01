@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\AerosolFlamethrower.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\BlindBlaster.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\BlindSquirtGun.cs" />
+     <Compile Include="Assets\Scripts\Interactives\RangedWeapons\HomemadeCannon.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\HomemadeFlamethrower.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\RangedWeapon.cs" />
      <Compile Include="Assets\Scripts\Interactives\Throwables\Molotov.cs" />
@@ -100,10 +101,13 @@
      <Compile Include="Assets\Scripts\Menu\ResultsController.cs" />
      <Compile Include="Assets\Scripts\Menu\Scenes.cs" />
      <Compile Include="Assets\Scripts\Menu\SelectOnInput.cs" />
+     <Compile Include="Assets\Scripts\Projectiles\BaseProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BileProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BlindProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectiles\FireGlob.cs" />
      <Compile Include="Assets\Scripts\Projectiles\FlameProjectile.cs" />
+     <Compile Include="Assets\Scripts\Projectiles\PlungerProjectile.cs" />
+     <Compile Include="Assets\Scripts\Projectiles\SpikeProjectile.cs" />
      <Compile Include="Assets\Scripts\Recipe.cs" />
      <Compile Include="Assets\Scripts\SpriteOutline.cs" />
      <Compile Include="Assets\Scripts\UI\DescriptionPanel.cs" />
