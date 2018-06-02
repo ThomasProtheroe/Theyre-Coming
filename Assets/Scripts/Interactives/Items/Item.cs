@@ -14,6 +14,7 @@ public class Item : Interactive {
 	public bool isAttacking = false;
 	[HideInInspector]
 	public bool flipped = false;
+	private bool deparent = false;
 
 	public float xOffset;
 	public float yOffset;
@@ -67,6 +68,11 @@ public class Item : Interactive {
 	
 	// Update is called once per frame
 	protected void Update () {
+		if (deparent) {
+			transform.parent = null;
+			deparent = false;
+		}
+
 		if (isBouncing) {
 			Rigidbody2D itemBody = gameObject.GetComponent<Rigidbody2D> ();
 			float xVel = itemBody.velocity.x;
@@ -260,9 +266,13 @@ public class Item : Interactive {
 		playBreakSound ();
 
 		if (isHeld) {
+			isHeld = false;
 			playerCon.heldItem = null;
 			playerCon.activeSlot.setEmpty();
-			gameObject.transform.parent = null;
+
+			//The animator sometimes changes the objects position on the frame it is 
+			//disabled, so we deparent the item next frame for safety
+			deparent = true;
 
 			disableAnimator ();
 			frontHand.SetActive (false);
@@ -285,8 +295,6 @@ public class Item : Interactive {
 
 		int xBreakForce = Random.Range(-100, 100);
 		int yBreakForce = Random.Range(60, 100);
-
-		isHeld = false;
 
 		//Reset the x and y rotation as these can change during attack animations
 		transform.eulerAngles = new Vector3 (0, 0, transform.rotation.z);
