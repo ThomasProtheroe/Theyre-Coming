@@ -32,9 +32,14 @@ public class Item : Interactive {
 	[SerializeField]
 	protected int attackType;
 
-	public Sprite bloodySprite1;
-	public Sprite bloodySprite2;
-	public Sprite bloodySprite3;
+	[SerializeField]
+	protected Sprite displaySprite;
+	[SerializeField]
+	protected Sprite bloodySprite1;
+	[SerializeField]
+	protected Sprite bloodySprite2;
+	[SerializeField]
+	protected Sprite bloodySprite3;
 
 	public BoxCollider2D pickupCollider;
 	public Collider2D hitCollider;
@@ -56,6 +61,9 @@ public class Item : Interactive {
 	public GameObject player;
 	[HideInInspector]
 	public PlayerController playerCon;
+
+	[HideInInspector]
+	public GameObject hiddenItem;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -99,13 +107,13 @@ public class Item : Interactive {
 				float direction = transform.position.x - other.transform.position.x;
 				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback, direction, false, attackType);
 				if ((state == 0) && (bloodySprite1 != null)) {
-					GetComponent<SpriteRenderer> ().sprite = bloodySprite1;
+					sprite.sprite = bloodySprite1;
 					state++;
 				} else if ((state == 1) && (bloodySprite2 != null)) {
-					GetComponent<SpriteRenderer> ().sprite = bloodySprite2;
+					sprite.sprite = bloodySprite2;
 					state++;
 				} else if ((state == 2) && (bloodySprite3 != null)) {
-					GetComponent<SpriteRenderer> ().sprite = bloodySprite3;
+					sprite.sprite = bloodySprite3;
 					state++;
 				}
 			}
@@ -160,6 +168,11 @@ public class Item : Interactive {
 	}
 
 	public void pickupItem(bool playerFlipX, bool playSound=true) {
+		if (hiddenItem != null) {
+			hiddenItem.transform.parent = null;
+			hiddenItem.SetActive(true);
+		}
+
 		if (playSound && pickupSound) {
 			soundController.playPriorityOneShot (pickupSound);
 		}
@@ -213,7 +226,7 @@ public class Item : Interactive {
 		transform.position = new Vector2 (transform.position.x, restingHeight);
 		transform.eulerAngles = new Vector3 (0, 0, restingRotation);
 
-		sprite.sortingLayerName = "Items";
+		sprite.sortingLayerName = "Background Items";
 		sprite.sortingOrder = 5;
 	}
 
@@ -317,6 +330,14 @@ public class Item : Interactive {
 		playerCon.activeSlot.resetDurabilityIndicator();
 	}
 
+	public Sprite getDisplaySprite() {
+		if (displaySprite != null) {
+			return displaySprite;
+		} 
+
+		return sprite.sprite;
+	}
+
 	//Return true if item should be destroyed immediately (no animation)
 	public virtual bool onBreak() {
 		return false;
@@ -339,7 +360,6 @@ public class Item : Interactive {
 
 	IEnumerator beginSpriteFlash() {
 		while (true) {
-			SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer> ();
 			if (sprite.enabled) {
 				sprite.enabled = false;
 			} else {

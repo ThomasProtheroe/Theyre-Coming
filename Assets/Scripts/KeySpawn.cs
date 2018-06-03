@@ -8,5 +8,7 @@ public class KeySpawn : MonoBehaviour {
 
 	public void spawnKey() {
 		garageKey.transform.position = transform.position;
+		garageKey.transform.parent = transform.parent;
+		transform.parent.gameObject.GetComponent<Item> ().hiddenItem = garageKey;
 	}
 }

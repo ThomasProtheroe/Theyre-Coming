@@ -146,7 +146,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (phase == "prep") {
-			TimeSpan timeSpan = TimeSpan.FromSeconds((prepTime - Mathf.Floor (timer)));
+			TimeSpan timeSpan = TimeSpan.FromSeconds ((prepTime - Mathf.Floor (timer)));
 			timerText.text = string.Format ("{0:D2}:{1:d2}", timeSpan.Minutes, timeSpan.Seconds);
 			if (Mathf.Floor (timer) >= prepTime) {
 				timerText.enabled = false;
@@ -162,7 +162,7 @@ public class GameController : MonoBehaviour {
 		checkForCinematics ();
 
 		//Skip cinematics
-		if (currentCinematic != null && Input.GetButtonDown("interact")) {
+		if (currentCinematic != null && Input.GetButtonDown ("interact")) {
 			switch (currentCinematic) {
 			case "playIntro":
 				StopCoroutine ("playIntro");
@@ -174,7 +174,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		//Pause Menu
-		if (Input.GetKeyDown("escape")) {
+		if (Input.GetKeyDown ("escape")) {
 			if (isPaused) {
 				unpauseGame ();
 			} else {
@@ -182,10 +182,21 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		if ((Scenes.getParam("devMode") != "false") && Input.GetKeyDown ("t")) {
-			spawnEnemyRand ();
-		} else if ((Scenes.getParam("devMode") != "false") && Input.GetKeyDown ("y")) {
-			spawnBoss (spawnZones[0]);
+		if (Scenes.getParam ("devMode") != "false") {
+			if (Input.GetKeyDown ("t")) {
+				spawnEnemyRand ();
+			} else if (Input.GetKeyDown ("u")) {
+				//Unlock all doors in dev mode
+				GameObject[] transitions = GameObject.FindGameObjectsWithTag("Transition");
+				foreach (GameObject temp in transitions) {
+					Transition transition = temp.GetComponent<Transition> ();
+					if (transition.isLocked) {
+						transition.isLocked = false;
+					}
+				}
+			} else if (Input.GetKeyDown ("y")) {
+				spawnBoss (spawnZones[0]);
+			}
 		}
 	}
 
