@@ -369,7 +369,7 @@ public class PlayerController : MonoBehaviour {
 			Item itemController = heldItem.GetComponent<Item> ();
 
 			//Update UI
-			updateItemSlot(heldItem.GetComponent<SpriteRenderer>().sprite);
+			updateItemSlot(itemController.getDisplaySprite());
 			if (itemController.description != "") {
 				gameCon.showDescription (itemController.description);
 			}
@@ -688,7 +688,7 @@ public class PlayerController : MonoBehaviour {
 			gameCon.countItemCraft ();
 
 			//Update UI box
-			updateItemSlot(heldItem.GetComponent<SpriteRenderer>().sprite);
+			updateItemSlot(itemCon.getDisplaySprite());
 			if (itemCon.description != "") {
 				gameCon.showDescription (itemCon.description);
 			}

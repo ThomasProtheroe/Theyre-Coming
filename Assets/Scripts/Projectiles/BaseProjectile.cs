@@ -18,8 +18,8 @@ public class BaseProjectile : MonoBehaviour {
 
 		gameObject.layer = 11;
 
-		int xBreakForce = Random.Range(-100, 100);
-		int yBreakForce = Random.Range(60, 100);
+		//int xBreakForce = Random.Range(-100, 100);
+		//int yBreakForce = Random.Range(60, 100);
 
 		body.bodyType = RigidbodyType2D.Dynamic;
 		//body.AddForce (new Vector2 (xBreakForce, yBreakForce));
