@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour {
 	protected int playerAttackType;
 	public bool hitPlayer;
 	public bool isInvunlerable;
+	protected int woundState;
 
 	protected bool isActive;
 	protected bool isMoving;
@@ -93,6 +94,7 @@ public class Enemy : MonoBehaviour {
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		isMoving = false;
 		isAttacking = false;
+		woundState = Constants.ENEMY_WOUND_NONE;
 
 		//Let players pass through the enemy
 		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
@@ -424,6 +426,19 @@ public class Enemy : MonoBehaviour {
 		health -= damage;
 		if (health <= 0) {
 			killEnemy ();
+		} else {
+			updateWoundState ();
+			updateAnimLayer ();
+		}
+	}
+
+	private void updateWoundState() {
+		if (health <= 3) {
+			woundState = Constants.ENEMY_WOUND_HEAVY;
+		} else if (health <= 7) {
+			woundState = Constants.ENEMY_WOUND_LIGHT;
+		} else {
+			woundState = Constants.ENEMY_WOUND_NONE;
 		}
 	}
 
@@ -543,7 +558,7 @@ public class Enemy : MonoBehaviour {
 			moveSpeed -= blindMoveModifier;
 			startWander ();
 			wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
-			anim.SetLayerWeight (1, 1.0f);
+			updateAnimLayer ();
 		} else {
 			blindTimer = blindDuration;
 		}
@@ -554,7 +569,26 @@ public class Enemy : MonoBehaviour {
 		isMoving = false;
 		wanderTimer = 0.0f;
 		moveSpeed += blindMoveModifier;
-		anim.SetLayerWeight (1, 0.0f);
+		updateAnimLayer ();
+	}
+
+	public void updateAnimLayer() {
+		int animLayer = woundState;
+		float weight = 0.0f;
+		if (isBlind) {
+			animLayer += 3;
+		}
+
+		for(int i = 0; i < anim.layerCount; i++) {
+			if (i == animLayer) {
+				weight = 1.0f;
+			} else {
+				weight = 0.0f;
+			}
+
+			anim.SetLayerWeight (i, weight);
+		}
+			
 	}
 
 	public void triggerSplash(Color color) {
