@@ -119,11 +119,6 @@ SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
 ShardBaseball,TapedShard,Baseball,Throwables/ShardBaseball
 ShardBaseball,GlassShards,Baseball,Throwables/ShardBaseball
 CorrosivePlunger,Plunger,Bleach,Weapons/CorrosivePlunger
-TapedGlove,GardeningGlove,DuctTape,Items/TapedGlove
-Cestus,GardeningGlove,TapedBlade,Weapons/Cestus
-Cestus,TapedGlove,KitchenKnife,Weapons/Cestus
-Cestus,TapedGlove,Scissors,Weapons/Cestus
-TapedCestus,TapedGlove,TapedBlade,Weapons/Cestus
 PillowcaseFlail,Pillowcase,Toaster,Weapons/Pillowcase Flail
 PillowcaseFlail,Pillowcase,Blender,Weapons/Pillowcase Flail
 PillowcaseFlail,Pillowcase,Dumbell,Weapons/Pillowcase Flail
@@ -167,6 +162,12 @@ WarPick,TapedSkullshatterHammer,Scissors,Weapons/WarPick
 WarPick,SkullshatterHammer,TapedBlade,Weapons/WarPick
 WarPick,TapedPipe,PickHead,Weapons/WarPick
 WarPick,MetalPipe,TapedPickHead,Weapons/WarPick
+TapedGloves,RubberGloves,DuctTape,Items/TapedGloves
+Cestus,TapedGloves,Scissors,Weapons/Cestus
+Cestus,TapedGloves,KitchenKnife,Weapons/Cestus
+Cestus,RubberGloves,TapedBlade,Weapons/Cestus
+Garrador,RubberGloves,TapedSurvivalKnife,Weapons/Garrador
+Garrador,TapedGloves,SurvivalKnife,Weapons/Garrador
 CorrosivePlunger,Plunger,Bleach,Weapons/CorrosivePlunger
 HeavyBoxTrap,CardboardBox,Blender,Traps/HeavyBoxTrap
 HeavyBoxTrap,CardboardBox,Brick,Traps/HeavyBoxTrap
@@ -270,7 +271,7 @@ HomemadeCannonLF,UnfinishedCannonLighter,LighterFluid,Items/HomemadeCannon/Homem
 HomemadeCannonHS,UnfinishedCannonHS,Lighter,Items/HomemadeCannon/HomemadeCannonHS
 HomemadeCannonHS,UnfinishedCannonHS,TapedLighter,Items/HomemadeCannon/HomemadeCannonHS
 HomemadeCannonHS,UnfinishedCannonLighter,Hairspray,Items/HomemadeCannon/HomemadeCannonHS
-HomemadeCannonHS,UnfinishedCannonHS,TapedHairspray,Items/HomemadeCannon/HomemadeCannonHS
+HomemadeCannonHS,UnfinishedCannonLighter,TapedHairspray,Items/HomemadeCannon/HomemadeCannonHS
 ShrapnelCannonGCNails,HomemadeCannonGC,Nails,RangedWeapons/HomemadeCannon/ShrapnelCannonGCNails
 ShrapnelCannonGCShards,HomemadeCannonGC,GlassShards,RangedWeapons/HomemadeCannon/ShrapnelCannonGCShards
 ShrapnelCannonGCShards,HomemadeCannonGC,TapedShard,RangedWeapons/HomemadeCannon/ShrapnelCannonGCShards
