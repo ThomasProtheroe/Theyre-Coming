@@ -120,7 +120,7 @@ public class BossGramps : Enemy {
 		}
 	}
 
-	public new void setBlind() {
+	public new void setBlind(float duration=0f) {
 		//Zombie gramps needs no eyes!
 		return;
 	}
