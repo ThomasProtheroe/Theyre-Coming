@@ -121,16 +121,6 @@ public class Transition : Interactive {
 		gc.showDialog (lockedDialog);
 	}
 
-	override public void disableHighlight() {
-		StopCoroutine ("highlightGlow");
-		GetComponent<SpriteOutline> ().enabled = false;
-	}
-
-	override public void enableHighlight() {
-		GetComponent<SpriteOutline> ().enabled = true;
-		StartCoroutine ("highlightGlow");
-	}
-
 	override public void updateHighlightColor() {
 		if (inUse || isLocked) {
 			GetComponent<SpriteOutline> ().color = negativeColor;
@@ -268,31 +258,5 @@ public class Transition : Interactive {
 		inUse = false;
 		sibling.inUse = false;
 		enemy.isInvunlerable = false;
-	}
-
-	IEnumerator highlightGlow() {
-		SpriteOutline outline = GetComponent<SpriteOutline> ();
-		//Fade out the highlight
-		for (float f = 1f; f >= 0.3; f -= 0.01f) {
-			Color c = outline.color;
-			c.a = f;
-			outline.color = c;
-
-			yield return null;
-		}
-		//Fade the highlight back in
-		for (float f = 0.3f; f <= 1; f += 0.01f) {
-			Color c = outline.color;
-			c.a = f;
-			outline.color = c;
-
-			yield return null;
-		}
-		Color orig = outline.color;
-		orig.a = 1;
-		outline.color = orig;
-
-
-		StartCoroutine ("highlightGlow");
 	}
 }

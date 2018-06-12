@@ -12,6 +12,11 @@ public class BaseProjectile : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
 	}
 
+	public virtual void fire() {
+		isActive = true;
+		transform.parent = null;
+	}
+
 	public void breakProjectile() {
 		Rigidbody2D body = GetComponent<Rigidbody2D>();
 		body.velocity = Vector2.zero;

@@ -46,8 +46,7 @@ public class HomemadeCannon : RangedWeapon {
 			speed *= -1;
 		}
 
-		projectile.isActive = true;
-		projectile.transform.parent = null;
+		projectile.fire ();
 		projectile.GetComponent<Rigidbody2D> ().velocity = new Vector2 (speed, 0.0f);
 	}
 }

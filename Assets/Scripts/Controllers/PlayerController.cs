@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
 	private float currentSpeed;
 	public int xThrowStrength;
 	public int yThrowStrength;
+	public int maxHealth;
+	//[HideInInspector]
 	public int health;
 
 
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour {
 	public bool isAttacking;
 	public bool isDead;
 	private bool isCrafting;
+	public bool isHealing;
 	private bool handsFlipped;
 	[SerializeField]
 	private bool startLeft;
@@ -89,6 +92,7 @@ public class PlayerController : MonoBehaviour {
 		activeSlot = itemSlot1;
 		activeSlot.setActive (true);
 
+		health = maxHealth;
 		currentSpeed = playerSpeed;
 		isTargetable = true;
 		burnImmunityTimer = 0.0f;
@@ -135,7 +139,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
-		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
+		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition" || other.gameObject.tag == "Interactive") {
 			nearInteractives.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
@@ -174,6 +178,7 @@ public class PlayerController : MonoBehaviour {
 	void checkPlayerInput() {
 		if (nearInteractives.Count != 0) {
 			checkTravel ();
+			checkInteract ();
 
 			if (!heldItem) {
 				checkPickup ();
@@ -282,6 +287,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void takeDamage(int damage) {
+		cancelCrafting ();
+		cancelHealing ();
+
 		if (health > 0) {
 			health -= damage;
 			if (health <= 0) {
@@ -454,6 +462,31 @@ public class PlayerController : MonoBehaviour {
 		gameCon.hideDescription ();
 	}
 
+	void checkInteract() {
+		if (interactInput && closestInteractive) {
+			if (closestInteractive.name == "FirstAidStation") {
+				FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
+
+				if (isHealing) {
+					isBusy = false;
+					isHealing = false;
+					station.cancelUse ();
+				}
+
+				if (station.usesRemaining <= 0 || health == maxHealth) {
+					return;
+				}
+
+				rigidBody.velocity = new Vector2 (0, 0);
+				anim.SetInteger("State", 0);
+				handsAnim.SetBool ("Walking", false);
+				isBusy = true;
+				isHealing = true;
+				station.interact ();
+			}
+		}
+	}
+
 	void checkTravel() {
 		if (interactInput && closestInteractive && closestInteractive.tag == "Transition") {
 			Transition transController = closestInteractive.GetComponent<Transition> ();
@@ -527,7 +560,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void takeHit(int damage) {
-		cancelCrafting ();
 		takeDamage (damage);
 		StartCoroutine ("damageFlash");
 	}
@@ -570,6 +602,25 @@ public class PlayerController : MonoBehaviour {
 	private void stopDrip() {
 		if (dripPS.isPlaying) {
 			dripPS.Stop ();
+		}
+	}
+
+	public void heal(int healAmount) {
+		health += healAmount;
+		if (health > maxHealth) {
+			health = maxHealth;
+		}
+
+		StartCoroutine ("healFlash");
+	}
+
+	private void cancelHealing() {
+		if (isHealing) {
+			isBusy = false;
+			isHealing = false;
+
+			FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
+			station.cancelUse ();
 		}
 	}
 
@@ -622,6 +673,28 @@ public class PlayerController : MonoBehaviour {
 		for (float f = 0f; f <= 1; f += 0.2f) {
 			Color c = playerSprite.material.color;
 			c.g = f;
+			c.b = f;
+			playerSprite.material.color = c;
+
+			yield return null;
+		}
+	}
+
+	IEnumerator healFlash() {
+		//Turn red over time
+		for (float f = 1f; f >= 0; f -= 0.2f) {
+			Color c = playerSprite.material.color;
+			c.r = f;
+			c.b = f;
+			playerSprite.material.color = c;
+
+			yield return null;
+		}
+
+		//Turn back to original color
+		for (float f = 0f; f <= 1; f += 0.2f) {
+			Color c = playerSprite.material.color;
+			c.r = f;
 			c.b = f;
 			playerSprite.material.color = c;
 
