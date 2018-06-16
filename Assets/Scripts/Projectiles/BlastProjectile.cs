@@ -5,6 +5,8 @@ using UnityEngine;
 public class BlastProjectile : BaseProjectile {
 
 	[SerializeField]
+	private ParticleSystem fusePS;
+	[SerializeField]
 	private ParticleSystem explosionPS;
 	[SerializeField]
 	private GameObject explosion;

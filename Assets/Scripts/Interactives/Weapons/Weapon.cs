@@ -42,6 +42,7 @@ public class Weapon : Item {
 		if (isThrown) {
 			if (other.gameObject.tag == "Enemy") {
 				float direction = transform.position.x - other.transform.position.x;
+				hitCount = 1;
 				other.gameObject.GetComponent<Enemy> ().takeThrowHit (thrownDamage, knockback, direction, false, attackType);
 				onEnemyImpact (other.gameObject);
 				reduceDurability ();
