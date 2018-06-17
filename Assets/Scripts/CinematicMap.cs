@@ -30,6 +30,7 @@ public static class CinematicMap {
 		map = new Queue<Cinematic> ();
 
 		map.Enqueue (new Cinematic("prep", 25.0f, new Dialog[] { new Dialog("\nDoesn't look like Grandpa is home. I hope he's OK...", null, 6.0f) }));
+		map.Enqueue (new Cinematic("prep", 60.0f, null, 1));
 		map.Enqueue (new Cinematic("siege", 190.0f, new Dialog[] { new Dialog("\nThey just keep coming... How am I supposed to get out of this alive?", null, 6.0f) }));
 		map.Enqueue (new Cinematic("siege", 445.0f, new Dialog[] { new Dialog("\nThat's weird, I don't hear many more of them outside. Are they finally letting up?", null, 5.0f) }));
 		map.Enqueue (new Cinematic("siege", 455.0f, new Dialog[] { new Dialog("\nFIOOOOONNNNNNAAAAAA!", "boss", 5.0f) }));
@@ -41,14 +42,16 @@ public static class CinematicMap {
 
 public class Cinematic {
 	public float playTime { get; set; }
-	public Dialog[] dialog { get; set;}
+	public Dialog[] dialog { get; set; }
+	public int clipIndex { get; set; }
 	public string phase { get; set;}
 	string cinematicCoroutine { get; set;}
 
-	public Cinematic(string startPhase, float time, Dialog[] dialogArray, string functionName=null) {
+	public Cinematic(string startPhase, float time, Dialog[] dialogArray, int clip=-1, string functionName=null) {
 		phase = startPhase;
 		playTime = time;
 		dialog = dialogArray;
+		clipIndex = clip;
 		cinematicCoroutine = functionName;
 	}
 }

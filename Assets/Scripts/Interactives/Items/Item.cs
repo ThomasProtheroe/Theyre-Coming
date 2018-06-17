@@ -14,6 +14,8 @@ public class Item : Interactive {
 	public bool isAttacking = false;
 	[HideInInspector]
 	public bool flipped = false;
+	[HideInInspector]
+	public bool usable = false;
 	private bool deparent = false;
 
 	public float xOffset;

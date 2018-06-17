@@ -34,6 +34,7 @@ public class Weapon : Item {
 		if (attackSpeed == 0f) {
 			attackSpeed = 1.0f;
 		}
+		usable = true;
 
 		base.Start ();
 	}

@@ -7,6 +7,12 @@ public class AdaptableTrap : Item {
 	[SerializeField]
 	private SpikeTrap trap;
 
+	protected override void Start() {
+		usable = true;
+
+		base.Start ();
+	}
+
 	public override void use ()
 	{
 		SpikeTrap newTrap = Instantiate (trap);

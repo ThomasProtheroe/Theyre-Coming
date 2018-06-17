@@ -17,6 +17,7 @@ public class RangedWeapon : Item {
 
 	private new void Start () {
 		ammunition = capacity;
+		usable = true;
 		base.Start ();
 	}
 

@@ -83,6 +83,7 @@ public class GameController : MonoBehaviour {
 	private int maxCorpseCount;
 	[SerializeField]
 	private int corpseCount;
+	private Queue<float> doorShakeMap;
 
 	// Use this for initialization
 	void Start () {
@@ -104,6 +105,17 @@ public class GameController : MonoBehaviour {
 		attackSoundMaster [2] = attackSounds3;
 		attackSoundMaster [3] = attackSounds4;
 		attackSoundMaster [4] = attackSounds5;
+
+		doorShakeMap = new Queue<float>();
+		doorShakeMap.Enqueue(71.33f);
+		doorShakeMap.Enqueue(72.92f);
+		doorShakeMap.Enqueue(74.25f);
+		doorShakeMap.Enqueue(75.69f);
+		doorShakeMap.Enqueue(77.35f);
+		doorShakeMap.Enqueue(80.15f);
+		doorShakeMap.Enqueue(82.38f);
+		doorShakeMap.Enqueue(83.80f);
+		doorShakeMap.Enqueue(86.15f);
 
 		buildPathingMap ();
 
@@ -148,6 +160,12 @@ public class GameController : MonoBehaviour {
 		if (phase == "prep") {
 			TimeSpan timeSpan = TimeSpan.FromSeconds ((prepTime - Mathf.Floor (timer)));
 			timerText.text = string.Format ("{0:D2}:{1:d2}", timeSpan.Minutes, timeSpan.Seconds);
+
+			if (doorShakeMap.Count > 0 && doorShakeMap.Peek() < timer) {
+				doorShakeMap.Dequeue ();
+				GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().shakeDoor();
+			}
+
 			if (Mathf.Floor (timer) >= prepTime) {
 				timerText.enabled = false;
 				changePhase ("siege");
@@ -228,7 +246,7 @@ public class GameController : MonoBehaviour {
 		if (Scenes.getParam("devMode") != "false") {
 			return;
 		}
-		spawnEnemy (spawnZones[1]);
+		spawnEnemy (spawnZones[2]);
 	}
 
 	private void checkForEnemySpawns() {
@@ -251,11 +269,15 @@ public class GameController : MonoBehaviour {
 	private void checkForCinematics() {
 		if (nextCinematic != null && phase == nextCinematic.phase && timer >= nextCinematic.playTime) {
 			if (nextCinematic.dialog != null) {
-				if (nextCinematic.dialog.Length > 1) {
+				if (nextCinematic.dialog.Length == 1) {
 					showDialog (nextCinematic.dialog[0]);
-				} else {
+				} else if (nextCinematic.dialog.Length > 1) {
 					StartCoroutine ("playConversation", nextCinematic.dialog);
 				}
+			}
+			if (nextCinematic.clipIndex != -1) {
+				source.clip = cinematicSounds[nextCinematic.clipIndex];
+				source.Play ();
 			}
 
 			nextCinematic = CinematicMap.getNextCinematic ();
