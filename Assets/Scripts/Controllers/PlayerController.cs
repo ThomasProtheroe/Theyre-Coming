@@ -316,6 +316,10 @@ public class PlayerController : MonoBehaviour {
 
 
 	void checkUse() {
+		if (!heldItem.GetComponent<Item> ().usable) {
+			return;
+		}
+
 		if (useInput && verticalInput == 0) {
 			rigidBody.velocity = new Vector2 (0, 0);
 			anim.SetInteger("State", 0);
