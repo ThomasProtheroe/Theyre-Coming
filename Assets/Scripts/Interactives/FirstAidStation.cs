@@ -10,6 +10,8 @@ public class FirstAidStation : Interactive {
 	private Image outerBar;
 	[SerializeField]
 	private Image innerBar;
+	[SerializeField]
+	private GameObject cancelText;
 
 	private float healTimer;
 	public float healTime;
@@ -48,6 +50,7 @@ public class FirstAidStation : Interactive {
 		healTimer = healTime;
 		outerBar.enabled = true;
 		innerBar.enabled = true;
+		cancelText.SetActive (true);
 	}
 
 	public void finishUse() {
@@ -57,12 +60,14 @@ public class FirstAidStation : Interactive {
 		playerCon.heal (healAmount);
 		playerCon.isBusy = false;
 		playerCon.isHealing = false;
+		cancelText.SetActive (false);
 	}
 
 	public void cancelUse() {
 		healTimer = 0.0f;
 		outerBar.enabled = false;
 		innerBar.enabled = false;
+		cancelText.SetActive (false);
 	}
 
 	override public void updateHighlightColor() {

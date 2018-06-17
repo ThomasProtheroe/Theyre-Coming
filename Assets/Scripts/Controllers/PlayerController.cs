@@ -116,7 +116,9 @@ public class PlayerController : MonoBehaviour {
 			isAttacking = false;
 		}
 
-		if (!isAttacking && !isBusy && !isDead) {
+		if (isBusy) {
+			checkInterrupt ();
+		} else if (!isAttacking && !isDead) {
 			playerMove ();
 			checkPlayerInput ();
 		}
@@ -194,6 +196,20 @@ public class PlayerController : MonoBehaviour {
 			checkDrop ();
 		}
 		checkSwapItem ();
+	}
+
+	void checkInterrupt() {
+		if (!interactInput) {
+			return;
+		}
+
+		if (isHealing) {
+			FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
+
+			isBusy = false;
+			isHealing = false;
+			station.cancelUse ();
+		}
 	}
 
 	void updateClosestInteractive() {
@@ -470,12 +486,6 @@ public class PlayerController : MonoBehaviour {
 		if (interactInput && closestInteractive) {
 			if (closestInteractive.name == "FirstAidStation") {
 				FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
-
-				if (isHealing) {
-					isBusy = false;
-					isHealing = false;
-					station.cancelUse ();
-				}
 
 				if (station.usesRemaining <= 0 || health == maxHealth) {
 					return;
