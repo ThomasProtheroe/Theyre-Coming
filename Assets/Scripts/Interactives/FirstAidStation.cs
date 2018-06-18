@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class FirstAidStation : Interactive {
 
 	private PlayerController playerCon;
+	private GameController gameCon;
 	[SerializeField]
 	private Image outerBar;
 	[SerializeField]
 	private Image innerBar;
 	[SerializeField]
 	private GameObject cancelText;
+	private Dialog emptyDialog;
 
 	private float healTimer;
 	public float healTime;
@@ -28,6 +30,8 @@ public class FirstAidStation : Interactive {
 	void Start () {
 		usesRemaining = capacity;
 		playerCon = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
+		gameCon = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		emptyDialog = new Dialog ("That's the last of the med supplies. Not good.");
 	}
 
 	// Update is called once per frame
@@ -56,11 +60,15 @@ public class FirstAidStation : Interactive {
 	public void finishUse() {
 		cancelUse ();
 
-		usesRemaining -= 1;
 		playerCon.heal (healAmount);
 		playerCon.isBusy = false;
 		playerCon.isHealing = false;
 		cancelText.SetActive (false);
+
+		usesRemaining -= 1;
+		if (usesRemaining == 0) {
+			gameCon.showDialog (emptyDialog);
+		}
 	}
 
 	public void cancelUse() {
