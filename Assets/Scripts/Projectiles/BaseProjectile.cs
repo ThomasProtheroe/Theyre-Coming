@@ -15,6 +15,7 @@ public class BaseProjectile : MonoBehaviour {
 	public virtual void fire() {
 		isActive = true;
 		transform.parent = null;
+		onFire ();
 	}
 
 	public void breakProjectile() {
@@ -32,6 +33,23 @@ public class BaseProjectile : MonoBehaviour {
 
 		StartCoroutine ("beginSpriteFlash");
 		StartCoroutine ("destroyAfterTime", 1.0f);
+	}
+
+	protected void onFire() {
+		Collider2D[] colliders = new Collider2D[50];
+		GetComponent<Collider2D> ().OverlapCollider(new ContactFilter2D(), colliders);
+		foreach (Collider2D collider in colliders) {
+			if (collider && collider.gameObject.tag == "Enemy") {
+				bool cont = hitTarget (collider.gameObject.GetComponent<Enemy> ());
+				if (!cont) {
+					break;
+				}
+			}
+		}
+	}
+
+	protected virtual bool hitTarget(Enemy target) {
+		return true;
 	}
 
 	/**** Coroutines ****/ 
