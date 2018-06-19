@@ -11,7 +11,7 @@ public class BlastProjectile : BaseProjectile {
 	[SerializeField]
 	private GameObject explosion;
 
-	protected new void OnTriggerEnter2D(Collider2D other) {
+	void OnTriggerEnter2D(Collider2D other) {
 		if (!isActive) {
 			return;
 		}
@@ -19,6 +19,21 @@ public class BlastProjectile : BaseProjectile {
 		if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "AreaWall") {
 			explode ();
 		}
+	}
+
+	public override void fire() {
+		fusePS.Play ();
+
+		base.fire ();
+	}
+
+	protected override bool hitTarget(Enemy target) {
+		if (!target.getIsDead ()) {
+			explode ();
+			return false;
+		}
+
+		return true;
 	}
 
 	private void explode() {

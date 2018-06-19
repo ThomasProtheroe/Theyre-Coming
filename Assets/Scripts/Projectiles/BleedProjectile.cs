@@ -37,15 +37,20 @@ public class BleedProjectile : BaseProjectile {
 				return;
 			}
 
-			if (!enemy.isInvunlerable && !enemy.getIsDead ()) {
-				float direction = player.transform.position.x - enemy.transform.position.x;
-				enemy.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
-				Debug.Log ("enemy hit");
-				enemy.setBleeding ();
-				enemiesHit.Add (enemy);
-			}
+			hitTarget (enemy);
 		} else if (other.gameObject.tag == "AreaWall") {
 			Destroy (gameObject);
 		}
+	}
+
+	protected override bool hitTarget(Enemy target) {
+		if (!target.isInvunlerable && !target.getIsDead ()) {
+			float direction = player.transform.position.x - target.transform.position.x;
+			target.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
+			target.setBleeding ();
+			enemiesHit.Add (target);
+		}
+
+		return true;
 	}
 }

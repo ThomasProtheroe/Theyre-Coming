@@ -17,7 +17,7 @@ public class Transition : Interactive {
 	private Transform[] buffers;
 	private Animator anim;
 	private GameObject player;
-	private GameObject camera;
+	private GameObject mainCamera;
 	protected GameController gc;
 	private SoundController soundCon;
 
@@ -42,7 +42,7 @@ public class Transition : Interactive {
 	// Use this for initialization
 	protected virtual void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
-		camera = GameObject.FindGameObjectWithTag("MainCamera");
+		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		anim = gameObject.GetComponent<Animator> ();
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
@@ -200,8 +200,8 @@ public class Transition : Interactive {
 			itemSprite.material.color = originalItemColor;
 		}
 
-		camera.transform.position = new Vector3 (player.transform.position.x, camera.transform.position.y, camera.transform.position.z);
-		GameObject parallax = camera.transform.GetChild (0).gameObject;
+		mainCamera.transform.position = new Vector3 (player.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
+		GameObject parallax = mainCamera.transform.GetChild (0).gameObject;
 		parallax.transform.localPosition = new Vector3 (0.0f, -1.5f, 10.0f);
 
 		gc.clearCorpses ();

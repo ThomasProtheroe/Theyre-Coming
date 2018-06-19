@@ -1,4 +1,4 @@
-TapedHandle,DuctTape,Broom,Weapons/TapedHandle
+,DuctTape,Broom,Weapons/TapedHandle
 TapedHandle,DuctTape,Mop,Weapons/TapedHandle
 TapedCurtainRod,DuctTape,CurtainRod,Weapons/TapedCurtainRod
 TapedBlade,DuctTape,KitchenKnife,Weapons/TapedBlade
@@ -172,6 +172,9 @@ WarPick,TapedSkullshatterHammer,Scissors,Weapons/WarPick
 WarPick,SkullshatterHammer,TapedBlade,Weapons/WarPick
 WarPick,TapedPipe,PickHead,Weapons/WarPick
 WarPick,MetalPipe,TapedPickHead,Weapons/WarPick
+SlaughterPick,SkullShatterHammer,TapedSurvivalKnife,Weapons/SlaughterPick
+SlaughterPick,TapedSkullshatterHammer,SurvivalKnife,Weapons/SlaughterPick
+SlaughterPick,TapedSkullshatterHammer,TapedSurvivalKnife,Weapons/SlaughterPick
 TapedGloves,RubberGloves,DuctTape,Items/TapedGloves
 Cestus,TapedGloves,Scissors,Weapons/Cestus
 Cestus,TapedGloves,KitchenKnife,Weapons/Cestus
