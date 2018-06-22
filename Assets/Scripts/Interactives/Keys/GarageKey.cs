@@ -8,7 +8,7 @@ public class GarageKey : Item {
 	private Transition targetDoor;
 
 	protected override void Start() {
-
+		usable = true;
 
 		base.Start ();
 	}

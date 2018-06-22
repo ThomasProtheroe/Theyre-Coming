@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
-		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition") {
+		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition" || other.gameObject.tag == "Interactive") {
 			other.GetComponent<Interactive> ().disableHighlight ();
 			nearInteractives.Remove(other.gameObject);
 		}
@@ -484,6 +484,7 @@ public class PlayerController : MonoBehaviour {
 
 	void checkInteract() {
 		if (interactInput && closestInteractive) {
+			Debug.Log (closestInteractive.name);
 			if (closestInteractive.name == "FirstAidStation") {
 				FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
 
