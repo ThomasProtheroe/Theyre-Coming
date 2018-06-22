@@ -14,6 +14,12 @@ public class Trap : Item {
 
 	public Collider2D triggerCollider;
 
+	protected override void Start() {
+		usable = true;
+
+		base.Start ();
+	}
+
 	override public void use() {
 		deploy ();
 	}
