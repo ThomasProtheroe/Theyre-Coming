@@ -484,7 +484,6 @@ public class PlayerController : MonoBehaviour {
 
 	void checkInteract() {
 		if (interactInput && closestInteractive) {
-			Debug.Log (closestInteractive.name);
 			if (closestInteractive.name == "FirstAidStation") {
 				FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
 
