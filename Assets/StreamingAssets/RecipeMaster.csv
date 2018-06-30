@@ -186,6 +186,9 @@ ShardFist,TapedGloves,GlassShards,Weapons/ShardFist
 ShardFist,RubberGloves,TapedShard,Weapons/ShardFist
 ShardFist,TapedGloves,TapedShard,Weapons/ShardFist
 ShardFist,TapedGloves,GlassBottle,Weapons/ShardFist
+WolverineClaw,Cestus,TapedBlade,Weapons/WolverineClaw
+DragonClaw,Cestus,TapedSurvivalKnife,Weapons/DragonClaw
+DragonClaw,Garrador,TapedBlade,Weapons/DragonClaw
 CorrosivePlunger,Plunger,Bleach,Weapons/CorrosivePlunger
 HeavyBoxTrap,CardboardBox,Blender,Traps/HeavyBoxTrap
 HeavyBoxTrap,CardboardBox,Brick,Traps/HeavyBoxTrap
