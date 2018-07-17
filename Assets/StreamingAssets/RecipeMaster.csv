@@ -123,6 +123,16 @@ BattlePick,TapedBat,TapedBlade,Weapons/BattlePick
 DuelistPick,TapedBat,SurvivalKnife,Weapons/DuelistPick
 DuelistPick,TapedBat,TapedSurvivalKnife,Weapons/DuelistPick
 DuelistPick,BaseballBat,TapedSurvivalKnife,Weapons/DuelistPick
+TapedShovel,Shovel,DuctTape,Weapons/TapedShovel
+NailShovel,TapedShovel,Nails,Weapons/NailShovel
+ShardShovel,TapedShovel,GlassShards,Weapons/ShardShovel
+ShardShovel,TapedShovel,TapedShard,Weapons/ShardShovel
+ShardShovel,Shovel,TapedShard,Weapons/ShardShovel
+ShardShovel,TapedShovel,GlassBottle,Weapons/ShardShovel
+TrenchShovel,TapedShovel,KitchenKnife,Weapons/TrenchShovel
+TrenchShovel,TapedShovel,Scissors,Weapons/TrenchShovel
+TrenchShovel,TapedShovel,TapedBlade,Weapons/TrenchShovel
+TrenchShovel,Shovel,TapedBlade,Weapons/TrenchShovel
 SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
 ShardBaseball,TapedShard,Baseball,Throwables/ShardBaseball
 ShardBaseball,GlassShards,Baseball,Throwables/ShardBaseball
