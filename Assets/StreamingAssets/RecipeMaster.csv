@@ -196,9 +196,15 @@ ShardFist,TapedGloves,GlassShards,Weapons/ShardFist
 ShardFist,RubberGloves,TapedShard,Weapons/ShardFist
 ShardFist,TapedGloves,TapedShard,Weapons/ShardFist
 ShardFist,TapedGloves,GlassBottle,Weapons/ShardFist
+WolverineClaw,TapedCestus,KitchenKnife,Weapons/WolverineClaw
+WolverineClaw,TapedCestus,Scissors,Weapons/WolverineClaw
+WolverineClaw,TapedCestus,TapedBlade,Weapons/WolverineClaw
 WolverineClaw,Cestus,TapedBlade,Weapons/WolverineClaw
 DragonClaw,Cestus,TapedSurvivalKnife,Weapons/DragonClaw
 DragonClaw,Garrador,TapedBlade,Weapons/DragonClaw
+TapedBlender,Blender,DuctTape,Items/TapedBlender
+Mulcher,TapedBlender,MetalPipe,Weapons/Mulcher
+Mulcher,Blender,TapedPipe,Weapons/Mulcher
 CorrosivePlunger,Plunger,Bleach,Weapons/CorrosivePlunger
 HeavyBoxTrap,CardboardBox,Blender,Traps/HeavyBoxTrap
 HeavyBoxTrap,CardboardBox,Brick,Traps/HeavyBoxTrap

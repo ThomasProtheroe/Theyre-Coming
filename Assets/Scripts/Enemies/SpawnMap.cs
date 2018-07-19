@@ -29,32 +29,30 @@ public static class SpawnMap {
 	private static void buildMap() {
 		map = new Queue<SpawnInstance> ();
 		map.Enqueue (new SpawnInstance(5.0f, 2));
-		map.Enqueue (new SpawnInstance(20.0f, 2));
-		map.Enqueue (new SpawnInstance(60.0f, 4));
-		map.Enqueue (new SpawnInstance(100.0f, 5));
-		map.Enqueue (new SpawnInstance(105.0f, 3));
-		map.Enqueue (new SpawnInstance(140.0f, 2));
-		map.Enqueue (new SpawnInstance(155.0f, 2));
-		map.Enqueue (new SpawnInstance(180.0f, 12));
-		map.Enqueue (new SpawnInstance(225.0f, 7));
-		map.Enqueue (new SpawnInstance(230.0f, 9));
-		map.Enqueue (new SpawnInstance(275.0f, 4));
-		map.Enqueue (new SpawnInstance(305.0f, 6));
-		map.Enqueue (new SpawnInstance(341.0f, 3));
-		map.Enqueue (new SpawnInstance(342.0f, 5));
-		map.Enqueue (new SpawnInstance(343.0f, 4));
-		map.Enqueue (new SpawnInstance(344.0f, 3));
-		map.Enqueue (new SpawnInstance(345.0f, 4));
-		map.Enqueue (new SpawnInstance(405.0f, 18));
-		map.Enqueue (new SpawnInstance(470.0f, 1, true));
-		map.Enqueue (new SpawnInstance(480.0f, 2));
-		map.Enqueue (new SpawnInstance(490.0f, 1));
-		map.Enqueue (new SpawnInstance(497.0f, 2));
-		map.Enqueue (new SpawnInstance(500.0f, 1));
-		map.Enqueue (new SpawnInstance(510.0f, 1));
-		map.Enqueue (new SpawnInstance(520.0f, 2));
-		map.Enqueue (new SpawnInstance(580.0f, 20));
-		map.Enqueue (new SpawnInstance(660.0f, 35));
+		map.Enqueue (new SpawnInstance(30.0f, 2));
+		map.Enqueue (new SpawnInstance(70.0f, 4));
+		map.Enqueue (new SpawnInstance(120.0f, 5));
+		map.Enqueue (new SpawnInstance(125.0f, 3));
+		map.Enqueue (new SpawnInstance(160.0f, 2));
+		map.Enqueue (new SpawnInstance(175.0f, 1));
+		map.Enqueue (new SpawnInstance(210.0f, 10));
+		map.Enqueue (new SpawnInstance(255.0f, 7));
+		map.Enqueue (new SpawnInstance(280.0f, 9));
+		map.Enqueue (new SpawnInstance(355.0f, 8));
+		map.Enqueue (new SpawnInstance(411.0f, 3));
+		map.Enqueue (new SpawnInstance(412.0f, 5));
+		map.Enqueue (new SpawnInstance(413.0f, 4));
+		map.Enqueue (new SpawnInstance(414.0f, 3));
+		map.Enqueue (new SpawnInstance(415.0f, 4));
+		map.Enqueue (new SpawnInstance(475.0f, 18));
+		map.Enqueue (new SpawnInstance(540.0f, 1, true));
+		map.Enqueue (new SpawnInstance(550.0f, 2));
+		map.Enqueue (new SpawnInstance(550.0f, 1));
+		map.Enqueue (new SpawnInstance(557.0f, 2));
+		map.Enqueue (new SpawnInstance(570.0f, 1));
+		map.Enqueue (new SpawnInstance(580.0f, 1));
+		map.Enqueue (new SpawnInstance(590.0f, 2));
+		map.Enqueue (new SpawnInstance(680.0f, 55));
 	}
 }
 

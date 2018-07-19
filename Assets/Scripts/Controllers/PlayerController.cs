@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
-		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition" || other.gameObject.tag == "Interactive") {
+		if ((other.gameObject.tag == "Item" && (other.GetComponent<Item> ().pickupCollider == other)) || other.gameObject.tag == "Transition" || other.gameObject.tag == "Interactive") {
 			nearInteractives.Add (other.gameObject);
 		} else if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
-		if (other.gameObject.tag == "Item" || other.gameObject.tag == "Transition" || other.gameObject.tag == "Interactive") {
+		if ((other.gameObject.tag == "Item" && (other.GetComponent<Item> ().pickupCollider == other)) || other.gameObject.tag == "Transition" || other.gameObject.tag == "Interactive") {
 			other.GetComponent<Interactive> ().disableHighlight ();
 			nearInteractives.Remove(other.gameObject);
 		}

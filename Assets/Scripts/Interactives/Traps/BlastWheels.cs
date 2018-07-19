@@ -36,7 +36,7 @@ public class BlastWheels : RemoteCarTrap {
 
 		}
 
-		if (Mathf.Abs(player.transform.position.x - transform.position.x) < 4) {
+		if (Mathf.Abs(player.transform.position.x - transform.position.x) < 2) {
 			playerCon.takeHit (2);
 		}
 

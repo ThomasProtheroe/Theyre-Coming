@@ -53,7 +53,7 @@ public class BlastProjectile : BaseProjectile {
 
 		}
 
-		if (Mathf.Abs(player.transform.position.x - transform.position.x) < 4) {
+		if (Mathf.Abs(player.transform.position.x - transform.position.x) < 2) {
 			player.takeHit (2);
 		}
 

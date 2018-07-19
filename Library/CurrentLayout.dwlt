@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 65
+  controlID: 12
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -367,9 +367,9 @@ MonoBehaviour:
     height: 556
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 183b0000
-    m_LastClickedID: 0
-    m_ExpandedIDs: d6abffffa6fbffff00000000503d0000
+    m_SelectedIDs: d8400000
+    m_LastClickedID: 16600
+    m_ExpandedIDs: 6a7bf9ff5c58faffd6ebffffdaf3ffffa6fbffff00000000a43f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -388,7 +388,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
   m_ExpandedScenes:
-  - MainMenu
+  - Main
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -419,14 +419,14 @@ MonoBehaviour:
     width: 1220
     height: 556
   m_SceneLighting: 0
-  lastFramingTime: 1774.66222436704
+  lastFramingTime: 3958.10101933269
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 20.407791, y: -3.4953127, z: 28.119244}
+    m_Target: {x: 91.69628, y: -1.9286087, z: 0.16475599}
     speed: 2
-    m_Value: {x: 20.407791, y: -3.4953127, z: 28.119244}
+    m_Value: {x: 91.69628, y: -1.9286087, z: 0.16475599}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -445,23 +445,23 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     zGrid:
-      m_Target: 1
+      m_Target: 0
       speed: 2
-      m_Value: 1
+      m_Value: 0
   m_Rotation:
     m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 45.269764
+    m_Target: 5.207406
     speed: 2
-    m_Value: 45.269764
+    m_Value: 5.207406
   m_Ortho:
     m_Target: 1
     speed: 2
     m_Value: 1
   m_ShowGlobalGrid: 1
-  m_LastSceneViewRotation: {x: 0.113536686, y: -0.73982847, z: 0.1291376, w: 0.6504512}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -488,13 +488,13 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 257
-    y: 100
-    width: 1210
-    height: 546
+    x: 251
+    y: 92
+    width: 1220
+    height: 556
   m_ResetOnNextRepaint: 0
   m_IgnoreNextPostprocessEvent: 0
-  m_SelectedAssetPath: Assets/Sprites/Weapons/Bloody Weapons/Shovel Blood 3.png
+  m_SelectedAssetPath: Assets/Sprites/Weapons/Vimy Ridge Shovel.png
   m_Selected:
     m_Name: 
     m_OriginalName: 
@@ -532,10 +532,10 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 296
+    x: 251
     y: 92
-    width: 1186
-    height: 474
+    width: 1220
+    height: 556
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -642,19 +642,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources/Prefabs/Traps
   m_ViewMode: 1
   m_StartGridSize: 90
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Resources/Prefabs/Traps
   m_LastFoldersGridSize: 90
   m_LastProjectPath: D:\GitHub\Unity\Theyre-Coming
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 300}
-    m_SelectedIDs: c82d0000
-    m_LastClickedID: 11720
-    m_ExpandedIDs: 000000008e2700006c290000422c0000cc2c0000c82d0000462e00005a2e00008c2e00000a2f000088300000d0340000e03400007636000006370000883700001e380000e6390000ec390000343b00008e3b0000ae3b0000bc3b000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 360}
+    m_SelectedIDs: 44360000
+    m_LastClickedID: 13892
+    m_ExpandedIDs: 000000008e2700006c290000422c0000cc2c0000c82d0000462e00005a2e00008c2e0000ba2e00000a2f000088300000d0340000e03400007636000006370000883700001e380000e6390000ec390000343b00008e3b0000ae3b0000bc3b000090e4010000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -709,8 +709,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: 0026000048260000ae98feff1c240000be270000de270000482500009c290000a82a0000f6330000dc6700005a4e000052270000ae280000523200007a2900003c310000a8c2000086320000d8380000da360000d6050000583100004a27000098280000e4d1feff282c0000862e0000f833000032570000da2e0000d8370000789100002c310000e89a0000bc530000f85700003c2a0000b0320000603800004c2c00008a30bdffcc35000000000000ba280000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: 0026000048260000ae98feff1c240000be270000482500009c290000f6330000dc6700005a4e000052270000ae280000523200007a2900003c310000a8c2000086320000d8380000da360000d60500004a27000098280000e4d1feff862e0000f833000032570000da2e0000d837000078910000e89a0000bc530000f8570000b0320000603800004c2c00008a30bdffcc3500000000000056290000de270000162d0000ece40100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
