@@ -9,7 +9,7 @@ public class Weapon : Item {
 	public int durability;
 	public float attackSpeed;
 	public int knockback;
-	private int maxDurability;
+	protected int maxDurability;
 
 	[Header("Special Attributes")]
 	public int multiHit = 1;
@@ -23,10 +23,10 @@ public class Weapon : Item {
 	public AudioClip swingSound;
 	public AudioClip hitSound;
 
-	private int hitCount = 0;
+	protected int hitCount = 0;
 	private bool hitWindowActive = false;
 
-	private Animator anim;
+	protected Animator anim;
 
 	protected override void Start() {
 		anim = GetComponent<Animator> ();	
@@ -151,7 +151,7 @@ public class Weapon : Item {
 		}
 	}
 
-	private void reduceDurability() {
+	protected virtual void reduceDurability() {
 		durability -= ((hitCount + 1) / 2);
 
 		if (durability <= 0) {

@@ -125,7 +125,7 @@ public class BossGramps : Enemy {
 		return;
 	}
 
-	public override void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
+	public override void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=true) {
 		if (isPreparing) {
 			isPreparing = false;
 			prepTimer = 0.0f;

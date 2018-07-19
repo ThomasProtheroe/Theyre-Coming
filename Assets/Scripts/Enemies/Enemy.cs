@@ -71,6 +71,9 @@ public class Enemy : MonoBehaviour {
 	protected bool prowlSoundPlaying;
 	protected bool burnSoundPlaying;
 
+	private float iFrameTimer = 0.0f;
+	[SerializeField]
+	private float iFrameDuration;
 	private float wanderTimer = 0.0f;
 	private int wanderDirection;
 	private float wanderAttackTimer = 0.0f;
@@ -182,6 +185,13 @@ public class Enemy : MonoBehaviour {
 			} else {
 				endBlind ();
 			}
+		}
+
+		//iframe control
+		if (iFrameTimer > 0.0f) {
+			iFrameTimer -= Time.deltaTime;
+		} else {
+			endIFrames ();
 		}
 	}
 
@@ -361,7 +371,11 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public virtual void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
+	public virtual void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=true) {
+		if (isInvunlerable) {
+			return;
+		}
+
 		if (!getIsDead ()) {
 			stopProwlSound ();
 			stopWalkSound ();
@@ -370,7 +384,11 @@ public class Enemy : MonoBehaviour {
 				var sh = bloodSprayPS.shape;
 				var main = bloodSprayPS.main;
 				int particleCount = 15;
-				if (damage >= 10) {
+				if (brutal) {
+					sh.arc = 40.0f;
+					particleCount = 60;
+					main.startLifetime = 0.6f;
+				} else if (damage >= 10) {
 					sh.arc = 120.0f;
 					particleCount = 260;
 					main.startLifetime = 1.5f;
@@ -397,6 +415,9 @@ public class Enemy : MonoBehaviour {
 			if (direction > 0) {
 				knockback *= -1;
 			}
+
+			startIFrames ();
+
 			StartCoroutine ("setHitFrame", knockback);
 
 			playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
@@ -430,6 +451,16 @@ public class Enemy : MonoBehaviour {
 			updateWoundState ();
 			updateAnimLayer ();
 		}
+	}
+
+	private void startIFrames() {
+		isInvunlerable = true;
+		iFrameTimer = iFrameDuration;
+	}
+
+	private void endIFrames() {
+		isInvunlerable = false;
+		iFrameTimer = 0.0f;
 	}
 
 	private void updateWoundState() {

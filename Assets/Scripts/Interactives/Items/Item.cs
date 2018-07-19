@@ -42,6 +42,8 @@ public class Item : Interactive {
 	protected Sprite bloodySprite2;
 	[SerializeField]
 	protected Sprite bloodySprite3;
+	[SerializeField]
+	protected Sprite bloodySprite4;
 
 	public BoxCollider2D pickupCollider;
 	public Collider2D hitCollider;
@@ -77,7 +79,7 @@ public class Item : Interactive {
 	}
 
 	// Update is called once per frame
-	protected void Update () {
+	protected virtual void Update () {
 		if (deparent) {
 			transform.parent = null;
 			deparent = false;
