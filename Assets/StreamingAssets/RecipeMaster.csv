@@ -133,6 +133,7 @@ TrenchShovel,TapedShovel,KitchenKnife,Weapons/TrenchShovel
 TrenchShovel,TapedShovel,Scissors,Weapons/TrenchShovel
 TrenchShovel,TapedShovel,TapedBlade,Weapons/TrenchShovel
 TrenchShovel,Shovel,TapedBlade,Weapons/TrenchShovel
+Gravedigger,TrenchShovel,TapedBlade,Weapons/Gravedigger
 SpikedBaseball,Nails,Baseball,Throwables/SpikedBaseball
 ShardBaseball,TapedShard,Baseball,Throwables/ShardBaseball
 ShardBaseball,GlassShards,Baseball,Throwables/ShardBaseball
