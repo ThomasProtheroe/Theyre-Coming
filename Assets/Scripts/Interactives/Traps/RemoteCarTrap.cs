@@ -9,7 +9,6 @@ public class RemoteCarTrap : Trap {
 	public AudioClip hitSound;
 	protected List<Enemy> enemiesHit;
 	protected Animator anim;
-	protected AudioSource source;
 
 	[SerializeField]
 	protected int damage;
@@ -25,7 +24,6 @@ public class RemoteCarTrap : Trap {
 	protected override void Start () {
 		anim = GetComponentInChildren<Animator> ();
 		anim.enabled = false;
-		source = GetComponent<AudioSource> ();
 
 		base.Start ();
 	}
@@ -74,7 +72,7 @@ public class RemoteCarTrap : Trap {
 				gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 				anim.enabled = false;
 
-				source.Stop ();
+				soundController.stopEnvironmentalSound (accelerationSound);
 				soundController.playPriorityOneShot (stopSound);
 
 				gameObject.layer = 13;
@@ -120,8 +118,7 @@ public class RemoteCarTrap : Trap {
 		anim.enabled = true;
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (speed * direction, 0f);
 
-		source.clip = accelerationSound;
-		source.Play ();
+		soundController.playEnvironmentalSound (accelerationSound);
 
 		onDeploy ();
 	}
@@ -136,7 +133,7 @@ public class RemoteCarTrap : Trap {
 	}
 
 	public override bool onBreak() {
-		source.Stop ();
+		soundController.stopEnvironmentalSound (accelerationSound);
 
 		return false;
 	}

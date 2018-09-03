@@ -11,6 +11,20 @@ public class Mulcher : Weapon {
 	[SerializeField]
 	private Sprite idleSprite;
 
+	[Header("Mulcher Sounds")]
+	[SerializeField]
+	private AudioClip turnOnSound;
+	[SerializeField]
+	private AudioClip runningSound;
+	[SerializeField]
+	private AudioClip turnOffSound;
+	[SerializeField]
+	private AudioClip hitStartSound;
+	[SerializeField]
+	private AudioClip hitMaintainSound;
+	[SerializeField]
+	private AudioClip hitStopSound;
+
 	new void OnTriggerStay2D(Collider2D other) {
 		if (!isRunning || other.gameObject.tag != "Enemy") {
 			return;
@@ -38,6 +52,7 @@ public class Mulcher : Weapon {
 	private void turnOn() {
 		isRunning = true;
 		damageHitbox.enabled = true;
+		soundController.playEnvironmentalSound (turnOnSound);
 
 		anim.SetBool ("Running", true);
 	}
