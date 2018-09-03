@@ -272,6 +272,8 @@ public class Item : Interactive {
 
 		playBreakSound ();
 
+		Rigidbody2D body = GetComponent<Rigidbody2D>();
+
 		if (isHeld) {
 			isHeld = false;
 			playerCon.heldItem = null;
@@ -287,6 +289,8 @@ public class Item : Interactive {
 
 			playerCon.alignHands ();
 			playerCon.showPlayerHands ();
+
+			body.velocity = Vector2.zero;
 		}
 
 		//If we don't want to play the break animation, destroy the object now
@@ -295,8 +299,8 @@ public class Item : Interactive {
 			return;
 		}
 
-		Rigidbody2D body = GetComponent<Rigidbody2D>();
-		body.velocity = Vector2.zero;
+
+
 
 		gameObject.layer = 11;
 
