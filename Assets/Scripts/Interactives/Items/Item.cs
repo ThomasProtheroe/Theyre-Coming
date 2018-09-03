@@ -127,6 +127,11 @@ public class Item : Interactive {
 			gameObject.layer = 11;
 			sprite.sortingLayerName = "Items";
 			sprite.sortingOrder = 5;
+
+			foreach (SpriteRenderer sprite in gameObject.GetComponentsInChildren<SpriteRenderer> () ) {
+				sprite.sortingLayerName = "Items";
+				sprite.sortingOrder = 5;
+			}
 		}
 	}
 
@@ -184,6 +189,12 @@ public class Item : Interactive {
 		sprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
 		sprite.sortingOrder = playerCon.playerSprite.sortingOrder + 1;
 
+		//Handle items with multiple sprites
+		foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer> () ) {
+			sprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
+			sprite.sortingOrder = playerCon.playerSprite.sortingOrder + 1;
+		}
+
 		//disable pickup trigger, enable hit trigger
 		pickupCollider.enabled = false;
 		hitCollider.enabled = true;
@@ -222,6 +233,12 @@ public class Item : Interactive {
 
 		sprite.sortingLayerName = "Background Items";
 		sprite.sortingOrder = 5;
+
+		//Handle items with multiple sprites
+		foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer> () ) {
+			sprite.sortingLayerName = "Background Items";
+			sprite.sortingOrder = 5;
+		}
 	}
 
 	public void playCraftingSound(AudioClip overrideSound=null) {

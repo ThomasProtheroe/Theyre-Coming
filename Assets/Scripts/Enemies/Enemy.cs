@@ -371,7 +371,7 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public virtual void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=true) {
+	public virtual void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=false) {
 		if (isInvunlerable) {
 			return;
 		}

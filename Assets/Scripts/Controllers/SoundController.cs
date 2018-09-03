@@ -12,6 +12,8 @@ public class SoundController : MonoBehaviour {
 	private int splashSourceMax;
 	[SerializeField]
 	private int oneShotSouceMax;
+	[SerializeField]
+	private int environmentalSourceMax;
 	//Audio Sources
 	private AudioSource[] enemyWalkSources;
 	private AudioSource[] enemyProwlSources;
@@ -19,11 +21,13 @@ public class SoundController : MonoBehaviour {
 	private AudioSource[] splashSources;
 	private AudioSource[] enemyOneShotSources;
 	private AudioSource[] priorityOneShotSources;
+	private AudioSource[] environmentalSources;
 
 	//Queues
 	private List<AudioClip> walkQueue = new List<AudioClip>();
 	private List<AudioClip> prowlQueue = new List<AudioClip>();
 	private List<AudioClip> burningQueue = new List<AudioClip>();
+	private List<AudioClip> environmentalQueue = new List<AudioClip>();
 
 	//Timers
 	[SerializeField]
@@ -38,6 +42,7 @@ public class SoundController : MonoBehaviour {
 		splashSources = new AudioSource[splashSourceMax];
 		enemyOneShotSources = new AudioSource[oneShotSouceMax];
 		priorityOneShotSources = new AudioSource[oneShotSouceMax];
+		environmentalSources = new AudioSource[environmentalSourceMax];
 
 		for (int i = 0; i < enemyQueuedSourceMax; i++) {
 			enemyWalkSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
@@ -58,6 +63,11 @@ public class SoundController : MonoBehaviour {
 		for (int i = 0; i < oneShotSouceMax; i++) {
 			enemyOneShotSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
 			priorityOneShotSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
+		}
+
+		for (int i = 0; i < enemyQueuedSourceMax; i++) {
+			environmentalSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
+			environmentalSources [i].loop = true;
 		}
 	}
 
@@ -218,6 +228,51 @@ public class SoundController : MonoBehaviour {
 				}
 
 				burningQueue.RemoveAt (i);
+				break;
+			}
+		}
+	}
+
+	public void playEnvironmentalSound(AudioClip request) {
+		bool played = false;
+		for (int i = 0; i < environmentalSources.Length; i++) {
+			if (environmentalSources [i].isPlaying) {
+				continue;
+			}
+
+			environmentalSources [i].clip = request;
+			environmentalSources [i].Play ();
+			played = true;
+			break;
+		}
+
+		//If we didn't have a free source to play the clip, queue it 
+		if (!played) {
+			queueRequest (request, prowlQueue);
+		}
+	}
+
+	public void stopEnvironmentalSound(AudioClip clip) {
+		bool found = false;
+		for (int i = 0; i < environmentalSources.Length; i++) {
+			//We don't actually care if we get the same source the request is playing on, as long as it is the same clip
+			if (environmentalSources [i].isPlaying && environmentalSources [i].clip == clip) {
+				found = true;
+				environmentalSources [i].Stop ();
+				environmentalSources [i].clip = null;
+
+				playNextQueued (prowlQueue, environmentalSources [i]);
+				break;
+			}
+		}
+
+		if (!found) {
+			for (int i = 0; i < prowlQueue.Count; i++) {
+				if (prowlQueue [i] != clip) {
+					continue;
+				}
+
+				prowlQueue.RemoveAt (i);
 				break;
 			}
 		}

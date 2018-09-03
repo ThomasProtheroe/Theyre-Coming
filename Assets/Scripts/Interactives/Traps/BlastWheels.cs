@@ -42,7 +42,7 @@ public class BlastWheels : RemoteCarTrap {
 
 		playerCon.gameCon.shakeCamera (0.5f, 0.2f);
 
-		source.Stop ();
+		soundController.stopEnvironmentalSound (accelerationSound);
 		breakItem ();
 	}
 
@@ -65,7 +65,7 @@ public class BlastWheels : RemoteCarTrap {
 
 	public override bool onBreak() {
 		fusePS.Stop ();
-		source.Stop ();
+		soundController.stopEnvironmentalSound (accelerationSound);
 
 		//De-parent the Particle System so the particles dont disappear when the item is destroyed
 		fusePS.transform.parent = null;
