@@ -50,16 +50,25 @@ public class Mulcher : Weapon {
 	}
 
 	private void turnOn() {
+		if (isRunning) {
+			return;
+		}
+
 		isRunning = true;
 		damageHitbox.enabled = true;
-		soundController.playEnvironmentalSound (turnOnSound);
+		soundController.playPlayerItemSound (turnOnSound, false, runningSound);
 
 		anim.SetBool ("Running", true);
 	}
 
 	private void turnOff() {
+		if (!isRunning) {
+			return;
+		}
+
 		isRunning = false;
 		damageHitbox.enabled = false;
+		soundController.playPlayerItemSound (turnOffSound);
 
 		anim.SetBool ("Running", false);
 	}

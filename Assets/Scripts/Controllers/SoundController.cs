@@ -22,12 +22,14 @@ public class SoundController : MonoBehaviour {
 	private AudioSource[] enemyOneShotSources;
 	private AudioSource[] priorityOneShotSources;
 	private AudioSource[] environmentalSources;
+	private AudioSource playerItemSource;
 
 	//Queues
 	private List<AudioClip> walkQueue = new List<AudioClip>();
 	private List<AudioClip> prowlQueue = new List<AudioClip>();
 	private List<AudioClip> burningQueue = new List<AudioClip>();
 	private List<AudioClip> environmentalQueue = new List<AudioClip>();
+	private AudioClip playerItemLoopingQueue = new AudioClip();
 
 	//Timers
 	[SerializeField]
@@ -43,6 +45,7 @@ public class SoundController : MonoBehaviour {
 		enemyOneShotSources = new AudioSource[oneShotSouceMax];
 		priorityOneShotSources = new AudioSource[oneShotSouceMax];
 		environmentalSources = new AudioSource[environmentalSourceMax];
+		playerItemSource = gameObject.AddComponent<AudioSource> () as AudioSource;
 
 		for (int i = 0; i < enemyQueuedSourceMax; i++) {
 			enemyWalkSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
@@ -72,8 +75,16 @@ public class SoundController : MonoBehaviour {
 	}
 
 	void Update() {
+		//Splash
 		if (splashTimer > 0) {
 			splashTimer -= Time.deltaTime;
+		}
+
+		//Player item looping
+		if (playerItemSource.isPlaying == false && playerItemLoopingQueue != null) {
+			playPlayerItemSound(playerItemLoopingQueue, true);
+
+			playerItemLoopingQueue = null;
 		}
 	}
 
@@ -233,7 +244,7 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void playEnvironmentalSound(AudioClip request) {
+	public void playEnvironmentalSound(AudioClip request, bool loop=true) {
 		bool played = false;
 		for (int i = 0; i < environmentalSources.Length; i++) {
 			if (environmentalSources [i].isPlaying) {
@@ -241,6 +252,7 @@ public class SoundController : MonoBehaviour {
 			}
 
 			environmentalSources [i].clip = request;
+			environmentalSources [i].loop = loop;
 			environmentalSources [i].Play ();
 			played = true;
 			break;
@@ -276,6 +288,20 @@ public class SoundController : MonoBehaviour {
 				break;
 			}
 		}
+	}
+
+	public void playPlayerItemSound(AudioClip startClip, bool loop=false, AudioClip loopClip=null) {
+		playerItemSource.Stop ();
+		playerItemSource.clip = startClip;
+		playerItemSource.loop = loop;
+		playerItemSource.Play ();
+
+		playerItemLoopingQueue = loopClip;
+	}
+
+	public void stopPlayerItemSound() {
+		playerItemSource.Stop ();
+		playerItemLoopingQueue = null;
 	}
 
 	public void playSpash(AudioClip clip) {
