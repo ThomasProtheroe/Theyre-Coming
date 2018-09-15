@@ -28,7 +28,7 @@ public class PlungerProjectile : BaseProjectile {
 
 		if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
-			if (!enemy.isInvunlerable && !enemy.getIsDead ()) {
+			if (!enemy.isInvulnerable && !enemy.getIsDead ()) {
 				enemy.setBlind (9999999f);
 				enemy.setStun (2.0f);
 				float direction = transform.position.x - enemy.transform.position.x;

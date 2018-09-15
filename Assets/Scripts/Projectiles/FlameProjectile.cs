@@ -18,7 +18,7 @@ public class FlameProjectile : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
-			if (!enemy.isInvunlerable && !enemy.getIsDead ()) {
+			if (!enemy.isInvulnerable && !enemy.getIsDead ()) {
 				enemy.takeFireHit (damage);
 			}
 		}

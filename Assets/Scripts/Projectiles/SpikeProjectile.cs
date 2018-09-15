@@ -21,7 +21,7 @@ public class SpikeProjectile : BaseProjectile {
 	}
 
 	protected override bool hitTarget(Enemy target) {
-		if (!target.isInvunlerable && !target.getIsDead ()) {
+		if (!target.isInvulnerable && !target.getIsDead ()) {
 			float direction = player.transform.position.x - target.transform.position.x;
 			target.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
 			durability--;

@@ -85,7 +85,9 @@
      <Compile Include="Assets\Scripts\Interactives\Transition.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\BlastWheels.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\BlazingWheels.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Traps\FanTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\HeavyBoxTrap.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Traps\ProjectileFanTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\RemoteCarTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\SpikeTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Traps\Trap.cs" />

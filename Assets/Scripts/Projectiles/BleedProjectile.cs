@@ -30,7 +30,6 @@ public class BleedProjectile : BaseProjectile {
 		if (!isActive) {
 			return;
 		}
-
 		if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 			if (enemiesHit.Contains (enemy)) {
@@ -38,13 +37,13 @@ public class BleedProjectile : BaseProjectile {
 			}
 
 			hitTarget (enemy);
-		} else if (other.gameObject.tag == "AreaWall") {
+		} else if (other.gameObject.tag == "AreaWall" || other.gameObject.tag == "Terrain") {
 			Destroy (gameObject);
 		}
 	}
 
 	protected override bool hitTarget(Enemy target) {
-		if (!target.isInvunlerable && !target.getIsDead ()) {
+		if (!target.isInvulnerable && !target.getIsDead ()) {
 			float direction = player.transform.position.x - target.transform.position.x;
 			target.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
 			target.setBleeding ();

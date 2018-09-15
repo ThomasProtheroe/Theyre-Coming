@@ -305,7 +305,7 @@ public class GameController : MonoBehaviour {
 		Enemy newEnemy = Instantiate (enemy, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
 		enemies.Add (newEnemy);
 		//Invulnerable while they are spawning in
-		enemy.isInvunlerable = true;
+		enemy.isInvulnerable = true;
 
 		Area spawnArea = spawnZone.GetComponentInParent<Area>();
 		newEnemy.setCurrentArea (spawnArea);
@@ -328,7 +328,7 @@ public class GameController : MonoBehaviour {
 		BossGramps newBoss = Instantiate (boss, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
 		enemies.Add (newBoss);
 		//Invulnerable while they are spawning in
-		newBoss.isInvunlerable = true;
+		newBoss.isInvulnerable = true;
 
 		Area spawnArea = spawnZone.GetComponentInParent<Area>();
 		newBoss.setCurrentArea (spawnArea);
@@ -744,7 +744,7 @@ public class GameController : MonoBehaviour {
 			yield return null;
 		}
 
-		enemy.isInvunlerable = false;
+		enemy.isInvulnerable = false;
 		enemy.activate ();
 	}
 
