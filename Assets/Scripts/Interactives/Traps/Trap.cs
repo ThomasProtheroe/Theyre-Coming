@@ -5,6 +5,7 @@ using UnityEngine;
 public class Trap : Item {
 
 	public int durability;
+	protected int maxDurability;
 	public bool friendlyFire;
 
 	public float deployY;
@@ -16,6 +17,7 @@ public class Trap : Item {
 
 	protected override void Start() {
 		usable = true;
+		maxDurability = durability;
 
 		base.Start ();
 	}

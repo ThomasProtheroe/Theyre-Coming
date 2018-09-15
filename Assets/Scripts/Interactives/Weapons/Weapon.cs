@@ -55,7 +55,7 @@ public class Weapon : Item {
 			isBouncing = true;
 			gameObject.layer = 11;
 		}
-		if (isAttacking && hitWindowActive && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvunlerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
+		if (isAttacking && hitWindowActive && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvulnerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
 			
 			if (!canHit ()) {
 				return;
@@ -90,7 +90,7 @@ public class Weapon : Item {
 		Collider2D[] colliders = new Collider2D[50];
 		hitCollider.OverlapCollider(new ContactFilter2D(), colliders);
 		foreach (Collider2D collider in colliders) {
-			if (collider && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().isInvunlerable && !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
+			if (collider && collider.gameObject.tag == "Enemy" && !collider.gameObject.GetComponent<Enemy>().isInvulnerable && !collider.gameObject.GetComponent<Enemy> ().getIsDead ()) {
 				if (!canHit ()) {
 					break;
 				}

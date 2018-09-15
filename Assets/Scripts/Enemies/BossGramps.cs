@@ -125,7 +125,7 @@ public class BossGramps : Enemy {
 		return;
 	}
 
-	public override void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=true) {
+	public override bool takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=true) {
 		if (isPreparing) {
 			isPreparing = false;
 			prepTimer = 0.0f;
@@ -143,7 +143,7 @@ public class BossGramps : Enemy {
 			isRecovering = true;
 		}
 			
-		base.takeHit (damage, knockback, direction, noBlood, attackType);
+		return base.takeHit (damage, knockback, direction, noBlood, attackType);
 	}
 
 	public override void takeThrowHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
@@ -349,7 +349,7 @@ public class BossGramps : Enemy {
 
 	IEnumerator LeapEvade () {
 		setStun (3.0f);
-		isInvunlerable = true;
+		isInvulnerable = true;
 		anim.enabled = false;
 
 		facePlayer();
@@ -387,7 +387,7 @@ public class BossGramps : Enemy {
 		anim.SetBool ("Active", false);
 		transform.position = new Vector3 (transform.position.x, groundLevel, transform.position.z);
 		anim.enabled = true;
-		isInvunlerable = false;
+		isInvulnerable = false;
 		isRecovering = false;
 	}
 }

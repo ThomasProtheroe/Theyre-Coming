@@ -5,6 +5,8 @@ using UnityEngine;
 public class Mulcher : Weapon {
 
 	private bool isRunning;
+	private bool isHitting;
+	private bool playingHitSound;
 	[SerializeField]
 	private BoxCollider2D damageHitbox;
 	private float bloodHitCount;
@@ -30,7 +32,7 @@ public class Mulcher : Weapon {
 			return;
 		}
 
-		if (!other.gameObject.GetComponent<Enemy>().isInvunlerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
+		if (!other.gameObject.GetComponent<Enemy>().isInvulnerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
 			//Mulcher uses the opposite direction from most weapons for the blood spray
 			float direction = (player.transform.position.x - other.transform.position.x) * -1.0f;
 			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction, false, attackType, true);

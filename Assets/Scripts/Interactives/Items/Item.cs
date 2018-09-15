@@ -29,6 +29,7 @@ public class Item : Interactive {
 	public int throwDirection = 0;
 	public string type;
 	public string description;
+	public bool staticBreak = false;
 
 	protected int state = 0;
 	[SerializeField]
@@ -316,21 +317,20 @@ public class Item : Interactive {
 			return;
 		}
 
-
-
-
 		gameObject.layer = 11;
 
-		int xBreakForce = Random.Range(-100, 100);
-		int yBreakForce = Random.Range(60, 100);
+		if (!staticBreak) {
+			int xBreakForce = Random.Range(-100, 100);
+			int yBreakForce = Random.Range(60, 100);
 
-		//Reset the x and y rotation as these can change during attack animations
-		transform.eulerAngles = new Vector3 (0, 0, transform.rotation.z);
+			//Reset the x and y rotation as these can change during attack animations
+			transform.eulerAngles = new Vector3 (0, 0, transform.rotation.z);
 
-		body.bodyType = RigidbodyType2D.Dynamic;
-		body.AddForce (new Vector2 (xBreakForce, yBreakForce));
-		body.AddTorque (25.0f);
-
+			body.bodyType = RigidbodyType2D.Dynamic;
+			body.AddForce (new Vector2 (xBreakForce, yBreakForce));
+			body.AddTorque (25.0f);
+		}
+			
 		StartCoroutine ("beginSpriteFlash");
 		StartCoroutine ("destroyAfterTime", 1.5f);
 	}

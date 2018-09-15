@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour {
 	public int attackDamage = 1;
 	protected int playerAttackType;
 	public bool hitPlayer;
-	public bool isInvunlerable;
+	public bool isInvulnerable;
 	protected int woundState;
 
 	protected bool isActive;
@@ -66,6 +66,7 @@ public class Enemy : MonoBehaviour {
 	protected bool isBleeding;
 	protected bool isBlind;
 	protected bool isDead;
+	protected bool isStaggered;
 
 	protected bool walkSoundPlaying;
 	protected bool prowlSoundPlaying;
@@ -371,57 +372,56 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public virtual void takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=false) {
-		if (isInvunlerable) {
-			return;
+	public virtual bool takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=false) {
+		if (isInvulnerable || getIsDead ()) {
+			return false;
 		}
-
-		if (!getIsDead ()) {
-			stopProwlSound ();
-			stopWalkSound ();
-			playerAttackType = attackType;
-			if (damage > 0 && !noBlood) {
-				var sh = bloodSprayPS.shape;
-				var main = bloodSprayPS.main;
-				int particleCount = 15;
-				if (brutal) {
-					sh.arc = 40.0f;
-					particleCount = 60;
-					main.startLifetime = 0.6f;
-				} else if (damage >= 10) {
-					sh.arc = 120.0f;
-					particleCount = 260;
-					main.startLifetime = 1.5f;
-				} else if (damage >= 7) {
-					sh.arc = 60;
-					particleCount = 120;
-					main.startLifetime = 1.0f;
-				} else {
-					sh.arc = 20;
-					particleCount = 20;
-					main.startLifetime = 0.6f;
-				}
-				float bloodDirection;
-				if (direction > 0) {
-					bloodDirection = 180;
-				} else {
-					bloodDirection = 0;
-				}
-				sh.rotation = new Vector3 (sh.rotation.x, bloodDirection, sh.rotation.z);
-				bloodSprayPS.Emit (particleCount);
+			
+		stopProwlSound ();
+		stopWalkSound ();
+		playerAttackType = attackType;
+		if (damage > 0 && !noBlood) {
+			var sh = bloodSprayPS.shape;
+			var main = bloodSprayPS.main;
+			int particleCount = 15;
+			if (brutal) {
+				sh.arc = 40.0f;
+				particleCount = 60;
+				main.startLifetime = 0.6f;
+			} else if (damage >= 10) {
+				sh.arc = 120.0f;
+				particleCount = 260;
+				main.startLifetime = 1.5f;
+			} else if (damage >= 7) {
+				sh.arc = 60;
+				particleCount = 120;
+				main.startLifetime = 1.0f;
+			} else {
+				sh.arc = 20;
+				particleCount = 20;
+				main.startLifetime = 0.6f;
 			}
-
-			takeDamage (damage);
+			float bloodDirection;
 			if (direction > 0) {
-				knockback *= -1;
+				bloodDirection = 180;
+			} else {
+				bloodDirection = 0;
 			}
-
-			startIFrames ();
-
-			StartCoroutine ("setHitFrame", knockback);
-
-			playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
+			sh.rotation = new Vector3 (sh.rotation.x, bloodDirection, sh.rotation.z);
+			bloodSprayPS.Emit (particleCount);
 		}
+
+		takeDamage (damage);
+		if (direction > 0) {
+			knockback *= -1;
+		}
+
+		startIFrames ();
+		isStaggered = true;
+		StartCoroutine ("setHitFrame", knockback);
+
+		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
+		return true;
 	}
 
 	public virtual void takeThrowHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
@@ -441,7 +441,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void takeDamage(int damage) {
-		if (isDead || isInvunlerable) {
+		if (isDead || isInvulnerable) {
 			return;
 		}
 		health -= damage;
@@ -454,12 +454,12 @@ public class Enemy : MonoBehaviour {
 	}
 
 	private void startIFrames() {
-		isInvunlerable = true;
+		isInvulnerable = true;
 		iFrameTimer = iFrameDuration;
 	}
 
 	private void endIFrames() {
-		isInvunlerable = false;
+		isInvulnerable = false;
 		iFrameTimer = 0.0f;
 	}
 
@@ -637,6 +637,10 @@ public class Enemy : MonoBehaviour {
 		return isBurning;
 	}
 
+	public bool getIsStaggered() {
+		return isStaggered;
+	}
+
 	public Area getCurrentArea() {
 		return currentArea;
 	}
@@ -717,6 +721,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	protected virtual void onKnockbackEnd() {
+		isStaggered = false;
 		setStun (0.3f);
 	}
 
