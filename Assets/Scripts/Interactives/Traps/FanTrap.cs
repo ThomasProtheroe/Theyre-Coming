@@ -78,7 +78,7 @@ public class FanTrap : Trap {
 		playerCon.activeSlot.setEmpty();
 	}
 
-	protected void reduceDurability() {
+	protected void reduceDurability(bool enemyHit=true) {
 		durability--;
 
 		if (durability <= 0) {
@@ -86,6 +86,11 @@ public class FanTrap : Trap {
 		} else {
 			//Update UI
 			updateDurabilityIndicator();
+
+			//Only apply blood effects if losing durability from hitting an enemy
+			if (!enemyHit) {
+				return;
+			}
 
 			if (durability < maxDurability * 0.5f) {
 				for (int i = 0; i < anim.layerCount; i++) {
