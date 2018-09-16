@@ -6,7 +6,7 @@ public class ProjectileFanTrap : FanTrap {
 
 	[Header("Projectile Attributes")]
 	[SerializeField]
-	private BaseProjectile projectile;
+	private BaseProjectile[] projectiles;
 	[SerializeField]
 	private float projectileInterval;
 	private float projectileTimer = 0.0f;
@@ -18,7 +18,7 @@ public class ProjectileFanTrap : FanTrap {
 	
 	// Update is called once per frame
 	protected override void Update () {
-		if (isDeployed) {
+		if (isDeployed && durability > 0) {
 			projectileTimer -= Time.deltaTime;
 			if (projectileTimer <= 0.0f) {
 				fireProjectile ();
@@ -27,7 +27,7 @@ public class ProjectileFanTrap : FanTrap {
 
 			degredationTimer -= Time.deltaTime;
 			if (degredationTimer <= 0.0f) {
-				reduceDurability ();
+				reduceDurability (false);
 				degredationTimer = degredationInterval;
 			}
 		}
@@ -42,7 +42,7 @@ public class ProjectileFanTrap : FanTrap {
 		float radAngle = angle * Mathf.Deg2Rad;
 		Vector2 direction = new Vector2 (Mathf.Cos (radAngle), Mathf.Sin (radAngle));
 
-		BaseProjectile newProjectile = Instantiate (projectile, transform.position, Quaternion.identity);
+		BaseProjectile newProjectile = Instantiate (projectiles[Random.Range(0, projectiles.Length)], transform.position, Quaternion.identity);
 		newProjectile.GetComponent<Rigidbody2D> ().velocity = direction * speed;
 		newProjectile.transform.eulerAngles = new Vector3 (0.0f, 0.0f, angle - 90.0f);
 
