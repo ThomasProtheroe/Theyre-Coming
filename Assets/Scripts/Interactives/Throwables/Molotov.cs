@@ -10,6 +10,8 @@ public class Molotov : Throwable {
 	[SerializeField]
 	private int globCount;
 	[SerializeField]
+	private float fireLifetime;
+	[SerializeField]
 	private float maxYVel;
 	[SerializeField]
 	private float minYVel;
@@ -41,6 +43,8 @@ public class Molotov : Throwable {
 
 		for (int i = 0; i < globCount; i++) {
 			FireGlob newGlob = Instantiate (fireGlob, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+			newGlob.friendlyFire = true;
+			newGlob.lifetime = fireLifetime;
 
 			Rigidbody2D rb = newGlob.GetComponent<Rigidbody2D> ();
 			rb.velocity = new Vector2 (UnityEngine.Random.Range(minXVel, maxXVel) * throwDirection, UnityEngine.Random.Range(minYVel, maxYVel));

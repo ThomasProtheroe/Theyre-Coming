@@ -7,8 +7,6 @@ public class BlastWheels : RemoteCarTrap {
 	[SerializeField]
 	private ParticleSystem fusePS;
 	[SerializeField]
-	private ParticleSystem explosionPS;
-	[SerializeField]
 	private GameObject explosion;
 
 	protected new void OnTriggerEnter2D(Collider2D other) {
