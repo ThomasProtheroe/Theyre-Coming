@@ -45,7 +45,6 @@ public class FlameFanTrap : FanTrap {
 	}
 
 	public override void deploy() {
-		flamePS.Play ();
 		rotationAnimator.enabled = true;
 		base.deploy ();
 	}
