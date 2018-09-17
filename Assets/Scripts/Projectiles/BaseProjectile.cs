@@ -7,9 +7,14 @@ public class BaseProjectile : MonoBehaviour {
 	public int knockback;
 	public bool isActive;
 	protected PlayerController player;
+	[SerializeField]
+	private AudioClip impactSound;
+	[SerializeField]
+	protected SoundController soundController;
 
 	public virtual void Start() {
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
+		soundController = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 	}
 
 	public virtual void fire() {
@@ -50,6 +55,11 @@ public class BaseProjectile : MonoBehaviour {
 
 	protected virtual bool hitTarget(Enemy target) {
 		return true;
+	}
+
+	protected void playImpactSound() {
+		Debug.Log (impactSound);
+		soundController.playPriorityOneShot (impactSound);
 	}
 
 	/**** Coroutines ****/ 

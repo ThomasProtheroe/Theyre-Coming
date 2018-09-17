@@ -8,12 +8,14 @@ public class Recipe {
 	private string ingredient2;
 
 	private GameObject product;
+	private string byProduct; 
 
-	public Recipe(string firstIngredient, string secondIngredient, string productPath) {
+	public Recipe(string firstIngredient, string secondIngredient, string productPath, string byProductType) {
 		ingredient1 = firstIngredient;
 		ingredient2 = secondIngredient;
 
 		product = (GameObject) Resources.Load("Prefabs/" + productPath);
+		byProduct = byProductType;
 	}
 
 	public bool areIngredients(string item1, string item2) {
@@ -27,6 +29,15 @@ public class Recipe {
 		return Object.Instantiate (product);
 	}
 
+	public string getByProduct() {
+		return byProduct;
+	}
+
+}
+
+public class Result {
+	public GameObject product;
+	public string byProduct;
 }
 
 public static class RecipeBook {
@@ -40,15 +51,17 @@ public static class RecipeBook {
 		recipes.Add (newRecipe);
 	}
 
-	public static GameObject tryCraft(string item1, string item2) {
-		GameObject product = null;
+	public static Result tryCraft(string item1, string item2) {
+		Result result = null;
 		foreach (Recipe current in recipes) {
 			if (current.areIngredients(item1, item2)) {
-				product = current.craft ();
+				result = new Result ();
+				result.product = current.craft ();
+				result.byProduct = current.getByProduct();
 				break;
 			}
 		}
-		return product;
+		return result;
 	}
 
 	public static bool canCraft(string item1, string item2) {
@@ -69,7 +82,7 @@ public static class RecipeBook {
 		while((line = reader.ReadLine()) != null)  
 		{  
 			string[] columns = line.Split (',');
-			Recipe newRecipe = new Recipe (columns [1], columns [2], columns [3]);
+			Recipe newRecipe = new Recipe (columns [1], columns [2], columns [3], columns [4]);
 			addRecipe (newRecipe);
 		}  
 	}

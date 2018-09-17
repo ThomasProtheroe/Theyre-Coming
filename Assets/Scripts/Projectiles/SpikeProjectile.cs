@@ -25,6 +25,7 @@ public class SpikeProjectile : BaseProjectile {
 			float direction = player.transform.position.x - target.transform.position.x;
 			target.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
 			durability--;
+			playImpactSound ();
 			if (durability <= 0) {
 				Destroy (gameObject);
 			}

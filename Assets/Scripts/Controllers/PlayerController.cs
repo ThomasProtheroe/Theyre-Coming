@@ -733,7 +733,8 @@ public class PlayerController : MonoBehaviour {
 		//Try to combine the items
 		Item closestItem = closest.GetComponent<Item> ();
 		Item equippedItem = heldItem.GetComponent<Item> ();
-		beingCrafted = RecipeBook.tryCraft (closestItem.type, equippedItem.type);
+		Result craftingResult = RecipeBook.tryCraft (closestItem.type, equippedItem.type);
+		beingCrafted = craftingResult.product;
 
 		//Check for crafting sound overrides
 		AudioClip overrideSound = null;
@@ -755,11 +756,22 @@ public class PlayerController : MonoBehaviour {
 
 			yield return new WaitForSeconds(0.6f);
 
-			//destroy both ingredients
-			nearInteractives.Remove (closest);
-			Destroy(closest);
-			Destroy (heldItem);
-
+			Debug.Log (craftingResult.byProduct);
+			//Save any ingredients that shouldn't be consumed, destroy the rest
+			if (closest.GetComponent<Item> ().type == craftingResult.byProduct) {
+				Destroy (heldItem);
+			} else if (heldItem.GetComponent<Item> ().type == craftingResult.byProduct) {
+				//Place helditem at the players feet
+				heldItem.GetComponent<Item> ().dropItem ();
+				
+				nearInteractives.Remove (closest);
+				Destroy (closest);
+			} else {
+				nearInteractives.Remove (closest);
+				Destroy (closest);
+				Destroy (heldItem);
+			}
+				
 			//create new item and place in hands
 			heldItem = beingCrafted;
 			Item itemCon = heldItem.GetComponent<Item> ();

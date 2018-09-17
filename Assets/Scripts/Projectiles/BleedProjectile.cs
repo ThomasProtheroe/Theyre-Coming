@@ -48,6 +48,7 @@ public class BleedProjectile : BaseProjectile {
 			target.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
 			target.setBleeding ();
 			enemiesHit.Add (target);
+			playImpactSound ();
 		}
 
 		return true;

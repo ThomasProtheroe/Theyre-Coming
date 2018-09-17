@@ -7,6 +7,9 @@ public class FirstAidStation : Interactive {
 
 	private PlayerController playerCon;
 	private GameController gameCon;
+	private SoundController soundCon;
+	[SerializeField]
+	private AudioClip healSound;
 	[SerializeField]
 	private Image outerBar;
 	[SerializeField]
@@ -31,6 +34,7 @@ public class FirstAidStation : Interactive {
 		usesRemaining = capacity;
 		playerCon = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
 		gameCon = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		emptyDialog = new Dialog ("That's the last of the med supplies. Not good.");
 	}
 
@@ -59,6 +63,7 @@ public class FirstAidStation : Interactive {
 
 	public void finishUse() {
 		cancelUse ();
+		soundCon.playPriorityOneShot (healSound);
 
 		playerCon.heal (healAmount);
 		playerCon.isBusy = false;
