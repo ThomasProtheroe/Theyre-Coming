@@ -58,7 +58,6 @@ public class BaseProjectile : MonoBehaviour {
 	}
 
 	protected void playImpactSound() {
-		Debug.Log (impactSound);
 		soundController.playPriorityOneShot (impactSound);
 	}
 

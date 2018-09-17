@@ -226,6 +226,13 @@ public class Transition : Interactive {
 		Color originalEnemyColor = sprite.material.color;
 
 		for (float f = 1f; f >= 0; f -= 0.03f) {
+			//Make sure the enemy didn't die due to DoT effects while travelling
+			if (enemy.getIsDead ()) {
+				inUse = false;
+				sibling.inUse = false;
+				yield break;
+			}
+
 			Color c = sprite.material.color;
 			c.a = f;
 			sprite.material.color = c;
@@ -243,7 +250,14 @@ public class Transition : Interactive {
 		enemy.setCurrentArea (sibling.transform.parent.gameObject.GetComponent<Area> ());
 
 		for (float f = 0f; f <= 1; f += 0.03f) {
-			Color c = sprite.material.color;
+			//Make sure the enemy didn't die due to DoT effects while travelling
+			if (enemy.getIsDead ()) {
+				inUse = false;
+				sibling.inUse = false;
+				yield break;
+			}
+
+			Color c = sprite.material.color; //Error
 			c.a = f;
 			sprite.material.color = c;
 
