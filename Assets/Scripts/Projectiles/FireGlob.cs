@@ -6,10 +6,9 @@ public class FireGlob : MonoBehaviour {
 
 	[SerializeField]
 	private int passiveDamage;
-	[SerializeField]
-	private int activeDamage;
-	[SerializeField]
-	private float lifetime;
+	public int activeDamage;
+	public float lifetime;
+	public bool friendlyFire;
 
 	private bool isAirborn = true;
 
@@ -38,7 +37,7 @@ public class FireGlob : MonoBehaviour {
 		if (!isAirborn) {
 			if (other.gameObject.tag == "Enemy") {
 				other.gameObject.GetComponent<Enemy> ().takeFireHit (passiveDamage);
-			} else if (other.gameObject.tag == "Player") {
+			} else if (other.gameObject.tag == "Player" && friendlyFire) {
 				other.gameObject.GetComponent<PlayerController> ().takeFireHit ();
 			}
 		}
