@@ -28,6 +28,7 @@ public class FanTrap : Trap {
 
 	override public void trigger(GameObject victim) {
 		Enemy enemy = victim.GetComponent<Enemy> ();
+		Debug.Log (enemy.isInvulnerable);
 
 		float direction = transform.position.x - victim.transform.position.x;
 		if (!enemy.takeHit (damage, knockback, direction, false, attackType)) {
@@ -82,6 +83,7 @@ public class FanTrap : Trap {
 		durability--;
 
 		if (durability <= 0) {
+			stopActiveSound ();
 			breakItem ();
 		} else {
 			//Update UI

@@ -709,6 +709,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	private void playAttackSound() {
+		if (player.GetComponent<PlayerController>().currentArea != currentArea) {
+			return;
+		}
 		soundCon.playEnemyOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
 	}
 

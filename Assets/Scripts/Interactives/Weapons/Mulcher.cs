@@ -83,32 +83,7 @@ public class Mulcher : Weapon {
 		} else {
 			//Update UI
 			updateDurabilityIndicator();
-
-			if ((durability < maxDurability * 0.6f) && (bloodySprite1 != null)) {
-				for (int i = 0; i < anim.layerCount; i++) {
-					anim.SetLayerWeight (i, 0.0f);
-				}
-
-				anim.SetLayerWeight (anim.GetLayerIndex("Blood 4"), 1.0f);
-			} else if ((durability < maxDurability * 0.7f) && (bloodySprite2 != null)) {
-				for (int i = 0; i < anim.layerCount; i++) {
-					anim.SetLayerWeight (i, 0.0f);
-				}
-
-				anim.SetLayerWeight (anim.GetLayerIndex("Blood 3"), 1.0f);
-			} else if ((durability < maxDurability * 0.8f) && (bloodySprite3 != null)) {
-				for (int i = 0; i < anim.layerCount; i++) {
-					anim.SetLayerWeight (i, 0.0f);
-				}
-
-				anim.SetLayerWeight (anim.GetLayerIndex("Blood 2"), 1.0f);
-			} else if ((durability < maxDurability * 0.9f) && (bloodySprite4 != null)) {
-				for (int i = 0; i < anim.layerCount; i++) {
-					anim.SetLayerWeight (i, 0.0f);
-				}
-
-				anim.SetLayerWeight (anim.GetLayerIndex("Blood 1"), 1.0f);
-			}
+			setBloodyAnim ();
 		}
 	}
 
@@ -119,4 +94,46 @@ public class Mulcher : Weapon {
 	public override void onThrow() {
 		turnOff ();
 	}
+
+	public override void onStash() {
+		turnOff ();
+	}
+
+	public override void onPickup() {
+		setBloodyAnim ();
+	}
+		
+	public override bool onBreak() {
+		turnOff ();
+		return base.onBreak ();
+	}
+
+	private void setBloodyAnim() {
+		if ((durability < maxDurability * 0.7f) && (bloodySprite1 != null)) {
+			for (int i = 0; i < anim.layerCount; i++) {
+				anim.SetLayerWeight (i, 0.0f);
+			}
+
+			anim.SetLayerWeight (anim.GetLayerIndex("Blood 4"), 1.0f);
+		} else if ((durability < maxDurability * 0.8f) && (bloodySprite2 != null)) {
+			for (int i = 0; i < anim.layerCount; i++) {
+				anim.SetLayerWeight (i, 0.0f);
+			}
+
+			anim.SetLayerWeight (anim.GetLayerIndex("Blood 3"), 1.0f);
+		} else if ((durability < maxDurability * 0.9f) && (bloodySprite3 != null)) {
+			for (int i = 0; i < anim.layerCount; i++) {
+				anim.SetLayerWeight (i, 0.0f);
+			}
+
+			anim.SetLayerWeight (anim.GetLayerIndex("Blood 2"), 1.0f);
+		} else if ((durability < maxDurability * 0.95f) && (bloodySprite4 != null)) {
+			for (int i = 0; i < anim.layerCount; i++) {
+				anim.SetLayerWeight (i, 0.0f);
+			}
+
+			anim.SetLayerWeight (anim.GetLayerIndex("Blood 1"), 1.0f);
+		}
+	}
+
 }
