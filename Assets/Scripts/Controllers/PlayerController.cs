@@ -457,6 +457,7 @@ public class PlayerController : MonoBehaviour {
 	void stashEquippedItem() {
 		stashedItem = heldItem;
 		stashedItem.SetActive (false);
+		stashedItem.GetComponent<Item>().onStash ();
 		heldItem = null;
 
 		alignHands ();
@@ -756,7 +757,6 @@ public class PlayerController : MonoBehaviour {
 
 			yield return new WaitForSeconds(0.6f);
 
-			Debug.Log (craftingResult.byProduct);
 			//Save any ingredients that shouldn't be consumed, destroy the rest
 			if (closest.GetComponent<Item> ().type == craftingResult.byProduct) {
 				Destroy (heldItem);

@@ -281,6 +281,10 @@ public class Item : Interactive {
 		return;
 	}
 
+	public virtual void onStash() {
+		return;
+	}
+
 	public virtual void onThrow() {
 		return;
 	}
