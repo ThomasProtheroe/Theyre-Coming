@@ -8,11 +8,13 @@ public class FlameFanTrap : FanTrap {
 	[SerializeField]
 	private FireGlob fireGlob;
 	[SerializeField]
-	ParticleSystem flamePS;
+	private ParticleSystem flamePS;
+	[SerializeField]
+	private ParticleSystem[] burningPSs;
 	[SerializeField]
 	private GameObject explosion;
 	[SerializeField]
-	Animator rotationAnimator;
+	private Animator rotationAnimator;
 	[SerializeField]
 	private float projectileInterval;
 	private float projectileTimer = 0.0f;
@@ -24,6 +26,11 @@ public class FlameFanTrap : FanTrap {
 	[SerializeField]
 	private int projectileDamage;
 
+	protected override void Start() {
+		burningPSs = GetComponentsInChildren<ParticleSystem> ();
+
+		base.Start ();
+	}
 
 	// Update is called once per frame
 	protected override void Update () {
@@ -90,6 +97,16 @@ public class FlameFanTrap : FanTrap {
 		playerCon.gameCon.shakeCamera (0.5f, 0.2f);
 
 		Destroy (gameObject);
+	}
+
+	protected override void reduceDurability(bool enemyHit=true) {
+		foreach (ParticleSystem ps in burningPSs) {
+			if (durability < maxDurability * 0.25f) {
+				ps.Play ();
+			}
+		}
+
+		base.reduceDurability (enemyHit);
 	}
 
 	public override bool onBreak() {

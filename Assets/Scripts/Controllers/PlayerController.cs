@@ -439,6 +439,7 @@ public class PlayerController : MonoBehaviour {
 		equipStashedItem ();
 		stashedItem = tempItem;
 		stashedItem.SetActive (false);
+		stashedItem.GetComponent<Item>().onStash ();
 	}
 
 	void equipStashedItem() {
