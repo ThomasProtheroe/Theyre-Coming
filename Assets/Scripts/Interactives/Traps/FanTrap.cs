@@ -79,7 +79,7 @@ public class FanTrap : Trap {
 		playerCon.activeSlot.setEmpty();
 	}
 
-	protected void reduceDurability(bool enemyHit=true) {
+	protected virtual void reduceDurability(bool enemyHit=true) {
 		durability--;
 
 		if (durability <= 0) {

@@ -191,9 +191,9 @@ public class Item : Interactive {
 		sprite.sortingOrder = playerCon.playerSprite.sortingOrder + 1;
 
 		//Handle items with multiple sprites
-		foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer> () ) {
-			sprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
-			sprite.sortingOrder = playerCon.playerSprite.sortingOrder + 1;
+		foreach (SpriteRenderer childSprite in GetComponentsInChildren<SpriteRenderer> () ) {
+			childSprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
+			childSprite.sortingOrder = sprite.sortingOrder - 1;
 		}
 
 		//disable pickup trigger, enable hit trigger
