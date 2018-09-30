@@ -91,11 +91,12 @@ public class GameController : MonoBehaviour {
 		playerCon = player.GetComponent<PlayerController> ();
 		source = GetComponent<AudioSource> ();
 
+		Cursor.lockState = CursorLockMode.Locked;
+
 		SpawnMap.rebuildMap ();
 		CinematicMap.rebuildMap ();
 
 		enemies = new List<Enemy> ();
-
 		nextSpawn = SpawnMap.getNextSpawn ();
 		nextCinematic = CinematicMap.getNextCinematic ();
 
@@ -222,6 +223,7 @@ public class GameController : MonoBehaviour {
 		pauseMenu.SetActive (true);
 		Time.timeScale = 0.0f;
 		isPaused = true;
+		Cursor.lockState = CursorLockMode.None;
 
 		soundCon.pauseAll ();
 	}
@@ -230,6 +232,7 @@ public class GameController : MonoBehaviour {
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1.0f;
 		isPaused = false;
+		Cursor.lockState = CursorLockMode.Locked;
 
 		soundCon.playAll ();
 	}

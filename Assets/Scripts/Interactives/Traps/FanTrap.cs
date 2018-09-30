@@ -12,11 +12,24 @@ public class FanTrap : Trap {
 	private AudioClip activeSound;
 	[SerializeField]
 	protected Animator anim;
+	private bool isPlaying;
 
 	[Header("Status Effects")]
 	public bool inflictsBleed;
 	public bool inflictsBlind;
 	public bool inflictsBurning;
+
+	protected override void Update () {
+		if (isDeployed) {
+			if (playerCon.getCurrentArea ().name == deployedArea && !isPlaying) {
+				startActiveSound ();
+			} else if (playerCon.getCurrentArea ().name != deployedArea && isPlaying) {
+				stopActiveSound ();
+			}
+		}
+
+		base.Update ();
+	}
 
 	void OnTriggerStay2D (Collider2D other) {
 		if (isDeployed) {
@@ -28,7 +41,6 @@ public class FanTrap : Trap {
 
 	override public void trigger(GameObject victim) {
 		Enemy enemy = victim.GetComponent<Enemy> ();
-		Debug.Log (enemy.isInvulnerable);
 
 		float direction = transform.position.x - victim.transform.position.x;
 		if (!enemy.takeHit (damage, knockback, direction, false, attackType)) {
@@ -67,6 +79,7 @@ public class FanTrap : Trap {
 		startActiveSound ();
 
 		isDeployed = true;
+		deployedArea = playerCon.getCurrentArea ().name;
 		tag = "Trap";
 
 		playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
@@ -123,10 +136,12 @@ public class FanTrap : Trap {
 
 	private void startActiveSound() {
 		soundController.playEnvironmentalSound (activeSound);
+		isPlaying = true;
 	}
 
 	private void stopActiveSound() {
 		soundController.stopEnvironmentalSound (activeSound);
+		isPlaying = false;
 	}
 
 	public override void onPickup() {

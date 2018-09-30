@@ -736,14 +736,18 @@ public class PlayerController : MonoBehaviour {
 		Item closestItem = closest.GetComponent<Item> ();
 		Item equippedItem = heldItem.GetComponent<Item> ();
 		Result craftingResult = RecipeBook.tryCraft (closestItem.type, equippedItem.type);
-		beingCrafted = craftingResult.product;
-
-		//Check for crafting sound overrides
 		AudioClip overrideSound = null;
-		if (equippedItem.craftOverrideSound) {
-			overrideSound = equippedItem.craftOverrideSound;
-		} else if (closestItem.craftOverrideSound) {
-			overrideSound = closestItem.craftOverrideSound;
+		if (craftingResult != null) {
+			beingCrafted = craftingResult.product;
+
+			//Check for crafting sound overrides
+			if (equippedItem.craftOverrideSound) {
+				overrideSound = equippedItem.craftOverrideSound;
+			} else if (closestItem.craftOverrideSound) {
+				overrideSound = closestItem.craftOverrideSound;
+			}
+		} else {
+			beingCrafted = null;
 		}
 
 		//If crafting is successful
