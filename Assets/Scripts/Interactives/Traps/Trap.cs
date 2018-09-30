@@ -12,6 +12,7 @@ public class Trap : Item {
 	public float deployRotation;
 
 	protected bool isDeployed;
+	protected string deployedArea;
 
 	public Collider2D triggerCollider;
 

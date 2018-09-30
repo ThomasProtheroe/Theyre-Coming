@@ -59,7 +59,7 @@ public class Item : Interactive {
 	public AudioClip breakSound;
 	public AudioClip craftOverrideSound;
 
-	private SpriteRenderer sprite;
+	protected SpriteRenderer sprite;
 	protected SoundController soundController;
 
 	[HideInInspector]
@@ -111,16 +111,7 @@ public class Item : Interactive {
 				}
 				float direction = transform.position.x - other.transform.position.x;
 				other.gameObject.GetComponent<Enemy> ().takeHit (thrownDamage, thrownKnockback, direction, false, attackType);
-				if ((state == 0) && (bloodySprite1 != null)) {
-					sprite.sprite = bloodySprite1;
-					state++;
-				} else if ((state == 1) && (bloodySprite2 != null)) {
-					sprite.sprite = bloodySprite2;
-					state++;
-				} else if ((state == 2) && (bloodySprite3 != null)) {
-					sprite.sprite = bloodySprite3;
-					state++;
-				}
+				setBloodyState ();
 			}
 
 			isThrown = false;
@@ -133,6 +124,19 @@ public class Item : Interactive {
 				sprite.sortingLayerName = "Items";
 				sprite.sortingOrder = 5;
 			}
+		}
+	}
+
+	protected virtual void setBloodyState() {
+		if ((state == 0) && (bloodySprite1 != null)) {
+			sprite.sprite = bloodySprite1;
+			state++;
+		} else if ((state == 1) && (bloodySprite2 != null)) {
+			sprite.sprite = bloodySprite2;
+			state++;
+		} else if ((state == 2) && (bloodySprite3 != null)) {
+			sprite.sprite = bloodySprite3;
+			state++;
 		}
 	}
 
