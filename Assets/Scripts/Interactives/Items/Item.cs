@@ -196,6 +196,9 @@ public class Item : Interactive {
 
 		//Handle items with multiple sprites
 		foreach (SpriteRenderer childSprite in GetComponentsInChildren<SpriteRenderer> () ) {
+			if (childSprite == frontHand.GetComponent<SpriteRenderer> () || childSprite == backHand.GetComponent<SpriteRenderer> () || childSprite == sprite) {
+				continue;
+			}
 			childSprite.sortingLayerName = playerCon.playerSprite.sortingLayerName;
 			childSprite.sortingOrder = sprite.sortingOrder - 1;
 		}
@@ -240,9 +243,12 @@ public class Item : Interactive {
 		sprite.sortingOrder = 5;
 
 		//Handle items with multiple sprites
-		foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer> () ) {
-			sprite.sortingLayerName = "Background Items";
-			sprite.sortingOrder = 5;
+		foreach (SpriteRenderer childSprite in GetComponentsInChildren<SpriteRenderer> () ) {
+			if (childSprite == frontHand.GetComponent<SpriteRenderer> () || childSprite == backHand.GetComponent<SpriteRenderer> () || childSprite == sprite) {
+				continue;
+			}
+			childSprite.sortingLayerName = "Background Items";
+			childSprite.sortingOrder = 4;
 		}
 	}
 
