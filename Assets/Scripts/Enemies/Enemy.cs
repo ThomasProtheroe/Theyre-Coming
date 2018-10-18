@@ -503,6 +503,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void destroyEnemy() {
+		Debug.Log ("destroy enemy");
 		//spawnCorpse ();
 		Destroy (gameObject);
 	}
