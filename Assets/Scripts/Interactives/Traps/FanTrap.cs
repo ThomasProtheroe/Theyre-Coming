@@ -21,7 +21,7 @@ public class FanTrap : Trap {
 
 	protected override void Update () {
 		if (isDeployed) {
-			if (playerCon.getCurrentArea ().name == deployedArea && !isPlaying) {
+			if (durability > 0 && playerCon.getCurrentArea ().name == deployedArea && !isPlaying) {
 				startActiveSound ();
 			} else if (playerCon.getCurrentArea ().name != deployedArea && isPlaying) {
 				stopActiveSound ();
