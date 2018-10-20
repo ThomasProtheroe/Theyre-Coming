@@ -17,6 +17,17 @@ public class SpikeProjectile : BaseProjectile {
 			hitTarget (enemy);
 		} else if (other.gameObject.tag == "AreaWall") {
 			Destroy (gameObject);
+
+			/*
+			//Embed the projectile into the wall
+			isActive = false;
+			Rigidbody2D body = GetComponent<Rigidbody2D>();
+			body.velocity = Vector2.zero;
+
+			SpriteRenderer sprite = GetComponent<SpriteRenderer> ();
+			sprite.sortingLayerName = "Background";
+			sprite.sortingOrder = 2;
+			*/
 		}
 	}
 

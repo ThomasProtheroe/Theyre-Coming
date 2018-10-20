@@ -79,6 +79,10 @@ public class Item : Interactive {
 		sprite = GetComponent<SpriteRenderer> ();
 	}
 
+	public void manualStart() {
+		Start ();
+	}
+
 	// Update is called once per frame
 	protected virtual void Update () {
 		if (deparent) {
@@ -117,12 +121,9 @@ public class Item : Interactive {
 			isThrown = false;
 			isBouncing = true;
 			gameObject.layer = 11;
-			sprite.sortingLayerName = "Items";
-			sprite.sortingOrder = 5;
 
 			foreach (SpriteRenderer sprite in gameObject.GetComponentsInChildren<SpriteRenderer> () ) {
 				sprite.sortingLayerName = "Items";
-				sprite.sortingOrder = 5;
 			}
 		}
 	}

@@ -16,6 +16,7 @@ public class AdaptableTrap : Item {
 	public override void use ()
 	{
 		SpikeTrap newTrap = Instantiate (trap);
+		newTrap.manualStart ();
 		newTrap.transform.position = new Vector2 (player.transform.position.x, transform.position.y);
 		newTrap.deploy ();
 		Destroy (gameObject);

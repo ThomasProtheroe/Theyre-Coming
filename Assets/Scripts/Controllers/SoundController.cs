@@ -260,7 +260,7 @@ public class SoundController : MonoBehaviour {
 
 		//If we didn't have a free source to play the clip, queue it 
 		if (!played) {
-			queueRequest (request, prowlQueue);
+			queueRequest (request, environmentalQueue);
 		}
 	}
 
@@ -273,18 +273,18 @@ public class SoundController : MonoBehaviour {
 				environmentalSources [i].Stop ();
 				environmentalSources [i].clip = null;
 
-				playNextQueued (prowlQueue, environmentalSources [i]);
+				playNextQueued (environmentalQueue, environmentalSources [i]);
 				break;
 			}
 		}
 
 		if (!found) {
-			for (int i = 0; i < prowlQueue.Count; i++) {
-				if (prowlQueue [i] != clip) {
+			for (int i = 0; i < environmentalQueue.Count; i++) {
+				if (environmentalQueue [i] != clip) {
 					continue;
 				}
 
-				prowlQueue.RemoveAt (i);
+				environmentalQueue.RemoveAt (i);
 				break;
 			}
 		}
