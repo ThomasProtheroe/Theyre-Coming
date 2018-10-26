@@ -4,40 +4,44 @@ using UnityEngine;
 
 public class Transition : Interactive {
 
-	public Transition sibling;
-	public AudioClip openSound;
-	public AudioClip closeSound;
-
-	[HideInInspector]
-	public Trap readiedTrap;
-
-	[SerializeField]
-	private Collider2D safeZone;
-	[SerializeField]
-	private Transform[] buffers;
-	private Animator anim;
-	private GameObject player;
-	private GameObject mainCamera;
-	protected GameController gc;
-	private SoundController soundCon;
-
-	private Dialog lockedDialog;
-	[SerializeField]
-	private string lockedDialogText;
-
-	[SerializeField]
-	private float safeZoneClearCooldown;
-	private float safeZoneClearTimer;
-	[SerializeField]
-	private float enemyBufferOffset;
-
 	[HideInInspector]
 	public bool inUse;
 	[HideInInspector]
 	public bool inUseByPlayer;
 	[HideInInspector]
 	public bool firstOpenAttempt;
+	[Header("General Settings")]
 	public bool isLocked;
+
+	[Header("Travel Settings")]
+	public Transition sibling;
+	[SerializeField]
+	private Collider2D safeZone;
+	[SerializeField]
+	private Transform[] buffers;
+	[SerializeField]
+	private float safeZoneClearCooldown;
+	private float safeZoneClearTimer;
+	[SerializeField]
+	private float enemyBufferOffset;
+
+	[Header("Audio Clips")]
+	public AudioClip openSound;
+	public AudioClip closeSound;
+	public AudioClip unlockSound;
+
+	private Dialog lockedDialog;
+	[Header("Dialog")]
+	[SerializeField]
+	private string lockedDialogText;
+
+	[HideInInspector]
+	public Trap readiedTrap;
+	private Animator anim;
+	private GameObject player;
+	private GameObject mainCamera;
+	protected GameController gc;
+	private SoundController soundCon;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -113,7 +117,11 @@ public class Transition : Interactive {
 		}
 	}
 
-	public void unlock() {
+	public void unlock(bool playSound=true) {
+		if (playSound) {
+			soundCon.playPriorityOneShot (unlockSound);
+		}
+
 		isLocked = false;
 	}
 

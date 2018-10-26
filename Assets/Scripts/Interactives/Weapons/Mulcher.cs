@@ -27,7 +27,7 @@ public class Mulcher : Weapon {
 	[SerializeField]
 	private AudioClip hitStopSound;
 
-	new void OnTriggerStay2D(Collider2D other) {
+	protected void OnTriggerStay2D(Collider2D other) {
 		if (!isRunning || other.gameObject.tag != "Enemy") {
 			return;
 		}
