@@ -5,6 +5,22 @@ using UnityEngine;
 public class HeavyBoxTrap : Trap {
 	
 	public int damage;
+	[SerializeField]
+	private bool spawnFire;
+	[SerializeField]
+	private FireGlob fireGlob;
+	[SerializeField]
+	private int globCount;
+	[SerializeField]
+	private float fireLifetime;
+	[SerializeField]
+	private float maxYVel;
+	[SerializeField]
+	private float minYVel;
+	[SerializeField]
+	private float maxXVel;
+	[SerializeField]
+	private float minXVel;
 	public AudioClip hitSound;
 
 	private Transition parentTransition;
@@ -83,5 +99,26 @@ public class HeavyBoxTrap : Trap {
 		Rigidbody2D body = GetComponent<Rigidbody2D>();
 		body.bodyType = RigidbodyType2D.Dynamic;
 		body.gravityScale = 2.0f;
+	}
+		
+	public override bool onBreak() {
+		if (!spawnFire) {
+			return false;
+		}
+
+		//Hack solution to collision problem when spawning fire globs
+		//float newYPos = transform.position.y + 0.1f;
+
+		for (int i = 0; i < globCount; i++) {
+			FireGlob newGlob = Instantiate (fireGlob, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+			newGlob.friendlyFire = true;
+			newGlob.lifetime = fireLifetime;
+
+			Rigidbody2D rb = newGlob.GetComponent<Rigidbody2D> ();
+			rb.velocity = new Vector2 (UnityEngine.Random.Range(minXVel, maxXVel), UnityEngine.Random.Range(minYVel, maxYVel));
+		}
+
+		//Return true so we don't play the breaking animation
+		return true;
 	}
 }
