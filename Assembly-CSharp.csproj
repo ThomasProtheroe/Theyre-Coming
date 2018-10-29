@@ -73,7 +73,9 @@
      <Compile Include="Assets\Scripts\Interactives\Interactive.cs" />
      <Compile Include="Assets\Scripts\Interactives\Items\AdaptableTrap.cs" />
      <Compile Include="Assets\Scripts\Interactives\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Items\MysteryButton.cs" />
      <Compile Include="Assets\Scripts\Interactives\Keys\GarageKey.cs" />
+     <Compile Include="Assets\Scripts\Interactives\LabEntrance.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\AerosolFlamethrower.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\BlindBlaster.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\BlindSquirtGun.cs" />
