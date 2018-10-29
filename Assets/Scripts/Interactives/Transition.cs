@@ -37,7 +37,7 @@ public class Transition : Interactive {
 
 	[HideInInspector]
 	public Trap readiedTrap;
-	private Animator anim;
+	protected Animator anim;
 	private GameObject player;
 	private GameObject mainCamera;
 	protected GameController gc;

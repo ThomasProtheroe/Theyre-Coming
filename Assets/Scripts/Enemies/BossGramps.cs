@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BossGramps : Enemy {
+	[Header("General Settings")]
 	[SerializeField]
 	private int maxBurnDamage;
+	[SerializeField]
+	private MysteryButton mysteryButton;
 
 	[Header("Spit Attack")]
 	[SerializeField]
@@ -145,6 +148,14 @@ public class BossGramps : Enemy {
 			
 		return base.takeHit (damage, knockback, direction, noBlood, attackType);
 	}
+
+	protected override void onDeath() {
+		Debug.Log ("OnDeath");
+		//Drop the mysterious button
+		MysteryButton newMysteryButton = Instantiate (mysteryButton, transform.transform.position, Quaternion.identity);
+		newMysteryButton.drop ();
+	}
+
 
 	public override void takeThrowHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
 		if (isPreparing) {

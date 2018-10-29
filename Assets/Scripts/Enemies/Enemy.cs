@@ -474,6 +474,8 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void killEnemy() {
+		onDeath ();
+
 		if (isAttacking) {
 			finishAttack ();
 		}
@@ -500,6 +502,10 @@ public class Enemy : MonoBehaviour {
 		}
 
 		anim.SetTrigger ("Death");
+	}
+
+	protected virtual void onDeath() {
+		return;
 	}
 
 	public void destroyEnemy() {
