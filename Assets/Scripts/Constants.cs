@@ -15,4 +15,10 @@ public class Constants {
 	public const int ENEMY_WOUND_NONE = 0;
 	public const int ENEMY_WOUND_LIGHT = 1;
 	public const int ENEMY_WOUND_HEAVY = 2;
+
+	/*** Player Wound States ***/
+	public const int PLAYER_WOUND_NONE = 0;
+	public const int PLAYER_WOUND_LIGHT = 1;
+	public const int PLAYER_WOUND_MODERATE = 2;
+	public const int PLAYER_WOUND_HEAVY = 3;
 }

@@ -39,9 +39,14 @@ public class MysteryButton : Item {
 
 	public override void use ()
 	{
+		if (!usable) {
+			return;
+		}
+
 		playUseSound ();
 		if (playerCon.getCurrentArea () == labEntrance.gameObject.transform.parent.gameObject.GetComponent<Area> ()) {
 			Invoke ("onUseSuccess", 1.0f);
+			usable = false;
 		} else {
 			Invoke ("onUseFail", 1.0f);
 		}

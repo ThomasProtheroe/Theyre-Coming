@@ -91,7 +91,7 @@ public class GameController : MonoBehaviour {
 		playerCon = player.GetComponent<PlayerController> ();
 		source = GetComponent<AudioSource> ();
 
-		Cursor.lockState = CursorLockMode.Locked;
+
 
 		SpawnMap.rebuildMap ();
 		CinematicMap.rebuildMap ();
@@ -139,6 +139,8 @@ public class GameController : MonoBehaviour {
 		killTotals = new int[6];
 
 		if (devMode == "false") {
+			//Leave the cursor visible in dev mode for debugging purposes
+			Cursor.lockState = CursorLockMode.Locked;
 			startIntro ();
 		} else {
 			changePhase("siege");
