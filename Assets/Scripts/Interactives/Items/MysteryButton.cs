@@ -44,6 +44,7 @@ public class MysteryButton : Item {
 		}
 
 		playUseSound ();
+		Debug.Log (labEntrance);
 		if (playerCon.getCurrentArea () == labEntrance.gameObject.transform.parent.gameObject.GetComponent<Area> ()) {
 			Invoke ("onUseSuccess", 1.0f);
 			usable = false;
