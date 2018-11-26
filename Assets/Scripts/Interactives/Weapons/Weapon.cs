@@ -75,6 +75,8 @@ public class Weapon : Item {
 		isAttacking = true;
 
 		anim.SetTrigger ("Attack");
+
+		onAttack ();
 	}
 
 	protected void playAttackSound() {
@@ -125,6 +127,10 @@ public class Weapon : Item {
 			return false;
 		}
 		return true;
+	}
+
+	protected virtual void onAttack() {
+		return;
 	}
 
 	public override void updateDurabilityIndicator() {
