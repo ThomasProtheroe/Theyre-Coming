@@ -108,6 +108,11 @@ ShardPipe,TapedPipe,GlassShards,Weapons/ShardPipe,
 ShardPipe,TapedPipe,GlassBottle,Weapons/ShardPipe,
 ShardPipe,TapedShard,MetalPipe,Weapons/ShardPipe,
 ShardPipe,TapedShard,TapedPipe,Weapons/ShardPipe,
+MetalPipeRag,MetalPipe,Rag,Weapons/MetalPipeRag,
+FlammablePipe,MetalPipeRag,GasCan,Weapons/FlammablePipe,
+FlammablePipe,MetalPipeRag,LighterFluid,Weapons/FlammablePipe,
+FlamingPipe,FlammablePipe,Lighter,Weapons/FlamingPipe,Lighter
+FlamingPipe,FlammablePipe,TapedLighter,Weapons/FlamingPipe,TapedLighter
 TapedBat,BaseballBat,DuctTape,Weapons/TapedBat,
 NailBat,TapedBat,Nails,Weapons/NailBat,
 ShardBat,TapedBat,GlassShards,Weapons/ShardBat,
