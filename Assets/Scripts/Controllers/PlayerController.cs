@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
 	public int maxHealth;
 	//[HideInInspector]
 	public int health;
+	private int woundState;
 
 
 	[HideInInspector]
@@ -93,6 +94,7 @@ public class PlayerController : MonoBehaviour {
 		activeSlot.setActive (true);
 
 		health = maxHealth;
+		woundState = 0;
 		currentSpeed = playerSpeed;
 		isTargetable = true;
 		burnImmunityTimer = 0.0f;
@@ -308,12 +310,38 @@ public class PlayerController : MonoBehaviour {
 
 		if (health > 0) {
 			health -= damage;
+			updateWoundState ();
 			if (health <= 0) {
 				source.PlayOneShot (deathSound);
 				gameOver ();
 			} else {
 				playHitSound ();
 			}
+		}
+	}
+
+	void updateWoundState() {
+		if (health == maxHealth) {
+			woundState = 0;
+		} else if (health > 5) {
+			woundState = 1;
+		} else if (health > 2) {
+			woundState = 2;
+		} else {
+			woundState = 3;
+		}
+
+		int animLayer = woundState;
+		float weight = 0.0f;
+
+		for(int i = 0; i < anim.layerCount; i++) {
+			if (i == animLayer) {
+				weight = 1.0f;
+			} else {
+				weight = 0.0f;
+			}
+
+			anim.SetLayerWeight (i, weight);
 		}
 	}
 
@@ -626,6 +654,8 @@ public class PlayerController : MonoBehaviour {
 		if (health > maxHealth) {
 			health = maxHealth;
 		}
+
+		updateWoundState ();
 
 		StartCoroutine ("healFlash");
 	}

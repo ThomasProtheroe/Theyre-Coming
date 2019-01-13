@@ -65,11 +65,25 @@ public class Transition : Interactive {
 	}
 
 	public void playerTravel() {
+		onPlayerTravel ();
 		StartCoroutine ("movePlayer");
 	}
 
 	public void enemyTravel(Enemy enemy) {
+		onEnemyTravel ();
 		StartCoroutine ("moveEnemy", enemy);
+	}
+
+	public virtual void onPlayerTravel() {
+		return;
+	}
+
+	public virtual void onEnemyTravel() {
+		return;
+	}
+
+	public virtual void onPlayerArrival() {
+		return;
 	}
 
 	private void playOpenSound() {
@@ -219,6 +233,8 @@ public class Transition : Interactive {
 
 		playerCon.isBusy = false;
 		playerCon.isInvulnerable = false;
+
+		sibling.onPlayerArrival ();
 	}
 
 	IEnumerator moveEnemy(Enemy enemy) {
