@@ -629,17 +629,7 @@ public class GameController : MonoBehaviour {
 		pauseTimer ();
 		endGameCalculations ();
 		Scenes.setParam ("result", "death");
-
-		deathFade ();
-	}
-
-	private void deathFade() {
-		//Set any existing enemies to idle
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
-		foreach (GameObject enemy in enemies) {
-			enemy.GetComponent<Enemy> ().deactivate ();
-		}
-
+		deactivateAllEnemies ();
 		StartCoroutine ("DeathFade");
 	}
 
@@ -651,6 +641,22 @@ public class GameController : MonoBehaviour {
 
 		StopCoroutine ("CheckVictory");
 		StartCoroutine ("VictoryFade");
+	}
+
+	public void deactivateAllEnemies() {
+		//Set any existing enemies to idle
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enemy in enemies) {
+			enemy.GetComponent<Enemy> ().deactivate ();
+		}
+	}
+
+	public void activateAllEnemies() {
+		//Set any existing enemies to idle
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enemy in enemies) {
+			enemy.GetComponent<Enemy> ().activate ();
+		}
 	}
 
 	public void returnToMenu() {

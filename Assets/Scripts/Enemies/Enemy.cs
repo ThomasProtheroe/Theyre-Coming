@@ -625,7 +625,6 @@ public class Enemy : MonoBehaviour {
 
 			anim.SetLayerWeight (i, weight);
 		}
-			
 	}
 
 	public void triggerSplash(Color color) {

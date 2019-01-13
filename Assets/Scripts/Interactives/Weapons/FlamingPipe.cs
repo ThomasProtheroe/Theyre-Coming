@@ -32,4 +32,18 @@ public class FlamingPipe : FlamingBat {
 	private void playFlameBurst() {
 		flameBurstPS.Play ();
 	}
+
+	public override void onTravel() {
+		ParticleSystem[] flames = GetComponentsInChildren<ParticleSystem> ();
+		foreach(ParticleSystem flame in flames) {
+			flame.Stop ();
+		}
+	}
+
+	public override void onArrival() {
+		ParticleSystem[] flames = GetComponentsInChildren<ParticleSystem> ();
+		foreach(ParticleSystem flame in flames) {
+			flame.Play ();
+		}
+	}
 }
