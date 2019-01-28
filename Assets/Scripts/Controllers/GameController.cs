@@ -371,7 +371,8 @@ public class GameController : MonoBehaviour {
 		corpseCount++;
 	}
 
-	public void clearCorpses() {
+   
+        public void clearCorpses() {
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
 
 

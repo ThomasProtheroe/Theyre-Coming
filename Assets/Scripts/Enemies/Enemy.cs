@@ -17,9 +17,12 @@ public class Enemy : MonoBehaviour {
 	protected PlayerController playerCon;
 	[SerializeField]
 	private EnemyCorpse enemyCorpse;
+    public BloodSplatter bloodSplatter;
+    //public GameObject bloodSplatter;
 
-	/* Audio Components */
-	[HideInInspector]
+
+    /* Audio Components */
+    [HideInInspector]
 	public SoundController soundCon;
 	protected AudioClip walkSound;
 	protected AudioClip prowlSound;
@@ -86,9 +89,9 @@ public class Enemy : MonoBehaviour {
 	private float blindDuration;
 	private float blindTimer = 0.0f;
 	private float blindMoveModifier = 0.3f;
-
-	// Use this for initialization
-	void Start () {
+    
+        // Use this for initialization
+    void Start () {
 		anim = gameObject.GetComponent<Animator> ();
 		rigidBody = gameObject.GetComponent<Rigidbody2D> ();
 		enemySprite = gameObject.GetComponent<SpriteRenderer> ();
@@ -99,9 +102,11 @@ public class Enemy : MonoBehaviour {
 		isMoving = false;
 		isAttacking = false;
 		woundState = Constants.ENEMY_WOUND_NONE;
+        
 
-		//Let players pass through the enemy
-		Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
+
+        //Let players pass through the enemy
+        Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
 
 		StartCoroutine ("pushEnemiesAway");
 	}
@@ -451,6 +456,9 @@ public class Enemy : MonoBehaviour {
 			updateWoundState ();
 			updateAnimLayer ();
 		}
+        if (damage > 5 && health <= 0){
+            createBloodSplatter();
+        }
 	}
 
 	private void startIFrames() {
@@ -526,7 +534,13 @@ public class Enemy : MonoBehaviour {
 		gc.addEnemyCorpse (corpse, currentArea.name);
 	}
 
-	public virtual void takeBurnDamage(int damage) {
+    private void createBloodSplatter()
+    {
+        BloodSplatter blood = Instantiate(bloodSplatter);
+
+		blood.transform.position = transform.position;
+    }
+    public virtual void takeBurnDamage(int damage) {
 		takeDamage (damage);
 	}
 
