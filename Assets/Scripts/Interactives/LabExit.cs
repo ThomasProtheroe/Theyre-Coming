@@ -9,10 +9,13 @@ public class LabExit : Transition {
 	private GameController gameCon;
 	[SerializeField]
 	private ElevatorController elevatorCon;
+	public MusicController musicCon;
 
 	public override void onPlayerArrival() {
 		gameCon.deactivateAllEnemies ();
 		gameCon.pauseTimer ();
+
+		musicCon.changeMusic ("lab");
 
 		elevatorCon.elevatorRunning = true;
 	}
