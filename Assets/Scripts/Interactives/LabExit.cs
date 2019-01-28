@@ -7,9 +7,13 @@ public class LabExit : Transition {
 	[Header("Lab Specific Settings")]
 	[SerializeField]
 	private GameController gameCon;
+	[SerializeField]
+	private ElevatorController elevatorCon;
 
 	public override void onPlayerArrival() {
 		gameCon.deactivateAllEnemies ();
 		gameCon.pauseTimer ();
+
+		elevatorCon.elevatorRunning = true;
 	}
 }
