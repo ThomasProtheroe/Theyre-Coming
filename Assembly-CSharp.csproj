@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Controllers\SoundController.cs" />
      <Compile Include="Assets\Scripts\Controllers\TutorialController.cs" />
      <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
+     <Compile Include="Assets\Scripts\Enemies\BloodSplatter.cs" />
      <Compile Include="Assets\Scripts\Enemies\BossGramps.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyCorpse.cs" />
