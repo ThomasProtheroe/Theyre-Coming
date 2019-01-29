@@ -27,6 +27,9 @@ public class GameController : MonoBehaviour {
 	private AudioClip[] cinematicSounds;
 	public KeySpawn[] keySpawns;
 
+	[SerializeField]
+	private MysteryButton mysteryButton;
+
 	[Header("General Settings")]
 	public int prepTime;
 
@@ -90,8 +93,6 @@ public class GameController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerCon = player.GetComponent<PlayerController> ();
 		source = GetComponent<AudioSource> ();
-
-
 
 		SpawnMap.rebuildMap ();
 		CinematicMap.rebuildMap ();
@@ -164,6 +165,7 @@ public class GameController : MonoBehaviour {
 			TimeSpan timeSpan = TimeSpan.FromSeconds ((prepTime - Mathf.Floor (timer)));
 			timerText.text = string.Format ("{0:D2}:{1:d2}", timeSpan.Minutes, timeSpan.Seconds);
 
+			//Shake the front door in time with the pounding noises
 			if (doorShakeMap.Count > 0 && doorShakeMap.Peek() < timer) {
 				doorShakeMap.Dequeue ();
 				GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().shakeDoor();
@@ -182,7 +184,7 @@ public class GameController : MonoBehaviour {
 
 		checkForCinematics ();
 
-		//Skip cinematics
+		//Skip cinematics when button is pressed
 		if (currentCinematic != null && Input.GetButtonDown ("interact")) {
 			switch (currentCinematic) {
 			case "playIntro":
@@ -203,6 +205,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		//Dev mode specific functionality
 		if (Scenes.getParam ("devMode") != "false") {
 			if (Input.GetKeyDown ("t")) {
 				spawnEnemyRand ();
@@ -217,6 +220,9 @@ public class GameController : MonoBehaviour {
 				}
 			} else if (Input.GetKeyDown ("y")) {
 				spawnBoss (spawnZones[0]);
+			} else if (Input.GetKeyDown ("i")) {
+				MysteryButton newMysteryButton = Instantiate (mysteryButton, player.transform.position, Quaternion.identity);
+				newMysteryButton.drop ();
 			}
 		}
 	}
@@ -546,6 +552,15 @@ public class GameController : MonoBehaviour {
 		currentCinematic = null;
 	}
 
+	public void startElevatorCinematic() {
+		playerCon.itemSlot1.gameObject.SetActive(false);
+		playerCon.itemSlot2.gameObject.SetActive(false);
+
+		playerCon.enableCinematicControl (true);
+
+		StartCoroutine ("playElevatorDialog");
+	}
+
 	public void startTimer() {
 		timerRunning = true;
 	}
@@ -665,6 +680,14 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene ("MainMenu");
 	}
 
+	public void miscFadeOut() {
+		StartCoroutine ("MiscBlackFadeOut", 0.01f);
+	}
+
+	public void miscFadeIn() {
+		StartCoroutine ("MiscBlackFadeIn", 0.01f);
+	}
+
 	IEnumerator playConversation(Dialog[] conversation) {
 		foreach(Dialog dialog in conversation) {
 			yield return new WaitForSeconds (dialog.delay);
@@ -705,6 +728,28 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (3.0f);
 
 		stopIntro ();
+	}
+
+	IEnumerator playElevatorDialog() {
+		currentCinematic = "playElevatorDialog";
+
+		yield return new WaitForSeconds (3.0f);
+
+		showDialog (new Dialog("\nWhat is this place?", null, 5.0f));
+
+		yield return new WaitForSeconds (6.0f);
+
+		playerCon.flipPlayer ();
+
+		yield return new WaitForSeconds (2.5f);
+
+		playerCon.flipPlayer ();
+
+		yield return new WaitForSeconds (2.5f);
+
+		showDialog (new Dialog("\nAt least it seems safe in here. There's no way those things are getting inside.", null, 5.0f));
+
+		yield return new WaitForSeconds (9.0f);
 	}
 
 	IEnumerator introFade() {
@@ -819,5 +864,35 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (3.0f);
 
 		StartCoroutine ("CheckVictory");
+	}
+
+	IEnumerator MiscBlackFadeIn(float interval=0.01f) {
+		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
+		Color startColor = sprite.color;
+		startColor.a = 1.0f;
+		blackFade.SetActive (true);
+		for (float f = 1.0f; f > 0.0f; f -= interval) {
+			Color spriteColor = sprite.color;
+			spriteColor.a = f;
+			sprite.color = spriteColor;
+
+			yield return null;
+		}
+		blackFade.SetActive (false);
+	}
+
+	IEnumerator MiscBlackFadeOut(float interval=0.01f) {
+		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
+		Color startColor = sprite.color;
+		startColor.a = 0.0f;
+		sprite.color = startColor;
+		blackFade.SetActive (true);
+		for (float f = 0.0f; f < 1.0f; f += interval) {
+			Color spriteColor = sprite.color;
+			spriteColor.a = f;
+			sprite.color = spriteColor;
+
+			yield return null;
+		}
 	}
 }

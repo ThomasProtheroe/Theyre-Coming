@@ -150,7 +150,6 @@ public class BossGramps : Enemy {
 	}
 
 	protected override void onDeath() {
-		Debug.Log ("OnDeath");
 		//Drop the mysterious button
 		MysteryButton newMysteryButton = Instantiate (mysteryButton, transform.transform.position, Quaternion.identity);
 		newMysteryButton.drop ();
