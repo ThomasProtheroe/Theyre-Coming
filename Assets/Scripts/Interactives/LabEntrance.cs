@@ -26,4 +26,8 @@ public class LabEntrance : Transition {
 		gameCon.activateAllEnemies ();
 		gameCon.startTimer ();
 	}
+
+	public override void onPlayerTravel() {
+		gameCon.miscFadeOut ();
+	}
 }

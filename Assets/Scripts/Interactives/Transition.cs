@@ -12,6 +12,7 @@ public class Transition : Interactive {
 	public bool firstOpenAttempt;
 	[Header("General Settings")]
 	public bool isLocked;
+	public float fadeInterval;
 
 	[Header("Travel Settings")]
 	public Transition sibling;
@@ -38,7 +39,7 @@ public class Transition : Interactive {
 	[HideInInspector]
 	public Trap readiedTrap;
 	protected Animator anim;
-	private GameObject player;
+	protected GameObject player;
 	private GameObject mainCamera;
 	protected GameController gc;
 	private SoundController soundCon;
@@ -66,7 +67,7 @@ public class Transition : Interactive {
 
 	public void playerTravel() {
 		onPlayerTravel ();
-		StartCoroutine ("movePlayer");
+		StartCoroutine ("movePlayer", fadeInterval);
 	}
 
 	public void enemyTravel(Enemy enemy) {
@@ -151,7 +152,7 @@ public class Transition : Interactive {
 		}
 	}
 
-	IEnumerator movePlayer() {
+	IEnumerator movePlayer(float fadeInterval=0.03f) {
 		PlayerController playerCon = player.GetComponent<PlayerController> ();
 		SpriteRenderer sprite = player.GetComponent<SpriteRenderer> ();
 		SpriteRenderer itemSprite = null;
@@ -173,7 +174,7 @@ public class Transition : Interactive {
 
 		anim.SetTrigger ("Open");
 
-		for (float f = 1f; f >= 0; f -= 0.03f) {
+		for (float f = 1f; f >= 0; f -= fadeInterval) {
 			//Fade out the player
 			Color c = sprite.material.color;
 			c.a = f;

@@ -5,6 +5,8 @@ using UnityEngine;
 public class ElevatorController : MonoBehaviour {
 	private GameObject player;
 	private GameObject mainCamera;
+	[SerializeField]
+	private GameController gameCon;
 
 	public List<GameObject> elevatorSegments = new List<GameObject> ();
 	public GameObject elevatorSegmentPrefab;
@@ -14,10 +16,12 @@ public class ElevatorController : MonoBehaviour {
 	public float elevatorSpeed;
 	private float elevatorTimer = 0.0f;
 	public float travelTime;
+	private bool isFading;
 
 	void Start() {
 		player = GameObject.FindGameObjectWithTag("Player");
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
 	}
 	
 	// Update is called once per frame
@@ -44,14 +48,36 @@ public class ElevatorController : MonoBehaviour {
 			}
 
 			elevatorTimer += Time.deltaTime;
+			if (elevatorTimer >= travelTime - 2.0f && !isFading) {
+				gameCon.miscFadeOut ();
+				isFading = true;
+			}
+
 			if (elevatorTimer >= travelTime) {
-				Vector2 destinationLoc = new Vector2(destination.transform.position.x, player.transform.position.y);
-				player.transform.position = destinationLoc;
-				mainCamera.transform.position = new Vector3 (player.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
-			
-				destination.isLocked = true;
-				elevatorRunning = false;
+				exitElevator ();
 			}
 		}
+	}
+
+	private void exitElevator() {
+		gameCon.miscFadeIn ();
+
+		Vector2 destinationLoc = new Vector2(destination.transform.position.x, player.transform.position.y);
+		player.transform.position = destinationLoc;
+		mainCamera.transform.position = new Vector3 (player.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
+
+		destination.isLocked = true;
+		elevatorRunning = false;
+		isFading = false;
+
+		returnPlayerControl ();
+	}
+
+	public void returnPlayerControl() {
+		PlayerController playerCon = player.GetComponent<PlayerController> ();
+		playerCon.enableCinematicControl (false);
+
+		playerCon.itemSlot1.gameObject.SetActive(true);
+		playerCon.itemSlot2.gameObject.SetActive(true);
 	}
 }
