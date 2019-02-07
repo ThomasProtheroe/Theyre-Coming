@@ -23,8 +23,13 @@ public class MysteryButton : Item {
 	[SerializeField]
 	private Sprite failSpriteOn;
 
+	[SerializeField]
+	private float useCooldown;
+	private float useTimer;
+
 	protected override void Start() {
 		usable = true;
+		useTimer = 0.0f;
 
 		//Find the lab entrance transition
 		foreach (GameObject transitionObj in GameObject.FindGameObjectsWithTag ("Transition")) {
@@ -37,11 +42,21 @@ public class MysteryButton : Item {
 		base.Start ();
 	}
 
+	protected override void Update() {
+		if (useTimer > 0) {
+			useTimer -= Time.deltaTime;
+		}
+
+		base.Update ();
+	}
+
 	public override void use ()
 	{
-		if (!usable) {
+		if (!usable || useTimer > 0.0f) {
 			return;
 		}
+
+		useTimer = useCooldown;
 
 		playUseSound ();
 		Debug.Log (labEntrance);
