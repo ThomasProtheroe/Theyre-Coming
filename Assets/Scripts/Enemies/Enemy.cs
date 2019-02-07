@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected AudioClip burningSound;
 	[SerializeField]
+	protected AudioClip disitingrateSound;
+	[SerializeField]
 	protected AudioClip splashSound;
 	[SerializeField]
 	protected AudioClip attackImpactSound;
@@ -507,9 +509,13 @@ public class Enemy : MonoBehaviour {
 				detailPS.Stop ();
 			}
 			stopBurningSound ();
-		}
 
-		anim.SetTrigger ("Death");
+			//play disintigrate sound
+			anim.SetTrigger ("BurnDeath");
+			soundCon.playEnemyOneShot (disitingrateSound);
+		} else {
+			anim.SetTrigger ("Death");
+		}
 	}
 
 	protected virtual void onDeath() {
