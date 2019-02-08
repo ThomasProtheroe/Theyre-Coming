@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	private EnemyCorpse enemyCorpse;
     public BloodSplatter bloodSplatter;
-    //public GameObject bloodSplatter;
+	public AshPile ashPile;
 
 
     /* Audio Components */
@@ -458,9 +458,12 @@ public class Enemy : MonoBehaviour {
 			updateWoundState ();
 			updateAnimLayer ();
 		}
-        if (damage > 5 && health <= 0){
+        if (damage >= 5 && health <= 0){
             createBloodSplatter();
         }
+		if (isBurning && health <= 0) {
+			createAshPile ();
+		}
 	}
 
 	private void startIFrames() {
@@ -546,7 +549,14 @@ public class Enemy : MonoBehaviour {
 
 		blood.transform.position = transform.position;
     }
-    public virtual void takeBurnDamage(int damage) {
+
+	private void createAshPile()
+	{
+		AshPile ash = Instantiate(ashPile);
+		Vector3 offset = new Vector3 (0, -0.41f, 0);
+		ash.transform.position = transform.position + offset;
+	}
+    public virtual void takeBurnDamage(int damage) { 
 		takeDamage (damage);
 	}
 
