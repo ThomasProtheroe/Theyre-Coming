@@ -17,7 +17,12 @@ public class Enemy : MonoBehaviour {
 	protected PlayerController playerCon;
 	[SerializeField]
 	private EnemyCorpse enemyCorpse;
-    public BloodSplatter bloodSplatter;
+    //public BloodSplatter bloodSplatter;
+	public List<BloodSplatter> bsList = new List<BloodSplatter>();
+	public BloodSplatter BloodSplatter1;
+	public BloodSplatter BloodSplatter2;
+	public BloodSplatter BloodSplatter3;
+
 	public AshPile ashPile;
 
 
@@ -104,10 +109,9 @@ public class Enemy : MonoBehaviour {
 		isMoving = false;
 		isAttacking = false;
 		woundState = Constants.ENEMY_WOUND_NONE;
-        
 
-
-        //Let players pass through the enemy
+      
+		        //Let players pass through the enemy
         Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
 
 		StartCoroutine ("pushEnemiesAway");
@@ -545,7 +549,12 @@ public class Enemy : MonoBehaviour {
 
     private void createBloodSplatter()
     {
-        BloodSplatter blood = Instantiate(bloodSplatter);
+		bsList.Add (BloodSplatter1);
+		bsList.Add (BloodSplatter2);
+		bsList.Add (BloodSplatter3);
+
+		int i = UnityEngine.Random.Range (0, bsList.Count);
+		BloodSplatter blood = (BloodSplatter) Instantiate(bsList[i]);
 
 		blood.transform.position = transform.position;
     }
