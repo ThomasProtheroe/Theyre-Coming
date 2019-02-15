@@ -461,9 +461,9 @@ public class Enemy : MonoBehaviour {
         if (damage >= 5 && health <= 0){
             createBloodSplatter();
         }
-		if (isBurning && health <= 0) {
-			createAshPile ();
-		}
+		//if (isBurning && health <= 0) {
+			//createAshPile ();
+		//}
 	}
 
 	private void startIFrames() {
@@ -554,7 +554,7 @@ public class Enemy : MonoBehaviour {
 		blood.transform.localScale = new Vector3(newScale, newScale, 0.5f);
     }
 
-	private void createAshPile()
+	public void createAshPile()
 	{
 		AshPile ash = Instantiate(ashPile);
 		Vector3 offset = new Vector3 (0, -0.41f, 0);
