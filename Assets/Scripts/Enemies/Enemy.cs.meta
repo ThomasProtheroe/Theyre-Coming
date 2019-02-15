@@ -1,27 +1,11 @@
 fileFormatVersion: 2
 guid: f306da041f5525f4fb593c1f9ad6ff06
-timeCreated: 1548048838
+timeCreated: 1550121848
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - attackHitbox: {instanceID: 0}
-  - bodyHitbox: {instanceID: 0}
-  - proximityHitbox: {instanceID: 0}
-  - currentArea: {instanceID: 0}
-  - enemyCorpse: {instanceID: 0}
-  - bloodSplatter: {fileID: 114515418703526360, guid: 1a997c6a142377f4ca9c76823bad10b6,
-      type: 2}
-  - soundCon: {instanceID: 0}
-  - igniteSound: {instanceID: 0}
-  - burningSound: {instanceID: 0}
-  - splashSound: {instanceID: 0}
-  - attackImpactSound: {instanceID: 0}
-  - bloodSprayPS: {instanceID: 0}
-  - splashPS: {instanceID: 0}
-  - bleedingPS: {instanceID: 0}
-  - burningPS: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
