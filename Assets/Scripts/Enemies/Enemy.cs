@@ -19,10 +19,6 @@ public class Enemy : MonoBehaviour {
 	private EnemyCorpse enemyCorpse;
     //public BloodSplatter bloodSplatter;
 	public List<BloodSplatter> bsList = new List<BloodSplatter>();
-	public BloodSplatter BloodSplatter1;
-	public BloodSplatter BloodSplatter2;
-	public BloodSplatter BloodSplatter3;
-
 	public AshPile ashPile;
 
 
@@ -547,16 +543,15 @@ public class Enemy : MonoBehaviour {
 		gc.addEnemyCorpse (corpse, currentArea.name);
 	}
 
-    private void createBloodSplatter()
+	public void createBloodSplatter(int damage=5)
     {
-		bsList.Add (BloodSplatter1);
-		bsList.Add (BloodSplatter2);
-		bsList.Add (BloodSplatter3);
-
 		int i = UnityEngine.Random.Range (0, bsList.Count);
 		BloodSplatter blood = (BloodSplatter) Instantiate(bsList[i]);
 
 		blood.transform.position = transform.position;
+
+		float newScale = 0.5f + (damage * 0.1f);
+		blood.transform.localScale = new Vector3(newScale, newScale, 0.5f);
     }
 
 	private void createAshPile()
@@ -564,6 +559,7 @@ public class Enemy : MonoBehaviour {
 		AshPile ash = Instantiate(ashPile);
 		Vector3 offset = new Vector3 (0, -0.41f, 0);
 		ash.transform.position = transform.position + offset;
+		//ash.transform.localScale =  Vector3.one * Random.Range(0.5f,1);
 	}
     public virtual void takeBurnDamage(int damage) { 
 		takeDamage (damage);
