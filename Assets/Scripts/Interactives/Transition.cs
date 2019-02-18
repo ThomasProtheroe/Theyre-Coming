@@ -42,7 +42,7 @@ public class Transition : Interactive {
 	protected GameObject player;
 	private GameObject mainCamera;
 	protected GameController gc;
-	private SoundController soundCon;
+	protected SoundController soundCon;
 
 	// Use this for initialization
 	protected virtual void Start () {
