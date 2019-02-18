@@ -515,7 +515,6 @@ public class Enemy : MonoBehaviour {
 			//play disintigrate sound
 			anim.SetTrigger ("BurnDeath");
 			soundCon.playEnemyOneShot (disitingrateSound);
-			createAshPile ();
 		} else {
 			anim.SetTrigger ("Death");
 		}
