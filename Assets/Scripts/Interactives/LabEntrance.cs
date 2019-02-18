@@ -11,6 +11,8 @@ public class LabEntrance : Transition {
 	public bool isLabEntrance = true;
 	[SerializeField]
 	private GameController gameCon;
+	[SerializeField]
+	private AudioClip revealSound;
 
 	public void reveal() {
 		//unlock and activate sprite/collider
@@ -18,8 +20,9 @@ public class LabEntrance : Transition {
 		GetComponent<SpriteRenderer> ().enabled = true;
 		entranceCollider.enabled = true;
 
-		//Play opening animation
+		//Play opening animation and sound
 		anim.SetTrigger ("Reveal");
+		soundCon.playPriorityOneShot (revealSound);
 	}
 
 	public override void onPlayerArrival() {

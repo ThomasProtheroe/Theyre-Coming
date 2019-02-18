@@ -59,7 +59,6 @@ public class MysteryButton : Item {
 		useTimer = useCooldown;
 
 		playUseSound ();
-		Debug.Log (labEntrance);
 		if (playerCon.getCurrentArea () == labEntrance.gameObject.transform.parent.gameObject.GetComponent<Area> ()) {
 			Invoke ("onUseSuccess", 1.0f);
 			usable = false;
@@ -81,13 +80,17 @@ public class MysteryButton : Item {
 	private void onUseSuccess() {
 		playSuccessSound ();
 		sprite.sprite = successSprite;
-		labEntrance.reveal ();
+		Invoke ("revealLab", 1.0f);
 	}
 
 	private void onUseFail() {
 		playFailSound ();
 		sprite.sprite = failSpriteOff;
 		flashFailLight ();
+	}
+
+	private void revealLab() {
+		labEntrance.reveal ();
 	}
 
 	private void flashFailLight() {
