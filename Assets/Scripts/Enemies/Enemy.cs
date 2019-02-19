@@ -460,9 +460,6 @@ public class Enemy : MonoBehaviour {
         if (damage >= 5 && health <= 0){
             createBloodSplatter();
         }
-		//if (isBurning && health <= 0) {
-			//createAshPile ();
-		//}
 	}
 
 	private void startIFrames() {
@@ -542,15 +539,16 @@ public class Enemy : MonoBehaviour {
 		gc.addEnemyCorpse (corpse, currentArea.name);
 	}
 
-	public void createBloodSplatter(int damage=5)
+	public void createBloodSplatter()//(int damage=5)
     {
 		int i = UnityEngine.Random.Range (0, bsList.Count);
 		BloodSplatter blood = (BloodSplatter) Instantiate(bsList[i]);
 
 		blood.transform.position = transform.position;
-
-		float newScale = 0.5f + (damage * 0.1f);
-		blood.transform.localScale = new Vector3(newScale, newScale, 0.5f);
+		blood.transform.localScale =  Vector3.one * Random.Range(0.1f,0.5f);
+		//Not happy with the sizing. I want something tide to weapon damage, but more realistic.
+		//float newScale = 0.5f + (damage * 0.1f);
+		//blood.transform.localScale = new Vector3(newScale, newScale, 0.5f);
     }
 
 	public void createAshPile()
@@ -559,7 +557,7 @@ public class Enemy : MonoBehaviour {
 		AshPile ash = (AshPile) Instantiate(apList[i]);
 		Vector3 offset = new Vector3 (0, -0.41f, 0);
 		ash.transform.position = transform.position + offset;
-		ash.transform.localScale =  Vector3.one * Random.Range(0.5f,1);
+		ash.transform.localScale =  Vector3.one * Random.Range(0.1f,0.3f);
 	}
     public virtual void takeBurnDamage(int damage) { 
 		takeDamage (damage);
