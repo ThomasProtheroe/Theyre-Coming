@@ -17,9 +17,8 @@ public class Enemy : MonoBehaviour {
 	protected PlayerController playerCon;
 	[SerializeField]
 	private EnemyCorpse enemyCorpse;
-    //public BloodSplatter bloodSplatter;
 	public List<BloodSplatter> bsList = new List<BloodSplatter>();
-	public AshPile ashPile;
+	public List<AshPile> apList = new List<AshPile>();
 
 
     /* Audio Components */
@@ -556,10 +555,11 @@ public class Enemy : MonoBehaviour {
 
 	public void createAshPile()
 	{
-		AshPile ash = Instantiate(ashPile);
+		int i = UnityEngine.Random.Range (0, apList.Count);
+		AshPile ash = (AshPile) Instantiate(apList[i]);
 		Vector3 offset = new Vector3 (0, -0.41f, 0);
 		ash.transform.position = transform.position + offset;
-		//ash.transform.localScale =  Vector3.one * Random.Range(0.5f,1);
+		ash.transform.localScale =  Vector3.one * Random.Range(0.5f,1);
 	}
     public virtual void takeBurnDamage(int damage) { 
 		takeDamage (damage);
