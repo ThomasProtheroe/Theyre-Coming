@@ -572,9 +572,9 @@ public class Enemy : MonoBehaviour {
 	{
 		int i = UnityEngine.Random.Range (0, apList.Count);
 		AshPile ash = (AshPile) Instantiate(apList[i]);
-		Vector3 offset = new Vector3 (0, -0.41f, 0);
+		Vector3 offset = new Vector3 (0, -0.35f, 0);
 		ash.transform.position = transform.position + offset;
-		ash.transform.localScale =  Vector3.one * Random.Range(0.1f,0.3f);
+		ash.transform.localScale =  Vector3.one * Random.Range(0.1f,0.2f);
 	}
     public virtual void takeBurnDamage(int damage) { 
 		takeDamage (damage);
