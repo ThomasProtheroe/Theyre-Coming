@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour {
 	protected bool isBlind;
 	protected bool isDead;
 	protected bool isStaggered;
+	protected bool isNotSplattering;
 
 	protected bool walkSoundPlaying;
 	protected bool prowlSoundPlaying;
@@ -203,6 +204,10 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
+		//I suppose you could use this code, but I liked code close to other functions.
+		//if (other.gameObject.tag == "NoSplatterZone") {
+		//isNotSplattering = true;
+		//}
 		if (other.gameObject.tag == "Enemy") {
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 			if (enemy.isBlind && other == enemy.attackHitbox) {
@@ -459,6 +464,7 @@ public class Enemy : MonoBehaviour {
 		}
         if (damage >= 5 && health <= 0){
             createBloodSplatter();
+
         }
 	}
 
@@ -539,7 +545,18 @@ public class Enemy : MonoBehaviour {
 		gc.addEnemyCorpse (corpse, currentArea.name);
 	}
 
-	public void createBloodSplatter()//(int damage=5)
+	public void OnTriggerStay2D(Collider2D other){
+		if (other.gameObject.tag == "NoSplatterZone") {
+			isNotSplattering = true;
+		}
+	}
+	public void OnTriggerExit2D(Collider2D other){
+		if (other.gameObject.tag == "NoSplatterZone"){
+				isNotSplattering = false;
+		}
+	}
+	public void createBloodSplatter(){//(int damage=5)
+	if (!isNotSplattering)
     {
 		int i = UnityEngine.Random.Range (0, bsList.Count);
 		BloodSplatter blood = (BloodSplatter) Instantiate(bsList[i]);
@@ -550,7 +567,7 @@ public class Enemy : MonoBehaviour {
 		//float newScale = 0.5f + (damage * 0.1f);
 		//blood.transform.localScale = new Vector3(newScale, newScale, 0.5f);
     }
-
+	}
 	public void createAshPile()
 	{
 		int i = UnityEngine.Random.Range (0, apList.Count);
