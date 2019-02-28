@@ -15,6 +15,7 @@ public class BlastWheels : RemoteCarTrap {
 				explode ();
 			}
 		}
+		base.trigger ();
 	}
 
 	private void explode() {

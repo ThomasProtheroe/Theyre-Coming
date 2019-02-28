@@ -79,6 +79,7 @@ public class RemoteCarTrap : Trap {
 				gameObject.tag = "Item";
 			}
 		}
+		base.trigger ();
 	}
 
 	public override void deploy() {

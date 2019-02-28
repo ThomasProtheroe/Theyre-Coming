@@ -32,6 +32,7 @@ public class Trap : Item {
 	}
 
 	public virtual void trigger(GameObject other=null) {
+		Enemy.onTrapTrigger ();
 		                                                                
 	}
 }

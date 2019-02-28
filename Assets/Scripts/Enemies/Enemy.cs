@@ -203,6 +203,9 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	public virtual void onTrapTrigger() {
+
+	}
 	void OnTriggerEnter2D (Collider2D other) {
 		//I suppose you could use this code, but I liked code close to other functions.
 		//if (other.gameObject.tag == "NoSplatterZone") {

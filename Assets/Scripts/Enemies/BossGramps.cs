@@ -180,7 +180,9 @@ public class BossGramps : Enemy {
 		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 	}
 
-
+	public override void onTrapTrigger() {
+		
+	}
 	public override void takeBurnDamage(int damage) { 
 		takeDamage (damage);
 		//Limits how much damage gramps can take from burning
