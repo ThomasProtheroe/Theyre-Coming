@@ -43,6 +43,7 @@ public class Transition : Interactive {
 	private GameObject mainCamera;
 	protected GameController gc;
 	protected SoundController soundCon;
+	protected MusicController musicCon;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -51,6 +52,7 @@ public class Transition : Interactive {
 		anim = gameObject.GetComponent<Animator> ();
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
+		musicCon = GameObject.FindGameObjectWithTag ("MusicPlayer").GetComponent<MusicController> ();
 		inUse = false;
 		firstOpenAttempt = true;
 

@@ -32,5 +32,6 @@ public class LabEntrance : Transition {
 
 	public override void onPlayerTravel() {
 		gameCon.miscFadeOut ();
+		musicCon.fadeMusicOut ();
 	}
 }
