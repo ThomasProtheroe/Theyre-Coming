@@ -511,7 +511,9 @@ public class Enemy : MonoBehaviour {
 
 			//play disintigrate sound
 			anim.SetTrigger ("BurnDeath");
-			soundCon.playEnemyOneShot (disitingrateSound);
+			if (playerCon.currentArea == currentArea) {
+				soundCon.playEnemyOneShot (disitingrateSound);
+			}
 		} else {
 			anim.SetTrigger ("Death");
 		}
