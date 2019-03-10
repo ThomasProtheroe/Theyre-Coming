@@ -10,7 +10,6 @@ public class LabExit : Transition {
 	private PlayerController playerCon;
 	[SerializeField]
 	private ElevatorController elevatorCon;
-	public MusicController musicCon;
 
 	void Start() {
 		playerCon = GameObject.FindGameObjectWithTag ("Player").GetComponent <PlayerController> ();
