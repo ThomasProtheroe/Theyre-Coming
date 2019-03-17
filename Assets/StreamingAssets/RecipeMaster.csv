@@ -113,6 +113,11 @@ FlammablePipe,MetalPipeRag,GasCan,Weapons/FlammablePipe,
 FlammablePipe,MetalPipeRag,LighterFluid,Weapons/FlammablePipe,
 FlamingPipe,FlammablePipe,Lighter,Weapons/FlamingPipe,Lighter
 FlamingPipe,FlammablePipe,TapedLighter,Weapons/FlamingPipe,TapedLighter
+CurtainRodRag,CurtainRod,Rag,Weapons/CurtainRodRag,
+FlammableCurtainRod,CurtainRodRag,GasCan,Weapons/FlammableCurtainRod,
+FlammableCurtainRod,CurtainRodRag,LighterFluid,Weapons/FlammableCurtainRod,
+FireStaff,FlammableCurtainRod,Lighter,Weapons/FireStaff,Lighter
+FireStaff,FlammableCurtainRod,TapedLighter,Weapons/FireStaff,TapedLighter
 TapedBat,BaseballBat,DuctTape,Weapons/TapedBat,
 NailBat,TapedBat,Nails,Weapons/NailBat,
 ShardBat,TapedBat,GlassShards,Weapons/ShardBat,
@@ -210,6 +215,8 @@ DragonClaw,Garrador,TapedBlade,Weapons/DragonClaw,
 TapedBlender,Blender,DuctTape,Items/TapedBlender,
 Mulcher,TapedBlender,MetalPipe,Weapons/Mulcher,
 Mulcher,Blender,TapedPipe,Weapons/Mulcher,
+DrillArm,Blender,TapedGloves,Weapons/DrillArm,
+DrillArm,TapedBlender,RubberGloves,Weapons/DrillArm,
 HeavyBoxTrap,CardboardBox,Blender,Traps/HeavyBoxTrap,
 HeavyBoxTrap,CardboardBox,Brick,Traps/HeavyBoxTrap,
 HeavyBoxTrap,CardboardBox,TapedBrick,Traps/HeavyBoxTrap,
