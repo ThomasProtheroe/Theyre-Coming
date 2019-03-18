@@ -28,5 +28,7 @@ public class FireStaff : FlamingBat {
 		}
 		Vector2 globVelocity = new Vector2 (speed, 2.5f);
 		rb.velocity = globVelocity;
+
+		hitCount = 1;
 	}
 }
