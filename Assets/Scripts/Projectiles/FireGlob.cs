@@ -12,6 +12,7 @@ public class FireGlob : MonoBehaviour {
 
 	private bool isAirborn = true;
 
+
 	void FixedUpdate () {
 		if (isAirborn && transform.position.y < -2.9f) {
 			freezePosition ();
@@ -39,6 +40,14 @@ public class FireGlob : MonoBehaviour {
 				other.gameObject.GetComponent<Enemy> ().takeFireHit (passiveDamage);
 			} else if (other.gameObject.tag == "Player" && friendlyFire) {
 				other.gameObject.GetComponent<PlayerController> ().takeFireHit ();
+			}
+		}
+	}
+
+	public void enableCollisions() {
+		foreach (CircleCollider2D collider in GetComponents <CircleCollider2D> ()) {
+			if (!collider.isTrigger) {
+				collider.enabled = true;
 			}
 		}
 	}
