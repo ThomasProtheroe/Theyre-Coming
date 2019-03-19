@@ -20,6 +20,8 @@ public class FireStaff : FlamingBat {
 		FireGlob newGlob = Instantiate (fireGlob, new Vector3(transform.position.x, transform.position.y + 0.25f, 0), Quaternion.identity);
 		newGlob.friendlyFire = true;
 		newGlob.lifetime = fireLifetime;
+		newGlob.activeDamage = 2;
+		newGlob.enableCollisions ();
 
 		Rigidbody2D rb = newGlob.GetComponent<Rigidbody2D> ();
 		float speed = projectileSpeed;
