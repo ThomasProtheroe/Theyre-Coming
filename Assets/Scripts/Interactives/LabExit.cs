@@ -11,10 +11,6 @@ public class LabExit : Transition {
 	[SerializeField]
 	private ElevatorController elevatorCon;
 
-	void Start() {
-		playerCon = GameObject.FindGameObjectWithTag ("Player").GetComponent <PlayerController> ();
-	}
-
 	public override void onPlayerArrival() {
 		gameCon.deactivateAllEnemies ();
 		gameCon.pauseTimer ();
