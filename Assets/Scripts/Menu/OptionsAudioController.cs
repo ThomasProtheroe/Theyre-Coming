@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class OptionsAudioController : MonoBehaviour {
+	public GameObject keybindingsMenu;
 	public GameObject optionsMenu;
 	public GameObject mainMenu;
 
@@ -85,13 +86,21 @@ public class OptionsAudioController : MonoBehaviour {
 		PlayerPrefs.SetFloat ("effectsVolume", effectsSlider.value);
 	}
 
+	public void showKeybindingsMenu() {
+		keybindingsMenu.SetActive (true);
+		optionsMenu.SetActive (false);
+		mainMenu.SetActive (false);
+	}
+
 	public void showOptionsMenu() {
+		keybindingsMenu.SetActive (false);
 		optionsMenu.SetActive (true);
 		mainMenu.SetActive (false);
 	}
 
 	public void showMainMenu() {
 		saveAudioSettings ();
+		keybindingsMenu.SetActive (false);
 		optionsMenu.SetActive (false);
 		mainMenu.SetActive (true);
 	}
