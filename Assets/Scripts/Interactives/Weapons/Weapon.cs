@@ -13,9 +13,6 @@ public class Weapon : Item {
 
 	[Header("Special Attributes")]
 	public int multiHit = 1;
-	public bool inflictsBleed;
-	public bool inflictsBlind;
-	public bool inflictsBurning;
 	public bool instantAttack;
 	public bool inflictsShockwave;
 

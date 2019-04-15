@@ -18,6 +18,7 @@ public class Item : Interactive {
 	public bool usable = false;
 	private bool deparent = false;
 
+	[Header("Basic Attributes")]
 	public float xOffset;
 	public float yOffset;
 	public float zRotation;
@@ -27,6 +28,7 @@ public class Item : Interactive {
 	public int thrownKnockback;
 	public float throwRotation;
 	public int throwDirection = 0;
+	public int tier = -1;
 	public string type;
 	public string description;
 	public bool staticBreak = false;
@@ -35,6 +37,7 @@ public class Item : Interactive {
 	[SerializeField]
 	protected int attackType;
 
+	[Header("Sprites")]
 	[SerializeField]
 	protected Sprite displaySprite;
 	[SerializeField]
@@ -51,6 +54,7 @@ public class Item : Interactive {
 	public GameObject frontHand;
 	public GameObject backHand;
 
+	[Header("Sound Clips")]
 	public AudioClip throwSound;
 	public AudioClip throwImpact;
 	public AudioClip craftSound;
@@ -58,6 +62,11 @@ public class Item : Interactive {
 	public AudioClip swapSound;
 	public AudioClip breakSound;
 	public AudioClip craftOverrideSound;
+
+	[Header("Status Effects")]
+	public bool inflictsBleed;
+	public bool inflictsBlind;
+	public bool inflictsBurning;
 
 	protected SpriteRenderer sprite;
 	protected SoundController soundController;
@@ -298,6 +307,22 @@ public class Item : Interactive {
 
 	public virtual void onThrow() {
 		return;
+	}
+
+	public List<string> getStatusEffects() {
+		List<string> statusEffects = new List<string> ();
+
+		if (inflictsBleed) {
+			statusEffects.Add ("bleed");
+		}
+		if (inflictsBurning) {
+			statusEffects.Add ("burn");
+		}
+		if (inflictsBlind) {
+			statusEffects.Add ("blind");
+		}
+
+		return statusEffects;
 	}
 
 	public virtual void breakItem() {

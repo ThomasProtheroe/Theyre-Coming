@@ -14,11 +14,6 @@ public class FanTrap : Trap {
 	protected Animator anim;
 	private bool isPlaying;
 
-	[Header("Status Effects")]
-	public bool inflictsBleed;
-	public bool inflictsBlind;
-	public bool inflictsBurning;
-
 	protected override void Update () {
 		if (isDeployed) {
 			if (durability > 0 && playerCon.getCurrentArea ().name == deployedArea && !isPlaying) {

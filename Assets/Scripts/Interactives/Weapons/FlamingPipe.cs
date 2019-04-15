@@ -27,6 +27,8 @@ public class FlamingPipe : FlamingBat {
 		fp.GetComponent<Rigidbody2D> ().velocity = new Vector2 (speed, 0.0f);
 		fp.lifetime = 0.25f;
 		fp.damage = 1;
+
+		hitCount = 1;
 	}
 
 	private void playFlameBurst() {
