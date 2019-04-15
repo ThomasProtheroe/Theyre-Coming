@@ -52,7 +52,8 @@ public class GameController : MonoBehaviour {
 	public float effectsVolume;
 
 	[Header("Enemies")]
-	public Enemy enemy;
+	public Enemy zombie;
+	public Enemy runner;
 	public BossGramps boss;
 	public List<EnemySpawn> spawnZones = new List<EnemySpawn> ();
 	[HideInInspector]
@@ -208,7 +209,9 @@ public class GameController : MonoBehaviour {
 		//Dev mode specific functionality
 		if (Scenes.getParam ("devMode") != "false") {
 			if (Input.GetKeyDown ("t")) {
-				spawnEnemyRand ();
+				spawnEnemyRand (Constants.ENEMY_TYPE_NORMAL);
+			} else if (Input.GetKeyDown ("p")) {
+				spawnEnemyRand (Constants.ENEMY_TYPE_RUNNER);
 			} else if (Input.GetKeyDown ("u")) {
 				//Unlock all doors in dev mode
 				GameObject[] transitions = GameObject.FindGameObjectsWithTag("Transition");
@@ -257,14 +260,14 @@ public class GameController : MonoBehaviour {
 		if (Scenes.getParam("devMode") != "false") {
 			return;
 		}
-		spawnEnemy (spawnZones[2]);
+		spawnEnemy (spawnZones[2], Constants.ENEMY_TYPE_NORMAL);
 	}
 
 	private void checkForEnemySpawns() {
 		if (timer >= nextSpawn.spawnTime) {
-			if (!nextSpawn.isBoss) {
+			if (nextSpawn.enemyType != Constants.ENEMY_TYPE_BOSS) {
 				for (int i = 0; i < nextSpawn.spawnCount; i++) {
-					Invoke ("spawnEnemyRand", i * 0.3f);
+					spawnEnemyRand (nextSpawn.enemyType);
 				}
 				nextSpawn = SpawnMap.getNextSpawn ();
 			} else {
@@ -295,28 +298,26 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	void spawnEnemyRand() {
-		//Randomly select a spawn location based on spawn weighting
-		List<EnemySpawn> randomizer = new List<EnemySpawn>();
-		foreach (EnemySpawn spawner in spawnZones) {
-			for(int i=0; i < spawner.weight; i++) {
-				randomizer.Add (spawner);
-			}
-		}
-		EnemySpawn spawnZone = randomizer[UnityEngine.Random.Range(0, randomizer.Count)];
-
-		spawnEnemy (spawnZone);
+	void spawnEnemyRand(int enemyType=Constants.ENEMY_TYPE_NORMAL) {
+		//Wrapper for co-routine
+		StartCoroutine ("SpawnEnemyRand", enemyType);
 	}
 
-	void spawnEnemy(EnemySpawn spawnZone) {
+	void spawnEnemy(EnemySpawn spawnZone, int enemyType) {
 		float spawnLocX = spawnZone.transform.position.x;
 		spawnLocX += UnityEngine.Random.Range (spawnZone.maxOffset * -1, spawnZone.maxOffset + 1);
 
 		//Create and position the enemy
-		Enemy newEnemy = Instantiate (enemy, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
+		Enemy newEnemy;
+		if (enemyType == Constants.ENEMY_TYPE_RUNNER) {
+			newEnemy = Instantiate (runner, new Vector3(spawnLocX, runner.transform.position.y, 0), Quaternion.identity);
+		} else {
+			newEnemy = Instantiate (zombie, new Vector3(spawnLocX, zombie.transform.position.y, 0), Quaternion.identity);
+		}
+
 		enemies.Add (newEnemy);
 		//Invulnerable while they are spawning in
-		enemy.isInvulnerable = true;
+		newEnemy.isInvulnerable = true;
 
 		Area spawnArea = spawnZone.GetComponentInParent<Area>();
 		newEnemy.setCurrentArea (spawnArea);
@@ -336,7 +337,7 @@ public class GameController : MonoBehaviour {
 		spawnLocX += UnityEngine.Random.Range (spawnZone.maxOffset * -1, spawnZone.maxOffset + 1);
 
 		//Create and position the boss
-		BossGramps newBoss = Instantiate (boss, new Vector3(spawnLocX, enemy.transform.position.y, 0), Quaternion.identity);
+		BossGramps newBoss = Instantiate (boss, new Vector3(spawnLocX, zombie.transform.position.y, 0), Quaternion.identity);
 		enemies.Add (newBoss);
 		//Invulnerable while they are spawning in
 		newBoss.isInvulnerable = true;
@@ -518,11 +519,19 @@ public class GameController : MonoBehaviour {
 		dialogPanel.hideDialog ();
 	}
 
-	public void showDescription(string description) {
+	public void showDescription(string description, List<string> statusEffects, int tier=-1) {
 		if (dialogPanel.gameObject.activeSelf) {
 			return;
 		}
 		descriptionPanel.showDescription (description);
+
+		if (tier == -1) {
+			descriptionPanel.hideTierImage();
+		} else {
+			descriptionPanel.showTierImage (tier);
+		}
+
+		descriptionPanel.updateStatusIcons (statusEffects);
 	}
 
 	public void hideDescription() {
@@ -785,6 +794,21 @@ public class GameController : MonoBehaviour {
 			yield return null;
 		}
 		blackFade.SetActive (false);
+	}
+
+	IEnumerator SpawnEnemyRand(int enemyType) {
+		yield return new WaitForSeconds (0.3f);
+
+		//Randomly select a spawn location based on spawn weighting
+		List<EnemySpawn> randomizer = new List<EnemySpawn>();
+		foreach (EnemySpawn spawner in spawnZones) {
+			for(int i=0; i < spawner.weight; i++) {
+				randomizer.Add (spawner);
+			}
+		}
+		EnemySpawn spawnZone = randomizer[UnityEngine.Random.Range(0, randomizer.Count)];
+
+		spawnEnemy (spawnZone, enemyType);
 	}
 
 	IEnumerator spawnFade(Enemy enemy) {

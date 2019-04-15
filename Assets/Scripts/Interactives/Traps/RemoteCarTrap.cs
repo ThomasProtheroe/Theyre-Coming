@@ -16,10 +16,6 @@ public class RemoteCarTrap : Trap {
 	protected int knockback;
 	[SerializeField]
 	protected float speed;
-	[SerializeField]
-	private bool inflictsBleeding;
-	[SerializeField]
-	private bool inflictsBurning;
 
 	protected override void Start () {
 		anim = GetComponentInChildren<Animator> ();
@@ -39,7 +35,7 @@ public class RemoteCarTrap : Trap {
 				enemiesHit.Add (enemy);
 				float direction = transform.position.x - other.transform.position.x;
 				other.gameObject.GetComponent<Enemy> ().takeHit (damage, knockback, direction, false, attackType);
-				if (inflictsBleeding) {
+				if (inflictsBleed) {
 					enemy.setBleeding ();
 				}
 				if (inflictsBurning) {

@@ -426,10 +426,14 @@ public class PlayerController : MonoBehaviour {
 
 			//Update UI
 			updateItemSlot(itemController.getDisplaySprite());
-			if (itemController.description != "") {
-				gameCon.showDescription (itemController.description);
-			}
 
+			//TODO - Create status effeccts list if a Weapon, pass to showDescription
+			List<string> statusEffects = itemController.getStatusEffects();
+
+			if (itemController.description != "") {
+				gameCon.showDescription (itemController.description, statusEffects, itemController.tier);
+			}
+				
 			itemController.pickupItem(playerSprite.flipX);
 			hidePlayerHands ();
 
@@ -824,7 +828,10 @@ public class PlayerController : MonoBehaviour {
 			//Update UI box
 			updateItemSlot(itemCon.getDisplaySprite());
 			if (itemCon.description != "") {
-				gameCon.showDescription (itemCon.description);
+				//TODO - Create status effects list if a Weapon, pass to showDescription
+				List<string> statusEffects = itemCon.getStatusEffects();
+
+				gameCon.showDescription (itemCon.description, statusEffects, itemCon.tier);
 			}
 		}
 	}

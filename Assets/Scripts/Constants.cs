@@ -21,4 +21,9 @@ public class Constants {
 	public const int PLAYER_WOUND_LIGHT = 1;
 	public const int PLAYER_WOUND_MODERATE = 2;
 	public const int PLAYER_WOUND_HEAVY = 3;
+
+	/*** Enemy Types ***/
+	public const int ENEMY_TYPE_NORMAL = 0;
+	public const int ENEMY_TYPE_RUNNER = 1;
+	public const int ENEMY_TYPE_BOSS = 2;
 }
