@@ -50,6 +50,11 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected ParticleSystem[] burningDetailPS;
 
+	[SerializeField]
+	protected List<GameObject> headGiblets;
+	[SerializeField]
+	protected List<GameObject> bodyGiblets;
+
 	public float groundLevel;
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
@@ -107,7 +112,7 @@ public class Enemy : MonoBehaviour {
 		woundState = Constants.ENEMY_WOUND_NONE;
 
       
-		        //Let players pass through the enemy
+		//Let players pass through the enemy
         Physics2D.IgnoreCollision (player.GetComponent<CapsuleCollider2D>(), bodyHitbox);
 
 		StartCoroutine ("pushEnemiesAway");
@@ -457,14 +462,17 @@ public class Enemy : MonoBehaviour {
 		}
 		health -= damage;
 		if (health <= 0) {
-			killEnemy ();
+			bool gib = false;
+			if (damage > 11) {
+				gib = true;
+			}
+			killEnemy (gib);
 		} else {
 			updateWoundState ();
 			updateAnimLayer ();
 		}
         if (damage >= 5 && health <= 0){
             createBloodSplatter();
-
         }
 	}
 
@@ -488,7 +496,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void killEnemy() {
+	public void killEnemy(bool gib=false) {
 		onDeath ();
 
 		if (isAttacking) {
@@ -509,7 +517,10 @@ public class Enemy : MonoBehaviour {
 		bloodSprayPS.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 2.0f);
 
 		//Kill the burning detail particle systems before playing death animation (if active)
-		if (isBurning) {
+		if (gib) {
+			dismemberEnemy ();
+		}
+		else if (isBurning) {
 			foreach (ParticleSystem detailPS in burningDetailPS) {
 				detailPS.Stop ();
 			}
@@ -532,6 +543,35 @@ public class Enemy : MonoBehaviour {
 	public void destroyEnemy() {
 		//spawnCorpse ();
 		Destroy (gameObject);
+	}
+
+	public void dismemberEnemy() {
+		//Randomly select the gibs to use
+		List<GameObject> gibs = new List<GameObject> ();
+		int gibCount = Random.Range (4, 7);
+		for (int i = 0; i < gibCount; i++) {
+			int gibIndex = Random.Range (0, bodyGiblets.Count);
+			Debug.Log (bodyGiblets);
+			gibs.Add (bodyGiblets[gibIndex]);
+			bodyGiblets.RemoveAt (gibIndex);
+		}
+		gibs.Add (headGiblets[Random.Range(0, headGiblets.Count)]);
+
+		//De-parent gibs and launch them
+		foreach (GameObject giblet in gibs) {
+			giblet.SetActive (true);
+			giblet.transform.parent = null;
+
+			Rigidbody2D body = giblet.GetComponent<Rigidbody2D> ();
+			body.bodyType = RigidbodyType2D.Dynamic;
+			body.AddForce (new Vector2 (Random.Range(-800, 800), Random.Range(200, 900)));
+			body.AddTorque (50.0f);
+
+			giblet.GetComponent<Giblet> ().startBloodTrail ();
+			giblet.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", Random.Range(5f, 10f));
+		}
+
+		destroyEnemy ();
 	}
 
 	private void spawnCorpse() {
@@ -564,7 +604,7 @@ public class Enemy : MonoBehaviour {
 		BloodSplatter blood = (BloodSplatter) Instantiate(bsList[i]);
 
 		blood.transform.position = transform.position;
-		blood.transform.localScale =  Vector3.one * Random.Range(0.1f,0.5f);
+		blood.transform.localScale =  Vector3.one * Random.Range(0.2f,0.6f);
 		//Not happy with the sizing. I want something tide to weapon damage, but more realistic.
 		//float newScale = 0.5f + (damage * 0.1f);
 		//blood.transform.localScale = new Vector3(newScale, newScale, 0.5f);

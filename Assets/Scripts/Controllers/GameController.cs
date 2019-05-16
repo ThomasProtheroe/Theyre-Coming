@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour {
 	public AudioSource source;
 	public MusicController musicPlayer;
 	public SoundController soundCon;
+
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
 	private AudioClip[][] attackSoundMaster;
@@ -45,6 +46,9 @@ public class GameController : MonoBehaviour {
 	public AudioClip[] attackSounds3;
 	public AudioClip[] attackSounds4;
 	public AudioClip[] attackSounds5;
+
+	public AudioClip[] runnerProwlingSounds;
+	public AudioClip[] runnerWalkSounds;
 
 	//Audio multipliers
 	public float masterVolume;
@@ -311,8 +315,20 @@ public class GameController : MonoBehaviour {
 		Enemy newEnemy;
 		if (enemyType == Constants.ENEMY_TYPE_RUNNER) {
 			newEnemy = Instantiate (runner, new Vector3(spawnLocX, runner.transform.position.y, 0), Quaternion.identity);
+
+			//Select a random walk, prowl and attack sound and assign them to the new enemy
+			int vocalType = UnityEngine.Random.Range(0,4);
+			newEnemy.setProwlSound(runnerProwlingSounds[vocalType]);
+			newEnemy.addAttackSound (attackSoundMaster[vocalType]);
+			newEnemy.setWalkSound(runnerWalkSounds[UnityEngine.Random.Range(0,4)]);
 		} else {
 			newEnemy = Instantiate (zombie, new Vector3(spawnLocX, zombie.transform.position.y, 0), Quaternion.identity);
+
+			//Select a random walk, prowl and attack sound and assign them to the new enemy
+			int vocalType = UnityEngine.Random.Range(0,5);
+			newEnemy.setProwlSound(prowlingSounds[vocalType]);
+			newEnemy.addAttackSound (attackSoundMaster[vocalType]);
+			newEnemy.setWalkSound(walkSounds[UnityEngine.Random.Range(0,5)]);
 		}
 
 		enemies.Add (newEnemy);
@@ -321,12 +337,6 @@ public class GameController : MonoBehaviour {
 
 		Area spawnArea = spawnZone.GetComponentInParent<Area>();
 		newEnemy.setCurrentArea (spawnArea);
-
-		//Select a random walk, prowl and attack sound and assign them to the new enemy
-		int vocalType = UnityEngine.Random.Range(0,5);
-		newEnemy.setProwlSound(prowlingSounds[vocalType]);
-		newEnemy.addAttackSound (attackSoundMaster[vocalType]);
-		newEnemy.setWalkSound(walkSounds[UnityEngine.Random.Range(0,5)]);
 
 		//Fade the enemy sprite in from black
 		StartCoroutine("spawnFade", newEnemy);
