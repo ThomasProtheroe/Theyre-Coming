@@ -84,7 +84,11 @@ public class FlameFanTrap : FanTrap {
 		foreach(RaycastHit2D collision in enemies) {
 			float direction = transform.position.x - collision.transform.position.x;
 
-			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (Mathf.RoundToInt(13f - collision.distance), 3, direction, true);
+			int damageDone = Mathf.RoundToInt (13f - collision.distance);
+			if (damageDone > 11) {
+				collision.transform.gameObject.GetComponent<Enemy> ().GetComponent<Enemy> ().setGibOnDeath (true);
+			}
+			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (damageDone, 3, direction, true);
 
 		}
 

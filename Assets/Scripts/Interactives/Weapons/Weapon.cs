@@ -59,6 +59,9 @@ public class Weapon : Item {
 			}
 			hitCount ++;
 			float direction = player.transform.position.x - other.transform.position.x;
+			if (inflictsGib) {
+				other.gameObject.GetComponent<Enemy> ().setGibOnDeath (true);
+			}
 			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction, false, attackType);
 			onEnemyImpact (other.gameObject);
 		}
