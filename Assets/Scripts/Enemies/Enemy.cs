@@ -78,6 +78,7 @@ public class Enemy : MonoBehaviour {
 	protected bool isDead;
 	protected bool isStaggered;
 	protected bool isNotSplattering;
+	protected bool gibOnDeath;
 
 	protected bool walkSoundPlaying;
 	protected bool prowlSoundPlaying;
@@ -462,11 +463,7 @@ public class Enemy : MonoBehaviour {
 		}
 		health -= damage;
 		if (health <= 0) {
-			bool gib = false;
-			if (damage > 11) {
-				gib = true;
-			}
-			killEnemy (gib);
+			killEnemy ();
 		} else {
 			updateWoundState ();
 			updateAnimLayer ();
@@ -496,7 +493,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void killEnemy(bool gib=false) {
+	public void killEnemy() {
 		onDeath ();
 
 		if (isAttacking) {
@@ -516,11 +513,11 @@ public class Enemy : MonoBehaviour {
 		bloodSprayPS.transform.parent = null;
 		bloodSprayPS.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 2.0f);
 
-		//Kill the burning detail particle systems before playing death animation (if active)
-		if (gib) {
+		if (gibOnDeath) {
 			dismemberEnemy ();
 		}
 		else if (isBurning) {
+			//Kill the burning detail particle systems before playing death animation (if active)
 			foreach (ParticleSystem detailPS in burningDetailPS) {
 				detailPS.Stop ();
 			}
@@ -545,13 +542,16 @@ public class Enemy : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
+	public void setGibOnDeath(bool gib) {
+		gibOnDeath = gib;
+	}
+
 	public void dismemberEnemy() {
 		//Randomly select the gibs to use
 		List<GameObject> gibs = new List<GameObject> ();
 		int gibCount = Random.Range (4, 7);
 		for (int i = 0; i < gibCount; i++) {
 			int gibIndex = Random.Range (0, bodyGiblets.Count);
-			Debug.Log (bodyGiblets);
 			gibs.Add (bodyGiblets[gibIndex]);
 			bodyGiblets.RemoveAt (gibIndex);
 		}
@@ -564,7 +564,7 @@ public class Enemy : MonoBehaviour {
 
 			Rigidbody2D body = giblet.GetComponent<Rigidbody2D> ();
 			body.bodyType = RigidbodyType2D.Dynamic;
-			body.AddForce (new Vector2 (Random.Range(-800, 800), Random.Range(200, 900)));
+			body.AddForce (new Vector2 (Random.Range(-800, 800), Random.Range(100, 700)));
 			body.AddTorque (50.0f);
 
 			giblet.GetComponent<Giblet> ().startBloodTrail ();
@@ -809,7 +809,7 @@ public class Enemy : MonoBehaviour {
 		if (player.GetComponent<PlayerController>().currentArea != currentArea) {
 			return;
 		}
-		soundCon.playEnemyOneShot (attackSounds[Random.Range(0, attackSounds.Count - 1)]);
+		soundCon.playEnemyOneShot (attackSounds[Random.Range(0, attackSounds.Count)]);
 	}
 
 	private void playIgniteSound() {

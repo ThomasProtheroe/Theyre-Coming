@@ -67,6 +67,7 @@ public class Item : Interactive {
 	public bool inflictsBleed;
 	public bool inflictsBlind;
 	public bool inflictsBurning;
+	public bool inflictsGib;
 
 	protected SpriteRenderer sprite;
 	protected SoundController soundController;

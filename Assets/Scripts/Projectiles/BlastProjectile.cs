@@ -47,7 +47,12 @@ public class BlastProjectile : BaseProjectile {
 		foreach(RaycastHit2D collision in enemies) {
 			float direction = transform.position.x - collision.transform.position.x;
 
-			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (Mathf.RoundToInt(15f - collision.distance), 3, direction, false);
+			int damageDone = Mathf.RoundToInt (15f - collision.distance);
+			if (damageDone > 11) {
+				collision.transform.gameObject.GetComponent<Enemy> ().GetComponent<Enemy> ().setGibOnDeath (true);
+			}
+				
+			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (damageDone, 3, direction, false);
 
 		}
 

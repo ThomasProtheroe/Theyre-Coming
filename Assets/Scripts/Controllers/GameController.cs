@@ -40,15 +40,18 @@ public class GameController : MonoBehaviour {
 
 	public AudioClip[] prowlingSounds;
 	public AudioClip[] walkSounds;
-	private AudioClip[][] attackSoundMaster;
-	public AudioClip[] attackSounds1;
-	public AudioClip[] attackSounds2;
-	public AudioClip[] attackSounds3;
-	public AudioClip[] attackSounds4;
-	public AudioClip[] attackSounds5;
+	private AudioClip[][] zombieAttackSoundMaster;
+	public AudioClip[] zombieAttackSounds1;
+	public AudioClip[] zombieAttackSounds2;
+	public AudioClip[] zombieAttackSounds3;
+	public AudioClip[] zombieAttackSounds4;
+	public AudioClip[] zombieAttackSounds5;
 
 	public AudioClip[] runnerProwlingSounds;
 	public AudioClip[] runnerWalkSounds;
+	private AudioClip[][] runnerAttackSoundMaster;
+	public AudioClip[] runnerAttackSounds1;
+	public AudioClip[] runnerAttackSounds2;
 
 	//Audio multipliers
 	public float masterVolume;
@@ -106,12 +109,16 @@ public class GameController : MonoBehaviour {
 		nextSpawn = SpawnMap.getNextSpawn ();
 		nextCinematic = CinematicMap.getNextCinematic ();
 
-		attackSoundMaster = new AudioClip[5][];
-		attackSoundMaster [0] = attackSounds1;
-		attackSoundMaster [1] = attackSounds2;
-		attackSoundMaster [2] = attackSounds3;
-		attackSoundMaster [3] = attackSounds4;
-		attackSoundMaster [4] = attackSounds5;
+		zombieAttackSoundMaster = new AudioClip[5][];
+		zombieAttackSoundMaster [0] = zombieAttackSounds1;
+		zombieAttackSoundMaster [1] = zombieAttackSounds2;
+		zombieAttackSoundMaster [2] = zombieAttackSounds3;
+		zombieAttackSoundMaster [3] = zombieAttackSounds4;
+		zombieAttackSoundMaster [4] = zombieAttackSounds5;
+
+		runnerAttackSoundMaster = new AudioClip[2][];
+		runnerAttackSoundMaster [0] = runnerAttackSounds1;
+		runnerAttackSoundMaster [1] = runnerAttackSounds2;
 
 		doorShakeMap = new Queue<float>();
 		doorShakeMap.Enqueue(71.33f);
@@ -318,16 +325,21 @@ public class GameController : MonoBehaviour {
 
 			//Select a random walk, prowl and attack sound and assign them to the new enemy
 			int vocalType = UnityEngine.Random.Range(0,4);
-			newEnemy.setProwlSound(runnerProwlingSounds[vocalType]);
-			newEnemy.addAttackSound (attackSoundMaster[vocalType]);
 			newEnemy.setWalkSound(runnerWalkSounds[UnityEngine.Random.Range(0,4)]);
+			newEnemy.setProwlSound(runnerProwlingSounds[vocalType]);
+			//We have shared attack sounds between certain vocal types
+			if (vocalType == 0 || vocalType == 1) {
+				newEnemy.addAttackSound (runnerAttackSoundMaster [0]);
+			} else {
+				newEnemy.addAttackSound (runnerAttackSoundMaster [1]);
+			}
 		} else {
 			newEnemy = Instantiate (zombie, new Vector3(spawnLocX, zombie.transform.position.y, 0), Quaternion.identity);
 
 			//Select a random walk, prowl and attack sound and assign them to the new enemy
 			int vocalType = UnityEngine.Random.Range(0,5);
 			newEnemy.setProwlSound(prowlingSounds[vocalType]);
-			newEnemy.addAttackSound (attackSoundMaster[vocalType]);
+			newEnemy.addAttackSound (zombieAttackSoundMaster[vocalType]);
 			newEnemy.setWalkSound(walkSounds[UnityEngine.Random.Range(0,5)]);
 		}
 
@@ -358,7 +370,7 @@ public class GameController : MonoBehaviour {
 		//Set unique boss sounds
 		int vocalType = UnityEngine.Random.Range(0,5);
 		newBoss.setProwlSound(prowlingSounds[vocalType]);
-		newBoss.addAttackSound (attackSoundMaster[vocalType]);
+		newBoss.addAttackSound (zombieAttackSoundMaster[vocalType]);
 		newBoss.setWalkSound(walkSounds[UnityEngine.Random.Range(0,5)]);
 
 		//Fade the enemy sprite in from black
