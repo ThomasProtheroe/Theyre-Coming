@@ -37,31 +37,6 @@ public class BlastProjectile : BaseProjectile {
 	private void explode() {
 		Instantiate (explosion, transform.position, Quaternion.identity);
 
-		//Raycast to get all enemies/players, deal damage to them
-		var list = new List<RaycastHit2D> ();
-		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.right, 10f, 1 << LayerMask.NameToLayer("Enemy")));
-		list.AddRange (Physics2D.RaycastAll(transform.position, Vector2.left, 10f, 1 << LayerMask.NameToLayer("Enemy")));
-
-		RaycastHit2D[] enemies = list.ToArray ();
-
-		foreach(RaycastHit2D collision in enemies) {
-			float direction = transform.position.x - collision.transform.position.x;
-
-			int damageDone = Mathf.RoundToInt (15f - collision.distance);
-			if (damageDone > 11) {
-				collision.transform.gameObject.GetComponent<Enemy> ().GetComponent<Enemy> ().setGibOnDeath (true);
-			}
-				
-			collision.transform.gameObject.GetComponent<Enemy> ().takeHit (damageDone, 3, direction, false);
-
-		}
-
-		if (Mathf.Abs(player.transform.position.x - transform.position.x) < 2) {
-			player.takeHit (2);
-		}
-
-		player.gameCon.shakeCamera (0.5f, 0.2f);
-
 		Destroy (gameObject);
 	}
 }
