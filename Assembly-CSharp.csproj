@@ -87,6 +87,7 @@
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\HomemadeCannon.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\HomemadeFlamethrower.cs" />
      <Compile Include="Assets\Scripts\Interactives\RangedWeapons\RangedWeapon.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Throwables\Grenade.cs" />
      <Compile Include="Assets\Scripts\Interactives\Throwables\Molotov.cs" />
      <Compile Include="Assets\Scripts\Interactives\Throwables\Throwable.cs" />
      <Compile Include="Assets\Scripts\Interactives\Transition.cs" />

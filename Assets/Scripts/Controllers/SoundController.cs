@@ -361,5 +361,4 @@ public class SoundController : MonoBehaviour {
 		source.Play ();
 		queue.RemoveAt (0);
 	}
-
 }
