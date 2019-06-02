@@ -426,12 +426,10 @@ public class PlayerController : MonoBehaviour {
 
 			//Update UI
 			updateItemSlot(itemController.getDisplaySprite());
-
-			//TODO - Create status effeccts list if a Weapon, pass to showDescription
 			List<string> statusEffects = itemController.getStatusEffects();
 
-			if (itemController.description != "") {
-				gameCon.showDescription (itemController.description, statusEffects, itemController.tier);
+			if (itemController.description != "" || itemController.itemName != "") {
+				gameCon.showDescription (itemController.itemName, itemController.description, statusEffects, itemController.tier);
 			}
 				
 			itemController.pickupItem(playerSprite.flipX);
@@ -827,12 +825,15 @@ public class PlayerController : MonoBehaviour {
 
 			//Update UI box
 			updateItemSlot(itemCon.getDisplaySprite());
-			if (itemCon.description != "") {
-				//TODO - Create status effects list if a Weapon, pass to showDescription
+			if (itemCon.description != "" || itemCon.itemName != "") {
+				//Create status effects list if a Weapon, pass to showDescription
 				List<string> statusEffects = itemCon.getStatusEffects();
 
-				gameCon.showDescription (itemCon.description, statusEffects, itemCon.tier);
+				gameCon.showDescription (itemCon.itemName, itemCon.description, statusEffects, itemCon.tier);
 			}
+
+			//Play fanfare for high-tier items
+			gameCon.startCraftingFanfare (itemCon);
 		}
 	}
 }

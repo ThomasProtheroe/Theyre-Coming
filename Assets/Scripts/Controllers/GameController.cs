@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private DescriptionPanel descriptionPanel;
 	[SerializeField]
+	private GameObject inventoryPanel;
+	[SerializeField]
 	private Sprite[] dialogSprites;
 	[SerializeField]
 	private AudioClip[] cinematicSounds;
@@ -78,6 +80,7 @@ public class GameController : MonoBehaviour {
 	[HideInInspector]
 	public int[] killTotals;
 	private int itemsCrafted;
+	private List<String> craftedTier1;
 
 	private bool isGameOver;
 	[HideInInspector]
@@ -150,6 +153,7 @@ public class GameController : MonoBehaviour {
 		Time.timeScale = 1.0f;
 
 		killTotals = new int[6];
+		craftedTier1 = new List<string> ();
 
 		if (devMode == "false") {
 			//Leave the cursor visible in dev mode for debugging purposes
@@ -541,11 +545,14 @@ public class GameController : MonoBehaviour {
 		dialogPanel.hideDialog ();
 	}
 
-	public void showDescription(string description, List<string> statusEffects, int tier=-1) {
+	public void showDescription(string itemName, string description, List<string> statusEffects, int tier=-1) {
 		if (dialogPanel.gameObject.activeSelf) {
 			return;
 		}
-		descriptionPanel.showDescription (description);
+		string[] text = new string[2];
+		text [0] = itemName;
+		text [1] = description;
+		descriptionPanel.showDescription (text);
 
 		if (tier == -1) {
 			descriptionPanel.hideTierImage();
@@ -690,6 +697,13 @@ public class GameController : MonoBehaviour {
 		StartCoroutine ("VictoryFade");
 	}
 
+	public void startCraftingFanfare(Item item) {
+		if (item.tier == 1 && item.craftingFanfare != null && !craftedTier1.Contains(item.itemName)) {
+			craftedTier1.Add (item.itemName);
+			StartCoroutine ("CraftingFanfare", item);
+		}
+	}
+
 	public void deactivateAllEnemies() {
 		//Set any existing enemies to idle
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
@@ -816,6 +830,57 @@ public class GameController : MonoBehaviour {
 			yield return null;
 		}
 		blackFade.SetActive (false);
+	}
+
+	IEnumerator CraftingFanfare(Item item) {
+		//Pause game
+		Time.timeScale = 0.0f;
+		isPaused = true;
+		soundCon.pauseAll ();
+
+		//Darken screen except for Item and description boxes
+		Vector3 target = GameObject.FindGameObjectWithTag("CanvasCenter").transform.position;
+		Vector3 restingPosition = descriptionPanel.transform.position;
+		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
+		Color startColor = sprite.color;
+		startColor.a = 0.0f;
+		sprite.color = startColor;
+		blackFade.SetActive (true);
+		for (float f = 0.0f; f < 0.5f; f += 0.03f) {
+			Color spriteColor = sprite.color;
+			spriteColor.a = f;
+			sprite.color = spriteColor;
+
+			//Move the UI boxes towards the center of the screen
+			//Description Box
+			descriptionPanel.transform.position = Vector3.MoveTowards(descriptionPanel.transform.position, new Vector3(descriptionPanel.transform.position.x, target.y), 3.0f);
+			inventoryPanel.transform.position = Vector3.MoveTowards(inventoryPanel.transform.position, new Vector3(inventoryPanel.transform.position.x, target.y), 3.0f);
+
+			yield return null;
+		}
+
+		//Highlight/shine item sprite and play fanfare
+		soundCon.playPriorityOneShot(item.craftingFanfare);
+
+		yield return new WaitForSecondsRealtime (item.craftingFanfare.length * 0.75f);
+
+		//Unpause game and brighten screen when fanfare is complete
+		for (float f = 0.5f; f > 0.0f; f -= 0.03f) {
+			Color spriteColor = sprite.color;
+			spriteColor.a = f;
+			sprite.color = spriteColor;
+
+			//Return UI to original position
+			descriptionPanel.transform.position = Vector3.MoveTowards(descriptionPanel.transform.position, new Vector3(descriptionPanel.transform.position.x, restingPosition.y), 3.0f);
+			inventoryPanel.transform.position = Vector3.MoveTowards(inventoryPanel.transform.position, new Vector3(inventoryPanel.transform.position.x, restingPosition.y), 3.0f);
+
+			yield return null;
+		}
+		blackFade.SetActive (false);
+
+		Time.timeScale = 1.0f;
+		isPaused = false;
+		soundCon.playAll ();
 	}
 
 	IEnumerator SpawnEnemyRand(int enemyType) {

@@ -30,6 +30,7 @@ public class Item : Interactive {
 	public int throwDirection = 0;
 	public int tier = -1;
 	public string type;
+	public string itemName;
 	public string description;
 	public bool staticBreak = false;
 
@@ -62,6 +63,7 @@ public class Item : Interactive {
 	public AudioClip swapSound;
 	public AudioClip breakSound;
 	public AudioClip craftOverrideSound;
+	public AudioClip craftingFanfare;
 
 	[Header("Status Effects")]
 	public bool inflictsBleed;
@@ -85,6 +87,7 @@ public class Item : Interactive {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerCon = player.GetComponent<PlayerController> ();
 		soundController = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
+		//Don't escape newline characters in item description
 		description = description.Replace ("\\n", "\n");
 		sprite = GetComponent<SpriteRenderer> ();
 	}
