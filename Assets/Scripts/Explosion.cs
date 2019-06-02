@@ -10,8 +10,6 @@ public class Explosion : MonoBehaviour {
 	private AudioClip meatyExplosionSound;
 	private PlayerController player;
 
-	private bool enemyHit;
-
 	// Use this for initialization
 	void Start () {
 		//Raycast to get all enemies/players, deal damage to them
@@ -50,9 +48,5 @@ public class Explosion : MonoBehaviour {
 	
 	protected void destroyOnFinish() {
 		Destroy (gameObject);
-	}
-
-	public void setEnemyHit(bool hit) {
-		enemyHit = hit;
 	}
 }
