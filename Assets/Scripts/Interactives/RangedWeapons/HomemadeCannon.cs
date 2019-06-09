@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HomemadeCannon : RangedWeapon {
 
+	public Animator anim;
 	public ParticleSystem smokePS;
 	public ParticleSystem projectilePS;
 	public BaseProjectile projectile;
@@ -14,6 +15,8 @@ public class HomemadeCannon : RangedWeapon {
 	override public void fire() {
 		isAttacking = true;
 		smokePS.Play ();
+
+		//anim.SetTrigger ("Attack");
 		if (projectilePS != null) {
 			projectilePS.Play ();
 		}
@@ -25,8 +28,6 @@ public class HomemadeCannon : RangedWeapon {
 		setEmpty ();
 
 		base.fire ();
-
-		Invoke ("stopAttacking", 0.5f);
 	}
 
 	public new void setEmpty() {

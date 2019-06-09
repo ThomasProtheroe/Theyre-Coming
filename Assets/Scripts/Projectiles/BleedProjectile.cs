@@ -44,6 +44,11 @@ public class BleedProjectile : BaseProjectile {
 
 	protected override bool hitTarget(Enemy target) {
 		if (!target.isInvulnerable && !target.getIsDead ()) {
+			if (player == null) {
+				player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
+				enemiesHit = new List<Enemy> ();
+				soundController = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
+			}
 			float direction = player.transform.position.x - target.transform.position.x;
 			target.takeHit (damage, knockback, direction, false, Constants.ATTACK_TYPE_PROJECTILE);
 			target.setBleeding ();
