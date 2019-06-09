@@ -862,7 +862,7 @@ public class GameController : MonoBehaviour {
 		//Highlight/shine item sprite and play fanfare
 		soundCon.playPriorityOneShot(item.craftingFanfare);
 
-		yield return new WaitForSecondsRealtime (item.craftingFanfare.length * 0.75f);
+		yield return new WaitForSecondsRealtime (item.craftingFanfare.length * 0.65f);
 
 		//Unpause game and brighten screen when fanfare is complete
 		for (float f = 0.5f; f > 0.0f; f -= 0.03f) {
