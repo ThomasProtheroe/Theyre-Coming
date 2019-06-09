@@ -5,6 +5,20 @@ using UnityEngine;
 public class HeavyBoxTrap : Trap {
 	
 	public int damage;
+	[Header("Bleed Properties")]
+	[SerializeField]
+	private bool spawnBleedProjectiles;
+	[SerializeField]
+	private ParticleSystem bleedPS;
+	[SerializeField]
+	private BleedProjectile bleedProjectile;
+	[SerializeField]
+	private float projectileSpeed;
+	[SerializeField]
+	private float projectileLifetime;
+	[SerializeField]
+	private SpikeTrap spikeTrap;
+	[Header("Molotov Properties")]
 	[SerializeField]
 	private bool spawnFire;
 	[SerializeField]
@@ -102,23 +116,44 @@ public class HeavyBoxTrap : Trap {
 	}
 		
 	public override bool onBreak() {
-		if (!spawnFire) {
+		if (spawnFire) {
+			for (int i = 0; i < globCount; i++) {
+				FireGlob newGlob = Instantiate (fireGlob, new Vector3(transform.position.x, transform.position.y + 0.25f, 0), Quaternion.identity);
+				newGlob.friendlyFire = true;
+				newGlob.lifetime = fireLifetime;
+
+				Rigidbody2D rb = newGlob.GetComponent<Rigidbody2D> ();
+				rb.velocity = new Vector2 (UnityEngine.Random.Range(minXVel, maxXVel), UnityEngine.Random.Range(minYVel, maxYVel));
+			}
+
+			//Return true so we don't play the breaking animation
+			return true;
+		}
+
+		if (spawnBleedProjectiles) {
+			bleedPS.Play ();
+
+			BleedProjectile rightProjectile = Instantiate (bleedProjectile, new Vector3 (transform.position.x, transform.position.y), Quaternion.identity);
+			rightProjectile.lifetime = projectileLifetime;
+			rightProjectile.GetComponent<Rigidbody2D> ().velocity = new Vector2 (projectileSpeed, 0.0f); 
+			rightProjectile.fire ();
+
+			BleedProjectile leftProjectile = Instantiate (bleedProjectile, new Vector3 (transform.position.x, transform.position.y), Quaternion.identity);
+			leftProjectile.lifetime = projectileLifetime;
+			leftProjectile.GetComponent<Rigidbody2D> ().velocity = new Vector2 (projectileSpeed * -1, 0.0f);
+			leftProjectile.fire ();
+
+			//Spawn spike trap
+			SpikeTrap newTrap = Instantiate (spikeTrap);
+			newTrap.manualStart ();
+			newTrap.transform.position = new Vector2 (transform.position.x, transform.position.y);
+			newTrap.durability = 5;
+			newTrap.moveToDeployPos ();
+			newTrap.delayDeployment (1.5f);
+
 			return false;
 		}
 
-		//Hack solution to collision problem when spawning fire globs
-		//float newYPos = transform.position.y + 0.1f;
-
-		for (int i = 0; i < globCount; i++) {
-			FireGlob newGlob = Instantiate (fireGlob, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-			newGlob.friendlyFire = true;
-			newGlob.lifetime = fireLifetime;
-
-			Rigidbody2D rb = newGlob.GetComponent<Rigidbody2D> ();
-			rb.velocity = new Vector2 (UnityEngine.Random.Range(minXVel, maxXVel), UnityEngine.Random.Range(minYVel, maxYVel));
-		}
-
-		//Return true so we don't play the breaking animation
-		return true;
+		return false;
 	}
 }

@@ -38,6 +38,11 @@ public class SpikeTrap : Trap {
 		}
 	}
 
+	public void delayDeployment(float delayTime) {
+		isDeployed = false;
+		Invoke ("deploy", delayTime);
+	}
+
 	public override void deploy() {
 		transform.parent = null;
 		hitCollider.enabled = false;
