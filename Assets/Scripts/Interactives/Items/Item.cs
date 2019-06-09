@@ -40,6 +40,8 @@ public class Item : Interactive {
 
 	[Header("Sprites")]
 	[SerializeField]
+	protected List<GameObject> decorativeSprites;
+	[SerializeField]
 	protected Sprite displaySprite;
 	[SerializeField]
 	protected Sprite bloodySprite1;
@@ -189,6 +191,11 @@ public class Item : Interactive {
 		if (hiddenItem != null) {
 			hiddenItem.transform.parent = null;
 			hiddenItem.SetActive(true);
+		}
+
+		//Handle decorative sprites attached to the item
+		foreach (GameObject decorativeSprite in decorativeSprites) {
+			decorativeSprite.GetComponent<DecorativeSprite> ().breakSprite();
 		}
 
 		if (playSound && pickupSound) {
