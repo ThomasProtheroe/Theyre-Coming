@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private GameObject inventoryPanel;
 	[SerializeField]
+	private GameObject craftingTwinkle;
+	[SerializeField]
 	private Sprite[] dialogSprites;
 	[SerializeField]
 	private AudioClip[] cinematicSounds;
@@ -36,7 +38,6 @@ public class GameController : MonoBehaviour {
 	public int prepTime;
 
 	[Header("Audio Control")]
-	public AudioSource source;
 	public MusicController musicPlayer;
 	public SoundController soundCon;
 
@@ -103,7 +104,6 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerCon = player.GetComponent<PlayerController> ();
-		source = GetComponent<AudioSource> ();
 
 		SpawnMap.rebuildMap ();
 		CinematicMap.rebuildMap ();
@@ -305,8 +305,7 @@ public class GameController : MonoBehaviour {
 				}
 			}
 			if (nextCinematic.clipIndex != -1) {
-				source.clip = cinematicSounds[nextCinematic.clipIndex];
-				source.Play ();
+				soundCon.playEnvironmentalSound (cinematicSounds[nextCinematic.clipIndex], false);
 			}
 
 			nextCinematic = CinematicMap.getNextCinematic ();
@@ -567,6 +566,20 @@ public class GameController : MonoBehaviour {
 		descriptionPanel.hideDescription ();
 	}
 
+	private void createTwinkle(Item item) {
+		Vector3 position = RandomPointInBounds (item.hitCollider.bounds);
+		GameObject twinkle = Instantiate (craftingTwinkle, position, Quaternion.identity);
+		twinkle.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 1.0f);
+	}
+
+	public static Vector3 RandomPointInBounds(Bounds bounds) {
+		return new Vector3(
+			UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+			UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+			UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
+		);
+	}
+
 	private void startIntro() {
 		skipText.gameObject.SetActive (true);
 		playerCon.itemSlot1.gameObject.SetActive(false);
@@ -632,7 +645,6 @@ public class GameController : MonoBehaviour {
 
 		soundCon.updateVolume(masterVolume * effectsVolume);
 		playerCon.updateVolume (masterVolume * effectsVolume);
-		source.volume = masterVolume * effectsVolume;
 	}
 
 	private void endGameCalculations() {
@@ -743,7 +755,7 @@ public class GameController : MonoBehaviour {
 	IEnumerator playIntro() {
 		currentCinematic = "playIntro";
 
-		source.PlayOneShot (cinematicSounds[0]);
+		soundCon.playEnvironmentalSound(cinematicSounds[0], false);
 		playerCon.moveInput = -1.0f;
 
 		yield return new WaitForSeconds (0.7f);
@@ -862,7 +874,59 @@ public class GameController : MonoBehaviour {
 		//Highlight/shine item sprite and play fanfare
 		soundCon.playPriorityOneShot(item.craftingFanfare);
 
-		yield return new WaitForSecondsRealtime (item.craftingFanfare.length * 0.65f);
+
+		float twinkleInterval = 0.15f;
+		float nextTwinkle = 0.0f;
+		float itemShineDuration = 0.0f;
+		SpriteRenderer itemSprite = item.GetComponent<SpriteRenderer> ();
+		//Turn yellow over time
+		for (float f = 1f; f >= 0.2f; f -= 0.03f) {
+			Color c = itemSprite.material.color;
+			c.r = 0.95f;
+			c.g = (1.0f - ((1.0f - f) / 3));
+			c.b = f;
+			itemSprite.material.color = c;
+
+			itemShineDuration += Time.unscaledDeltaTime;
+			if (nextTwinkle <= 0.0f) {
+				createTwinkle (item);
+				nextTwinkle = twinkleInterval;
+			} else {
+				nextTwinkle -= Time.unscaledDeltaTime;
+			}
+
+			yield return null;
+		}
+
+		//Turn back to original color
+		nextTwinkle = 0.0f;
+		for (float f = 0.2f; f <= 1; f += 0.03f) {
+			Color c = itemSprite.material.color;
+			c.r = 0.95f;
+			c.g = (1.0f - ((1.0f - f) / 3));
+			c.b = f;
+			itemSprite.material.color = c;
+
+			itemShineDuration += Time.unscaledDeltaTime;
+			if (nextTwinkle <= 0.0f) {
+				createTwinkle (item);
+				nextTwinkle = twinkleInterval;
+			} else {
+				nextTwinkle -= Time.unscaledDeltaTime;
+			}
+			yield return null;
+		}
+		Color col = itemSprite.material.color;
+		col.r = 1.0f;
+		col.g = 1.0f;
+		col.b = 1.0f;
+		itemSprite.material.color = col;
+
+		float additionalWaitTime = (item.craftingFanfare.length * 0.7f) - itemShineDuration;
+		if (additionalWaitTime <= 0.0f) {
+			additionalWaitTime = 0.0f;
+		}
+		yield return new WaitForSecondsRealtime (additionalWaitTime);
 
 		//Unpause game and brighten screen when fanfare is complete
 		for (float f = 0.5f; f > 0.0f; f -= 0.03f) {

@@ -105,7 +105,7 @@ public class SoundController : MonoBehaviour {
 	public void playAll() {
 		AudioSource[] sources = GetComponents<AudioSource> ();
 		foreach (AudioSource source in sources) {
-			source.Play ();
+			source.UnPause ();
 		}
 	}
 
