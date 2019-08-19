@@ -19,6 +19,7 @@ public class Weapon : Item {
 	[Header("Weapon Sounds")]
 	public AudioClip swingSound;
 	public AudioClip hitSound;
+	public AudioClip missSound;
 
 	protected int hitCount = 0;
 	private bool hitWindowActive = false;
@@ -114,6 +115,10 @@ public class Weapon : Item {
 
 		if (hitCount > 0) {
 			reduceDurability ();
+		} else {
+			if (missSound) {
+				soundController.playPriorityOneShot (missSound);
+			}
 		}
 	}
 

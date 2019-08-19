@@ -197,6 +197,9 @@ public class Item : Interactive {
 		foreach (GameObject decorativeSprite in decorativeSprites) {
 			decorativeSprite.GetComponent<DecorativeSprite> ().breakSprite();
 		}
+		if (decorativeSprites.Count > 0) {
+			decorativeSprites.Clear ();
+		}
 
 		if (playSound && pickupSound) {
 			soundController.playPriorityOneShot (pickupSound);
