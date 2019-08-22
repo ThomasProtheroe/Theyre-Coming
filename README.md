@@ -15,5 +15,5 @@
 # Authors:
 #  Thomas Protheroe - Code and Game Design
 #  Dylan Kelk - Music, Sounds and Artwork
-# 
+#  Jason Shenkenfielder - Code
 #
