@@ -875,7 +875,7 @@ public class GameController : MonoBehaviour {
 		soundCon.playPriorityOneShot(item.craftingFanfare);
 
 
-		float twinkleInterval = 0.15f;
+		float twinkleInterval = 0.12f;
 		float nextTwinkle = 0.0f;
 		float itemShineDuration = 0.0f;
 		SpriteRenderer itemSprite = item.GetComponent<SpriteRenderer> ();
