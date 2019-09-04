@@ -73,6 +73,9 @@ public class Item : Interactive {
 	public bool inflictsBurning;
 	public bool inflictsGib;
 
+	[Header("Tutorial")]
+	public TutorialPanel tutorialPanel;
+
 	protected SpriteRenderer sprite;
 	protected SoundController soundController;
 
@@ -239,6 +242,12 @@ public class Item : Interactive {
 		isHeld = true;
 
 		updateDurabilityIndicator ();
+
+		//Display tutorial dialog if needed
+		if (tutorialPanel != null) {
+			tutorialPanel.showTutorialPanel();
+		}
+
 		onPickup ();
 	}
 
