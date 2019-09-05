@@ -16,8 +16,9 @@ public class TutorialPanel : MonoBehaviour {
 	
 	public void showTutorialPanel () {
 		//Destroy previously viewed tutorial panels
+		TutorialPanel tutorialPanel;
 		foreach(GameObject tutorialobject in GameObject.FindGameObjectsWithTag("Tutorial")) {
-			tutorialPanel = tutorialobject.getComponent<TutorialPanel> ();
+			tutorialPanel = tutorialobject.GetComponent<TutorialPanel> ();
 			if (tutorialPanel.viewed) {
 				Destroy(tutorialobject);
 			}
