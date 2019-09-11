@@ -12,4 +12,11 @@ public class MainMenuController : MonoBehaviour {
 			PlayerPrefs.SetInt ("tutorialPlay", 1);
 		}
 	}
+
+//TODO - Remove from final build
+	void Update () {
+		if (Input.GetKeyDown ("t")) {
+				PlayerPrefs.SetInt("tutorialPlay", 1);
+			}
+	}
 }

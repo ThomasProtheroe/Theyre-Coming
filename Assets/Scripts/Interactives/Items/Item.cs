@@ -188,6 +188,10 @@ public class Item : Interactive {
 		scale.x *= -1;
 		transform.localScale = scale;
 		flipped = !flipped;
+
+		if (tutorialPanel != null) {
+			tutorialPanel.flipPanel();
+		}
 	}
 
 	public void pickupItem(bool playerFlipX, bool playSound=true) {
@@ -246,6 +250,8 @@ public class Item : Interactive {
 		//Display tutorial dialog if needed
 		if (tutorialPanel != null) {
 			tutorialPanel.showTutorialPanel();
+			tutorialPanel.transform.parent = player.transform;
+			tutorialPanel.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1.5f);
 		}
 
 		onPickup ();
@@ -321,6 +327,8 @@ public class Item : Interactive {
 	}
 
 	public virtual void onDrop() {
+		adoptTutorialPanel();
+
 		return;
 	}
 
@@ -329,7 +337,16 @@ public class Item : Interactive {
 	}
 
 	public virtual void onThrow() {
+		adoptTutorialPanel();
+		
 		return;
+	}
+
+	public void adoptTutorialPanel() {
+		if (tutorialPanel != null) {
+			tutorialPanel.transform.parent = gameObject.transform;
+			tutorialPanel.transform.position = new Vector3(gameObject.transform.position.x, tutorialPanel.transform.position.y);
+		}
 	}
 
 	public List<string> getStatusEffects() {

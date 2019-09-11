@@ -49,6 +49,5 @@ public class RangedWeapon : Item {
 
 	public void stopAttacking() {
 		isAttacking = false;
-		Debug.Log ("Stop Attacking");
 	}
 }

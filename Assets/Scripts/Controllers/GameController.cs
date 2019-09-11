@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private GameObject inventoryPanel;
 	[SerializeField]
+	private GameObject firstTutorialPanel;
+	[SerializeField]
 	private GameObject craftingTwinkle;
 	[SerializeField]
 	private Sprite[] dialogSprites;
@@ -83,10 +85,10 @@ public class GameController : MonoBehaviour {
 	private int itemsCrafted;
 	private List<String> craftedTier1;
 
+	private int tutorialPlay;
 	private bool isGameOver;
 	[HideInInspector]
 	public bool isPaused;
-	[HideInInspector]
 	private bool timerRunning;
 	private bool bossKilled;
 	private bool noMoreEnemySpawns;
@@ -99,6 +101,13 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private int corpseCount;
 	private Queue<float> doorShakeMap;
+
+	void Awake() {
+		tutorialPlay = PlayerPrefs.GetInt ("tutorialPlay");
+		if (tutorialPlay == 1) {
+			PlayerPrefs.SetInt("tutorialPlay", 0);
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -160,6 +169,8 @@ public class GameController : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.Locked;
 			startIntro ();
 		} else {
+			firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
+
 			changePhase("siege");
 			onSiegePhase ();
 		}
@@ -594,9 +605,13 @@ public class GameController : MonoBehaviour {
 	private void stopIntro() {
 		blackFade.SetActive (false);
 		changePhase("prep");
-		timerText.enabled = true;
 
+		timerText.enabled = true;
 		skipText.gameObject.SetActive (false);
+
+		//Start the tutorial if using
+		firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
+
 		playerCon.itemSlot1.gameObject.SetActive(true);
 		playerCon.itemSlot2.gameObject.SetActive(true);
 		playerCon.enableCinematicControl (false);
@@ -688,6 +703,14 @@ public class GameController : MonoBehaviour {
 		Scenes.setParam ("resultsTime", timer.ToString());
 		Scenes.setParam ("resultsKills", killTotal.ToString());
 		Scenes.setParam ("resultsType", typeName);
+	}
+
+	public bool isTutorialActive() {
+		if (tutorialPlay == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public void gameOver() {
@@ -823,7 +846,7 @@ public class GameController : MonoBehaviour {
 
 			yield return null;
 		}
-		for (float f = 0.9f; f > 0.6f; f -= 0.003f) {
+		for (float f = 0.9f; f > 0.6f; f -= 0.0035f) {
 			Color spriteColor = sprite.color;
 
 			spriteColor.a = f;
@@ -832,7 +855,7 @@ public class GameController : MonoBehaviour {
 
 			yield return null;
 		}
-		for (float f = 0.6f; f > 0.0f; f -= 0.006f) {
+		for (float f = 0.6f; f > 0.0f; f -= 0.007f) {
 			Color spriteColor = sprite.color;
 
 			spriteColor.a = f;
