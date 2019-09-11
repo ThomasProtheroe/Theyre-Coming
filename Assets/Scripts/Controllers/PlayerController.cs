@@ -34,8 +34,10 @@ public class PlayerController : MonoBehaviour {
 	public Area currentArea;
 	[HideInInspector]
 	public GameController gameCon;
+	public SoundController soundCon;
 
 	public AudioClip[] hitSounds;
+	public AudioClip[] walkingSounds;
 	public AudioClip deathSound;
 
 	[HideInInspector]
@@ -65,6 +67,7 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public bool isAttacking;
 	public bool isDead;
+	public bool isWalking;
 	private bool isCrafting;
 	public bool isHealing;
 	private bool handsFlipped;
@@ -88,6 +91,7 @@ public class PlayerController : MonoBehaviour {
 		playerSprite = gameObject.GetComponent<SpriteRenderer> ();
 
 		gameCon = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		itemSlot1 = GameObject.FindGameObjectWithTag ("ItemSlot1").GetComponent<ItemSlot> ();
 		itemSlot2 = GameObject.FindGameObjectWithTag ("ItemSlot2").GetComponent<ItemSlot> ();
 		activeSlot = itemSlot1;
@@ -266,10 +270,20 @@ public class PlayerController : MonoBehaviour {
 		rigidBody.velocity = new Vector2 (moveX * currentSpeed, rigidBody.velocity.y);
 
 		if (moveX != 0.0f) {
+			if (isWalking) {
+				return;
+			}
+			isWalking = true;
 			anim.SetInteger("State", 1);
+			soundCon.playPlayerWalkSound(walkingSounds[Random.Range(0,2)]);
 		}
 		else if (moveX == 0.0f) {
+			if (!isWalking) {
+				return;
+			}
+			isWalking = false;
 			anim.SetInteger("State", 0);
+			soundCon.stopPlayerWalkSound();
 		}
 	}
 

@@ -23,6 +23,7 @@ public class SoundController : MonoBehaviour {
 	private AudioSource[] priorityOneShotSources;
 	private AudioSource[] environmentalSources;
 	private AudioSource playerItemSource;
+	private AudioSource playerWalkSource;
 
 	//Queues
 	private List<AudioClip> walkQueue = new List<AudioClip>();
@@ -46,6 +47,7 @@ public class SoundController : MonoBehaviour {
 		priorityOneShotSources = new AudioSource[oneShotSouceMax];
 		environmentalSources = new AudioSource[environmentalSourceMax];
 		playerItemSource = gameObject.AddComponent<AudioSource> () as AudioSource;
+		playerWalkSource = gameObject.AddComponent<AudioSource> () as AudioSource;
 
 		for (int i = 0; i < enemyQueuedSourceMax; i++) {
 			enemyWalkSources [i] = gameObject.AddComponent<AudioSource> () as AudioSource;
@@ -302,6 +304,17 @@ public class SoundController : MonoBehaviour {
 	public void stopPlayerItemSound() {
 		playerItemSource.Stop ();
 		playerItemLoopingQueue = null;
+	}
+
+	public void playPlayerWalkSound(AudioClip walkClip) {
+		playerWalkSource.Stop ();
+		playerWalkSource.clip = walkClip;
+		playerWalkSource.loop = true;
+		playerWalkSource.Play ();
+	}
+
+	public void stopPlayerWalkSound() {
+		playerWalkSource.Stop ();
 	}
 
 	public void playSpash(AudioClip clip) {
