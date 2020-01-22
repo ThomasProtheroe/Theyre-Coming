@@ -169,7 +169,9 @@ public class GameController : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.Locked;
 			startIntro ();
 		} else {
-			firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
+			if (tutorialPlay == 1) {
+				firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
+			}
 
 			changePhase("siege");
 			onSiegePhase ();
@@ -610,7 +612,9 @@ public class GameController : MonoBehaviour {
 		skipText.gameObject.SetActive (false);
 
 		//Start the tutorial if using
-		firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
+		if (tutorialPlay == 1) {
+			firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
+		}
 
 		playerCon.itemSlot1.gameObject.SetActive(true);
 		playerCon.itemSlot2.gameObject.SetActive(true);

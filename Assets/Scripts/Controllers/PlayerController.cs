@@ -122,6 +122,10 @@ public class PlayerController : MonoBehaviour {
 			isAttacking = false;
 		}
 
+		if (isWalking && (isAttacking || isBusy)) {
+			stopWalking();
+		}
+
 		if (isBusy) {
 			checkInterrupt ();
 		} else if (!isAttacking && !isDead) {
@@ -285,6 +289,11 @@ public class PlayerController : MonoBehaviour {
 			anim.SetInteger("State", 0);
 			soundCon.stopPlayerWalkSound();
 		}
+	}
+
+	private void stopWalking() {
+		isWalking = false;
+		soundCon.stopPlayerWalkSound();
 	}
 
 	public void flipPlayer() {
