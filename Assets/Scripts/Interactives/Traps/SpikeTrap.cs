@@ -48,6 +48,11 @@ public class SpikeTrap : Trap {
 		hitCollider.enabled = false;
 		pickupCollider.enabled = false;
 		triggerCollider.enabled = true;
+
+		bool autoDeploy = false;
+		if (isHeld == false) {
+			autoDeploy = true;
+		}
 		isHeld = false;
 
 		disableAnimator ();
@@ -67,14 +72,17 @@ public class SpikeTrap : Trap {
 		isDeployed = true;
 		tag = "Trap";
 
-		playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
-		playerCon.alignHands ();
-		playerCon.showPlayerHands ();
+		if (autoDeploy == false)
+		{
+			playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
+			playerCon.alignHands ();
+			playerCon.showPlayerHands ();
 
-		playerCon.heldItem = null;
+			playerCon.heldItem = null;
 
-		//Update UI box
-		playerCon.activeSlot.setEmpty();
+			//Update UI box
+			playerCon.activeSlot.setEmpty();
+		}
 	}
 
 	public void moveToDeployPos () {
