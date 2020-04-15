@@ -15,6 +15,8 @@ public class Weapon : Item {
 	public int multiHit = 1;
 	public bool instantAttack;
 	public bool inflictsShockwave;
+	public bool isVorpal;
+	public float vorpalChance = 0;
 
 	[Header("Weapon Sounds")]
 	public AudioClip swingSound;
@@ -63,7 +65,13 @@ public class Weapon : Item {
 			if (inflictsGib) {
 				other.gameObject.GetComponent<Enemy> ().setGibOnDeath (true);
 			}
-			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction, false, attackType);
+			bool vorpalHit = false;
+			bool noBlood = false;
+			if (isVorpal && (UnityEngine.Random.Range(1,100) <= vorpalChance)) {
+				vorpalHit = true;
+				noBlood = true;
+			}
+			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction, noBlood, attackType, false, vorpalHit);
 			onEnemyImpact (other.gameObject);
 		}
 	}

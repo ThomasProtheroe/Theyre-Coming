@@ -128,7 +128,7 @@ public class BossGramps : Enemy {
 		return;
 	}
 
-	public override bool takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=true) {
+	public override bool takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=false, bool vorpal=false) {
 		if (isPreparing) {
 			isPreparing = false;
 			prepTimer = 0.0f;
@@ -146,7 +146,7 @@ public class BossGramps : Enemy {
 			isRecovering = true;
 		}
 			
-		return base.takeHit (damage, knockback, direction, noBlood, attackType);
+		return base.takeHit (damage, knockback, direction, noBlood, attackType, brutal);
 	}
 
 	protected override void onDeath() {

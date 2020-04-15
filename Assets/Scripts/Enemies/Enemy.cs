@@ -79,6 +79,7 @@ public class Enemy : MonoBehaviour {
 	protected bool isStaggered;
 	protected bool isNotSplattering;
 	protected bool gibOnDeath;
+	protected bool vorpalDeath;
 
 	protected bool walkSoundPlaying;
 	protected bool prowlSoundPlaying;
@@ -389,7 +390,7 @@ public class Enemy : MonoBehaviour {
 		attackHitbox.transform.position = new Vector2(attackHitbox.transform.position.x + 0.05f, attackHitbox.transform.position.y);
 	}
 
-	public virtual bool takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=false) {
+	public virtual bool takeHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED, bool brutal=false, bool vorpal=false) {
 		if (isInvulnerable || getIsDead ()) {
 			return false;
 		}
@@ -427,16 +428,20 @@ public class Enemy : MonoBehaviour {
 			sh.rotation = new Vector3 (sh.rotation.x, bloodDirection, sh.rotation.z);
 			bloodSprayPS.Emit (particleCount);
 		}
+		if (!vorpal) {
+			takeDamage (damage);
+			if (direction > 0) {
+				knockback *= -1;
+			}
 
-		takeDamage (damage);
-		if (direction > 0) {
-			knockback *= -1;
+			startIFrames ();
+			isStaggered = true;
+			StartCoroutine ("setHitFrame", knockback);
+		} else {
+			setVorpalDeath (true);
+			killEnemy ();
 		}
-
-		startIFrames ();
-		isStaggered = true;
-		StartCoroutine ("setHitFrame", knockback);
-
+		
 		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
 		return true;
 	}
@@ -515,8 +520,9 @@ public class Enemy : MonoBehaviour {
 
 		if (gibOnDeath) {
 			dismemberEnemy ();
-		}
-		else if (isBurning) {
+		} else if (vorpalDeath) {
+			beheadEnemy();
+		} else if (isBurning) {
 			//Kill the burning detail particle systems before playing death animation (if active)
 			foreach (ParticleSystem detailPS in burningDetailPS) {
 				detailPS.Stop ();
@@ -546,6 +552,10 @@ public class Enemy : MonoBehaviour {
 		gibOnDeath = gib;
 	}
 
+	public void setVorpalDeath(bool vorpal) {
+		vorpalDeath = vorpal;
+	}
+
 	public void dismemberEnemy() {
 		//Randomly select the gibs to use
 		List<GameObject> gibs = new List<GameObject> ();
@@ -572,6 +582,16 @@ public class Enemy : MonoBehaviour {
 		}
 
 		destroyEnemy ();
+	}
+
+	private void beheadEnemy() {
+		//TODO - Change to VorpalDeath when animation is created
+		anim.SetTrigger ("VorpalDeath");
+
+		//TODO - Display beheading head and detach from enemy object
+
+		//TODO - Play the blood fountain particle system
+
 	}
 
 	private void spawnCorpse() {
