@@ -68,6 +68,7 @@ public class Weapon : Item {
 			bool vorpalHit = false;
 			bool noBlood = false;
 			if (isVorpal && (UnityEngine.Random.Range(1,100) <= vorpalChance)) {
+				hitCount --;
 				vorpalHit = true;
 				noBlood = true;
 			}

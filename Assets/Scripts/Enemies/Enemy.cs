@@ -42,6 +42,8 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected ParticleSystem bloodSprayPS;
 	[SerializeField]
+	protected ParticleSystem bloodFountainPS;
+	[SerializeField]
 	protected ParticleSystem splashPS;
 	[SerializeField]
 	protected ParticleSystem bleedingPS;
@@ -51,9 +53,13 @@ public class Enemy : MonoBehaviour {
 	protected ParticleSystem[] burningDetailPS;
 
 	[SerializeField]
+	protected List<GameObject> beaheadingParts;
+	[SerializeField]
 	protected List<GameObject> headGiblets;
 	[SerializeField]
 	protected List<GameObject> bodyGiblets;
+
+	private GameObject detachedHead;
 
 	public float groundLevel;
 	public float moveSpeed = 1.5f;
@@ -585,13 +591,29 @@ public class Enemy : MonoBehaviour {
 	}
 
 	private void beheadEnemy() {
-		//TODO - Change to VorpalDeath when animation is created
+		//The blood fountain particle system is triggered in the death animation
 		anim.SetTrigger ("VorpalDeath");
 
-		//TODO - Display beheading head and detach from enemy object
+		//Display beheading head and detach from enemy object
+		if (woundState == 0) {
+			detachedHead = beaheadingParts[0];
+		} else {
+			detachedHead = beaheadingParts[1];
+		}
+		
+		detachedHead.SetActive(true);
+	}
 
-		//TODO - Play the blood fountain particle system
+	private void detachHead() {
+		detachedHead.transform.parent = null;
 
+		Rigidbody2D body = detachedHead.GetComponent<Rigidbody2D> ();
+		body.bodyType = RigidbodyType2D.Dynamic;
+		body.AddForce (new Vector2 (-25f, 0f));
+		body.AddTorque (7);
+
+		detachedHead.GetComponent<Giblet> ().startBloodTrail ();
+		detachedHead.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 3f);
 	}
 
 	private void spawnCorpse() {
@@ -746,6 +768,10 @@ public class Enemy : MonoBehaviour {
 		playSplashSound ();
 	}
 
+	public void playBloodFountain() {
+		bloodFountainPS.Play();
+	}
+
 	public bool getIsDead() {
 		return isDead;
 	}
@@ -778,6 +804,8 @@ public class Enemy : MonoBehaviour {
 	public void setWalkSound(AudioClip sound) {
 		walkSound = sound;
 	}
+
+	/******* Audio helpers *******/
 
 	public void startProwlSound() {
 		if (!prowlSoundPlaying) {
