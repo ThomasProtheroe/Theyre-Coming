@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour {
 	protected AudioClip walkSound;
 	protected AudioClip prowlSound;
 	[SerializeField]
+	protected AudioClip decapitationSound;
+	[SerializeField]
 	protected AudioClip igniteSound;
 	[SerializeField]
 	protected AudioClip burningSound;
@@ -614,6 +616,8 @@ public class Enemy : MonoBehaviour {
 
 		detachedHead.GetComponent<Giblet> ().startBloodTrail ();
 		detachedHead.GetComponent<DestroyAfterTime> ().StartCoroutine ("destroyAfterTime", 3f);
+
+		playDecapitationSound ();
 	}
 
 	private void spawnCorpse() {
@@ -858,6 +862,10 @@ public class Enemy : MonoBehaviour {
 			return;
 		}
 		soundCon.playEnemyOneShot (attackSounds[Random.Range(0, attackSounds.Count)]);
+	}
+
+	private void playDecapitationSound() {
+		soundCon.playEnemyOneShot (decapitationSound);
 	}
 
 	private void playIgniteSound() {
