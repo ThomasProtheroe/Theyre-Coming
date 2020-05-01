@@ -437,6 +437,10 @@ public class Item : Interactive {
 	public virtual bool onBreak() {
 		return false;
 	}
+
+	public virtual void onCraft() {
+		
+	}
 		
 	public virtual void onTravel() {
 

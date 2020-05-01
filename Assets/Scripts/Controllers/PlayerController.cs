@@ -846,6 +846,8 @@ public class PlayerController : MonoBehaviour {
 			beingCrafted = null;
 			gameCon.countItemCraft ();
 
+			itemCon.onCraft();
+
 			//Update UI box
 			updateItemSlot(itemCon.getDisplaySprite());
 			if (itemCon.description != "" || itemCon.itemName != "") {

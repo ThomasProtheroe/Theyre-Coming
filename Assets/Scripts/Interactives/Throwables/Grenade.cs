@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Grenade : Throwable {
 
@@ -8,6 +9,8 @@ public class Grenade : Throwable {
 	private float fuseDuration;
 	[SerializeField]
 	private GameObject explosion;
+	[SerializeField]
+	private Text timerText;
 	[SerializeField]
 	private AudioClip fuseSound;
 
@@ -22,6 +25,8 @@ public class Grenade : Throwable {
 			if (fuseTimer <= 0.0f) {
 				explode ();
 			}
+			
+			timerText.text = Mathf.Ceil(fuseTimer).ToString();
 		}
 
 		base.Update ();
@@ -39,9 +44,14 @@ public class Grenade : Throwable {
 		return true;
 	}
 
-	public override void onThrow() {
+	private void arm() {
 		isArmed = true;
 		soundController.playEnvironmentalSound (fuseSound, true);
 		fuseTimer = fuseDuration;
+		timerText.gameObject.SetActive(true);
+	}
+
+	public override void onCraft() {
+		arm();
 	}
 }
