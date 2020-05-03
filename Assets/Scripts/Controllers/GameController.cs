@@ -112,7 +112,7 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameMode = Scenes.getParam ("gameMode");
-		if (gameMode == null) {
+		if (gameMode != "story" && gameMode != "endless") {
 			gameMode = "dev";
 		}
 
