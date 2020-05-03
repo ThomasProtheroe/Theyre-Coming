@@ -12,6 +12,7 @@ public class TutorialPanel : MonoBehaviour {
 	private GameObject text;
 	[SerializeField]
 	private float lifetime;
+	public int tutorialStep;
 	public GameObject parentItem;
 	private GameController gameController;
 
@@ -24,6 +25,12 @@ public class TutorialPanel : MonoBehaviour {
 	}
 	
 	public void showTutorialPanel () {
+		if (tutorialStep < gameController.getTutorialStep ()) {
+			return;
+		} else if (tutorialStep > gameController.getTutorialStep ()) {
+			gameController.setTutorialStep(tutorialStep);
+		}
+
 		//Destroy previously viewed tutorial panels
 		if (parentItem.GetComponent<PlayerController> () == null) {
 			foreach(GameObject tutorialObject in GameObject.FindGameObjectsWithTag("Tutorial")) {

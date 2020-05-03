@@ -86,6 +86,7 @@ public class GameController : MonoBehaviour {
 	private List<String> craftedTier1;
 
 	private int tutorialPlay;
+	private int tutorialStep;
 	private bool isGameOver;
 	[HideInInspector]
 	public bool isPaused;
@@ -104,7 +105,9 @@ public class GameController : MonoBehaviour {
 
 	void Awake() {
 		tutorialPlay = PlayerPrefs.GetInt ("tutorialPlay");
+		tutorialPlay = 1;
 		if (tutorialPlay == 1) {
+			tutorialStep = 1;
 			PlayerPrefs.SetInt("tutorialPlay", 0);
 		}
 	}
@@ -732,6 +735,14 @@ public class GameController : MonoBehaviour {
 		} else {
 			return true;
 		}
+	}
+
+	public int getTutorialStep() {
+		return tutorialStep;
+	}
+
+	public void setTutorialStep(int step) {
+		tutorialStep = step;
 	}
 
 	public void gameOver() {

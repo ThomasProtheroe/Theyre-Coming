@@ -43,7 +43,7 @@ public static class SpawnMap {
 	}
 
 	private static void buildWave(float gameTime) {
-		//Debug.Log("Building Wave " + wave.ToString());
+		Debug.Log("Building Wave " + wave.ToString());
 		map = new Queue<SpawnInstance> ();
 
 		int enemyCount = (difficulty * 4) + (wave / 2);
@@ -57,9 +57,9 @@ public static class SpawnMap {
 			runnerChance = 0.22f;
 		}
 
-		float nexttWaveStartTime = gameTime + 60f;
-		if (wave == 1) {
-			nexttWaveStartTime += 30f;
+		float nexttWaveStartTime = 0f;
+		if (wave > 1) {
+			nexttWaveStartTime = gameTime + 60;
 		}
 
 		int spawnGroupMax = Mathf.RoundToInt(enemyCount / 4);
@@ -70,13 +70,13 @@ public static class SpawnMap {
 		int spawnGroupCount = Random.Range(spawnGroupMin, spawnGroupMax + 1);
 		int enemiesPerGroup = Mathf.RoundToInt(enemyCount / spawnGroupCount);
 
-		/*
+
 		Debug.Log("Start Time: " + nexttWaveStartTime.ToString());
 		Debug.Log("Difficulty: " + difficulty.ToString());
 		Debug.Log("Number of Enemies: " + enemyCount.ToString());
 		Debug.Log("Number of Groups: " + spawnGroupCount.ToString());
 		Debug.Log("Enemies per Group: " + enemiesPerGroup.ToString());
-		*/
+
 
 		//Generate spawn instances based on above stats and add them to the map
 		for(int i = 0; i < spawnGroupCount; i++) {
