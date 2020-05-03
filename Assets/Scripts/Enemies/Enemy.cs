@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour {
 	public SoundController soundCon;
 	protected AudioClip walkSound;
 	protected AudioClip prowlSound;
+	[Header("Audio Clips")]
 	[SerializeField]
 	protected AudioClip decapitationSound;
 	[SerializeField]
@@ -41,6 +42,7 @@ public class Enemy : MonoBehaviour {
 	protected List<AudioClip> attackSounds;
 
 	/* Particle Systems */
+	[Header("Particle Systems")]
 	[SerializeField]
 	protected ParticleSystem bloodSprayPS;
 	[SerializeField]
@@ -54,6 +56,7 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected ParticleSystem[] burningDetailPS;
 
+	[Header("Gibs")]
 	[SerializeField]
 	protected List<GameObject> beaheadingParts;
 	[SerializeField]
@@ -61,8 +64,17 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected List<GameObject> bodyGiblets;
 
+	[Header("Item Drops")]
+	[SerializeField]
+	protected List<Item> commonDrops;
+	[SerializeField]
+	protected List<Item> uncommonDrops;
+	[SerializeField]
+	protected List<Item> rareDrops;
+
 	private GameObject detachedHead;
 
+	[Header("Basic Attributes")]
 	public float groundLevel;
 	public float moveSpeed = 1.5f;
 	public float attackRange = 0.8f;
@@ -75,7 +87,9 @@ public class Enemy : MonoBehaviour {
 	public bool hitPlayer;
 	public bool isInvulnerable;
 	protected int woundState;
-
+	protected int itemDropChance = 0;
+	[SerializeField]
+	
 	protected bool isActive;
 	protected bool isMoving;
 	protected bool isAttacking;
@@ -548,7 +562,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	protected virtual void onDeath() {
-		return;
+		if (Random.Range(0,100) < itemDropChance) {
+			dropItem();
+		}
 	}
 
 	public void destroyEnemy() {
@@ -562,6 +578,10 @@ public class Enemy : MonoBehaviour {
 
 	public void setVorpalDeath(bool vorpal) {
 		vorpalDeath = vorpal;
+	}
+
+	public void enableItemDrops(int chance) {
+		itemDropChance = chance;
 	}
 
 	public void dismemberEnemy() {
@@ -631,6 +651,34 @@ public class Enemy : MonoBehaviour {
 		corpse.positionOnGround (transform.position.x);
 
 		gc.addEnemyCorpse (corpse, currentArea.name);
+	}
+
+	private void dropItem() {
+		Item itemToDrop = null;
+		int dropRoll = Random.Range(0, 100);
+		if (dropRoll < 60) {
+			itemToDrop = commonDrops[Random.Range(0, commonDrops.Count)];
+		} else if (dropRoll < 85) {
+			itemToDrop = uncommonDrops[Random.Range(0, uncommonDrops.Count)];
+		} else {
+			itemToDrop = rareDrops[Random.Range(0, commonDrops.Count)];
+		}
+
+		Item newItem = Instantiate(itemToDrop, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+		Rigidbody2D body = newItem.GetComponent<Rigidbody2D>();
+		newItem.isBouncing = true;
+		newItem.gameObject.layer = 11;
+		newItem.setSkipBounceCheck(5);
+		body.bodyType = RigidbodyType2D.Dynamic;
+		body.AddForce (new Vector2 (0f, 125f));
+		body.AddTorque (4f);
+
+		newItem.pickupCollider.enabled = false;
+		newItem.hitCollider.enabled = true;
+
+		foreach (SpriteRenderer sprite in newItem.gameObject.GetComponentsInChildren<SpriteRenderer> () ) {
+			sprite.sortingLayerName = "Items";
+		}
 	}
 
 	public void OnTriggerStay2D(Collider2D other){

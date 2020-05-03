@@ -9,14 +9,18 @@ public class LoadSceneOnClick : MonoBehaviour {
 	public Text title;
 
 	public void startNewGame() {
-		StartCoroutine ("fadeToBlack", "false");
+		StartCoroutine ("fadeToBlack", "story");
 	}
 
 	public void startSandboxGame() {
-		StartCoroutine ("fadeToBlack", "true");
+		StartCoroutine ("fadeToBlack", "dev");
 	}
 
-	IEnumerator fadeToBlack(string devMode)
+	public void startEndlessGame() {
+		StartCoroutine ("fadeToBlack", "endless");
+	}
+
+	IEnumerator fadeToBlack(string mode)
 	{
 		Button[] buttons = Button.FindObjectsOfType<Button> ();
 		for (float f = 1.0f; f > 0.0f; f -= 0.02f) {
@@ -41,6 +45,6 @@ public class LoadSceneOnClick : MonoBehaviour {
 			yield return null;
 		}
 
-		Scenes.Load ("Main", "devMode", devMode);
+		Scenes.Load ("Main", "gameMode", mode);
 	}
 }

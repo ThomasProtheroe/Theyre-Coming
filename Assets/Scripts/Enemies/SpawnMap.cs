@@ -4,27 +4,124 @@ using UnityEngine;
 
 public static class SpawnMap {
 	private static Queue<SpawnInstance> map;
-
-	static SpawnMap() {
-		map = new Queue<SpawnInstance> ();
-
-		buildMap ();
-	}
+	
+	private static string mode;
+	private static int difficulty = 2;
+	private static int wave = 1;
+	private static int difficultyCurve;
 
 	public static void rebuildMap() {
 		buildMap();
 	}
 
-	public static SpawnInstance getNextSpawn() {
-		SpawnInstance nextSpawn;
-		if (map.Count > 0) {
+	public static void setMode(string inMode) {
+		mode = inMode;
+	}
+
+	public static void setDifficultyCurve(int inCurve) {
+		difficultyCurve = inCurve;
+	}
+
+	public static SpawnInstance getNextSpawn(float gameTime = 0f) {
+		SpawnInstance nextSpawn = null;
+
+		if (mode == "story") {
+			if (map.Count > 0) {
+				nextSpawn = map.Dequeue ();
+			} else {
+				nextSpawn = null;
+			}
+		} else if (mode == "endless") {
+			if (map == null || map.Count == 0) {
+				buildWave(gameTime);
+				
+			} 
 			nextSpawn = map.Dequeue ();
-		} else {
-			nextSpawn = null;
 		}
+		
 		return nextSpawn;
 	}
 
+	private static void buildWave(float gameTime) {
+		//Debug.Log("Building Wave " + wave.ToString());
+		map = new Queue<SpawnInstance> ();
+
+		int enemyCount = (difficulty * 5) + (wave / 2);
+		int variance = Mathf.RoundToInt(enemyCount * 0.2f);
+		enemyCount += Random.Range(variance * -1, variance + 1);
+
+		float runnerChance = 0f;
+		if (wave > 4) {
+			runnerChance = 0.15f;
+		} else if (wave > 10) {
+			runnerChance = 0.22f;
+		}
+
+		float nexttWaveStartTime = gameTime + 60f;
+		if (wave == 1) {
+			nexttWaveStartTime += 30f;
+		}
+
+		int spawnGroupMax = Mathf.RoundToInt(enemyCount / 4);
+		int spawnGroupMin = difficulty;
+		if (spawnGroupMin < 2) {
+			spawnGroupMin = 2;
+		}
+		int spawnGroupCount = Random.Range(spawnGroupMin, spawnGroupMax + 1);
+		int enemiesPerGroup = Mathf.RoundToInt(enemyCount / spawnGroupCount);
+
+		/*
+		Debug.Log("Start Time: " + nexttWaveStartTime.ToString());
+		Debug.Log("Difficulty: " + difficulty.ToString());
+		Debug.Log("Number of Enemies: " + enemyCount.ToString());
+		Debug.Log("Number of Groups: " + spawnGroupCount.ToString());
+		Debug.Log("Enemies per Group: " + enemiesPerGroup.ToString());
+		*/
+
+		//Generate spawn instances based on above stats and add them to the map
+		for(int i = 0; i < spawnGroupCount; i++) {
+			int groupSize = Random.Range(Mathf.RoundToInt(enemiesPerGroup * 0.9f), Mathf.RoundToInt(enemiesPerGroup * 1.1f) + 1);
+			if (enemyCount < groupSize || (i == spawnGroupCount - 1)) {
+				groupSize = enemyCount;
+			}
+			
+			//Generate runners
+			int runnerCount = 0;
+			if (runnerChance > 0f) {
+				for(int n = 0; n < groupSize; n++) {
+					if (Random.Range(0f, 1f) < runnerChance) {
+						runnerCount ++;
+						groupSize --;
+					}
+				}
+			}
+			
+			map.Enqueue (new SpawnInstance (nexttWaveStartTime, groupSize, Constants.ENEMY_TYPE_NORMAL));
+			if (runnerCount > 0) {
+				map.Enqueue (new SpawnInstance (nexttWaveStartTime, runnerCount, Constants.ENEMY_TYPE_RUNNER));
+			}
+			
+
+			nexttWaveStartTime += Random.Range(5f, 10f);
+			enemyCount -= groupSize;
+			enemyCount -= runnerCount;
+
+			/*
+			Debug.Log("Creating group " + i.ToString());
+			Debug.Log("Group Size: " + groupSize.ToString());
+			Debug.Log("Enemies left in wave: " + enemyCount.ToString());
+			*/
+			if (enemyCount <= 0) {
+				break;
+			}
+		}
+
+		//Every <difficultyCurve waves>, increase difficulty
+		if (wave % difficultyCurve == 0) {
+			difficulty++;
+		}
+		wave++;
+	}
 
 	private static void buildMap() {
 		int mapType = Random.Range (0, 5);

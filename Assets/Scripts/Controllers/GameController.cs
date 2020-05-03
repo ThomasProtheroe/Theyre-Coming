@@ -95,7 +95,7 @@ public class GameController : MonoBehaviour {
 	private float timer;
 	private string phase;
 	private string currentCinematic;
-	private string devMode;
+	private string gameMode;
 	[SerializeField]
 	private int maxCorpseCount;
 	[SerializeField]
@@ -111,11 +111,21 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		gameMode = Scenes.getParam ("gameMode");
+		if (gameMode == null) {
+			gameMode = "dev";
+		}
+
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerCon = player.GetComponent<PlayerController> ();
 
-		SpawnMap.rebuildMap ();
-		CinematicMap.rebuildMap ();
+		SpawnMap.setMode(gameMode);
+		if (gameMode == "story") {
+			SpawnMap.rebuildMap ();
+			CinematicMap.rebuildMap ();
+		} else if (gameMode == "endless") {
+			SpawnMap.setDifficultyCurve(3);
+		}
 
 		enemies = new List<Enemy> ();
 		nextSpawn = SpawnMap.getNextSpawn ();
@@ -147,11 +157,6 @@ public class GameController : MonoBehaviour {
 
 		//Load settings
 		updateVolume();
-
-		devMode = Scenes.getParam ("devMode");
-		if (devMode == null) {
-			devMode = "false";
-		}
 			
 		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
 
@@ -164,15 +169,21 @@ public class GameController : MonoBehaviour {
 		killTotals = new int[6];
 		craftedTier1 = new List<string> ();
 
-		if (devMode == "false") {
-			//Leave the cursor visible in dev mode for debugging purposes
+		//Set up the scene based on the game mode
+		if (gameMode != "dev") {
+			//Hide the cursor in non-dev modes (leave in dev mode for debugging)
 			Cursor.lockState = CursorLockMode.Locked;
+		}
+
+		if (gameMode != "dev") {
 			startIntro ();
 		} else {
 			if (tutorialPlay == 1) {
 				firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
 			}
+		}
 
+		if (gameMode == "dev") {
 			changePhase("siege");
 			onSiegePhase ();
 		}
@@ -206,12 +217,15 @@ public class GameController : MonoBehaviour {
 				onSiegePhase ();
 			}
 		} else if (phase == "siege") {
-			if (Scenes.getParam ("devMode") == "false" && !noMoreEnemySpawns) {
+			if ((gameMode == "story" || gameMode == "endless") && !noMoreEnemySpawns) {
 				checkForEnemySpawns ();
 			}
 		}
 
-		checkForCinematics ();
+		if (gameMode == "story") {
+			checkForCinematics ();
+		}
+		
 
 		//Skip cinematics when button is pressed
 		if (currentCinematic != null && Input.GetButtonDown ("interact")) {
@@ -235,7 +249,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		//Dev mode specific functionality
-		if (Scenes.getParam ("devMode") != "false") {
+		if (gameMode == "dev") {
 			if (Input.GetKeyDown ("t")) {
 				spawnEnemyRand (Constants.ENEMY_TYPE_NORMAL);
 			} else if (Input.GetKeyDown ("p")) {
@@ -285,10 +299,9 @@ public class GameController : MonoBehaviour {
 	private void onSiegePhase() {
 		//Change front door to broken version
 		GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
-		if (Scenes.getParam("devMode") != "false") {
-			return;
+		if (gameMode == "story") {
+			spawnEnemy (spawnZones[2], Constants.ENEMY_TYPE_NORMAL);
 		}
-		spawnEnemy (spawnZones[2], Constants.ENEMY_TYPE_NORMAL);
 	}
 
 	private void checkForEnemySpawns() {
@@ -297,7 +310,7 @@ public class GameController : MonoBehaviour {
 				for (int i = 0; i < nextSpawn.spawnCount; i++) {
 					spawnEnemyRand (nextSpawn.enemyType);
 				}
-				nextSpawn = SpawnMap.getNextSpawn ();
+				nextSpawn = SpawnMap.getNextSpawn (timer);
 			} else {
 				spawnBoss (spawnZones[0]);
 				nextSpawn = SpawnMap.getNextSpawn ();
@@ -357,6 +370,10 @@ public class GameController : MonoBehaviour {
 			newEnemy.setProwlSound(prowlingSounds[vocalType]);
 			newEnemy.addAttackSound (zombieAttackSoundMaster[vocalType]);
 			newEnemy.setWalkSound(walkSounds[UnityEngine.Random.Range(0,5)]);
+		}
+
+		if (gameMode == "endless") {
+			newEnemy.enableItemDrops(10);
 		}
 
 		enemies.Add (newEnemy);

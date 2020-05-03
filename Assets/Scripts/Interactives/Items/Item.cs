@@ -18,6 +18,8 @@ public class Item : Interactive {
 	public bool usable = false;
 	private bool deparent = false;
 
+	private int skipBounceCheck;
+
 	[Header("Basic Attributes")]
 	public float xOffset;
 	public float yOffset;
@@ -108,12 +110,18 @@ public class Item : Interactive {
 			deparent = false;
 		}
 
+		if (skipBounceCheck > 0) {
+			skipBounceCheck --;
+			return;
+		}
+
 		if (isBouncing) {
 			Rigidbody2D itemBody = gameObject.GetComponent<Rigidbody2D> ();
 			float xVel = itemBody.velocity.x;
 			float yVel = itemBody.velocity.y;
 			//Once it has come to rest
 			if (Mathf.Approximately (xVel, 0.0f) && Mathf.Approximately (yVel, 0.0f)) {
+				Debug.Log("Stop item");
 				isBouncing = false;
 				//Turn physics effects off for the item
 				itemBody.bodyType = RigidbodyType2D.Kinematic;
@@ -171,6 +179,10 @@ public class Item : Interactive {
 		if (anim) {
 			anim.enabled = true;
 		}
+	}
+
+	public void setSkipBounceCheck(int count) {
+		skipBounceCheck = count;
 	}
 
 	override public void updateHighlightColor() {
