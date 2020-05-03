@@ -46,7 +46,7 @@ public static class SpawnMap {
 		//Debug.Log("Building Wave " + wave.ToString());
 		map = new Queue<SpawnInstance> ();
 
-		int enemyCount = (difficulty * 5) + (wave / 2);
+		int enemyCount = (difficulty * 4) + (wave / 2);
 		int variance = Mathf.RoundToInt(enemyCount * 0.2f);
 		enemyCount += Random.Range(variance * -1, variance + 1);
 
