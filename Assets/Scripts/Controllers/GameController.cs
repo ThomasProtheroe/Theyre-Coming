@@ -105,7 +105,6 @@ public class GameController : MonoBehaviour {
 
 	void Awake() {
 		tutorialPlay = PlayerPrefs.GetInt ("tutorialPlay");
-		tutorialPlay = 1;
 		if (tutorialPlay == 1) {
 			tutorialStep = 1;
 			PlayerPrefs.SetInt("tutorialPlay", 0);
@@ -127,7 +126,7 @@ public class GameController : MonoBehaviour {
 			SpawnMap.rebuildMap ();
 			CinematicMap.rebuildMap ();
 		} else if (gameMode == "endless") {
-			SpawnMap.setDifficultyCurve(3);
+			SpawnMap.startEndlessMode ();
 		}
 
 		enemies = new List<Enemy> ();

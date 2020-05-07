@@ -6,8 +6,8 @@ public static class SpawnMap {
 	private static Queue<SpawnInstance> map;
 	
 	private static string mode;
-	private static int difficulty = 2;
-	private static int wave = 1;
+	private static int difficulty;
+	private static int wave;
 	private static int difficultyCurve;
 
 	public static void rebuildMap() {
@@ -42,6 +42,14 @@ public static class SpawnMap {
 		return nextSpawn;
 	}
 
+	public static void startEndlessMode() {
+		map = new Queue<SpawnInstance> ();
+
+		wave = 1;
+		difficulty = 2;
+		difficultyCurve = 2;
+	}
+
 	private static void buildWave(float gameTime) {
 		Debug.Log("Building Wave " + wave.ToString());
 		map = new Queue<SpawnInstance> ();
@@ -72,10 +80,10 @@ public static class SpawnMap {
 
 
 		Debug.Log("Start Time: " + nexttWaveStartTime.ToString());
-		Debug.Log("Difficulty: " + difficulty.ToString());
+		//Debug.Log("Difficulty: " + difficulty.ToString());
 		Debug.Log("Number of Enemies: " + enemyCount.ToString());
 		Debug.Log("Number of Groups: " + spawnGroupCount.ToString());
-		Debug.Log("Enemies per Group: " + enemiesPerGroup.ToString());
+		//Debug.Log("Enemies per Group: " + enemiesPerGroup.ToString());
 
 
 		//Generate spawn instances based on above stats and add them to the map
