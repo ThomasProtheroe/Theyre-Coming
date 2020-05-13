@@ -5,15 +5,24 @@ using UnityEngine;
 public class ClockHand : MonoBehaviour {
 
 	[SerializeField]
+	private List<AudioClip> tickSounds;
+	private PlayerController player;
 	private SoundController soundCon;
 	[SerializeField]
-	private AudioClip tickSound;
-
+	private Area area;
+	
 	private bool canHear;
 	private float timer;
 	private int seconds;
 	private int rotation;
+	private int tickCount;
 	
+	void Start() {
+		tickCount = 0;
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
+		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		timer += Time.deltaTime;
@@ -26,6 +35,12 @@ public class ClockHand : MonoBehaviour {
 				seconds = 0;
 			}
 		}
+
+		if (player.getCurrentArea().name == "Livingroom") {
+			canHear = true;
+		} else {
+			canHear = false;
+		}
 	}
 
 	void moveHand() {
@@ -37,7 +52,15 @@ public class ClockHand : MonoBehaviour {
 		transform.rotation = target;
 
 		if (canHear) {
-			soundCon.playEnvironmentalSound(tickSound, false);
+			playTickSound();
+		}
+	}
+
+	void playTickSound() {
+		soundCon.playEnvironmentalSound(tickSounds[tickCount], false);
+		tickCount ++;
+		if (tickCount >= tickSounds.Count) {
+			tickCount = 0;
 		}
 	}
 }

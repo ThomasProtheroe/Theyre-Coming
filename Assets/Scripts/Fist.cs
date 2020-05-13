@@ -12,7 +12,7 @@ public class Fist : MonoBehaviour {
 
 	[Header("Sounds")]
 	public AudioClip swingSound;
-	public AudioClip hitSound;
+	public List<AudioClip> hitSounds;
 	private SoundController soundCon;
 
 	protected int hitCount = 0;
@@ -62,8 +62,8 @@ public class Fist : MonoBehaviour {
 	}
 
 	void onEnemyHit() {
-		if (hitSound) {
-			soundCon.playPriorityOneShot (hitSound);
+		if (hitSounds.Count > 0) {
+			soundCon.playPriorityOneShot (hitSounds[Random.Range(0, hitSounds.Count)]);
 		}
 	}
 
