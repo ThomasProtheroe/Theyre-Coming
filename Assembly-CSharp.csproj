@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
      <Compile Include="Assets\Scripts\Controllers\ElevatorController.cs" />
      <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\HandsController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MusicController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\SoundController.cs" />
@@ -72,6 +73,7 @@
      <Compile Include="Assets\Scripts\Enemies\Giblet.cs" />
      <Compile Include="Assets\Scripts\Enemies\SpawnMap.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
+     <Compile Include="Assets\Scripts\Fist.cs" />
      <Compile Include="Assets\Scripts\IgnoreParentRotation.cs" />
      <Compile Include="Assets\Scripts\Interactives\DecorativeSprite.cs" />
      <Compile Include="Assets\Scripts\Interactives\FirstAidStation.cs" />

@@ -10,19 +10,21 @@ public class PlayerController : MonoBehaviour {
 	private float currentSpeed;
 	public int xThrowStrength;
 	public int yThrowStrength;
+	public int punchDamage;
 	public int maxHealth;
-	//[HideInInspector]
+	[HideInInspector]
 	public int health;
 	private int woundState;
 
-
 	[HideInInspector]
 	public List<GameObject> nearInteractives = new List<GameObject>();
+	[HideInInspector]
 	public GameObject heldItem;
 	[HideInInspector]
 	public GameObject heldItemParent;
 	[HideInInspector]
 	public GameObject handsParent;
+	[HideInInspector]
 	public GameObject stashedItem;
 	[HideInInspector]
 	public GameObject frontHand;
@@ -198,11 +200,13 @@ public class PlayerController : MonoBehaviour {
 				checkCraft ();
 			}
 		}
+
+		//Since we are sharing a key for both, only check for item use if not throwing item
+		if (!checkThrow ()) {
+			checkUse ();
+		}
+
 		if (heldItem) {
-			//Since we are sharing a key for both, only check for item use if not throwing item
-			if (!checkThrow ()) {
-				checkUse ();
-			}
 			checkDrop ();
 		}
 		checkSwapItem ();
@@ -383,59 +387,63 @@ public class PlayerController : MonoBehaviour {
 
 
 	void checkUse() {
-		if (!heldItem.GetComponent<Item> ().usable) {
-			return;
-		}
-
 		if (useInput && verticalInput == 0) {
-			rigidBody.velocity = new Vector2 (0, 0);
-			anim.SetInteger("State", 0);
-			heldItem.GetComponent<Item>().use ();
+			if (!heldItem) {
+				rigidBody.velocity = new Vector2 (0, 0);
+				anim.SetInteger("State", 0);
+				punch();
+			} else if (heldItem.GetComponent<Item> ().usable) {
+				rigidBody.velocity = new Vector2 (0, 0);
+				anim.SetInteger("State", 0);
+				heldItem.GetComponent<Item>().use ();
+			}
 		}
 	}
 
 	bool checkThrow() {
-		if (verticalInput > 0 && useInput) {
-			Item item = heldItem.GetComponent<Item> ();
-			item.disableAnimator ();
-			item.playThrowSound ();
+		if (heldItem) {
+			if (verticalInput > 0 && useInput) {
+				Item item = heldItem.GetComponent<Item> ();
+				item.disableAnimator ();
+				item.playThrowSound ();
 
-			heldItem.transform.parent = null;
-			item.frontHand.SetActive (false);
-			item.backHand.SetActive (false);
+				heldItem.transform.parent = null;
+				item.frontHand.SetActive (false);
+				item.backHand.SetActive (false);
 
-			Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
+				Rigidbody2D body = heldItem.GetComponent<Rigidbody2D>();
 
-			heldItem.layer = 12;
+				heldItem.layer = 12;
 
-			//Set throw direction	
-			int tempThrowStrength;
-			float tempThrowRotation;
-			if (playerSprite.flipX) {
-				item.throwDirection = -1;
-			} else {
-				item.throwDirection = 1;
+				//Set throw direction	
+				int tempThrowStrength;
+				float tempThrowRotation;
+				if (playerSprite.flipX) {
+					item.throwDirection = -1;
+				} else {
+					item.throwDirection = 1;
+				}
+				tempThrowStrength = xThrowStrength * item.throwDirection;
+				tempThrowRotation = item.throwRotation * item.throwDirection;
+					
+				alignHands ();
+				showPlayerHands ();
+
+				item.isHeld = false;
+				item.isThrown = true;
+				item.onThrow ();
+
+				body.bodyType = RigidbodyType2D.Dynamic;
+				body.AddForce (new Vector2 (tempThrowStrength, yThrowStrength));
+				body.AddTorque (tempThrowRotation);
+
+				heldItem = null;
+
+				//Update UI box
+				activeSlot.setEmpty();
+
+				return true;
 			}
-			tempThrowStrength = xThrowStrength * item.throwDirection;
-			tempThrowRotation = item.throwRotation * item.throwDirection;
-				
-			alignHands ();
-			showPlayerHands ();
-
-			item.isHeld = false;
-			item.isThrown = true;
-			item.onThrow ();
-
-			body.bodyType = RigidbodyType2D.Dynamic;
-			body.AddForce (new Vector2 (tempThrowStrength, yThrowStrength));
-			body.AddTorque (tempThrowRotation);
-
-			heldItem = null;
-
-			//Update UI box
-			activeSlot.setEmpty();
-
-			return true;
 		}
 		return false;
 	}
@@ -537,6 +545,20 @@ public class PlayerController : MonoBehaviour {
 		gameCon.hideDescription ();
 	}
 
+	private void punch() {
+		isBusy = true;
+
+		handsAnim.SetBool ("Walking", false);
+		handsAnim.SetBool ("Ready", false);
+
+		handsAnim.SetTrigger("Punch");
+	}
+
+	public void endPunch() {
+		frontHand.GetComponent<CircleCollider2D> ().enabled = false;
+		isBusy = false;
+	}
+
 	void checkInteract() {
 		if (interactInput && closestInteractive) {
 			if (closestInteractive.name == "FirstAidStation") {
@@ -549,6 +571,7 @@ public class PlayerController : MonoBehaviour {
 				rigidBody.velocity = new Vector2 (0, 0);
 				anim.SetInteger("State", 0);
 				handsAnim.SetBool ("Walking", false);
+				handsAnim.SetBool ("Ready", false);
 				isBusy = true;
 				isHealing = true;
 				station.interact ();
@@ -571,9 +594,9 @@ public class PlayerController : MonoBehaviour {
 			rigidBody.velocity = new Vector2 (0f, 0f);
 			anim.SetInteger("State", 0);
 			handsAnim.SetBool ("Walking", false);
+			handsAnim.SetBool ("Ready", false);
 			isBusy = true;
 			isInvulnerable = true;
-
 
 			transController.playerTravel ();
 		}
