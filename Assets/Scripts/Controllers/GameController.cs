@@ -88,6 +88,7 @@ public class GameController : MonoBehaviour {
 	private int tutorialPlay;
 	private int tutorialStep;
 	private bool isGameOver;
+	private bool resultsReady;
 	[HideInInspector]
 	public bool isPaused;
 	private bool timerRunning;
@@ -195,8 +196,8 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (isGameOver) {
-			return;
+		if (isGameOver && resultsReady) {
+			checkGameOverSkip();
 		}
 
 		if (timerRunning) {
@@ -337,6 +338,12 @@ public class GameController : MonoBehaviour {
 			}
 
 			nextCinematic = CinematicMap.getNextCinematic ();
+		}
+	}
+
+	private void checkGameOverSkip() {
+		if (Input.anyKeyDown) {
+			SceneManager.LoadScene("ResultsScreen");
 		}
 	}
 
@@ -1035,12 +1042,16 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator DeathFade() {
+		//musicPlayer.fadeMusicOut(0.03f);
+		musicPlayer.changeMusic("death");
+
+		//Start the fade to black
 		SpriteRenderer sprite = blackFade.GetComponent<SpriteRenderer> ();
 		Color startColor = sprite.color;
 		startColor.a = 0.0f;
 		sprite.color = startColor;
 		blackFade.SetActive (true);
-		for (float f = 0.0f; f < 1.0f; f += 0.003f) {
+		for (float f = 0.0f; f < 1.0f; f += 0.002f) {
 			Color spriteColor = sprite.color;
 			Color textColor = gameOverText.color;
 
@@ -1053,9 +1064,7 @@ public class GameController : MonoBehaviour {
 			yield return null;
 		}
 
-		yield return new WaitForSeconds (2.0f);
-
-		SceneManager.LoadScene("ResultsScreen");
+		resultsReady = true;
 	}
 
 	IEnumerator VictoryFade() {
