@@ -394,6 +394,7 @@ public class PlayerController : MonoBehaviour {
 				punch();
 			} else if (heldItem.GetComponent<Item> ().usable) {
 				rigidBody.velocity = new Vector2 (0, 0);
+				stopWalking();
 				anim.SetInteger("State", 0);
 				heldItem.GetComponent<Item>().use ();
 			}
@@ -549,8 +550,6 @@ public class PlayerController : MonoBehaviour {
 		isBusy = true;
 
 		handsAnim.SetBool ("Walking", false);
-		handsAnim.SetBool ("Ready", false);
-
 		handsAnim.SetTrigger("Punch");
 	}
 

@@ -96,6 +96,8 @@ public class HeavyBoxTrap : Trap {
 
 		//Update UI box
 		playerCon.activeSlot.setEmpty ();
+
+		playTrapDeploySound();
 	}
 
 	public void moveToDeployPos () {

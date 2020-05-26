@@ -83,6 +83,8 @@ public class SpikeTrap : Trap {
 			//Update UI box
 			playerCon.activeSlot.setEmpty();
 		}
+
+		playTrapDeploySound();
 	}
 
 	public void moveToDeployPos () {

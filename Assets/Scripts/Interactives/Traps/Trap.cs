@@ -10,6 +10,7 @@ public class Trap : Item {
 
 	public float deployY;
 	public float deployRotation;
+	public AudioClip deploySound;
 
 	protected bool isDeployed;
 	protected string deployedArea;
@@ -28,10 +29,14 @@ public class Trap : Item {
 	}
 
 	public virtual void deploy() {
-
+		playTrapDeploySound();
 	}
 
 	public virtual void trigger(GameObject other=null) {
 		                                                                
+	}
+
+	public void playTrapDeploySound() {
+		soundController.playPriorityOneShot (deploySound);
 	}
 }
