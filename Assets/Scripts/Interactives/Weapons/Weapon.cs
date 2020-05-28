@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Weapon : Item {
 
+	[SerializeField]
+	protected CapsuleCollider2D throwHitCollider;
+
 	[Header("Basic Attributes")]
 	public int attackDamage;
 	public int durability;
@@ -13,6 +16,7 @@ public class Weapon : Item {
 
 	[Header("Special Attributes")]
 	public int multiHit = 1;
+	public int multiHitThrow;
 	public bool instantAttack;
 	public bool inflictsShockwave;
 	public bool isVorpal;
@@ -41,7 +45,7 @@ public class Weapon : Item {
 
 	new void OnCollisionEnter2D(Collision2D other) {
 		if (isThrown) {
-			if (other.gameObject.tag == "Enemy") {
+			if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvulnerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
 				float direction = transform.position.x - other.transform.position.x;
 				hitCount = 1;
 				other.gameObject.GetComponent<Enemy> ().takeThrowHit (thrownDamage, knockback, direction, false, attackType);
@@ -74,6 +78,27 @@ public class Weapon : Item {
 			}
 			other.gameObject.GetComponent<Enemy> ().takeHit (attackDamage, knockback, direction, noBlood, attackType, false, vorpalHit);
 			onEnemyImpact (other.gameObject);
+		}
+	}
+
+	void OnTriggerEnter2D (Collider2D other) {
+		if (isThrown && multiHitThrow > 0 && other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<Enemy>().isInvulnerable && !other.gameObject.GetComponent<Enemy>().getIsDead()) {
+			float direction = transform.position.x - other.transform.position.x;
+			hitCount ++;
+			other.gameObject.GetComponent<Enemy> ().takeThrowHit (thrownDamage, knockback, direction, false, attackType);
+			onEnemyImpact (other.gameObject);
+
+			if (hitCount >= multiHitThrow) {
+				throwHitCollider.enabled = false;
+				hitCollider.enabled = true;
+				reduceDurability ();
+			}
+		} 
+
+		if (isThrown && multiHitThrow > 0 && (other.gameObject.tag == "AreaWall" || other.gameObject.tag == "Terrain")) {
+			throwHitCollider.enabled = false;
+			hitCollider.enabled = true;
+			reduceDurability ();
 		}
 	}
 
@@ -145,6 +170,15 @@ public class Weapon : Item {
 
 	protected virtual void onAttack() {
 		return;
+	}
+
+	public override void onThrow() {
+		if (multiHitThrow > 0) {
+			hitCount = 0;
+			hitCollider.enabled = false;
+			throwHitCollider.enabled = true;
+		}
+		base.onThrow();
 	}
 
 	public override void updateDurabilityIndicator() {

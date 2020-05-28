@@ -29,6 +29,8 @@ public class Item : Interactive {
 	public int thrownDamage;
 	public int thrownKnockback;
 	public float throwRotation;
+	public float initialThrowRotation;
+	public float initialThrowHeight;
 	public int throwDirection = 0;
 	public int tier = -1;
 	public string type;
@@ -110,6 +112,7 @@ public class Item : Interactive {
 			deparent = false;
 		}
 
+		//This god awful hack lets you skip checking if the item should come to rest for a certain number of frames. There is almost certainly a better way of doing this.
 		if (skipBounceCheck > 0) {
 			skipBounceCheck --;
 			return;
@@ -389,7 +392,7 @@ public class Item : Interactive {
 			playerCon.activeSlot.setEmpty();
 
 			//The animator sometimes changes the objects position on the frame it is 
-			//disabled, so we deparent the item next frame for safety
+			//disabled, so we deparent the item next frame instead for safety. Goddamn unity animators.
 			deparent = true;
 
 			disableAnimator ();
@@ -410,6 +413,7 @@ public class Item : Interactive {
 
 		gameObject.layer = 11;
 
+		//Items with static break set will freeze in place while breaking
 		if (!staticBreak) {
 			int xBreakForce = Random.Range(-100, 100);
 			int yBreakForce = Random.Range(60, 100);

@@ -416,7 +416,7 @@ public class PlayerController : MonoBehaviour {
 
 				heldItem.layer = 12;
 
-				//Set throw direction	
+				//Position item to be thrown and Set throw direction
 				int tempThrowStrength;
 				float tempThrowRotation;
 				if (playerSprite.flipX) {
@@ -426,6 +426,21 @@ public class PlayerController : MonoBehaviour {
 				}
 				tempThrowStrength = xThrowStrength * item.throwDirection;
 				tempThrowRotation = item.throwRotation * item.throwDirection;
+
+				if (item.initialThrowRotation != 0) {
+					float initialRotation;
+					if (playerSprite.flipX) {
+						initialRotation = item.initialThrowRotation - 180;
+					} else {
+						initialRotation = item.initialThrowRotation;
+					}
+					Quaternion rotation = Quaternion.Euler(0, 0, initialRotation);
+					heldItem.transform.rotation = rotation;
+				} 
+				if (item.initialThrowHeight != 0) {
+					Vector3 position = new Vector3(heldItem.transform.position.x, heldItem.transform.position.y + item.initialThrowHeight, heldItem.transform.position.z);
+					heldItem.transform.position = position;
+				}
 					
 				alignHands ();
 				showPlayerHands ();
