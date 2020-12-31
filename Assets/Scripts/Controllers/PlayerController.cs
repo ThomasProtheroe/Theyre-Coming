@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public int health;
 	private int woundState;
+	public float maxStamina;
+	[HideInInspector]
+	public float stamina;
+
 
 	[HideInInspector]
 	public List<GameObject> nearInteractives = new List<GameObject>();
@@ -50,6 +54,8 @@ public class PlayerController : MonoBehaviour {
 	public ItemSlot activeSlot;
 	[HideInInspector]
 	public SpriteRenderer playerSprite;
+
+	public Image staminaBarFill;
 
 	private Animator anim;
 	private Animator handsAnim;
@@ -101,6 +107,8 @@ public class PlayerController : MonoBehaviour {
 
 		health = maxHealth;
 		woundState = 0;
+		stamina = maxStamina / 2;
+		updateStaminaBar ();
 		currentSpeed = playerSpeed;
 		isTargetable = true;
 		burnImmunityTimer = 0.0f;
@@ -345,6 +353,27 @@ public class PlayerController : MonoBehaviour {
 				playHitSound ();
 			}
 		}
+	}
+
+	void increaseStamina(float exhaustion) {
+		stamina = stamina + exhaustion;
+		if (stamina >= maxStamina) {
+			stamina = maxStamina;
+
+		}
+		updateStaminaBar ();
+	}
+
+	void decreaseStamina(float exhaustion) {
+		stamina = stamina - exhaustion;
+		if (stamina <0 ) {
+			stamina = stamina;
+		}
+		updateStaminaBar ();
+	}
+
+	void updateStaminaBar(){
+		staminaBarFill.fillAmount = stamina / maxStamina;
 	}
 
 	void updateWoundState() {
