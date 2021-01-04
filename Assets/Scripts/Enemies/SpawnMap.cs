@@ -22,22 +22,13 @@ public static class SpawnMap {
 		difficultyCurve = inCurve;
 	}
 
-	public static SpawnInstance getNextSpawn(float gameTime = 0f) {
+	public static SpawnInstance getNextSpawn() {
 		SpawnInstance nextSpawn = null;
 
-		if (mode == "story") {
-			if (map.Count > 0) {
-				nextSpawn = map.Dequeue ();
-			} else {
-				nextSpawn = null;
-			}
-		} else if (mode == "endless") {
-			if (map == null || map.Count == 0) {
-				buildWave(gameTime);
-				
-			} 
-			nextSpawn = map.Dequeue ();
-		}
+		if (map == null || map.Count == 0) {
+			return null;
+		} 
+		nextSpawn = map.Dequeue ();
 		
 		return nextSpawn;
 	}
@@ -50,7 +41,15 @@ public static class SpawnMap {
 		difficultyCurve = 2;
 	}
 
-	private static void buildWave(float gameTime) {
+	public static void startStoryMode() {
+		map = new Queue<SpawnInstance> ();
+
+		wave = 1;
+		difficulty = 2;
+		difficultyCurve = 2;
+	}
+
+	public static void buildWave(float gameTime) {
 		Debug.Log("Building Wave " + wave.ToString());
 		map = new Queue<SpawnInstance> ();
 
@@ -59,15 +58,15 @@ public static class SpawnMap {
 		enemyCount += Random.Range(variance * -1, variance + 1);
 
 		float runnerChance = 0f;
-		if (wave > 4) {
+		if (wave > 2) {
 			runnerChance = 0.15f;
-		} else if (wave > 10) {
+		} else if (wave > 5) {
 			runnerChance = 0.22f;
 		}
 
 		float nexttWaveStartTime = 0f;
 		if (wave > 1) {
-			nexttWaveStartTime = gameTime + 60;
+			nexttWaveStartTime = gameTime + 10;
 		}
 
 		int spawnGroupMax = Mathf.RoundToInt(enemyCount / 4);
@@ -110,7 +109,7 @@ public static class SpawnMap {
 			}
 			
 
-			nexttWaveStartTime += Random.Range(5f, 10f);
+			nexttWaveStartTime += Random.Range(10f, 20f);
 			enemyCount -= groupSize;
 			enemyCount -= runnerCount;
 
@@ -131,6 +130,7 @@ public static class SpawnMap {
 		wave++;
 	}
 
+/*
 	private static void buildMap() {
 		int mapType = Random.Range (0, 5);
 		map = new Queue<SpawnInstance> ();
@@ -318,6 +318,7 @@ public static class SpawnMap {
 			map.Enqueue (new SpawnInstance(680.0f, 8, Constants.ENEMY_TYPE_RUNNER));
 		}
 	}
+	*/
 }
 
 public class SpawnInstance {

@@ -124,7 +124,7 @@ public class GameController : MonoBehaviour {
 
 		SpawnMap.setMode(gameMode);
 		if (gameMode == "story") {
-			SpawnMap.rebuildMap ();
+			SpawnMap.startStoryMode ();
 			CinematicMap.rebuildMap ();
 		} else if (gameMode == "endless") {
 			SpawnMap.startEndlessMode ();
@@ -223,6 +223,8 @@ public class GameController : MonoBehaviour {
 			if ((gameMode == "story" || gameMode == "endless") && !noMoreEnemySpawns) {
 				checkForEnemySpawns ();
 			}
+		} else if (phase == "downtime") {
+
 		}
 
 		if (gameMode == "story") {
@@ -297,14 +299,25 @@ public class GameController : MonoBehaviour {
 		phase = newPhase;
 		musicPlayer.changeMusic (phase);
 		timer = 0.0f;
+
+		if (newPhase == "prep") {
+			timerText.enabled = true;
+		} else if (newPhase == "downtime") {
+
+		} else if (newPhase == "siege") {
+			SpawnMap.buildWave();
+			//Change front door to broken version
+			GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
+			if (gameMode == "story") {
+				spawnEnemy (spawnZones[2], Constants.ENEMY_TYPE_NORMAL);
+			}
+
+			StartCoroutine ("CheckNightEnd");
+		}
 	}
 
 	private void onSiegePhase() {
-		//Change front door to broken version
-		GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
-		if (gameMode == "story") {
-			spawnEnemy (spawnZones[2], Constants.ENEMY_TYPE_NORMAL);
-		}
+		
 	}
 
 	private void checkForEnemySpawns() {
@@ -313,7 +326,7 @@ public class GameController : MonoBehaviour {
 				for (int i = 0; i < nextSpawn.spawnCount; i++) {
 					spawnEnemyRand (nextSpawn.enemyType);
 				}
-				nextSpawn = SpawnMap.getNextSpawn (timer);
+				nextSpawn = SpawnMap.getNextSpawn ();
 			} else {
 				spawnBoss (spawnZones[0]);
 				nextSpawn = SpawnMap.getNextSpawn ();
@@ -632,9 +645,8 @@ public class GameController : MonoBehaviour {
 
 	private void stopIntro() {
 		blackFade.SetActive (false);
-		changePhase("prep");
+		changePhase("downtime");
 
-		timerText.enabled = true;
 		skipText.gameObject.SetActive (false);
 
 		//Start the tutorial if using
@@ -1091,6 +1103,18 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (2.0f);
 
 		Scenes.Load ("ResultsScreen", "result", "victory");
+	}
+
+	IEnumerator CheckNightEnd() {
+		if (noMoreEnemySpawns && !playerCon.isDead && enemies.Count == 0) {
+			yield return new WaitForSeconds (5.0f);
+			changePhase ("downtime");
+			yield break;
+		}
+
+		yield return new WaitForSeconds (3.0f);
+
+		StartCoroutine ("CheckNightEnd");
 	}
 
 	IEnumerator CheckVictory() {
