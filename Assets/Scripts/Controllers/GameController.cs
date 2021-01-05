@@ -131,7 +131,6 @@ public class GameController : MonoBehaviour {
 		}
 
 		enemies = new List<Enemy> ();
-		nextSpawn = SpawnMap.getNextSpawn ();
 		nextCinematic = CinematicMap.getNextCinematic ();
 
 		zombieAttackSoundMaster = new AudioClip[5][];
@@ -188,7 +187,6 @@ public class GameController : MonoBehaviour {
 
 		if (gameMode == "dev") {
 			changePhase("siege");
-			onSiegePhase ();
 		}
 
 		StartCoroutine ("CheckVictory");
@@ -217,7 +215,6 @@ public class GameController : MonoBehaviour {
 			if (Mathf.Floor (timer) >= prepTime) {
 				timerText.enabled = false;
 				changePhase ("siege");
-				onSiegePhase ();
 			}
 		} else if (phase == "siege") {
 			if ((gameMode == "story" || gameMode == "endless") && !noMoreEnemySpawns) {
@@ -306,18 +303,21 @@ public class GameController : MonoBehaviour {
 
 		} else if (newPhase == "siege") {
 			SpawnMap.buildWave();
+			nextSpawn = SpawnMap.getNextSpawn ();
 			//Change front door to broken version
 			GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
+			/*
 			if (gameMode == "story") {
 				spawnEnemy (spawnZones[2], Constants.ENEMY_TYPE_NORMAL);
 			}
+			*/
 
 			StartCoroutine ("CheckNightEnd");
 		}
 	}
 
-	private void onSiegePhase() {
-		
+	public void startNewNight() {
+		changePhase("siege");
 	}
 
 	private void checkForEnemySpawns() {
@@ -759,6 +759,10 @@ public class GameController : MonoBehaviour {
 		return tutorialStep;
 	}
 
+	public string getPhase() {
+		return phase;
+	}
+
 	public void setTutorialStep(int step) {
 		tutorialStep = step;
 	}
@@ -810,12 +814,12 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene ("MainMenu");
 	}
 
-	public void miscFadeOut() {
-		StartCoroutine ("MiscBlackFadeOut", 0.01f);
+	public void miscFadeOut(float interval=0.01f) {
+		StartCoroutine ("MiscBlackFadeOut", interval);
 	}
 
-	public void miscFadeIn() {
-		StartCoroutine ("MiscBlackFadeIn", 0.01f);
+	public void miscFadeIn(float interval=0.01f) {
+		StartCoroutine ("MiscBlackFadeIn", interval);
 	}
 
 	IEnumerator playConversation(Dialog[] conversation) {

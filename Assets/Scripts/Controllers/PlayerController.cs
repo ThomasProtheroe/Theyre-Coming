@@ -589,6 +589,15 @@ public class PlayerController : MonoBehaviour {
 				isBusy = true;
 				isHealing = true;
 				station.interact ();
+			} else if (closestInteractive.name == "Bed") {
+				Bed bed = closestInteractive.GetComponent<Bed> ();
+
+				rigidBody.velocity = new Vector2 (0, 0);
+				anim.SetInteger("State", 0);
+				handsAnim.SetBool ("Walking", false);
+				handsAnim.SetBool ("Ready", false);
+				isBusy = true;
+				bed.interact ();
 			}
 		}
 	}

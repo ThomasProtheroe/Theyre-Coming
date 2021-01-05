@@ -10,10 +10,6 @@ public static class SpawnMap {
 	private static int wave;
 	private static int difficultyCurve;
 
-	public static void rebuildMap() {
-		buildMap();
-	}
-
 	public static void setMode(string inMode) {
 		mode = inMode;
 	}
@@ -49,7 +45,7 @@ public static class SpawnMap {
 		difficultyCurve = 2;
 	}
 
-	public static void buildWave(float gameTime) {
+	public static void buildWave() {
 		Debug.Log("Building Wave " + wave.ToString());
 		map = new Queue<SpawnInstance> ();
 
@@ -65,9 +61,6 @@ public static class SpawnMap {
 		}
 
 		float nexttWaveStartTime = 0f;
-		if (wave > 1) {
-			nexttWaveStartTime = gameTime + 10;
-		}
 
 		int spawnGroupMax = Mathf.RoundToInt(enemyCount / 4);
 		int spawnGroupMin = difficulty;

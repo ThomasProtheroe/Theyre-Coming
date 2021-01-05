@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\Fist.cs" />
      <Compile Include="Assets\Scripts\IgnoreParentRotation.cs" />
+     <Compile Include="Assets\Scripts\Interactives\Bed.cs" />
      <Compile Include="Assets\Scripts\Interactives\DecorativeSprite.cs" />
      <Compile Include="Assets\Scripts\Interactives\FirstAidStation.cs" />
      <Compile Include="Assets\Scripts\Interactives\FrontDoor.cs" />
