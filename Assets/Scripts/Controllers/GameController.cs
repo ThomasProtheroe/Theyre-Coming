@@ -634,8 +634,6 @@ public class GameController : MonoBehaviour {
 
 	private void startIntro() {
 		skipText.gameObject.SetActive (true);
-		playerCon.itemSlot1.gameObject.SetActive(false);
-		playerCon.itemSlot2.gameObject.SetActive(false);
 
 		playerCon.enableCinematicControl (true);
 
@@ -653,17 +651,12 @@ public class GameController : MonoBehaviour {
 		if (tutorialPlay == 1) {
 			firstTutorialPanel.GetComponent<TutorialPanel> ().showTutorialPanel();
 		}
-
-		playerCon.itemSlot1.gameObject.SetActive(true);
-		playerCon.itemSlot2.gameObject.SetActive(true);
+			
 		playerCon.enableCinematicControl (false);
 		currentCinematic = null;
 	}
 
 	public void startElevatorCinematic() {
-		playerCon.itemSlot1.gameObject.SetActive(false);
-		playerCon.itemSlot2.gameObject.SetActive(false);
-
 		playerCon.enableCinematicControl (true);
 
 		StartCoroutine ("playElevatorDialog");

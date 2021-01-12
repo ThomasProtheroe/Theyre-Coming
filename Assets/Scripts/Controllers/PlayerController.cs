@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private GameObject closestInteractive;
 	private GameObject beingCrafted;
+	private GameObject staminaBar;
 	private float burnImmunityTimer;
 	private float bileImmunityTimer;
 	private float slowedTimer;
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour {
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
 		itemSlot1 = GameObject.FindGameObjectWithTag ("ItemSlot1").GetComponent<ItemSlot> ();
 		itemSlot2 = GameObject.FindGameObjectWithTag ("ItemSlot2").GetComponent<ItemSlot> ();
+		staminaBar = GameObject.FindGameObjectWithTag ("StaminaBar");
 		activeSlot = itemSlot1;
 		activeSlot.setActive (true);
 
@@ -798,6 +800,16 @@ public class PlayerController : MonoBehaviour {
 
 	public void enableCinematicControl(bool flag) {
 		cinematicControl = flag;
+
+		if (flag == true) {
+			itemSlot1.gameObject.SetActive(false);
+			itemSlot2.gameObject.SetActive(false);
+			staminaBar.SetActive (false);
+		} else {
+			itemSlot1.gameObject.SetActive(true);
+			itemSlot2.gameObject.SetActive(true);
+			staminaBar.SetActive (true);
+		}
 	}
 
 	public void updateVolume(float volume) {
