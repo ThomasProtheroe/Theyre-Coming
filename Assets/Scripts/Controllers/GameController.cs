@@ -121,7 +121,7 @@ public class GameController : MonoBehaviour {
 
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerCon = player.GetComponent<PlayerController> ();
-
+                            
 		SpawnMap.setMode(gameMode);
 		if (gameMode == "story") {
 			SpawnMap.startStoryMode ();
