@@ -377,6 +377,21 @@ public class PlayerController : MonoBehaviour {
 	void updateStaminaBar(){
 		staminaBarFill.fillAmount = stamina / maxStamina;
 	}
+	  
+	void updatePlayerSpeed() {
+		Debug.Log(currentSpeed);
+		if (stamina == maxStamina) {
+			currentSpeed = playerSpeed;
+		} else if (stamina > 75) {
+			currentSpeed = playerSpeed * (float)0.8;
+		} else if (stamina > 50) {
+			currentSpeed = playerSpeed * (float)0.7;
+		} else if (stamina > 25) {
+			currentSpeed = playerSpeed * (float)0.5;
+		} else {
+			currentSpeed = playerSpeed * (float)0.4;
+		}
+	}
 
 	void updateWoundState() {
 		if (health == maxHealth) {
