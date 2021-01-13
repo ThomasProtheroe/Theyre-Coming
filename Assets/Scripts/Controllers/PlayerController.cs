@@ -361,9 +361,9 @@ public class PlayerController : MonoBehaviour {
 		stamina = stamina + exhaustion;
 		if (stamina >= maxStamina) {
 			stamina = maxStamina;
-
 		}
 		updateStaminaBar ();
+		updatePlayerSpeed ();
 	}
 
 	void decreaseStamina(float exhaustion) {
@@ -372,6 +372,7 @@ public class PlayerController : MonoBehaviour {
 			stamina = stamina;
 		}
 		updateStaminaBar ();
+		updatePlayerSpeed ();
 	}
 
 	void updateStaminaBar(){
@@ -379,7 +380,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	  
 	void updatePlayerSpeed() {
-		Debug.Log(currentSpeed);
+		Debug.Log (currentSpeed);
 		if (stamina == maxStamina) {
 			currentSpeed = playerSpeed;
 		} else if (stamina > 75) {
