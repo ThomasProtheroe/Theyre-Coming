@@ -357,6 +357,10 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	public void goToSleep() {
+		increaseStamina(maxStamina / 2);
+	}
+
 	void increaseStamina(float exhaustion) {
 		stamina = stamina + exhaustion;
 		if (stamina >= maxStamina) {

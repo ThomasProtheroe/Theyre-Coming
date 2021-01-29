@@ -56,7 +56,7 @@ public class Bed : Interactive {
 		yield return new WaitForSeconds (3.0f);
 		soundCon.playPriorityOneShot (sleepSound);
 		yield return new WaitForSeconds (1.0f);
-		//TODO - replenish player stamina
+		playerCon.goToSleep();
 		gameCon.miscFadeIn(0.005f);
 		yield return new WaitForSeconds (3.0f);
 		gameCon.startNewNight();
