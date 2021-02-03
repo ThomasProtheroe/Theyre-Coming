@@ -3837,9 +3837,31 @@ Prefab:
       propertyPath: shakeAmount
       value: 0.02
       objectReference: {fileID: 0}
+    - target: {fileID: 1300030263985234, guid: 886d359eade945e4a82c97a26cc4db2a, type: 2}
+      propertyPath: m_TagString
+      value: Interactive
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 886d359eade945e4a82c97a26cc4db2a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &307142630 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1300030263985234, guid: 886d359eade945e4a82c97a26cc4db2a,
+    type: 2}
+  m_PrefabInternal: {fileID: 307142629}
+--- !u!114 &307142631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 307142630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abcfeac34ea9672478be50fce75f345d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.078431375, g: 1, b: 0.043137256, a: 1}
+  outlineSize: 1
 --- !u!1001 &312062902
 Prefab:
   m_ObjectHideFlags: 0

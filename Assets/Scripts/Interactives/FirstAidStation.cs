@@ -84,7 +84,8 @@ public class FirstAidStation : Interactive {
 	}
 
 	override public void updateHighlightColor() {
-		if (usesRemaining > 0 && playerCon.health < playerCon.maxHealth) {
+		string phase = gameCon.getPhase ();
+		if (usesRemaining > 0 && playerCon.health < playerCon.maxHealth && phase == "downtime") {
 			GetComponent<SpriteOutline> ().color = positiveColor;
 		} else {
 			GetComponent<SpriteOutline> ().color = negativeColor;
