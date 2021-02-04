@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\CameraShake.cs" />
      <Compile Include="Assets\Scripts\CinematicMap.cs" />
      <Compile Include="Assets\Scripts\ClockHand.cs" />
+     <Compile Include="Assets\Scripts\Computer.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
      <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
      <Compile Include="Assets\Scripts\Controllers\ElevatorController.cs" />

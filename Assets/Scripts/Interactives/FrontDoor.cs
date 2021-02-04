@@ -14,6 +14,7 @@ public class FrontDoor : Interactive {
 	[SerializeField]
 	private Sprite playerPortrait;
 	private GameController gameCon;
+	private PlayerController playerCon;
 
 	private bool warningPlayed;
 
@@ -54,6 +55,7 @@ public class FrontDoor : Interactive {
 			GetComponent<SpriteOutline> ().color = negativeColor;
 		}
 	}
+
 	public void shakeDoor() {
 		StartCoroutine ("ShakeDoor");
 	}
