@@ -26,6 +26,7 @@ public class Computer : Interactive {
 
 	private void OpenInternet() {
 	}
+
 	override public void updateHighlightColor() {
 		string phase = gameCon.getPhase();
 		if (phase == "downtime") {

@@ -3841,6 +3841,11 @@ Prefab:
       propertyPath: m_TagString
       value: Interactive
       objectReference: {fileID: 0}
+    - target: {fileID: 212666113396562978, guid: 886d359eade945e4a82c97a26cc4db2a,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 628f0ba3e54c0fb45abdca8ef703677b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 886d359eade945e4a82c97a26cc4db2a, type: 2}
   m_IsPrefabParent: 0
@@ -78780,6 +78785,16 @@ Prefab:
         type: 2}
       propertyPath: m_SortingLayer
       value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 212959223078037756, guid: 09061780d378cc34fb3dfefb4de74936,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 628f0ba3e54c0fb45abdca8ef703677b, type: 2}
+    - target: {fileID: 61247001424890434, guid: 09061780d378cc34fb3dfefb4de74936,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09061780d378cc34fb3dfefb4de74936, type: 2}
