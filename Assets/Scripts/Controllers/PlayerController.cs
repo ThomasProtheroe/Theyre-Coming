@@ -384,7 +384,6 @@ public class PlayerController : MonoBehaviour {
 	}
 	  
 	void updatePlayerSpeed() {
-		Debug.Log (currentSpeed);
 		if (stamina == maxStamina) {
 			currentSpeed = playerSpeed;
 		} else if (stamina > 75) {
@@ -914,10 +913,16 @@ public class PlayerController : MonoBehaviour {
 
 		//If crafting is successful
 		if (beingCrafted) {
+			Item prodItem = beingCrafted.GetComponent<Item> ();
+
+			//Check if the player has enough stamina
+			if ((int)stamina < prodItem.getCraftingCost()) {
+				yield break;
+			}
+
 			isBusy = true;
 			isCrafting = true;
 
-			Item prodItem = beingCrafted.GetComponent<Item> ();
 			prodItem.playCraftingSound (overrideSound);
 			beingCrafted.transform.position = new Vector2 (0.0f, -50.0f);
 			craftingCloud.SetActive (true);
@@ -963,6 +968,8 @@ public class PlayerController : MonoBehaviour {
 
 				gameCon.showDescription (itemCon.itemName, itemCon.description, statusEffects, itemCon.tier);
 			}
+
+			//Deduct stamina costs from player
 
 			//Play fanfare for high-tier items
 			gameCon.startCraftingFanfare (itemCon);

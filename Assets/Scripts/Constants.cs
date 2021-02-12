@@ -26,4 +26,10 @@ public class Constants {
 	public const int ENEMY_TYPE_NORMAL = 0;
 	public const int ENEMY_TYPE_RUNNER = 1;
 	public const int ENEMY_TYPE_BOSS = 2;
+
+	/*** Stamina Costs ***/
+	public const int STAMINA_COST_CRAFT_DEFAULT = 5;
+	public const int STAMINA_COST_SCAVANGE = 20;
+	public const int STAMINA_COST_COMPUTER = 8;
+	public const int STAMINA_COST_FIRSTAID = 6;
 }

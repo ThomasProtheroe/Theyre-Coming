@@ -87,6 +87,8 @@ public class Item : Interactive {
 	public GameObject player;
 	[HideInInspector]
 	public PlayerController playerCon;
+	[HideInInspector]
+	protected GameController gameController;
 
 	[HideInInspector]
 	public GameObject hiddenItem;
@@ -96,6 +98,7 @@ public class Item : Interactive {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerCon = player.GetComponent<PlayerController> ();
 		soundController = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
+		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		//Don't escape newline characters in item description
 		description = description.Replace ("\\n", "\n");
 		sprite = GetComponent<SpriteRenderer> ();
@@ -189,8 +192,17 @@ public class Item : Interactive {
 
 	override public void updateHighlightColor() {
 		GameObject heldItem = playerCon.heldItem;
-		if (heldItem && !RecipeBook.canCraft(type, heldItem.GetComponent<Item>().type)) {
-			GetComponent<SpriteOutline> ().color = negativeColor;
+		bool canCraft = RecipeBook.canCraft(type, heldItem.GetComponent<Item>().type);
+		if (heldItem) {
+			if (!canCraft) {
+				//Can't combine these items
+				GetComponent<SpriteOutline> ().color = negativeColor;
+			} else {
+				int cost = RecipeBook.tryCraft (type, heldItem.GetComponent<Item>().type).product.GetComponent<Item> ().getCraftingCost();
+				if (cost > (int)playerCon.stamina) {
+					GetComponent<SpriteOutline> ().color = negativeColor;
+				}
+			}
 		} else {
 			GetComponent<SpriteOutline> ().color = positiveColor;
 		}
@@ -377,6 +389,18 @@ public class Item : Interactive {
 		}
 
 		return statusEffects;
+	}
+
+	public int getCraftingCost() {
+		int cost = 0;
+		string phase = gameController.getPhase();
+		if (phase == "downtime") {
+			cost = Constants.STAMINA_COST_CRAFT_DEFAULT;
+		} else if (phase == "siege") {
+			cost = Constants.STAMINA_COST_CRAFT_DEFAULT / 2;
+		}
+
+		return cost;
 	}
 
 	public virtual void breakItem() {
