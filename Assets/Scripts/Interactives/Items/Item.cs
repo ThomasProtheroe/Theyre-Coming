@@ -409,11 +409,11 @@ public class Item : Interactive {
 		}
 		
 		string phase = gameController.getPhase();
-		int cost;
+		int cost = 0;
 		if (phase == "downtime") {
 			cost = baseCost;
 		} else if (phase == "siege") {
-			cost = Mathf.Floor(baseCost / 2);
+			cost = (int)Mathf.Floor((float)baseCost / 2);
 		}
 
 		return cost;

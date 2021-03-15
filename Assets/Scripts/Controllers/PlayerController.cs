@@ -960,7 +960,7 @@ public class PlayerController : MonoBehaviour {
 
 			//Make the item "shoddy" if crafted during the siege phase
 			if (gameCon.getPhase() == "siege") {
-				itemCon.mkaeShoddy();
+				itemCon.makeShoddy();
 			}
 
 			itemCon.onCraft();

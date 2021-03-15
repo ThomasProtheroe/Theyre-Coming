@@ -36,7 +36,7 @@ public class Recipe {
 	}
 
 	public int getCostOverride() {
-		retunr craftingCostOverride;
+		return craftingCostOverride;
 	}
 
 }
@@ -63,7 +63,7 @@ public static class RecipeBook {
 			if (current.areIngredients(item1, item2)) {
 				result = new Result ();
 				result.product = current.craft ();
-				result.product.setCraftingCostOverride(current.getCostOverride());
+				result.product.GetComponent<Item> ().setCraftingCostOverride(current.getCostOverride());
 				result.byProduct = current.getByProduct();
 				break;
 			}
@@ -89,7 +89,7 @@ public static class RecipeBook {
 		while((line = reader.ReadLine()) != null)  
 		{  
 			string[] columns = line.Split (',');
-			Recipe newRecipe = new Recipe (columns [1], columns [2], columns [3], columns [4]);
+			Recipe newRecipe = new Recipe (columns [1], columns [2], columns [3], columns [4], int.Parse(columns [5]));
 			addRecipe (newRecipe);
 		}  
 	}
