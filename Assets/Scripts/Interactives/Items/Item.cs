@@ -19,6 +19,7 @@ public class Item : Interactive {
 	private bool deparent = false;
 	private bool isShoddy = false;
 
+	private int craftingCostOverride;
 	private int skipBounceCheck;
 
 	[Header("Basic Attributes")]
@@ -185,6 +186,10 @@ public class Item : Interactive {
 		if (anim) {
 			anim.enabled = true;
 		}
+	}
+
+	public void setCraftingCostOverride(int cost) {
+		craftingCostOverride = cost;
 	}
 
 	public void setSkipBounceCheck(int count) {
@@ -396,12 +401,19 @@ public class Item : Interactive {
 	}
 
 	public int getCraftingCost() {
-		int cost = 0;
+		int baseCost;
+		if (craftingCostOverride > 0) {
+			baseCost = craftingCostOverride;
+		} else {
+			baseCost = Constants.STAMINA_COST_CRAFT_DEFAULT;
+		}
+		
 		string phase = gameController.getPhase();
+		int cost;
 		if (phase == "downtime") {
-			cost = Constants.STAMINA_COST_CRAFT_DEFAULT;
+			cost = baseCost;
 		} else if (phase == "siege") {
-			cost = Constants.STAMINA_COST_CRAFT_DEFAULT / 2;
+			cost = Mathf.Floor(baseCost / 2);
 		}
 
 		return cost;

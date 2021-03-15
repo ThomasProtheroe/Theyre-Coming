@@ -9,13 +9,15 @@ public class Recipe {
 
 	private GameObject product;
 	private string byProduct; 
+	private int craftingCostOverride;
 
-	public Recipe(string firstIngredient, string secondIngredient, string productPath, string byProductType) {
+	public Recipe(string firstIngredient, string secondIngredient, string productPath, string byProductType, int costOverride) {
 		ingredient1 = firstIngredient;
 		ingredient2 = secondIngredient;
 
 		product = (GameObject) Resources.Load("Prefabs/" + productPath);
 		byProduct = byProductType;
+		craftingCostOverride = costOverride;
 	}
 
 	public bool areIngredients(string item1, string item2) {
@@ -31,6 +33,10 @@ public class Recipe {
 
 	public string getByProduct() {
 		return byProduct;
+	}
+
+	public int getCostOverride() {
+		retunr craftingCostOverride;
 	}
 
 }
@@ -57,6 +63,7 @@ public static class RecipeBook {
 			if (current.areIngredients(item1, item2)) {
 				result = new Result ();
 				result.product = current.craft ();
+				result.product.setCraftingCostOverride(current.getCostOverride());
 				result.byProduct = current.getByProduct();
 				break;
 			}

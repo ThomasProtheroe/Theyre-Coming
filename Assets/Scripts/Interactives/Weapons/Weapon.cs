@@ -182,7 +182,7 @@ public class Weapon : Item {
 	}
 
 	public override void makeShoddy() {
-		maxDurability = (int)Math.Floor(maxDurability * 0.75);
+		maxDurability = (int)Math.Floor(maxDurability * 0.7);
 		if (durability > maxDurability) {
 			durability = maxDurability;
 		}
