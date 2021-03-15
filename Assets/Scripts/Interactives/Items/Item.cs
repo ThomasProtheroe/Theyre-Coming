@@ -17,6 +17,7 @@ public class Item : Interactive {
 	[HideInInspector]
 	public bool usable = false;
 	private bool deparent = false;
+	private bool isShoddy = false;
 
 	private int skipBounceCheck;
 
@@ -387,6 +388,9 @@ public class Item : Interactive {
 		if (inflictsBlind) {
 			statusEffects.Add ("blind");
 		}
+		if (isShoddy) {
+			statusEffects.Add ("shoddy");
+		}
 
 		return statusEffects;
 	}
@@ -487,6 +491,10 @@ public class Item : Interactive {
 
 	public virtual void onArrival() {
 		
+	}
+
+	public virtual void makeShoddy() {
+		isShoddy = true;
 	}
 
 	/**** Coroutines ****/ 

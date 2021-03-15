@@ -11,6 +11,7 @@ public class DescriptionPanel : MonoBehaviour {
 	public Image bleedIcon;
 	public Image burnIcon;
 	public Image blindIcon;
+	public Image shoddyIcon;
 	public Color defaultNameColor;
 
 	public Sprite[] tierSprites;
@@ -41,7 +42,9 @@ public class DescriptionPanel : MonoBehaviour {
 				burnIcon.enabled = true;
 			} else if (iconName == "blind") { 
 				blindIcon.enabled = true;
-			}
+			}  else if (iconName == "shoddy") { 
+				shoddyIcon.enabled = true;
+			} 
 		}
 	}
 

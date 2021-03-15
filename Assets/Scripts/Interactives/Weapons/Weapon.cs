@@ -181,6 +181,15 @@ public class Weapon : Item {
 		base.onThrow();
 	}
 
+	public override void makeShoddy() {
+		maxDurability = (int)Math.Floor(maxDurability * 0.75);
+		if (durability > maxDurability) {
+			durability = maxDurability;
+		}
+
+		base.makeShoddy();
+	}
+
 	public override void updateDurabilityIndicator() {
 		playerCon.activeSlot.setDurabilityIndicator(((float)durability / maxDurability));
 	}

@@ -958,6 +958,11 @@ public class PlayerController : MonoBehaviour {
 			beingCrafted = null;
 			gameCon.countItemCraft ();
 
+			//Make the item "shoddy" if crafted during the siege phase
+			if (gameCon.getPhase() == "siege") {
+				itemCon.mkaeShoddy();
+			}
+
 			itemCon.onCraft();
 
 			//Update UI box
@@ -970,6 +975,7 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			//Deduct stamina costs from player
+			decreaseStamina((int)prodItem.getCraftingCost());
 
 			//Play fanfare for high-tier items
 			gameCon.startCraftingFanfare (itemCon);
