@@ -198,13 +198,13 @@ public class Item : Interactive {
 
 	override public void updateHighlightColor() {
 		GameObject heldItem = playerCon.heldItem;
-		bool canCraft = RecipeBook.canCraft(type, heldItem.GetComponent<Item>().type);
 		if (heldItem) {
-			if (!canCraft) {
+			if (!RecipeBook.canCraft(type, heldItem.GetComponent<Item>().type)) {
 				//Can't combine these items
 				GetComponent<SpriteOutline> ().color = negativeColor;
 			} else {
-				int cost = RecipeBook.tryCraft (type, heldItem.GetComponent<Item>().type).product.GetComponent<Item> ().getCraftingCost();
+				int cost = RecipeBook.getCraftingCost (type, heldItem.GetComponent<Item>().type, gameController.getPhase());
+
 				if (cost > (int)playerCon.stamina) {
 					GetComponent<SpriteOutline> ().color = negativeColor;
 				}

@@ -187,6 +187,8 @@ public class GameController : MonoBehaviour {
 
 		if (gameMode == "dev") {
 			changePhase("siege");
+		} else {
+			changePhase("downtime");
 		}
 
 		StartCoroutine ("CheckVictory");

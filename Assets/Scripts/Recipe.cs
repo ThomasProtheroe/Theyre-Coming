@@ -11,13 +11,15 @@ public class Recipe {
 	private string byProduct; 
 	private int craftingCostOverride;
 
-	public Recipe(string firstIngredient, string secondIngredient, string productPath, string byProductType, int costOverride) {
+	public Recipe(string firstIngredient, string secondIngredient, string productPath, string byProductType, string costOverride) {
 		ingredient1 = firstIngredient;
 		ingredient2 = secondIngredient;
 
 		product = (GameObject) Resources.Load("Prefabs/" + productPath);
 		byProduct = byProductType;
-		craftingCostOverride = costOverride;
+		if (!string.IsNullOrEmpty(costOverride)) {
+			craftingCostOverride = int.Parse(costOverride);
+		}
 	}
 
 	public bool areIngredients(string item1, string item2) {
@@ -37,6 +39,24 @@ public class Recipe {
 
 	public int getCostOverride() {
 		return craftingCostOverride;
+	}
+
+	public int getCraftingCost(string phase) {
+		int baseCost;
+		if (craftingCostOverride > 0) {
+			baseCost = craftingCostOverride;
+		} else {
+			baseCost = Constants.STAMINA_COST_CRAFT_DEFAULT;
+		}
+		
+		int cost = 0;
+		if (phase == "downtime") {
+			cost = baseCost;
+		} else if (phase == "siege") {
+			cost = (int)Mathf.Floor((float)baseCost / 2);
+		}
+
+		return cost;
 	}
 
 }
@@ -89,12 +109,24 @@ public static class RecipeBook {
 		while((line = reader.ReadLine()) != null)  
 		{  
 			string[] columns = line.Split (',');
-			Recipe newRecipe = new Recipe (columns [1], columns [2], columns [3], columns [4], int.Parse(columns [5]));
+			
+			Recipe newRecipe = new Recipe (columns [1], columns [2], columns [3], columns [4], columns [5]);
 			addRecipe (newRecipe);
 		}  
 	}
 
 	public static ArrayList getRecipes() {
 		return recipes;
+	}
+
+	public static int getCraftingCost(string item1, string item2, string phase) {
+		int cost = -1;
+		foreach (Recipe current in recipes) {
+			if (current.areIngredients(item1, item2)) {
+				cost = current.getCraftingCost(phase);
+				break;
+			}
+		}
+		return cost;
 	}
 }

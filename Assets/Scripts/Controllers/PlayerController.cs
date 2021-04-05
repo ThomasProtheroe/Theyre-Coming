@@ -384,16 +384,14 @@ public class PlayerController : MonoBehaviour {
 	}
 	  
 	void updatePlayerSpeed() {
-		if (stamina == maxStamina) {
+		if (stamina > maxStamina * 0.75f) {
 			currentSpeed = playerSpeed;
-		} else if (stamina > 75) {
-			currentSpeed = playerSpeed * (float)0.8;
-		} else if (stamina > 50) {
-			currentSpeed = playerSpeed * (float)0.7;
-		} else if (stamina > 25) {
-			currentSpeed = playerSpeed * (float)0.5;
+		} else if (stamina > maxStamina * 0.50f) {
+			currentSpeed = playerSpeed * (float)0.90;
+		} else if (stamina > maxStamina * 0.25f) {
+			currentSpeed = playerSpeed * (float)0.80;
 		} else {
-			currentSpeed = playerSpeed * (float)0.4;
+			currentSpeed = playerSpeed * (float)0.70;
 		}
 	}
 
@@ -896,6 +894,13 @@ public class PlayerController : MonoBehaviour {
 		//Try to combine the items
 		Item closestItem = closest.GetComponent<Item> ();
 		Item equippedItem = heldItem.GetComponent<Item> ();
+
+		//Check if the player has enough stamina
+		int staminaCost = RecipeBook.getCraftingCost(closestItem.type, equippedItem.type, gameCon.getPhase());
+		if ((int)stamina < staminaCost) {
+			yield break;
+		}
+
 		Result craftingResult = RecipeBook.tryCraft (closestItem.type, equippedItem.type);
 		AudioClip overrideSound = null;
 		if (craftingResult != null) {
@@ -914,11 +919,6 @@ public class PlayerController : MonoBehaviour {
 		//If crafting is successful
 		if (beingCrafted) {
 			Item prodItem = beingCrafted.GetComponent<Item> ();
-
-			//Check if the player has enough stamina
-			if ((int)stamina < prodItem.getCraftingCost()) {
-				yield break;
-			}
 
 			isBusy = true;
 			isCrafting = true;
@@ -975,7 +975,7 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			//Deduct stamina costs from player
-			decreaseStamina((int)prodItem.getCraftingCost());
+			decreaseStamina(staminaCost);
 
 			//Play fanfare for high-tier items
 			gameCon.startCraftingFanfare (itemCon);
