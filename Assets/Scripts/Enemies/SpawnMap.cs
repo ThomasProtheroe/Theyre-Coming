@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public static class SpawnMap {
 	
 	private static string mode;
 	private static int difficulty;
-	private static int wave;
+	private static int night;
 	private static int difficultyCurve;
 
 	public static void setMode(string inMode) {
@@ -32,38 +33,39 @@ public static class SpawnMap {
 	public static void startEndlessMode() {
 		map = new Queue<SpawnInstance> ();
 
-		wave = 1;
-		difficulty = 2;
+		night = 1;
+		difficulty = 5;
 		difficultyCurve = 2;
 	}
 
 	public static void startStoryMode() {
 		map = new Queue<SpawnInstance> ();
 
-		wave = 1;
-		difficulty = 2;
+		night = 1;
+		difficulty = 10;
 		difficultyCurve = 2;
 	}
 
 	public static void buildWave() {
-		Debug.Log("Building Wave " + wave.ToString());
+		Debug.Log("Building Wave " + night.ToString());
 		map = new Queue<SpawnInstance> ();
 
-		int enemyCount = (difficulty * 4) + (wave / 2);
+		int enemyCount = Convert.ToInt32((float)difficulty * 2.5f);
 		int variance = Mathf.RoundToInt(enemyCount * 0.2f);
 		enemyCount += Random.Range(variance * -1, variance + 1);
 
+		//Add specials
 		float runnerChance = 0f;
-		if (wave > 2) {
+		if (night > 2) {
 			runnerChance = 0.15f;
-		} else if (wave > 5) {
+		} else if (night > 5) {
 			runnerChance = 0.22f;
 		}
 
-		float nexttWaveStartTime = 0f;
+		float nexttWaveStartTime = 10f;
 
 		int spawnGroupMax = Mathf.RoundToInt(enemyCount / 4);
-		int spawnGroupMin = difficulty;
+		int spawnGroupMin = Mathf.RoundToInt(enemyCount / 10);
 		if (spawnGroupMin < 2) {
 			spawnGroupMin = 2;
 		}
@@ -102,7 +104,7 @@ public static class SpawnMap {
 			}
 			
 
-			nexttWaveStartTime += Random.Range(10f, 20f);
+			nexttWaveStartTime += Random.Range(15f, 22f);
 			enemyCount -= groupSize;
 			enemyCount -= runnerCount;
 
@@ -116,11 +118,9 @@ public static class SpawnMap {
 			}
 		}
 
-		//Every <difficultyCurve waves>, increase difficulty
-		if (wave % difficultyCurve == 0) {
-			difficulty++;
-		}
-		wave++;
+		//Increase difficulty
+		difficulty += difficultyCurve;
+		night++;
 	}
 
 /*
