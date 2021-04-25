@@ -105,7 +105,7 @@ public class FirstAidStation : Interactive {
 	}
 
 	override public void updateHighlightColor() {
-		if (canUse && playerCon.health < playerCon.maxHealth) {
+		if (canUse() && playerCon.health < playerCon.maxHealth) {
 			GetComponent<SpriteOutline> ().color = positiveColor;
 		} else {
 			GetComponent<SpriteOutline> ().color = negativeColor;

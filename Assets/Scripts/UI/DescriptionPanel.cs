@@ -52,6 +52,7 @@ public class DescriptionPanel : MonoBehaviour {
 		bleedIcon.enabled = false;
 		burnIcon.enabled = false;
 		blindIcon.enabled = false;
+		shoddyIcon.enabled = false;
 	}
 
 	public void hideTierImage() {
