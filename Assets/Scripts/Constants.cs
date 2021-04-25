@@ -31,5 +31,5 @@ public class Constants {
 	public const int STAMINA_COST_CRAFT_DEFAULT = 5;
 	public const int STAMINA_COST_SCAVANGE = 20;
 	public const int STAMINA_COST_COMPUTER = 8;
-	public const int STAMINA_COST_FIRSTAID = 6;
+	public const int STAMINA_COST_FIRSTAID = 10;
 }

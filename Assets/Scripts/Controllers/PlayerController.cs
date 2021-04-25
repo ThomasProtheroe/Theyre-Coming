@@ -361,7 +361,7 @@ public class PlayerController : MonoBehaviour {
 		increaseStamina(maxStamina / 2);
 	}
 
-	void increaseStamina(float exhaustion) {
+	public void increaseStamina(float exhaustion) {
 		stamina = stamina + exhaustion;
 		if (stamina >= maxStamina) {
 			stamina = maxStamina;
@@ -370,7 +370,7 @@ public class PlayerController : MonoBehaviour {
 		updatePlayerSpeed ();
 	}
 
-	void decreaseStamina(float exhaustion) {
+	public void decreaseStamina(float exhaustion) {
 		stamina = stamina - exhaustion;
 		if (stamina <0 ) {
 			stamina = stamina;
@@ -626,7 +626,7 @@ public class PlayerController : MonoBehaviour {
 			if (closestInteractive.name == "FirstAidStation") {
 				FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
 
-				if (station.usesRemaining <= 0 || health == maxHealth) {
+				if (!station.canUse() || health == maxHealth) {
 					return;
 				}
 
@@ -805,6 +805,10 @@ public class PlayerController : MonoBehaviour {
 
 	public Area getCurrentArea() {
 		return currentArea;
+	}
+
+	public int getHealthMissing() {
+		return maxHealth - health;
 	}
 
 	public void setCurrentArea(Area area) {

@@ -207,6 +207,8 @@ public class Item : Interactive {
 
 				if (cost > (int)playerCon.stamina) {
 					GetComponent<SpriteOutline> ().color = negativeColor;
+				} else {
+					GetComponent<SpriteOutline> ().color = positiveColor;
 				}
 			}
 		} else {

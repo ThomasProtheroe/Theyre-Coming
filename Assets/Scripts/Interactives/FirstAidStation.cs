@@ -25,13 +25,13 @@ public class FirstAidStation : Interactive {
 	[SerializeField]
 	private int capacity;
 	[HideInInspector]
-	public int usesRemaining;
+	public int healthRemaining;
 
 	private bool inUse;
 
 	// Use this for initialization
 	void Start () {
-		usesRemaining = capacity;
+		healthRemaining = capacity / 2;  //Rounded down implicitly
 		playerCon = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
 		gameCon = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		soundCon = GameObject.FindGameObjectWithTag ("SoundController").GetComponent<SoundController> ();
@@ -65,13 +65,22 @@ public class FirstAidStation : Interactive {
 		cancelUse ();
 		soundCon.playPriorityOneShot (healSound);
 
-		playerCon.heal (healAmount);
+		int playerHealthMissing = playerCon.getHealthMissing();
+		int healAmount = 0;
+		if (playerHealthMissing <= healthRemaining) {
+			healAmount = playerHealthMissing;
+		} else {
+			healAmount = healthRemaining;
+		}
+		
+		playerCon.heal(healAmount);
+		playerCon.decreaseStamina(getStaminaCost());
 		playerCon.isBusy = false;
 		playerCon.isHealing = false;
 		cancelText.SetActive (false);
 
-		usesRemaining -= 1;
-		if (usesRemaining == 0) {
+		healthRemaining -= healAmount;
+		if (healthRemaining == 0) {
 			gameCon.showDialog (emptyDialog);
 		}
 	}
@@ -83,8 +92,20 @@ public class FirstAidStation : Interactive {
 		cancelText.SetActive (false);
 	}
 
+	public bool canUse() {
+		if (healthRemaining > 0 && (int)playerCon.stamina >= getStaminaCost()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int getStaminaCost() {
+		return Constants.STAMINA_COST_FIRSTAID;
+	}
+
 	override public void updateHighlightColor() {
-		if (usesRemaining > 0 && playerCon.health < playerCon.maxHealth) {
+		if (canUse && playerCon.health < playerCon.maxHealth) {
 			GetComponent<SpriteOutline> ().color = positiveColor;
 		} else {
 			GetComponent<SpriteOutline> ().color = negativeColor;
