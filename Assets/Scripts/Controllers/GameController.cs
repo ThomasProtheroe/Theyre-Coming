@@ -309,6 +309,7 @@ public class GameController : MonoBehaviour {
 
 		} else if (newPhase == "siege") {
 			SpawnMap.buildWave(timer);
+			noMoreEnemySpawns = false;
 			nextSpawn = SpawnMap.getNextSpawn ();
 			//Change front door to broken version
 			GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
@@ -327,6 +328,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void checkForEnemySpawns() {
+		Debug.Log(timer);
 		if (timer >= nextSpawn.spawnTime) {
 			if (nextSpawn.enemyType != Constants.ENEMY_TYPE_BOSS) {
 				for (int i = 0; i < nextSpawn.spawnCount; i++) {
