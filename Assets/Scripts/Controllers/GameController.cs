@@ -79,6 +79,10 @@ public class GameController : MonoBehaviour {
 	private SpawnInstance nextSpawn;
 	private Cinematic nextCinematic;
 
+	//Dialog
+	private List<List<Dialog>> sleepDialog;
+	private List<List<Dialog>> downtimeDialog;
+
 	//Stat tracking
 	[HideInInspector]
 	public int[] killTotals;
@@ -126,6 +130,7 @@ public class GameController : MonoBehaviour {
 		if (gameMode == "story") {
 			SpawnMap.startStoryMode ();
 			CinematicMap.rebuildMap ();
+			buildDialogLists();
 		} else if (gameMode == "endless") {
 			SpawnMap.startEndlessMode ();
 		}
@@ -187,8 +192,6 @@ public class GameController : MonoBehaviour {
 
 		if (gameMode == "dev") {
 			changePhase("siege");
-		} else {
-			changePhase("downtime");
 		}
 
 		StartCoroutine ("CheckVictory");
@@ -295,6 +298,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void changePhase(string newPhase) {
+		Debug.Log("Change phase: " + newPhase);
 		phase = newPhase;
 		musicPlayer.changeMusic (phase);
 		timer = 0.0f;
@@ -304,7 +308,7 @@ public class GameController : MonoBehaviour {
 		} else if (newPhase == "downtime") {
 
 		} else if (newPhase == "siege") {
-			SpawnMap.buildWave();
+			SpawnMap.buildWave(timer);
 			nextSpawn = SpawnMap.getNextSpawn ();
 			//Change front door to broken version
 			GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
@@ -549,6 +553,16 @@ public class GameController : MonoBehaviour {
 		garageMap.Add ("Yard", "TrGarageYard");
 		garageMap.Add ("Kitchen","TrGarageYard");
 		pathfindingMap.Add ("Garage", garageMap);
+	}
+
+	private void buildDialogLists() {
+		sleepDialog = new List<List<Dialog>> ();
+		List<Dialog> sleep1 = new List<Dialog> ();
+		sleepDialog.Add(sleep1);
+
+		downtimeDialog = new List<List<Dialog>> ();
+		List<Dialog> downtime1 = new List<Dialog> ();
+		downtimeDialog.Add(downtime1);
 	}
 
 	public Transition findRouteToPlayer(Area currentArea) {

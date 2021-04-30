@@ -45,7 +45,7 @@ public static class SpawnMap {
 		difficultyCurve = 2;
 	}
 
-	public static void buildWave() {
+	public static void buildWave(float currentTime) {
 		Debug.Log("Building Wave " + night.ToString());
 		map = new Queue<SpawnInstance> ();
 
@@ -61,7 +61,7 @@ public static class SpawnMap {
 			runnerChance = 0.22f;
 		}
 
-		float nexttWaveStartTime = 10f;
+		float nexttWaveStartTime = currentTime + 15f;
 
 		int spawnGroupMax = Mathf.RoundToInt(enemyCount / 4);
 		int spawnGroupMin = Mathf.RoundToInt(enemyCount / 10);
@@ -102,7 +102,6 @@ public static class SpawnMap {
 				map.Enqueue (new SpawnInstance (nexttWaveStartTime, runnerCount, Constants.ENEMY_TYPE_RUNNER));
 			}
 			
-
 			nexttWaveStartTime += Random.Range(15f, 22f);
 			enemyCount -= groupSize;
 			enemyCount -= runnerCount;
