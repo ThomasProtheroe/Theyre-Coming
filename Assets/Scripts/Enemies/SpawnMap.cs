@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +33,7 @@ public static class SpawnMap {
 		map = new Queue<SpawnInstance> ();
 
 		night = 1;
-		difficulty = 5;
+		difficulty = 8;
 		difficultyCurve = 2;
 	}
 
@@ -50,7 +49,7 @@ public static class SpawnMap {
 		Debug.Log("Building Wave " + night.ToString());
 		map = new Queue<SpawnInstance> ();
 
-		int enemyCount = Convert.ToInt32((float)difficulty * 2.5f);
+		int enemyCount = (int)((float)difficulty * 2.5f);
 		int variance = Mathf.RoundToInt(enemyCount * 0.2f);
 		enemyCount += Random.Range(variance * -1, variance + 1);
 
