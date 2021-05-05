@@ -626,7 +626,7 @@ public class PlayerController : MonoBehaviour {
 			if (closestInteractive.name == "FirstAidStation") {
 				FirstAidStation station = closestInteractive.GetComponent<FirstAidStation> ();
 
-				if (!station.canUse() || health == maxHealth) {
+				if (!station.canUse()) {
 					return;
 				}
 
@@ -646,6 +646,24 @@ public class PlayerController : MonoBehaviour {
 				handsAnim.SetBool ("Ready", false);
 				isBusy = true;
 				bed.interact ();
+			} else if (closestInteractive.name == "FrontDoor") {
+				FrontDoor door = closestInteractive.GetComponent<FrontDoor> ();
+
+				rigidBody.velocity = new Vector2 (0, 0);
+				anim.SetInteger("State", 0);
+				handsAnim.SetBool ("Walking", false);
+				handsAnim.SetBool ("Ready", false);
+				isBusy = true;
+				door.interact ();
+			} else if (closestInteractive.name == "Computer") {
+				Computer computer = closestInteractive.GetComponent<Computer> ();
+
+				rigidBody.velocity = new Vector2 (0, 0);
+				anim.SetInteger("State", 0);
+				handsAnim.SetBool ("Walking", false);
+				handsAnim.SetBool ("Ready", false);
+				isBusy = true;
+				computer.interact ();
 			}
 		}
 	}

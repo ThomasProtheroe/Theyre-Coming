@@ -93,7 +93,9 @@ public class FirstAidStation : Interactive {
 	}
 
 	public bool canUse() {
-		if (healthRemaining > 0 && (int)playerCon.stamina >= getStaminaCost()) {
+		string phase = gameCon.getPhase ();
+
+		if (healthRemaining > 0 && (int)playerCon.stamina >= getStaminaCost() && phase == "downtime" && playerCon.health < playerCon.maxHealth) {
 			return true;
 		} else {
 			return false;
@@ -105,7 +107,7 @@ public class FirstAidStation : Interactive {
 	}
 
 	override public void updateHighlightColor() {
-		if (canUse() && playerCon.health < playerCon.maxHealth) {
+		if (canUse()) {
 			GetComponent<SpriteOutline> ().color = positiveColor;
 		} else {
 			GetComponent<SpriteOutline> ().color = negativeColor;

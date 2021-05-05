@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FrontDoor : MonoBehaviour {
+public class FrontDoor : Interactive {
 
 	public Sprite siegeSprite;
 	[SerializeField]
@@ -13,7 +13,8 @@ public class FrontDoor : MonoBehaviour {
 	private string warningString;
 	[SerializeField]
 	private Sprite playerPortrait;
-	private GameController gc;
+	private GameController gameCon;
+	private PlayerController playerCon;
 
 	private bool warningPlayed;
 
@@ -27,7 +28,7 @@ public class FrontDoor : MonoBehaviour {
 
 	void Start() {
 		originalPosition = transform.localPosition;
-		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		gameCon = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		warningString = "The streets outside are crawling with those things. I won't last 2 minutes out there...";
 		Invoke ("enableWarning", 5.0f);
 	}
@@ -35,8 +36,23 @@ public class FrontDoor : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (!warningPlayed && other.tag == "Player") {
 			Dialog warningDialog = new Dialog (warningString, null, 5.0f);
-			gc.showDialog (warningDialog);
+			gameCon.showDialog (warningDialog);
 			warningPlayed = true;
+		}
+	}
+
+	public void interact() {
+		OpenScavenge ();
+	}
+
+	private void OpenScavenge() {
+	}
+	override public void updateHighlightColor() {
+		string phase = gameCon.getPhase();
+		if (phase == "downtime") {
+			GetComponent<SpriteOutline> ().color = positiveColor;
+		} else {
+			GetComponent<SpriteOutline> ().color = negativeColor;
 		}
 	}
 
