@@ -10,6 +10,10 @@ public class Bed : Interactive {
 	private SoundController soundCon;
 	[SerializeField]
 	private AudioClip sleepSound;
+	[SerializeField]
+	private Sprite sleepSprite;
+	[SerializeField]
+	private Sprite defaultSprite;
 
 	private bool inUse;
 
@@ -38,6 +42,14 @@ public class Bed : Interactive {
 		}
 	}
 
+	private void setSleepSprite() {
+		GetComponent<SpriteRenderer> ().sprite = sleepSprite;
+	}
+
+	private void setDefaultSprite() {
+		GetComponent<SpriteRenderer> ().sprite = defaultSprite;
+	}
+
 	public void finishUse() {
 		playerCon.isBusy = false;
 	}
@@ -52,10 +64,14 @@ public class Bed : Interactive {
 	}
 
 	IEnumerator GoToBed() {
+		playerCon.hidePlayer();
+		setSleepSprite();
 		soundCon.playPriorityOneShot (sleepSound);
 		gameCon.miscFadeOut(0.005f);
 		yield return new WaitForSeconds (3.5f);
 		playerCon.goToSleep();
+		setDefaultSprite();
+		playerCon.showPlayer();
 		gameCon.miscFadeIn(0.005f);
 		yield return new WaitForSeconds (2.75f);
 		gameCon.startNewNight();

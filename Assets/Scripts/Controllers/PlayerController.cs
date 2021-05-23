@@ -683,6 +683,16 @@ public class PlayerController : MonoBehaviour {
 		backHand.SetActive (true);
 	}
 
+	public void hidePlayer() {
+		GetComponent<SpriteRenderer> ().enabled = false;
+		hidePlayerHands();
+	}
+
+	public void showPlayer() {
+		GetComponent<SpriteRenderer> ().enabled = true;
+		showPlayerHands();
+	}
+
 	public void positionHeldItem() {
 		if (heldItem) {
 			Item itemCon = heldItem.GetComponent<Item> ();
