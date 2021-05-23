@@ -55,8 +55,6 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public SpriteRenderer playerSprite;
 
-	public Image staminaBarFill;
-
 	private Animator anim;
 	private Animator handsAnim;
 	private AudioSource source;
@@ -85,11 +83,17 @@ public class PlayerController : MonoBehaviour {
 
 	//Player input storage
 	private bool cinematicControl;
+	[HideInInspector]
 	public float moveInput;
+	[HideInInspector]
 	public float verticalInput;
+	[HideInInspector]
 	public bool useInput;
+	[HideInInspector]
 	public bool interactInput;
+	[HideInInspector]
 	public bool swapInput;
+	[HideInInspector]
 	public bool dropInput;
 
 	void Start() {
@@ -380,7 +384,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void updateStaminaBar(){
-		staminaBarFill.fillAmount = stamina / maxStamina;
+		float amount = stamina / maxStamina;
+		staminaBar.GetComponent<StaminaBar> ().updateStaminaBar(amount);
 	}
 	  
 	void updatePlayerSpeed() {

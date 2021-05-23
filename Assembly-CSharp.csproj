@@ -140,6 +140,7 @@
      <Compile Include="Assets\Scripts\UI\InfoPanel.cs" />
      <Compile Include="Assets\Scripts\UI\ItemSlot.cs" />
      <Compile Include="Assets\Scripts\UI\SmartTextMesh.cs" />
+     <Compile Include="Assets\Scripts\UI\StaminaBar.cs" />
      <Compile Include="Assets\Scripts\UI\TutorialPanel.cs" />
      <None Include="Assets\Fonts\pixelated\read me.txt" />
      <None Include="Assets\Fonts\pixelated\license.txt" />
