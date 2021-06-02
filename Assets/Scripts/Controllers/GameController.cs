@@ -80,8 +80,7 @@ public class GameController : MonoBehaviour {
 	private Cinematic nextCinematic;
 
 	//Dialog
-	private List<List<Dialog>> sleepDialog;
-	private List<List<Dialog>> downtimeDialog;
+
 
 	//Stat tracking
 	[HideInInspector]
@@ -164,8 +163,10 @@ public class GameController : MonoBehaviour {
 
 		//Load settings
 		updateVolume();
-			
+
+		//Load external data files
 		RecipeBook.loadRecipes (System.IO.Path.Combine(Application.streamingAssetsPath, "RecipeMaster.csv"));
+		DialogList.loadDialogs (System.IO.Path.Combine(Application.streamingAssetsPath, "DialogMaster.csv"));
 
 		spawnGarageKey ();
 
@@ -555,16 +556,6 @@ public class GameController : MonoBehaviour {
 		garageMap.Add ("Yard", "TrGarageYard");
 		garageMap.Add ("Kitchen","TrGarageYard");
 		pathfindingMap.Add ("Garage", garageMap);
-	}
-
-	private void buildDialogLists() {
-		sleepDialog = new List<List<Dialog>> ();
-		List<Dialog> sleep1 = new List<Dialog> ();
-		sleepDialog.Add(sleep1);
-
-		downtimeDialog = new List<List<Dialog>> ();
-		List<Dialog> downtime1 = new List<Dialog> ();
-		downtimeDialog.Add(downtime1);
 	}
 
 	public Transition findRouteToPlayer(Area currentArea) {
