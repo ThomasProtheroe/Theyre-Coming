@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Dialog {
@@ -42,7 +43,7 @@ public static class DialogList {
 
 		dialogIndex[dialogType] = currentIndex + 1;
 
-		return dialogList[currentIndex];
+		return (Dialog) dialogList[currentIndex];
 	}
 
 	public static Dialog GetRandomDialog(string dialogType) {
@@ -51,7 +52,7 @@ public static class DialogList {
 		}
 		
 		ArrayList dialogList = dialogMaster[dialogType];
-		return dialogList[Random.Range(0, dialogList.Count)];
+		return (Dialog) dialogList[Random.Range(0, dialogList.Count)];
 	}
 
 	public static void addDialog(string dialogType, Dialog newDialog) {

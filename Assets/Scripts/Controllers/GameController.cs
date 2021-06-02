@@ -129,7 +129,6 @@ public class GameController : MonoBehaviour {
 		if (gameMode == "story") {
 			SpawnMap.startStoryMode ();
 			CinematicMap.rebuildMap ();
-			buildDialogLists();
 		} else if (gameMode == "endless") {
 			SpawnMap.startEndlessMode ();
 		}
