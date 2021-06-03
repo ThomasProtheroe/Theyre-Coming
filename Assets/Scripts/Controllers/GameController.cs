@@ -79,9 +79,6 @@ public class GameController : MonoBehaviour {
 	private SpawnInstance nextSpawn;
 	private Cinematic nextCinematic;
 
-	//Dialog
-
-
 	//Stat tracking
 	[HideInInspector]
 	public int[] killTotals;
@@ -1112,8 +1109,9 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator CheckNightEnd() {
 		if (noMoreEnemySpawns && !playerCon.isDead && enemies.Count == 0) {
-			yield return new WaitForSeconds (5.0f);
+			yield return new WaitForSeconds (4.0f);
 			changePhase ("downtime");
+			showDialog (DialogList.GetRandomDialog("downtime" + SpawnMap.getNight().ToString()));
 			yield break;
 		}
 

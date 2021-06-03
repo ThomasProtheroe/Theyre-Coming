@@ -14,6 +14,10 @@ public static class SpawnMap {
 		mode = inMode;
 	}
 
+	public static int getNight() {
+		return night;
+	}
+
 	public static void setDifficultyCurve(int inCurve) {
 		difficultyCurve = inCurve;
 	}
