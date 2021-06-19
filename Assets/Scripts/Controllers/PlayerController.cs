@@ -690,12 +690,20 @@ public class PlayerController : MonoBehaviour {
 
 	public void hidePlayer() {
 		GetComponent<SpriteRenderer> ().enabled = false;
-		hidePlayerHands();
+		if (heldItem == null) {
+			hidePlayerHands();
+		} else {
+			heldItem.GetComponent<Item> ().hideItem();
+		}
 	}
 
 	public void showPlayer() {
 		GetComponent<SpriteRenderer> ().enabled = true;
-		showPlayerHands();
+		if (heldItem == null) {
+			showPlayerHands();
+		} else {
+			heldItem.GetComponent<Item> ().showItem();
+		}
 	}
 
 	public void positionHeldItem() {

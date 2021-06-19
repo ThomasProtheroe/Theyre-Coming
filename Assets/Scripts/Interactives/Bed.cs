@@ -68,12 +68,17 @@ public class Bed : Interactive {
 		setSleepSprite();
 		soundCon.playPriorityOneShot (sleepSound);
 		gameCon.miscFadeOut(0.005f);
-		yield return new WaitForSeconds (3.5f);
+		yield return new WaitForSeconds (4.0f);
+
+		gameCon.showDialog (DialogList.GetRandomDialog("sleep" + SpawnMap.getNight().ToString()));
+		yield return new WaitForSeconds (6.0f);
+
 		playerCon.goToSleep();
 		setDefaultSprite();
 		playerCon.showPlayer();
 		gameCon.miscFadeIn(0.005f);
 		yield return new WaitForSeconds (2.75f);
+
 		gameCon.startNewNight();
 		finishUse();
 	}

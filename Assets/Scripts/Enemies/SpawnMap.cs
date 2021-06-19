@@ -64,6 +64,12 @@ public static class SpawnMap {
 		} else if (night > 5) {
 			runnerChance = 0.22f;
 		}
+		float spitterChance = 0f;
+		if (night > 3) {
+			spitterChance = 0.10f;
+		} else if (night > 6) {
+			spitterChance = 0.16f;
+		}
 
 		float nexttWaveStartTime = currentTime + 15f;
 
@@ -90,7 +96,7 @@ public static class SpawnMap {
 				groupSize = enemyCount;
 			}
 			
-			//Generate runners
+			//Generate specials
 			int runnerCount = 0;
 			if (runnerChance > 0f) {
 				for(int n = 0; n < groupSize; n++) {
@@ -100,15 +106,26 @@ public static class SpawnMap {
 					}
 				}
 			}
+			int spitterCount = 0;
+			if (spitterChance > 0f) {
+				if (Random.Range(0f, 1f) < spitterChance) {
+					spitterCount ++;
+					groupSize --;
+				}
+			}
 			
 			map.Enqueue (new SpawnInstance (nexttWaveStartTime, groupSize, Constants.ENEMY_TYPE_NORMAL));
 			if (runnerCount > 0) {
 				map.Enqueue (new SpawnInstance (nexttWaveStartTime, runnerCount, Constants.ENEMY_TYPE_RUNNER));
 			}
+			if (spitterCount > 0) {
+				map.Enqueue (new SpawnInstance (nexttWaveStartTime, spitterCount, Constants.ENEMY_TYPE_SPITTER));
+			}
 			
 			nexttWaveStartTime += Random.Range(15f, 22f);
 			enemyCount -= groupSize;
 			enemyCount -= runnerCount;
+			enemyCount -= spitterCount;
 
 			/*
 			Debug.Log("Creating group " + i.ToString());

@@ -490,6 +490,27 @@ public class Item : Interactive {
 		return sprite.sprite;
 	}
 
+	public void hideItem() {
+		sprite.enabled = false;
+		//Handle items with multiple sprites
+		foreach (SpriteRenderer childSprite in GetComponentsInChildren<SpriteRenderer> () ) {
+			if (childSprite == sprite) {
+				continue;
+			}
+			childSprite.enabled = false;
+		}
+	}
+
+	public void showItem() {
+		sprite.enabled = true;
+		foreach (SpriteRenderer childSprite in GetComponentsInChildren<SpriteRenderer> () ) {
+			if (childSprite == sprite) {
+				continue;
+			}
+			childSprite.enabled = true;
+		}
+	}
+
 	//Return true if item should be destroyed immediately (no animation)
 	public virtual bool onBreak() {
 		return false;

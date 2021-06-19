@@ -77,6 +77,7 @@ public static class DialogList {
 		while((line = reader.ReadLine()) != null)  
 		{  
 			string[] columns = line.Split (',');
+			Debug.Log(columns.Length);
 			
 			Dialog newDialog = new Dialog (columns [1], columns [2]);
 			addDialog (columns [0], newDialog);

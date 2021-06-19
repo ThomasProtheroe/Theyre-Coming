@@ -1111,7 +1111,6 @@ public class GameController : MonoBehaviour {
 		if (noMoreEnemySpawns && !playerCon.isDead && enemies.Count == 0) {
 			yield return new WaitForSeconds (4.0f);
 			changePhase ("downtime");
-			showDialog (DialogList.GetRandomDialog("downtime" + SpawnMap.getNight().ToString()));
 			yield break;
 		}
 
