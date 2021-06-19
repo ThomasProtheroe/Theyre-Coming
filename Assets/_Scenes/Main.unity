@@ -71070,11 +71070,26 @@ MonoBehaviour:
   runnerAttackSounds2:
   - {fileID: 8300000, guid: c4e52ca093b1f9b4a8311f21fab4d69b, type: 3}
   - {fileID: 8300000, guid: 714444b665cc83b47be2f24bde8b42d7, type: 3}
+  spitterProwlingSounds:
+  - {fileID: 8300000, guid: b7aa024212e0b8043a5534a373b788ec, type: 3}
+  - {fileID: 8300000, guid: 55c99fb83670d464f87a17bc17eac2f9, type: 3}
+  - {fileID: 8300000, guid: c25d56faec9cea548898ba5d831dc866, type: 3}
+  - {fileID: 8300000, guid: 22883701d71aa1c458773874e9c6eeaf, type: 3}
+  spitterWalkSounds:
+  - {fileID: 8300000, guid: 03453e7b5658d3540969c80bd8e56da8, type: 3}
+  - {fileID: 8300000, guid: 8819e5058ef361f4794b5d4541461a4c, type: 3}
+  - {fileID: 8300000, guid: a87a8f950a7ada94ba0ca9253887718e, type: 3}
+  - {fileID: 8300000, guid: c977a73acc1d55849a228ee08192ebe5, type: 3}
+  spitterAttackSounds1:
+  - {fileID: 8300000, guid: 761fe03005af058479c1ead3511bb004, type: 3}
+  spitterAttackSounds2:
+  - {fileID: 8300000, guid: 953f58fbcc5fd184ab7d3d71915276d5, type: 3}
   masterVolume: 0
   musicVolume: 0
   effectsVolume: 0
   zombie: {fileID: 114385907852196578, guid: dc47bab56a371fa4ebee8b3ce89118a8, type: 2}
   runner: {fileID: 114385907852196578, guid: b52102b1ec7b9d54ea64ca68db204d4c, type: 2}
+  spitter: {fileID: 114385907852196578, guid: 582f2d64b65b78a4eb168045a3c177e1, type: 2}
   boss: {fileID: 114232774938142340, guid: 97ac7a317c230d746b218ebaf6dfa758, type: 2}
   spawnZones:
   - {fileID: 55447996}

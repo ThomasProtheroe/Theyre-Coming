@@ -58,6 +58,12 @@ public class GameController : MonoBehaviour {
 	public AudioClip[] runnerAttackSounds1;
 	public AudioClip[] runnerAttackSounds2;
 
+	public AudioClip[] spitterProwlingSounds;
+	public AudioClip[] spitterWalkSounds;
+	private AudioClip[][] spitterAttackSoundMaster;
+	public AudioClip[] spitterAttackSounds1;
+	public AudioClip[] spitterAttackSounds2;
+
 	//Audio multipliers
 	public float masterVolume;
 	public float musicVolume;
@@ -66,6 +72,7 @@ public class GameController : MonoBehaviour {
 	[Header("Enemies")]
 	public Enemy zombie;
 	public Enemy runner;
+	public Enemy spitter;
 	public BossGramps boss;
 	public List<EnemySpawn> spawnZones = new List<EnemySpawn> ();
 	[HideInInspector]
@@ -143,6 +150,10 @@ public class GameController : MonoBehaviour {
 		runnerAttackSoundMaster = new AudioClip[2][];
 		runnerAttackSoundMaster [0] = runnerAttackSounds1;
 		runnerAttackSoundMaster [1] = runnerAttackSounds2;
+
+		spitterAttackSoundMaster = new AudioClip[2][];
+		spitterAttackSoundMaster [0] = spitterAttackSounds1;
+		spitterAttackSoundMaster [1] = spitterAttackSounds2;
 
 		doorShakeMap = new Queue<float>();
 		doorShakeMap.Enqueue(71.33f);
@@ -258,6 +269,8 @@ public class GameController : MonoBehaviour {
 				spawnEnemyRand (Constants.ENEMY_TYPE_NORMAL);
 			} else if (Input.GetKeyDown ("p")) {
 				spawnEnemyRand (Constants.ENEMY_TYPE_RUNNER);
+			} else if (Input.GetKeyDown ("l")) {
+				spawnEnemyRand (Constants.ENEMY_TYPE_SPITTER);
 			} else if (Input.GetKeyDown ("u")) {
 				//Unlock all doors in dev mode
 				GameObject[] transitions = GameObject.FindGameObjectsWithTag("Transition");
@@ -310,11 +323,6 @@ public class GameController : MonoBehaviour {
 			nextSpawn = SpawnMap.getNextSpawn ();
 			//Change front door to broken version
 			GameObject.FindGameObjectWithTag("FrontDoor").GetComponent<FrontDoor> ().setSiegeMode();
-			/*
-			if (gameMode == "story") {
-				spawnEnemy (spawnZones[2], Constants.ENEMY_TYPE_NORMAL);
-			}
-			*/
 
 			StartCoroutine ("CheckNightEnd");
 		}
@@ -388,6 +396,19 @@ public class GameController : MonoBehaviour {
 				newEnemy.addAttackSound (runnerAttackSoundMaster [0]);
 			} else {
 				newEnemy.addAttackSound (runnerAttackSoundMaster [1]);
+			}
+		} else if (enemyType == Constants.ENEMY_TYPE_SPITTER) {
+			newEnemy = Instantiate (spitter, new Vector3(spawnLocX, spitter.transform.position.y, 0), Quaternion.identity);
+
+			//Select a random walk, prowl and attack sound and assign them to the new enemy
+			int vocalType = UnityEngine.Random.Range(0,4);
+			newEnemy.setWalkSound(spitterWalkSounds[vocalType]);
+			newEnemy.setProwlSound(spitterProwlingSounds[vocalType]);
+			//We have shared attack sounds between certain vocal types
+			if (vocalType == 0) {
+				newEnemy.addAttackSound (spitterAttackSoundMaster [0]);
+			} else {
+				newEnemy.addAttackSound (spitterAttackSoundMaster [1]);
 			}
 		} else {
 			newEnemy = Instantiate (zombie, new Vector3(spawnLocX, zombie.transform.position.y, 0), Quaternion.identity);
