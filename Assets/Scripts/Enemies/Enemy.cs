@@ -110,9 +110,9 @@ public class Enemy : MonoBehaviour {
 	private float iFrameTimer = 0.0f;
 	[SerializeField]
 	private float iFrameDuration;
-	private float wanderTimer = 0.0f;
-	private int wanderDirection;
-	private float wanderAttackTimer = 0.0f;
+	protected float wanderTimer = 0.0f;
+	protected int wanderDirection;
+	protected float wanderAttackTimer = 0.0f;
 	protected float burnTimer = 0.0f;
 	protected float burnImmunityTimer = 0.0f;
 	protected float stunTimer;
@@ -224,6 +224,8 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 
+		checkExtraTimers();
+
 		//iframe control
 		if (iFrameTimer > 0.0f) {
 			iFrameTimer -= Time.deltaTime;
@@ -264,6 +266,10 @@ public class Enemy : MonoBehaviour {
 			rigidBody.velocity = new Vector2 (0.0f, rigidBody.velocity.y);
 			transform.position = new Vector3 (wallPosition + (diff * direction.x), transform.position.y);
 		}
+	}
+
+	protected virtual void checkExtraTimers() {
+		return;
 	}
 
 	public virtual void takeAction() {
@@ -366,7 +372,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void startWander() {
+	protected void startWander() {
 		//Pick a direction to wander in
 		wanderDirection = UnityEngine.Random.Range (0, 2);
 		if (wanderDirection == 0) {
@@ -386,7 +392,7 @@ public class Enemy : MonoBehaviour {
 		wanderTimer = UnityEngine.Random.Range (2.0f, 3.2f);
 	}
 
-	void wanderBlind() {
+	protected void wanderBlind() {
 		isMoving = true;
 		float currentSpeed = moveSpeed;
 		currentSpeed *= wanderDirection;
@@ -465,7 +471,14 @@ public class Enemy : MonoBehaviour {
 		}
 		
 		playerAttackType = Constants.ATTACK_TYPE_UNTYPED;
+
+		onTakeHit();
+
 		return true;
+	}
+
+	protected virtual void onTakeHit() {
+		return;
 	}
 
 	public virtual void takeThrowHit(int damage, int knockback, float direction, bool noBlood=false, int attackType=Constants.ATTACK_TYPE_UNTYPED) {
