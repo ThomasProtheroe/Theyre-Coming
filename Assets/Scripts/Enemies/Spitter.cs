@@ -21,28 +21,36 @@ public class Spitter : Enemy {
 	[SerializeField]
 	private float spitCooldown;
 	private float spitCooldownTimer;
+	[SerializeField]
+	private float guardRange;
+	private Enemy guard;
     
 	public override void takeAction() {
-		if (isActive && isBlind) {
-			//Move randomly back and forth
-			if (wanderTimer > 0) {
-				wanderBlind ();
-			} else {
-				startWander ();
-			}
-
-			//Attack randomly
-			//if (wanderAttackTimer <= 0) {
-			//	attack ();
-			//	wanderAttackTimer = UnityEngine.Random.Range (2.0f, 3.0f);
-			//}
-		} else if (isActive) {
-			if (!isDead) {
-				if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
-					moveTowardsPlayer ();
-					tryAttack ();
+		if (isActive) {
+			if (isBlind) {
+				//Move randomly back and forth
+				if (wanderTimer > 0) {
+					wanderBlind ();
 				} else {
-					seekPlayer ();
+					startWander ();
+				}
+
+				//Attack randomly
+				if (wanderAttackTimer <= 0) {
+					spitAttack ();
+					wanderAttackTimer = UnityEngine.Random.Range (7.0f, 8.0f);
+				}
+			} else {
+				if (!isDead) {
+					//Attack player whenever possible
+					tryAttack();
+
+					if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
+						moveTowardsPlayer ();
+						tryAttack ();
+					} else {
+						seekPlayer ();
+					}
 				}
 			}
 		} else {
@@ -61,6 +69,7 @@ public class Spitter : Enemy {
 
 	protected override void tryAttack() {
 		if (distanceToPlayer < attackRange && spitAttackReady && !isAttacking) {
+			facePlayer();
 			spitAttack();
 		}
 	}

@@ -22,5 +22,9 @@ public class BileProjectile : MonoBehaviour {
 				player.takeBileHit (damage);
 			}
 		}
+
+		if (other.gameObject.tag == "Enemy") {
+			other.gameObject.GetComponent<Enemy> ().stopBurning();
+		}
 	}
 }
