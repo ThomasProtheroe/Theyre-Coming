@@ -59,10 +59,8 @@ public class GameController : MonoBehaviour {
 	public AudioClip[] runnerAttackSounds2;
 
 	public AudioClip[] spitterProwlingSounds;
-	public AudioClip[] spitterWalkSounds;
 	private AudioClip[][] spitterAttackSoundMaster;
 	public AudioClip[] spitterAttackSounds1;
-	public AudioClip[] spitterAttackSounds2;
 
 	//Audio multipliers
 	public float masterVolume;
@@ -153,7 +151,6 @@ public class GameController : MonoBehaviour {
 
 		spitterAttackSoundMaster = new AudioClip[2][];
 		spitterAttackSoundMaster [0] = spitterAttackSounds1;
-		spitterAttackSoundMaster [1] = spitterAttackSounds2;
 
 		doorShakeMap = new Queue<float>();
 		doorShakeMap.Enqueue(71.33f);
@@ -401,15 +398,9 @@ public class GameController : MonoBehaviour {
 			newEnemy = Instantiate (spitter, new Vector3(spawnLocX, spitter.transform.position.y, 0), Quaternion.identity);
 
 			//Select a random walk, prowl and attack sound and assign them to the new enemy
-			int vocalType = UnityEngine.Random.Range(0,4);
-			newEnemy.setWalkSound(spitterWalkSounds[vocalType]);
-			newEnemy.setProwlSound(spitterProwlingSounds[vocalType]);
-			//We have shared attack sounds between certain vocal types
-			if (vocalType == 0) {
-				newEnemy.addAttackSound (spitterAttackSoundMaster [0]);
-			} else {
-				newEnemy.addAttackSound (spitterAttackSoundMaster [1]);
-			}
+			newEnemy.setWalkSound(walkSounds[UnityEngine.Random.Range(0,4)]);
+			newEnemy.setProwlSound(spitterProwlingSounds[UnityEngine.Random.Range(0,3)]);
+			newEnemy.addAttackSound (spitterAttackSoundMaster [0]);
 		} else {
 			newEnemy = Instantiate (zombie, new Vector3(spawnLocX, zombie.transform.position.y, 0), Quaternion.identity);
 

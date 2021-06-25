@@ -1850,6 +1850,7 @@ MonoBehaviour:
   decapitationSound: {fileID: 8300000, guid: 9ce1ae0d2c8f9a74f8d8f1478a9bb195, type: 3}
   igniteSound: {fileID: 8300000, guid: 25a871d970dfc204b8e06b7a47df33f3, type: 3}
   burningSound: {fileID: 8300000, guid: 7e60dc823677da741b8b5f9b81040400, type: 3}
+  extinguishSound: {fileID: 8300000, guid: 2fcc661f571ece24fa0ed2b08d4d21fb, type: 3}
   disitingrateSound: {fileID: 8300000, guid: b8160d24dc784fc46bab9e25528e67f9, type: 3}
   splashSound: {fileID: 8300000, guid: e3bfeb2346cb29d44a986167af432c79, type: 3}
   attackImpactSound: {fileID: 8300000, guid: 1c11ecdf2c712e748a3e66884a9b87fc, type: 3}
@@ -1897,6 +1898,7 @@ MonoBehaviour:
     type: 2}
   projectileSpeed: 7
   spitCooldown: 7
+  guardRange: 0
 --- !u!114 &114915710920690162
 MonoBehaviour:
   m_ObjectHideFlags: 1

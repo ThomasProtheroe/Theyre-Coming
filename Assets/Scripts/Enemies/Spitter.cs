@@ -43,11 +43,11 @@ public class Spitter : Enemy {
 			} else {
 				if (!isDead) {
 					//Attack player whenever possible
-					tryAttack();
-
 					if (player.GetComponent<PlayerController> ().getCurrentArea () == currentArea) {
-						moveTowardsPlayer ();
-						tryAttack ();
+						if (spitAttackReady) {
+							moveTowardsPlayer ();
+							tryAttack ();
+						}
 					} else {
 						seekPlayer ();
 					}
@@ -63,6 +63,8 @@ public class Spitter : Enemy {
 			spitCooldownTimer -= Time.deltaTime;
 			if (spitCooldownTimer <= 0f) {
 				spitAttackReady = true;
+				isActive = true;
+				anim.SetBool("Active", true);
 			}
 		}
 	}
@@ -78,6 +80,7 @@ public class Spitter : Enemy {
 		isSpitting = true;
 		isAttacking = true;
 		spitCooldownTimer = spitCooldown;
+		spitAttackReady = false;
 		stopMoving ();
 		StartCoroutine ("SpitAttack");
 	}
@@ -118,6 +121,7 @@ public class Spitter : Enemy {
 		//Prepare to spit
 		deactivate();
 		droolPS.Play ();
+		playAttackSound();
 
 		var sh = spitPS.shape;
 		float spitDirection;
@@ -147,6 +151,8 @@ public class Spitter : Enemy {
 		activate ();
 		isSpitting = false;
 		isAttacking = false;
+		isActive = false;
+		anim.SetBool("Active", false);
 	}
 }
 	

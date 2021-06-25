@@ -34,6 +34,8 @@ public class Enemy : MonoBehaviour {
 	[SerializeField]
 	protected AudioClip burningSound;
 	[SerializeField]
+	protected AudioClip extinguishSound;
+	[SerializeField]
 	protected AudioClip disitingrateSound;
 	[SerializeField]
 	protected AudioClip splashSound;
@@ -744,7 +746,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void stopBurning () {
+	public void stopBurning (bool extinguish = false) {
 		if (!isBurning) {
 			return;
 		}
@@ -756,6 +758,9 @@ public class Enemy : MonoBehaviour {
 		}
 		if (burnSoundPlaying) {
 			stopBurningSound ();
+		}
+		if (extinguish && extinguishSound != null) {
+			soundCon.playEnemyOneShot(extinguishSound);
 		}
 	}
 
@@ -918,7 +923,7 @@ public class Enemy : MonoBehaviour {
 		soundCon.playEnemyOneShot (attackImpactSound);
 	}
 
-	private void playAttackSound() {
+	protected void playAttackSound() {
 		if (player.GetComponent<PlayerController>().currentArea != currentArea) {
 			return;
 		}

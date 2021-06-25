@@ -2575,10 +2575,10 @@ Transform:
   - {fileID: 1313854746}
   - {fileID: 1208651134}
   - {fileID: 289614544}
-  - {fileID: 1569539529}
   - {fileID: 526026541}
   - {fileID: 1466134163}
   - {fileID: 1244598485}
+  - {fileID: 1569539529}
   - {fileID: 312062903}
   - {fileID: 700855858}
   - {fileID: 1083687667}
@@ -71081,15 +71081,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 55c99fb83670d464f87a17bc17eac2f9, type: 3}
   - {fileID: 8300000, guid: c25d56faec9cea548898ba5d831dc866, type: 3}
   - {fileID: 8300000, guid: 22883701d71aa1c458773874e9c6eeaf, type: 3}
-  spitterWalkSounds:
-  - {fileID: 8300000, guid: 03453e7b5658d3540969c80bd8e56da8, type: 3}
-  - {fileID: 8300000, guid: 8819e5058ef361f4794b5d4541461a4c, type: 3}
-  - {fileID: 8300000, guid: a87a8f950a7ada94ba0ca9253887718e, type: 3}
-  - {fileID: 8300000, guid: c977a73acc1d55849a228ee08192ebe5, type: 3}
   spitterAttackSounds1:
-  - {fileID: 8300000, guid: 761fe03005af058479c1ead3511bb004, type: 3}
-  spitterAttackSounds2:
-  - {fileID: 8300000, guid: 953f58fbcc5fd184ab7d3d71915276d5, type: 3}
+  - {fileID: 8300000, guid: 6c4d3f9a9846df4448c29431a3a6b639, type: 3}
+  - {fileID: 8300000, guid: c987fb79c768f8440a838bee341ae275, type: 3}
+  - {fileID: 8300000, guid: be0e0cca679578f43ae3a24d52f20f29, type: 3}
+  - {fileID: 8300000, guid: b0eecf06d08fb984a9d1a8905fa55d68, type: 3}
   masterVolume: 0
   musicVolume: 0
   effectsVolume: 0
@@ -74041,7 +74037,7 @@ Transform:
   m_Children:
   - {fileID: 1397624}
   m_Father: {fileID: 213953490}
-  m_RootOrder: 54
+  m_RootOrder: 57
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -13}
 --- !u!1001 &1569607206
 Prefab:
