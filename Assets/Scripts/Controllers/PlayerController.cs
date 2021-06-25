@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour {
 	public SoundController soundCon;
 
 	public AudioClip[] hitSounds;
+	public AudioClip acidHitSound;
 	public AudioClip[] walkingSounds;
 	public AudioClip deathSound;
 
@@ -759,6 +760,8 @@ public class PlayerController : MonoBehaviour {
 		dripPS.Play ();
 		CancelInvoke ("stopDrip");
 		Invoke ("stopDrip", 3.0f);
+		
+		playAcidHitSound();
 			
 		bileImmunityTimer = 0.6f;
 
@@ -840,6 +843,10 @@ public class PlayerController : MonoBehaviour {
 
 	private void playHitSound() {
 		source.PlayOneShot (hitSounds [Random.Range (0, hitSounds.Length - 1)]);
+	}
+
+	private void playAcidHitSound() {
+		source.PlayOneShot (acidHitSound);
 	}
 
 	public void enableCinematicControl(bool flag) {

@@ -63624,6 +63624,11 @@ Prefab:
       propertyPath: playerSpeed
       value: 2.85
       objectReference: {fileID: 0}
+    - target: {fileID: 114859605230333912, guid: a0ec909a3e312684595b3371274c8bcc,
+        type: 2}
+      propertyPath: acidHitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d000d0c3b29c03e40824b2700d61b634, type: 3}
     m_RemovedComponents:
     - {fileID: 95480882931531178, guid: a0ec909a3e312684595b3371274c8bcc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a0ec909a3e312684595b3371274c8bcc, type: 2}
@@ -71077,10 +71082,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c4e52ca093b1f9b4a8311f21fab4d69b, type: 3}
   - {fileID: 8300000, guid: 714444b665cc83b47be2f24bde8b42d7, type: 3}
   spitterProwlingSounds:
-  - {fileID: 8300000, guid: b7aa024212e0b8043a5534a373b788ec, type: 3}
-  - {fileID: 8300000, guid: 55c99fb83670d464f87a17bc17eac2f9, type: 3}
-  - {fileID: 8300000, guid: c25d56faec9cea548898ba5d831dc866, type: 3}
-  - {fileID: 8300000, guid: 22883701d71aa1c458773874e9c6eeaf, type: 3}
+  - {fileID: 8300000, guid: a752f57e1c7185145ab4508f62597a66, type: 3}
+  - {fileID: 8300000, guid: 89bacee2bd5c86247894e6a90f1544f8, type: 3}
+  - {fileID: 8300000, guid: d0861eda9103b19448e37f1c9eb71d5c, type: 3}
   spitterAttackSounds1:
   - {fileID: 8300000, guid: 6c4d3f9a9846df4448c29431a3a6b639, type: 3}
   - {fileID: 8300000, guid: c987fb79c768f8440a838bee341ae275, type: 3}
