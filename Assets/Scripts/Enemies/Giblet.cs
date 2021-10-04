@@ -5,7 +5,7 @@ using UnityEngine;
 public class Giblet : MonoBehaviour {
 
 	[SerializeField]
-	private AudioClip gibletImpact;
+	private EnhancedAudioClip gibletImpact;
 
 	// Use this for initialization
 	void Start () {

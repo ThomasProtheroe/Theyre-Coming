@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private Sprite[] dialogSprites;
 	[SerializeField]
-	private AudioClip[] cinematicSounds;
+	private EnhancedAudioClip[] cinematicSounds;
 	public KeySpawn[] keySpawns;
 
 	[SerializeField]
@@ -43,24 +43,24 @@ public class GameController : MonoBehaviour {
 	public MusicController musicPlayer;
 	public SoundController soundCon;
 
-	public AudioClip[] prowlingSounds;
-	public AudioClip[] walkSounds;
-	private AudioClip[][] zombieAttackSoundMaster;
-	public AudioClip[] zombieAttackSounds1;
-	public AudioClip[] zombieAttackSounds2;
-	public AudioClip[] zombieAttackSounds3;
-	public AudioClip[] zombieAttackSounds4;
-	public AudioClip[] zombieAttackSounds5;
+	public EnhancedAudioClip[] prowlingSounds;
+	public EnhancedAudioClip[] walkSounds;
+	private EnhancedAudioClip[][] zombieAttackSoundMaster;
+	public EnhancedAudioClip[] zombieAttackSounds1;
+	public EnhancedAudioClip[] zombieAttackSounds2;
+	public EnhancedAudioClip[] zombieAttackSounds3;
+	public EnhancedAudioClip[] zombieAttackSounds4;
+	public EnhancedAudioClip[] zombieAttackSounds5;
 
-	public AudioClip[] runnerProwlingSounds;
-	public AudioClip[] runnerWalkSounds;
-	private AudioClip[][] runnerAttackSoundMaster;
-	public AudioClip[] runnerAttackSounds1;
-	public AudioClip[] runnerAttackSounds2;
+	public EnhancedAudioClip[] runnerProwlingSounds;
+	public EnhancedAudioClip[] runnerWalkSounds;
+	private EnhancedAudioClip[][] runnerAttackSoundMaster;
+	public EnhancedAudioClip[] runnerAttackSounds1;
+	public EnhancedAudioClip[] runnerAttackSounds2;
 
-	public AudioClip[] spitterProwlingSounds;
-	private AudioClip[][] spitterAttackSoundMaster;
-	public AudioClip[] spitterAttackSounds1;
+	public EnhancedAudioClip[] spitterProwlingSounds;
+	private EnhancedAudioClip[][] spitterAttackSoundMaster;
+	public EnhancedAudioClip[] spitterAttackSounds1;
 
 	//Audio multipliers
 	public float masterVolume;
@@ -138,18 +138,18 @@ public class GameController : MonoBehaviour {
 		enemies = new List<Enemy> ();
 		nextCinematic = CinematicMap.getNextCinematic ();
 
-		zombieAttackSoundMaster = new AudioClip[5][];
+		zombieAttackSoundMaster = new EnhancedAudioClip[5][];
 		zombieAttackSoundMaster [0] = zombieAttackSounds1;
 		zombieAttackSoundMaster [1] = zombieAttackSounds2;
 		zombieAttackSoundMaster [2] = zombieAttackSounds3;
 		zombieAttackSoundMaster [3] = zombieAttackSounds4;
 		zombieAttackSoundMaster [4] = zombieAttackSounds5;
 
-		runnerAttackSoundMaster = new AudioClip[2][];
+		runnerAttackSoundMaster = new EnhancedAudioClip[2][];
 		runnerAttackSoundMaster [0] = runnerAttackSounds1;
 		runnerAttackSoundMaster [1] = runnerAttackSounds2;
 
-		spitterAttackSoundMaster = new AudioClip[2][];
+		spitterAttackSoundMaster = new EnhancedAudioClip[2][];
 		spitterAttackSoundMaster [0] = spitterAttackSounds1;
 
 		doorShakeMap = new Queue<float>();
@@ -1009,7 +1009,7 @@ public class GameController : MonoBehaviour {
 		col.b = 1.0f;
 		itemSprite.material.color = col;
 
-		float additionalWaitTime = (item.craftingFanfare.length * 0.7f) - itemShineDuration;
+		float additionalWaitTime = (item.craftingFanfare.clip.length * 0.7f) - itemShineDuration;
 		if (additionalWaitTime <= 0.0f) {
 			additionalWaitTime = 0.0f;
 		}

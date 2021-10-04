@@ -13,7 +13,7 @@ public class RangedWeapon : Item {
 	[SerializeField]
 	private GameObject emptyPrefab;
 	[SerializeField]
-	protected AudioClip fireSound;
+	protected EnhancedAudioClip fireSound;
 
 	private new void Start () {
 		ammunition = capacity;

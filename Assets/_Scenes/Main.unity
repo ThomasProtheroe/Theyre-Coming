@@ -1025,10 +1025,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tickSounds:
-  - {fileID: 8300000, guid: 8e1fda7f37a522c4abad55626397d9f5, type: 3}
-  - {fileID: 8300000, guid: 91f5b5fc761d57146a962d57a1b9eca7, type: 3}
-  - {fileID: 8300000, guid: eb5ced7ecf455a640899cc5d05764081, type: 3}
-  - {fileID: 8300000, guid: 04349018cb876fe42a9ba899cd150496, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   area: {fileID: 2109230951}
 --- !u!4 &73602582 stripped
 Transform:
@@ -2759,7 +2759,7 @@ MonoBehaviour:
   - {fileID: 1398785476}
   safeZoneClearCooldown: 3
   enemyBufferOffset: 0.25
-  openSound: {fileID: 8300000, guid: 0a8b407005d669941ba240d564fd26ff, type: 3}
+  openSound: {fileID: 0}
   closeSound: {fileID: 0}
   unlockSound: {fileID: 0}
   lockedDialogText: 
@@ -2767,7 +2767,7 @@ MonoBehaviour:
   entranceCollider: {fileID: 229440967}
   isLabEntrance: 1
   gameCon: {fileID: 1302620166}
-  revealSound: {fileID: 8300000, guid: 31ee8e3a1a5d13e45b12c53c6f96287c, type: 3}
+  revealSound: {fileID: 0}
 --- !u!95 &229440966
 Animator:
   serializedVersion: 3
@@ -6169,7 +6169,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4901293101347472, guid: f340ce769ae9cbc4d97f484130259c79, type: 2}
       propertyPath: m_RootOrder
-      value: 55
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: 212770700107875072, guid: f340ce769ae9cbc4d97f484130259c79,
         type: 2}
@@ -6286,7 +6286,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -6367,6 +6367,7 @@ GameObject:
   - component: {fileID: 542195602}
   - component: {fileID: 542195604}
   - component: {fileID: 542195603}
+  - component: {fileID: 542195605}
   m_Layer: 23
   m_Name: Background
   m_TagString: Untagged
@@ -59983,6 +59984,19 @@ Tilemap:
     m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 0
+--- !u!114 &542195605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 542195601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf72325fc5f34d41b265c978f179389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 0}
+  volume: 0
 --- !u!1 &542641782
 GameObject:
   m_ObjectHideFlags: 0
@@ -62856,12 +62870,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantAttack: 1
-  swingSound: {fileID: 8300000, guid: 8c1ce110df1b359459e588f826a35f4a, type: 3}
+  swingSound: {fileID: 0}
   hitSounds:
-  - {fileID: 8300000, guid: 59fb040e1b97a834e9d34b2763382cfc, type: 3}
-  - {fileID: 8300000, guid: 123249391405ff54ca8df93adeffe3c1, type: 3}
-  - {fileID: 8300000, guid: 9e48961937c387143ae417c1a922bd45, type: 3}
-  - {fileID: 8300000, guid: e0a0aed1715b2fd439881cdd58a7f109, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &851662843
 GameObject:
   m_ObjectHideFlags: 0
@@ -63629,6 +63643,11 @@ Prefab:
       propertyPath: acidHitSound
       value: 
       objectReference: {fileID: 8300000, guid: d000d0c3b29c03e40824b2700d61b634, type: 3}
+    - target: {fileID: 82092711104274696, guid: a0ec909a3e312684595b3371274c8bcc,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 95480882931531178, guid: a0ec909a3e312684595b3371274c8bcc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a0ec909a3e312684595b3371274c8bcc, type: 2}
@@ -64703,9 +64722,9 @@ MonoBehaviour:
   - {fileID: 1060686747}
   safeZoneClearCooldown: 3
   enemyBufferOffset: 0.25
-  openSound: {fileID: 8300000, guid: e0bdf65929832064d98f28a56ff148ed, type: 3}
-  closeSound: {fileID: 8300000, guid: 3b9bfb69982f0214f9c84fd1a657d8f0, type: 3}
-  unlockSound: {fileID: 8300000, guid: d61791bc0012ae74f966eb7ddba0bbb2, type: 3}
+  openSound: {fileID: 0}
+  closeSound: {fileID: 0}
+  unlockSound: {fileID: 0}
   lockedDialogText: Dammit, locked. Where did you leave the key this time Grandpa?
   readiedTrap: {fileID: 0}
 --- !u!1 &1019172784
@@ -70288,7 +70307,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4668262598242918, guid: b8eea66f48e29d74f9bc09114d7d7bf2, type: 2}
       propertyPath: m_RootOrder
-      value: 57
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 212172050721162098, guid: b8eea66f48e29d74f9bc09114d7d7bf2,
         type: 2}
@@ -71019,8 +71038,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 47ce612104b68f641940f9323786ede9, type: 3}
   - {fileID: 21300000, guid: 4f7eccc21b3dea24ab19bd4ce7bbd009, type: 3}
   cinematicSounds:
-  - {fileID: 8300000, guid: 1673982ad6106e04393c565b407169db, type: 3}
-  - {fileID: 8300000, guid: ce91a75df0db8f34681a50a32c45ca4e, type: 3}
+  - {fileID: 114867234919746638, guid: 1ccd1da8e81511845861a0adb9139117, type: 2}
+  - {fileID: 114867234919746638, guid: 4727c7be2dba9e947b399152300290b3, type: 2}
   keySpawns:
   - {fileID: 1055709525}
   - {fileID: 352836819}
@@ -71033,63 +71052,63 @@ MonoBehaviour:
   musicPlayer: {fileID: 533518043}
   soundCon: {fileID: 1864253229}
   prowlingSounds:
-  - {fileID: 8300000, guid: 62718dd61e7864940a5de4b127656ba6, type: 3}
-  - {fileID: 8300000, guid: 14b1c84b01f25b748905eba1b5ee1da6, type: 3}
-  - {fileID: 8300000, guid: a848808da417e4f40a171173d6a20fd7, type: 3}
-  - {fileID: 8300000, guid: 80230749c0464ff40b38e1dbe696f180, type: 3}
-  - {fileID: 8300000, guid: a1329b5fa4c723343ae8c2204670ed95, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   walkSounds:
-  - {fileID: 8300000, guid: b6fe3bc81f6d09045aa9eb784dad79be, type: 3}
-  - {fileID: 8300000, guid: 973bd183230504b4c98d96ba3ce2570b, type: 3}
-  - {fileID: 8300000, guid: 7bc6a6bc46380ca46a40e040c2077278, type: 3}
-  - {fileID: 8300000, guid: 4367269766e0fce42bb5c35dbaad0e81, type: 3}
-  - {fileID: 8300000, guid: 13b37948d31be6e4db30c5499243faff, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   zombieAttackSounds1:
-  - {fileID: 8300000, guid: 86510a4e551a789479b256cf1aea2d06, type: 3}
-  - {fileID: 8300000, guid: 38022ba412f39704ea47e764cdd77d12, type: 3}
-  - {fileID: 8300000, guid: c2e196462c371614c8e472358519032b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   zombieAttackSounds2:
-  - {fileID: 8300000, guid: 1e57f3565df2130489a679a86e632970, type: 3}
-  - {fileID: 8300000, guid: adb8c45a17096934f92b4e34b4d33097, type: 3}
-  - {fileID: 8300000, guid: 10c2a271c856c634b80ecaa13fe00d00, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   zombieAttackSounds3:
-  - {fileID: 8300000, guid: f643a30246fb608468f72f35e51bb6e4, type: 3}
-  - {fileID: 8300000, guid: c278834ca59dcdf4e9836f52266df9b7, type: 3}
-  - {fileID: 8300000, guid: 3ee9716aa6042e342b3d4a83d986cd2e, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   zombieAttackSounds4:
-  - {fileID: 8300000, guid: c4a95af406e891f43aca3be66495fc37, type: 3}
-  - {fileID: 8300000, guid: 7881f10215a39554695cd28a7fad0922, type: 3}
-  - {fileID: 8300000, guid: 224342c7a531c65458b36667d0980c91, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   zombieAttackSounds5:
-  - {fileID: 8300000, guid: 638b96fbd46673f45a3b1b477240c4bc, type: 3}
-  - {fileID: 8300000, guid: a869290e3346add489cc66653bec9302, type: 3}
-  - {fileID: 8300000, guid: 55b2a469645feea45b4e41b7a9506ddc, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   runnerProwlingSounds:
-  - {fileID: 8300000, guid: b7aa024212e0b8043a5534a373b788ec, type: 3}
-  - {fileID: 8300000, guid: 55c99fb83670d464f87a17bc17eac2f9, type: 3}
-  - {fileID: 8300000, guid: c25d56faec9cea548898ba5d831dc866, type: 3}
-  - {fileID: 8300000, guid: 22883701d71aa1c458773874e9c6eeaf, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   runnerWalkSounds:
-  - {fileID: 8300000, guid: 03453e7b5658d3540969c80bd8e56da8, type: 3}
-  - {fileID: 8300000, guid: 8819e5058ef361f4794b5d4541461a4c, type: 3}
-  - {fileID: 8300000, guid: a87a8f950a7ada94ba0ca9253887718e, type: 3}
-  - {fileID: 8300000, guid: c977a73acc1d55849a228ee08192ebe5, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   runnerAttackSounds1:
-  - {fileID: 8300000, guid: 761fe03005af058479c1ead3511bb004, type: 3}
-  - {fileID: 8300000, guid: 953f58fbcc5fd184ab7d3d71915276d5, type: 3}
-  - {fileID: 8300000, guid: 9849a69a0de041d409b5d7b303ce996e, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   runnerAttackSounds2:
-  - {fileID: 8300000, guid: c4e52ca093b1f9b4a8311f21fab4d69b, type: 3}
-  - {fileID: 8300000, guid: 714444b665cc83b47be2f24bde8b42d7, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   spitterProwlingSounds:
-  - {fileID: 8300000, guid: a752f57e1c7185145ab4508f62597a66, type: 3}
-  - {fileID: 8300000, guid: 89bacee2bd5c86247894e6a90f1544f8, type: 3}
-  - {fileID: 8300000, guid: d0861eda9103b19448e37f1c9eb71d5c, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spitterAttackSounds1:
-  - {fileID: 8300000, guid: 6c4d3f9a9846df4448c29431a3a6b639, type: 3}
-  - {fileID: 8300000, guid: c987fb79c768f8440a838bee341ae275, type: 3}
-  - {fileID: 8300000, guid: be0e0cca679578f43ae3a24d52f20f29, type: 3}
-  - {fileID: 8300000, guid: b0eecf06d08fb984a9d1a8905fa55d68, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   masterVolume: 0
   musicVolume: 0
   effectsVolume: 0
@@ -71185,7 +71204,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -72776,7 +72795,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4055099204075730, guid: 6508637d966b3d546a7b8ed44d174e7a, type: 2}
       propertyPath: m_RootOrder
-      value: 56
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 1896446266898452, guid: 6508637d966b3d546a7b8ed44d174e7a, type: 2}
       propertyPath: m_Name
@@ -73875,11 +73894,11 @@ MonoBehaviour:
   hitCollider: {fileID: 1569539526}
   frontHand: {fileID: 1397622}
   backHand: {fileID: 1397622}
-  throwSound: {fileID: 8300000, guid: 3ee23fde936274e4191e0424348d09ff, type: 3}
+  throwSound: {fileID: 0}
   throwImpact: {fileID: 0}
   craftSound: {fileID: 0}
-  pickupSound: {fileID: 8300000, guid: 7fac08fb276fc68488ea64f47f22560d, type: 3}
-  swapSound: {fileID: 8300000, guid: 2af30c91ff9b1ff40ae80454818ec3e6, type: 3}
+  pickupSound: {fileID: 0}
+  swapSound: {fileID: 0}
   breakSound: {fileID: 0}
   craftOverrideSound: {fileID: 0}
   craftingFanfare: {fileID: 0}
@@ -74753,7 +74772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499b4a92e50244248b63197b8af21170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sleepSound: {fileID: 8300000, guid: 64c67398eb1ebbc4887b9f875c0ab76f, type: 3}
+  sleepSound: {fileID: 0}
   sleepSprite: {fileID: 21300000, guid: 7c9fab43c9d3f064abf7411afd37c52b, type: 3}
   defaultSprite: {fileID: 21300000, guid: 0dedc84dbc5b89043bd0ec8160582786, type: 3}
 --- !u!1001 &1600315767
@@ -76783,6 +76802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6b640f6cd7318c45bc97f3b031813a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterVolume: 0
   enemyQueuedSourceMax: 6
   burningSourceMax: 5
   splashSourceMax: 4

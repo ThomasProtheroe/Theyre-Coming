@@ -12,7 +12,7 @@ public class Grenade : Throwable {
 	[SerializeField]
 	private Text timerText;
 	[SerializeField]
-	private AudioClip fuseSound;
+	private EnhancedAudioClip fuseSound;
 
 	private bool isArmed;
 	private float fuseTimer;

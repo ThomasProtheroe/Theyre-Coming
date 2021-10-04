@@ -9,11 +9,11 @@ public class MysteryButton : Item {
 
 	[Header("Button Sounds")]
 	[SerializeField]
-	private AudioClip useSound;
+	private EnhancedAudioClip useSound;
 	[SerializeField]
-	private AudioClip successSound;
+	private EnhancedAudioClip successSound;
 	[SerializeField]
-	private AudioClip failSound;
+	private EnhancedAudioClip failSound;
 
 	[Header("Sprites")]
 	[SerializeField]

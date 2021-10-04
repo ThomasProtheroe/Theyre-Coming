@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour {
 	public GameController gameCon;
 	public SoundController soundCon;
 
-	public AudioClip[] hitSounds;
-	public AudioClip acidHitSound;
-	public AudioClip[] walkingSounds;
-	public AudioClip deathSound;
+	public EnhancedAudioClip[] hitSounds;
+	public EnhancedAudioClip acidHitSound;
+	public EnhancedAudioClip[] walkingSounds;
+	public EnhancedAudioClip deathSound;
 
 	[HideInInspector]
 	public ItemSlot itemSlot1;
@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour {
 			health -= damage;
 			updateWoundState ();
 			if (health <= 0) {
-				source.PlayOneShot (deathSound);
+				soundCon.playPriorityOneShot(deathSound);
 				gameOver ();
 			} else {
 				playHitSound ();
@@ -842,11 +842,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void playHitSound() {
-		source.PlayOneShot (hitSounds [Random.Range (0, hitSounds.Length - 1)]);
+		soundCon.playPriorityOneShot (hitSounds [Random.Range (0, hitSounds.Length - 1)]);
 	}
 
 	private void playAcidHitSound() {
-		source.PlayOneShot (acidHitSound);
+		soundCon.playPriorityOneShot (acidHitSound);
 	}
 
 	public void enableCinematicControl(bool flag) {
@@ -936,7 +936,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		Result craftingResult = RecipeBook.tryCraft (closestItem.type, equippedItem.type);
-		AudioClip overrideSound = null;
+		EnhancedAudioClip overrideSound = null;
 		if (craftingResult != null) {
 			beingCrafted = craftingResult.product;
 

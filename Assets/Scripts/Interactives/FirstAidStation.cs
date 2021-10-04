@@ -9,7 +9,7 @@ public class FirstAidStation : Interactive {
 	private GameController gameCon;
 	private SoundController soundCon;
 	[SerializeField]
-	private AudioClip healSound;
+	private EnhancedAudioClip healSound;
 	[SerializeField]
 	private Image outerBar;
 	[SerializeField]

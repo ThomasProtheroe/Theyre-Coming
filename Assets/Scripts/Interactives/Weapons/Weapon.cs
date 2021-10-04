@@ -23,9 +23,9 @@ public class Weapon : Item {
 	public float vorpalChance = 0;
 
 	[Header("Weapon Sounds")]
-	public AudioClip swingSound;
-	public AudioClip hitSound;
-	public AudioClip missSound;
+	public EnhancedAudioClip swingSound;
+	public EnhancedAudioClip hitSound;
+	public EnhancedAudioClip missSound;
 
 	protected int hitCount = 0;
 	private bool hitWindowActive = false;

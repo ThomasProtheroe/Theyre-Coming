@@ -24,24 +24,24 @@ public class Enemy : MonoBehaviour {
     /* Audio Components */
     [HideInInspector]
 	public SoundController soundCon;
-	protected AudioClip walkSound;
-	protected AudioClip prowlSound;
+	protected EnhancedAudioClip walkSound;
+	protected EnhancedAudioClip prowlSound;
 	[Header("Audio Clips")]
 	[SerializeField]
-	protected AudioClip decapitationSound;
+	protected EnhancedAudioClip decapitationSound;
 	[SerializeField]
-	protected AudioClip igniteSound;
+	protected EnhancedAudioClip igniteSound;
 	[SerializeField]
-	protected AudioClip burningSound;
+	protected EnhancedAudioClip burningSound;
 	[SerializeField]
-	protected AudioClip extinguishSound;
+	protected EnhancedAudioClip extinguishSound;
 	[SerializeField]
-	protected AudioClip disitingrateSound;
+	protected EnhancedAudioClip disitingrateSound;
 	[SerializeField]
-	protected AudioClip splashSound;
+	protected EnhancedAudioClip splashSound;
 	[SerializeField]
-	protected AudioClip attackImpactSound;
-	protected List<AudioClip> attackSounds;
+	protected EnhancedAudioClip attackImpactSound;
+	protected List<EnhancedAudioClip> attackSounds;
 
 	/* Particle Systems */
 	[Header("Particle Systems")]
@@ -862,16 +862,16 @@ public class Enemy : MonoBehaviour {
 		currentArea = area;
 	}
 
-	public void setProwlSound(AudioClip sound) {
+	public void setProwlSound(EnhancedAudioClip sound) {
 		prowlSound = sound;
 	}
 
-	public void addAttackSound(AudioClip[] sounds) {
-		attackSounds = new List<AudioClip> ();
+	public void addAttackSound(EnhancedAudioClip[] sounds) {
+		attackSounds = new List<EnhancedAudioClip> ();
 		attackSounds.AddRange(sounds);
 	}
 
-	public void setWalkSound(AudioClip sound) {
+	public void setWalkSound(EnhancedAudioClip sound) {
 		walkSound = sound;
 	}
 

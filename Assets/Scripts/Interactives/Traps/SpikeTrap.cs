@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpikeTrap : Trap {
 
 	public int damage;
-	public AudioClip hitSound;
+	public EnhancedAudioClip hitSound;
 
 	[SerializeField]
 	private Sprite altDeploySprite;

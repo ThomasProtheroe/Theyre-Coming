@@ -9,7 +9,7 @@ public class Bed : Interactive {
 	private GameController gameCon;
 	private SoundController soundCon;
 	[SerializeField]
-	private AudioClip sleepSound;
+	private EnhancedAudioClip sleepSound;
 	[SerializeField]
 	private Sprite sleepSprite;
 	[SerializeField]

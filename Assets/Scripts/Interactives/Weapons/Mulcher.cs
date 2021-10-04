@@ -15,17 +15,17 @@ public class Mulcher : Weapon {
 
 	[Header("Mulcher Sounds")]
 	[SerializeField]
-	private AudioClip turnOnSound;
+	private EnhancedAudioClip turnOnSound;
 	[SerializeField]
-	private AudioClip runningSound;
+	private EnhancedAudioClip runningSound;
 	[SerializeField]
-	private AudioClip turnOffSound;
+	private EnhancedAudioClip turnOffSound;
 	[SerializeField]
-	private AudioClip hitStartSound;
+	private EnhancedAudioClip hitStartSound;
 	[SerializeField]
-	private AudioClip hitMaintainSound;
+	private EnhancedAudioClip hitMaintainSound;
 	[SerializeField]
-	private AudioClip hitStopSound;
+	private EnhancedAudioClip hitStopSound;
 
 	protected void OnTriggerStay2D(Collider2D other) {
 		if (!isRunning || other.gameObject.tag != "Enemy") {
