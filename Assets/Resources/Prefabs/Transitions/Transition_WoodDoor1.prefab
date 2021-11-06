@@ -221,8 +221,10 @@ MonoBehaviour:
   - {fileID: 4631245193073022}
   safeZoneClearCooldown: 3
   enemyBufferOffset: 0.25
-  openSound: {fileID: 8300000, guid: e0bdf65929832064d98f28a56ff148ed, type: 3}
-  closeSound: {fileID: 8300000, guid: 3b9bfb69982f0214f9c84fd1a657d8f0, type: 3}
+  openSound: {fileID: 114867234919746638, guid: e1aaf9a9ef656414fb35576aaec6ad75,
+    type: 2}
+  closeSound: {fileID: 114867234919746638, guid: a83c9f22e5101ef43b54c301f6ba4fbe,
+    type: 2}
   unlockSound: {fileID: 0}
   lockedDialogText: 
   readiedTrap: {fileID: 0}
