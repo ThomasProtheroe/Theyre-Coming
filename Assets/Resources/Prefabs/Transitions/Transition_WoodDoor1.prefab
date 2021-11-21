@@ -225,7 +225,8 @@ MonoBehaviour:
     type: 2}
   closeSound: {fileID: 114867234919746638, guid: a83c9f22e5101ef43b54c301f6ba4fbe,
     type: 2}
-  unlockSound: {fileID: 0}
+  unlockSound: {fileID: 114867234919746638, guid: 71b2ded450ebb432eb86d0eb558b9f54,
+    type: 2}
   lockedDialogText: 
   readiedTrap: {fileID: 0}
 --- !u!114 &114377398976377312

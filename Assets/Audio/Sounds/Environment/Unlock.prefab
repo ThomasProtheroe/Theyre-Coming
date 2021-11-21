@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4106269779772972}
   - component: {fileID: 114867234919746638}
   m_Layer: 0
-  m_Name: EnhancedAudioClip 1
+  m_Name: Unlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,5 +51,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf72325fc5f34d41b265c978f179389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: d61791bc0012ae74f966eb7ddba0bbb2, type: 3}
   volume: 1

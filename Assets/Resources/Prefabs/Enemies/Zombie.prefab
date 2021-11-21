@@ -1644,7 +1644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114111045751677408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1656,7 +1656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114124356809327864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114385907852196578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1728,13 +1728,14 @@ MonoBehaviour:
   - {fileID: 114356620297844480, guid: 8bccd45ac575bac40a713c51be503e21, type: 2}
   - {fileID: 114916511521372466, guid: e3dd56114e03da04a904e379a7264a8f, type: 2}
   soundCon: {fileID: 0}
-  decapitationSound: {fileID: 8300000, guid: 9ce1ae0d2c8f9a74f8d8f1478a9bb195, type: 3}
-  igniteSound: {fileID: 8300000, guid: 25a871d970dfc204b8e06b7a47df33f3, type: 3}
-  burningSound: {fileID: 8300000, guid: 7e60dc823677da741b8b5f9b81040400, type: 3}
-  extinguishSound: {fileID: 8300000, guid: 2fcc661f571ece24fa0ed2b08d4d21fb, type: 3}
-  disitingrateSound: {fileID: 8300000, guid: b8160d24dc784fc46bab9e25528e67f9, type: 3}
-  splashSound: {fileID: 8300000, guid: e3bfeb2346cb29d44a986167af432c79, type: 3}
-  attackImpactSound: {fileID: 8300000, guid: 1c11ecdf2c712e748a3e66884a9b87fc, type: 3}
+  decapitationSound: {fileID: 0}
+  igniteSound: {fileID: 0}
+  burningSound: {fileID: 114867234919746638, guid: b31b4fe0312344372acd5601643240e5,
+    type: 2}
+  extinguishSound: {fileID: 0}
+  disitingrateSound: {fileID: 0}
+  splashSound: {fileID: 0}
+  attackImpactSound: {fileID: 0}
   bloodSprayPS: {fileID: 198899111556680052}
   bloodFountainPS: {fileID: 198071986244403636}
   splashPS: {fileID: 198317594137574074}
@@ -1825,7 +1826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114516522483594032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1837,7 +1838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114619277302254142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1871,7 +1872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114749997028052138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1883,7 +1884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114805246423648672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1906,7 +1907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114843969258881862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1940,7 +1941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114899317194807286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1952,7 +1953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114915710920690162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1964,7 +1965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!114 &114920075675736204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1987,7 +1988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c64394755913743b2815063c0b8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gibletImpact: {fileID: 8300000, guid: f3597b588aff30b44b747ac8745df254, type: 3}
+  gibletImpact: {fileID: 0}
 --- !u!198 &198013592315077340
 ParticleSystem:
   m_ObjectHideFlags: 1
