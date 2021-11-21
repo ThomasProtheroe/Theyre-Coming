@@ -7,9 +7,9 @@ public class FanTrap : Trap {
 	public int damage;
 	public int knockback;
 	[SerializeField]
-	private AudioClip hitSound;
+	private EnhancedAudioClip hitSound;
 	[SerializeField]
-	private AudioClip activeSound;
+	private EnhancedAudioClip activeSound;
 	[SerializeField]
 	protected Animator anim;
 	private bool isPlaying;

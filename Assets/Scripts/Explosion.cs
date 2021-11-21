@@ -5,9 +5,9 @@ using UnityEngine;
 public class Explosion : MonoBehaviour {
 
 	[SerializeField]
-	private AudioClip explosionSound;
+	private EnhancedAudioClip explosionSound;
 	[SerializeField]
-	private AudioClip meatyExplosionSound;
+	private EnhancedAudioClip meatyExplosionSound;
 	private PlayerController player;
 
 	// Use this for initialization

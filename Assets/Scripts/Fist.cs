@@ -11,8 +11,8 @@ public class Fist : MonoBehaviour {
 	private bool instantAttack;
 
 	[Header("Sounds")]
-	public AudioClip swingSound;
-	public List<AudioClip> hitSounds;
+	public EnhancedAudioClip swingSound;
+	public List<EnhancedAudioClip> hitSounds;
 	private SoundController soundCon;
 
 	protected int hitCount = 0;

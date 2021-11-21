@@ -5,6 +5,8 @@ using UnityEngine;
 public class SoundController : MonoBehaviour {
 
 	[SerializeField]
+	private float masterVolume;
+	[SerializeField]
 	private int enemyQueuedSourceMax;
 	[SerializeField]
 	private int burningSourceMax;
@@ -26,11 +28,11 @@ public class SoundController : MonoBehaviour {
 	private AudioSource playerWalkSource;
 
 	//Queues
-	private List<AudioClip> walkQueue = new List<AudioClip>();
-	private List<AudioClip> prowlQueue = new List<AudioClip>();
-	private List<AudioClip> burningQueue = new List<AudioClip>();
-	private List<AudioClip> environmentalQueue = new List<AudioClip>();
-	private AudioClip playerItemLoopingQueue = new AudioClip();
+	private List<EnhancedAudioClip> walkQueue = new List<EnhancedAudioClip>();
+	private List<EnhancedAudioClip> prowlQueue = new List<EnhancedAudioClip>();
+	private List<EnhancedAudioClip> burningQueue = new List<EnhancedAudioClip>();
+	private List<EnhancedAudioClip> environmentalQueue = new List<EnhancedAudioClip>();
+	private EnhancedAudioClip playerItemLoopingQueue = new EnhancedAudioClip();
 
 	//Timers
 	[SerializeField]
@@ -90,11 +92,13 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void updateVolume(float volume) {
+	public void updateVolume(float newMasterVolume) {
 		AudioSource[] sources = GetComponents<AudioSource> ();
 		foreach (AudioSource source in sources) {
-			source.volume = volume;
+			source.volume = (source.volume / masterVolume) * newMasterVolume;
 		}
+
+		masterVolume = newMasterVolume;
 	}
 
 	public void pauseAll() {
@@ -111,14 +115,15 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void playEnemyWalk(AudioClip request) {
+	public void playEnemyWalk(EnhancedAudioClip request) {
 		bool played = false;
 		for (int i = 0; i < enemyWalkSources.Length; i++) {
 			if (enemyWalkSources [i].isPlaying) {
 				continue;
 			}
 
-			enemyWalkSources [i].clip = request;
+			enemyWalkSources [i].clip = request.clip;
+			enemyWalkSources [i].volume = request.volume * masterVolume;
 			enemyWalkSources [i].Play ();
 			played = true;
 			break;
@@ -130,11 +135,11 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void stopEnemyWalk(AudioClip clip) {
+	public void stopEnemyWalk(EnhancedAudioClip clip) {
 		bool found = false;
 		for (int i = 0; i < enemyWalkSources.Length; i++) {
 			//We don't actually care if we ge tthe same source the request is playing on, as long as it is the same clip
-			if (enemyWalkSources [i].isPlaying && enemyWalkSources [i].clip == clip) {
+			if (enemyWalkSources [i].isPlaying && enemyWalkSources [i].clip == clip.clip) {
 				found = true;
 				enemyWalkSources [i].Stop ();
 				enemyWalkSources [i].clip = null;
@@ -146,7 +151,7 @@ public class SoundController : MonoBehaviour {
 
 		if (!found) {
 			for (int i = 0; i < walkQueue.Count; i++) {
-				if (walkQueue [i] != clip) {
+				if (walkQueue [i] != clip.clip) {
 					continue;
 				}
 
@@ -156,30 +161,31 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void playEnemyProwl(AudioClip request) {
+	public void playEnemyProwl(EnhancedAudioClip request) {
 		bool played = false;
 		for (int i = 0; i < enemyProwlSources.Length; i++) {
 			if (enemyProwlSources [i].isPlaying) {
 				continue;
 			}
 
-			enemyProwlSources [i].clip = request;
+			enemyProwlSources [i].clip = request.clip;
+			enemyProwlSources [i].volume = request.volume * masterVolume;
 			enemyProwlSources [i].Play ();
 			played = true;
 			break;
 		}
 
-		//If we didn't have a free source to play the clip, queue it 
+		//If we didn't have a free source to play the clip, queue it
 		if (!played) {
 			queueRequest (request, prowlQueue);
 		}
 	}
 
-	public void stopEnemyProwl(AudioClip clip) {
+	public void stopEnemyProwl(EnhancedAudioClip clip) {
 		bool found = false;
 		for (int i = 0; i < enemyProwlSources.Length; i++) {
 			//We don't actually care if we ge tthe same source the request is playing on, as long as it is the same clip
-			if (enemyProwlSources [i].isPlaying && enemyProwlSources [i].clip == clip) {
+			if (enemyProwlSources [i].isPlaying && enemyProwlSources [i].clip == clip.clip) {
 				found = true;
 				enemyProwlSources [i].Stop ();
 				enemyProwlSources [i].clip = null;
@@ -201,14 +207,15 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void playBurning(AudioClip request) {
+	public void playBurning(EnhancedAudioClip request) {
 		bool played = false;
 		for (int i = 0; i < burningSources.Length; i++) {
 			if (burningSources [i].isPlaying) {
 				continue;
 			}
 
-			burningSources [i].clip = request;
+			burningSources [i].clip = request.clip;
+			burningSources [i].volume = request.volume * masterVolume;
 			burningSources [i].Play ();
 			played = true;
 			break;
@@ -220,11 +227,11 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void stopBurning(AudioClip clip) {
+	public void stopBurning(EnhancedAudioClip clip) {
 		bool found = false;
 		for (int i = 0; i < burningSources.Length; i++) {
 			//We don't actually care if we ge tthe same source the request is playing on, as long as it is the same clip
-			if (burningSources [i].isPlaying && burningSources [i].clip == clip) {
+			if (burningSources [i].isPlaying && burningSources [i].clip == clip.clip) {
 				found = true;
 				burningSources [i].Stop ();
 				burningSources [i].clip = null;
@@ -246,14 +253,15 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void playEnvironmentalSound(AudioClip request, bool loop=true) {
+	public void playEnvironmentalSound(EnhancedAudioClip request, bool loop=true) {
 		bool played = false;
 		for (int i = 0; i < environmentalSources.Length; i++) {
 			if (environmentalSources [i].isPlaying) {
 				continue;
 			}
 
-			environmentalSources [i].clip = request;
+			environmentalSources [i].clip = request.clip;
+			environmentalSources [i].volume = request.volume * masterVolume;
 			environmentalSources [i].loop = loop;
 			environmentalSources [i].Play ();
 			played = true;
@@ -266,11 +274,11 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void stopEnvironmentalSound(AudioClip clip) {
+	public void stopEnvironmentalSound(EnhancedAudioClip clip) {
 		bool found = false;
 		for (int i = 0; i < environmentalSources.Length; i++) {
 			//We don't actually care if we get the same source the request is playing on, as long as it is the same clip
-			if (environmentalSources [i].isPlaying && environmentalSources [i].clip == clip) {
+			if (environmentalSources [i].isPlaying && environmentalSources [i].clip == clip.clip) {
 				found = true;
 				environmentalSources [i].Stop ();
 				environmentalSources [i].clip = null;
@@ -292,9 +300,10 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 
-	public void playPlayerItemSound(AudioClip startClip, bool loop=false, AudioClip loopClip=null) {
+	public void playPlayerItemSound(EnhancedAudioClip startClip, bool loop=false, EnhancedAudioClip loopClip=null) {
 		playerItemSource.Stop ();
-		playerItemSource.clip = startClip;
+		playerItemSource.clip = startClip.clip;
+		playerItemSource.volume = startClip.volume * masterVolume;
 		playerItemSource.loop = loop;
 		playerItemSource.Play ();
 
@@ -306,9 +315,10 @@ public class SoundController : MonoBehaviour {
 		playerItemLoopingQueue = null;
 	}
 
-	public void playPlayerWalkSound(AudioClip walkClip) {
+	public void playPlayerWalkSound(EnhancedAudioClip walkClip) {
 		playerWalkSource.Stop ();
-		playerWalkSource.clip = walkClip;
+		playerWalkSource.clip = walkClip.clip;
+		playerWalkSource.volume = walkClip.volume * masterVolume;
 		playerWalkSource.loop = true;
 		playerWalkSource.Play ();
 	}
@@ -317,7 +327,7 @@ public class SoundController : MonoBehaviour {
 		playerWalkSource.Stop ();
 	}
 
-	public void playSpash(AudioClip clip) {
+	public void playSpash(EnhancedAudioClip clip) {
 		if (splashTimer > 0) {
 			return;
 		}
@@ -328,7 +338,8 @@ public class SoundController : MonoBehaviour {
 				continue;
 			}
 
-			splashSources [i].clip = clip;
+			splashSources [i].clip = clip.clip;
+			splashSources [i].volume = clip.volume * masterVolume;
 			splashSources [i].Play ();
 			splashTimer = splashInterval;
 			break;
@@ -336,41 +347,44 @@ public class SoundController : MonoBehaviour {
 	}
 
 
-	public void playEnemyOneShot(AudioClip requestedClip) {
+	public void playEnemyOneShot(EnhancedAudioClip requestedClip) {
 		for (int i = 0; i < enemyOneShotSources.Length; i++) {
 			if (enemyOneShotSources [i].isPlaying) {
 				continue;
 			}
 
-			enemyOneShotSources [i].PlayOneShot (requestedClip);
+			enemyOneShotSources [i].volume = requestedClip.volume * masterVolume;
+			enemyOneShotSources [i].PlayOneShot (requestedClip.clip);
 			break;
 		}
 		//If we get to this point without playing the clip, then all sources are full and we ignore the play request
 	}
 
-	public void playPriorityOneShot(AudioClip requestedClip) {
+	public void playPriorityOneShot(EnhancedAudioClip requestedClip) {
 		for (int i = 0; i < priorityOneShotSources.Length; i++) {
 			if (priorityOneShotSources [i].isPlaying) {
 				continue;
 			}
 
-			priorityOneShotSources [i].PlayOneShot (requestedClip);
+			priorityOneShotSources [i].volume = requestedClip.volume * masterVolume;
+			priorityOneShotSources [i].PlayOneShot (requestedClip.clip);
 			break;
 		}
 		//If we get to this point without playing the clip, then all sources are full and we ignore the play request
 	}
 		
-	private void queueRequest(AudioClip request, List<AudioClip> queue) {
+	private void queueRequest(EnhancedAudioClip request, List<EnhancedAudioClip> queue) {
 		queue.Add (request);
 	}
 
-	private void playNextQueued(List<AudioClip> queue, AudioSource source) {
+	private void playNextQueued(List<EnhancedAudioClip> queue, AudioSource source) {
 		if (queue.Count == 0) {
 			//queue is empty
 			return;
 		}
 	
-		source.clip = queue [0];
+		source.clip = queue [0].clip;
+		source.volume = queue [0].volume * masterVolume;
 		source.Play ();
 		queue.RemoveAt (0);
 	}

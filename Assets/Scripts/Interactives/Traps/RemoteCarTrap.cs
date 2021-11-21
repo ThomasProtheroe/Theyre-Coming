@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RemoteCarTrap : Trap {
 
-	public AudioClip accelerationSound;
-	public AudioClip stopSound;
-	public AudioClip hitSound;
+	public EnhancedAudioClip accelerationSound;
+	public EnhancedAudioClip stopSound;
+	public EnhancedAudioClip hitSound;
 	protected List<Enemy> enemiesHit;
 	protected Animator anim;
 

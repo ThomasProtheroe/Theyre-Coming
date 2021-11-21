@@ -5,7 +5,7 @@ using UnityEngine;
 public class ClockHand : MonoBehaviour {
 
 	[SerializeField]
-	private List<AudioClip> tickSounds;
+	private List<EnhancedAudioClip> tickSounds;
 	private PlayerController player;
 	private SoundController soundCon;
 	[SerializeField]

@@ -64,14 +64,14 @@ public class Item : Interactive {
 	public GameObject backHand;
 
 	[Header("Sound Clips")]
-	public AudioClip throwSound;
-	public AudioClip throwImpact;
-	public AudioClip craftSound;
-	public AudioClip pickupSound;
-	public AudioClip swapSound;
-	public AudioClip breakSound;
-	public AudioClip craftOverrideSound;
-	public AudioClip craftingFanfare;
+	public EnhancedAudioClip throwSound;
+	public EnhancedAudioClip throwImpact;
+	public EnhancedAudioClip craftSound;
+	public EnhancedAudioClip pickupSound;
+	public EnhancedAudioClip swapSound;
+	public EnhancedAudioClip breakSound;
+	public EnhancedAudioClip craftOverrideSound;
+	public EnhancedAudioClip craftingFanfare;
 
 	[Header("Status Effects")]
 	public bool inflictsBleed;
@@ -325,7 +325,7 @@ public class Item : Interactive {
 		}
 	}
 
-	public void playCraftingSound(AudioClip overrideSound=null) {
+	public void playCraftingSound(EnhancedAudioClip overrideSound=null) {
 		//Since this object was just created, all variables are not initialized yet
 		//so we need to get the SoundController directly
 		SoundController sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();

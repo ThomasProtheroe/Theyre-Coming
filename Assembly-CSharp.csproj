@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\Enemies\Giblet.cs" />
      <Compile Include="Assets\Scripts\Enemies\SpawnMap.cs" />
      <Compile Include="Assets\Scripts\Enemies\Spitter.cs" />
+     <Compile Include="Assets\Scripts\EnhancedAudioClip.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\Fist.cs" />
      <Compile Include="Assets\Scripts\IgnoreParentRotation.cs" />

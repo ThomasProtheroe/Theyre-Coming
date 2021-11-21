@@ -12,7 +12,7 @@ public class LabEntrance : Transition {
 	[SerializeField]
 	private GameController gameCon;
 	[SerializeField]
-	private AudioClip revealSound;
+	private EnhancedAudioClip revealSound;
 
 	public void reveal() {
 		//unlock and activate sprite/collider

@@ -8,7 +8,7 @@ public class BaseProjectile : MonoBehaviour {
 	public bool isActive;
 	protected PlayerController player;
 	[SerializeField]
-	private AudioClip impactSound;
+	private EnhancedAudioClip impactSound;
 	[SerializeField]
 	protected SoundController soundController;
 

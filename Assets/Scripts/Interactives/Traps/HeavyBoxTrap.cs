@@ -35,7 +35,7 @@ public class HeavyBoxTrap : Trap {
 	private float maxXVel;
 	[SerializeField]
 	private float minXVel;
-	public AudioClip hitSound;
+	public EnhancedAudioClip hitSound;
 
 	private Transition parentTransition;
 	private bool isFalling = false;

@@ -10,7 +10,7 @@ public class Trap : Item {
 
 	public float deployY;
 	public float deployRotation;
-	public AudioClip deploySound;
+	public EnhancedAudioClip deploySound;
 
 	protected bool isDeployed;
 	protected string deployedArea;

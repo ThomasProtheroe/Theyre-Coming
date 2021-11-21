@@ -27,9 +27,9 @@ public class Transition : Interactive {
 	private float enemyBufferOffset;
 
 	[Header("Audio Clips")]
-	public AudioClip openSound;
-	public AudioClip closeSound;
-	public AudioClip unlockSound;
+	public EnhancedAudioClip openSound;
+	public EnhancedAudioClip closeSound;
+	public EnhancedAudioClip unlockSound;
 
 	private Dialog lockedDialog;
 	[Header("Dialog")]
